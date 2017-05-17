@@ -96,7 +96,7 @@ if  $INSTALL_SYSTEM_DEPENDENCIES ; then
         print_green "Installing aptitude dependencies"
 
         # Install base packages
-        sudo apt-get -y install python-pip python-virtualenv python-dev build-essential
+        sudo apt-get -y install python-pip python-virtualenv python3-dev build-essential
 
         print_green "Installing image libraries"
         # Install image libs
