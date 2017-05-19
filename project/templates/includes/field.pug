@@ -1,0 +1,27 @@
+- load i18n
+
+- if field.is_hidden
+  div
+    {{field}}
+- else 
+  div.form-group(class="{% if field.errors %}has-error{% endif %}")
+    - if field.field.is_checkbox
+      div.col-md-offset-3.col-md-9
+        div.checkbox
+          label
+            {{field }}
+            {{field.label}}
+    - else
+      label.col-sm-3(for="id_{{field.name}}")
+        | {{field.label}}
+        - if not field.field.required
+          | ({% trans 'optional' %})
+      .col-sm-9
+        {{ field }}
+    - if field.errors
+      .col-sm-12
+        span.help-block.text-right(for="id_{{field.name}}")
+          {% for error in field.errors %}
+          | {{ error }}
+          {% endfor %}
+          | {{ field.help_text }}

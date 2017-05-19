@@ -1,0 +1,55 @@
+- load i18n
+
+div.navbar.navbar-inverse.navbar-fixed-top
+  div.container
+    div.navbar-header
+      button.navbar-toggle(type="button", data-toggle="collapse",
+                            data-target=".navbar-collapse")
+        span.icon-bar
+        span.icon-bar
+        span.icon-bar
+      a.navbar-brand(href="{% url 'home' %}") Project
+        i.fa.fa-spinner.fa-spin.page-loading-icon
+    div.navbar-collapse.collapse
+      - if user.is_authenticated 
+        {% if user.is_staff %}
+        ul.nav.navbar-nav
+          li
+            a(href="{% url 'admin:index' %}") Administración
+        {% endif %}
+        ul.nav.navbar-nav
+          li
+            a(href="#") Link 1
+        ul.nav.navbar-nav
+          li
+            a(href="#") Link 2
+
+      ul.nav.navbar-nav.navbar-right
+        {% if user.is_authenticated %}
+        li.dropdown
+          a.dropdown-toggle(href="#", data-toggle="dropdown")
+            | {% trans 'Logged in as' %} {{user.email}}
+            b.caret
+
+          ul.dropdown-menu
+            li
+              a(href="{% url 'user_profile' %}") Mi perfil
+            li
+              a(href="{% url 'password_change' %}")
+                | Modificar Contraseña
+            li
+              a(href="{% url 'logout' %}") Logout
+        {% else %}
+        li.dropdown
+          a.dropdown-toggle(href="#", data-toggle="dropdown")
+            | Login
+            b.caret
+
+          ul.dropdown-menu
+            li
+              a(href="{% url 'login' %}?next={{request.path}}")
+                | Login
+            li
+              a(href="{% url 'password_reset' %}")
+                | Recover password
+        {% endif %}

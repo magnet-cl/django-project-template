@@ -1,0 +1,10 @@
+- load i18n
+
+- if fieldset.legend
+  legend {{ fieldset.legend }}
+
+- if fieldset.description
+  p.description {{ fieldset.description }}
+
+- for field in fieldset
+  {% include 'includes/field.pug' %}
