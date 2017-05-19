@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.staticfiles',
+    'compressor',
+    'project',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -143,6 +146,8 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'compressor.finders.CompressorFinder',
 )
+
+AUTH_USER_MODEL = 'users.User'
 
 # set the precompilers
 COMPRESS_PRECOMPILERS = (
