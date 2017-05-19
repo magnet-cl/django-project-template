@@ -1,0 +1,58 @@
+extends "base.pug"
+
+- load i18n static
+
+block javascripts
+  script(src="{% static 'js/login.js' %}")
+
+block content
+  .row 
+    .col-sm-12
+      form.form-signin.form-horizontal(action='', method='post')
+        {% csrf_token %}
+
+        .form-signin-inner
+          h2 {% blocktrans %}Login{% endblocktrans %}
+
+          - if form.non_field_errors
+            - for error in form.non_field_errors
+              .alert.alert-error {{ error }}
+
+          .form-group(class="{% if form.email.errors %}has-error{% endif %}")
+            label.control-label.col-lg-2.required(for='id_email') 
+              | {% trans 'E-mail:' %}
+
+            .col-lg-10
+              input#id_email.form-control(name='email', type='text',
+                placeholder="{% trans 'E-mail' %}")
+              span.help-inline.help-block {{ form.email.errors|striptags }}
+
+          .form-group(class="{% if form.password.errors %}has-error{% endif %}")
+            label.control-label.col-lg-2.required(for='id_password')
+              | {% trans 'Password' %}
+
+            .col-lg-10
+              input#id_password.form-control(name='password', type='password',
+                placeholder="{% trans 'Password' %}")
+              span.help-inline.help-block {{ form.password.errors|striptags }}
+
+            input(type='hidden', name='this_is_the_login_form', value='1')
+            input(type='hidden', name='next', value='{{ next }}')
+
+          - if form.captcha
+            label.control-label.required(for='id_captcha')
+              | {{ form.captcha.label }}
+            {{ form.captcha }}
+            span.help-inline.help-block {{ form.captcha.errors|striptags }}
+
+          .form-group
+            .col-md-offset-2.col-lg-10
+              a(href="{% url 'password_reset' %}")
+                | {% trans 'Forgotten your password?' %}
+          .form-group
+            .col-md-offset-2.col-lg-10
+              a(href="{% url 'register' %}")
+                | {% trans 'New? Register here.' %}
+        .form-group
+          .col-sm-12.text-right
+            input.btn.btn-primary(type='submit', value="{% trans 'Log in' %}")

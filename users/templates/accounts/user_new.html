@@ -1,0 +1,26 @@
+{% extends "base.pug" %}
+
+{% load i18n static %}
+
+{% block content %}
+
+{% if form.errors %}
+{% for error in form.non_field_errors %}
+<div class="alert alert-error">
+  {{ error }}
+</div>
+{% endfor %}
+{% endif %}
+
+<h2>{% blocktrans %}Create new account{% endblocktrans %}</h2>
+
+<form class="form-horizontal" method="post" action="{% url 'users.views.user_new' %}">
+  {% include "includes/form.pug" %}
+
+  <div class="form-actions">
+    <input type="submit" value="{% trans 'Register' %}" class="btn"/>
+  </div>
+</form>
+
+{% endblock %}
+
