@@ -98,3 +98,6 @@ ENV/
 node_modules
 
 test_app
+
+project/media
+project/static
