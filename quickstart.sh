@@ -166,8 +166,6 @@ if [ ! -f ./project/settings/local_settings.py ] ; then
     fi
 fi
 
-exit
-
 # Change the project/settings.py file if it contains the CHANGE ME string
 if grep -q "CHANGE ME" "project/settings.py"; then
     print_green "Generate secret key"
