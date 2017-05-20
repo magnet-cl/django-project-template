@@ -150,26 +150,26 @@ fi
 
 # create the local_settings file if it does not exist
 if [ ! -f ./project/settings/local_settings.py ] ; then
-    cp project/settings/local_settings.py.default project/settings/local_settings.py
+    cp project/local_settings.py.default project/local_settings.py
 
     if [ INSTALL_POSTGRE ] ; then
         EXP="s/database-name/${PWD##*/}/g"
-        print_green $i|sed -i $EXP project/settings/local_settings.py
+        print_green $i|sed -i $EXP project/local_settings.py
 
         print_green "remember to configure in project/local_setings.py your database"
     else
         EXP="s/postgresql_psycopg2/sqlite3/g"
-        print_green $i|sed -i $EXP project/settings/local_settings.py
+        print_green $i|sed -i $EXP project/local_settings.py
 
         EXP="s/database-name/\/tmp/${PWD##*/}.sql/g"
-        print_green $i|sed -i $EXP project/settings/local_settings.py
+        print_green $i|sed -i $EXP project/local_settings.py
     fi
 fi
 
 exit
 
-# Change the project/settings/__init__.py file it contains the CHANGE ME string
-if grep -q "CHANGE ME" "project/settings/__init__.py"; then
+# Change the project/settings.py file if it contains the CHANGE ME string
+if grep -q "CHANGE ME" "project/settings.py"; then
     print_green "Generate secret key"
     # change the SECRET_KEY value on project settings
     python manage.py generatesecretkey

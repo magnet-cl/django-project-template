@@ -1,0 +1,29 @@
+# -*- coding: utf-8 -*-
+
+LOCAL_DEBUG = True
+
+LOCAL_DATABASES = {
+    'default': {
+        # engines: 'postgresql', 'mysql', 'sqlite3' or 'oracle'
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'database-name',
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT': '',
+    }
+}
+
+LOCAL_EMAIL_SETTINGS = {
+    'EMAIL_SENDER_NAME': "Sender name",
+    'SENDER_EMAIL': 'sender email',
+
+    # Amazon AWS settings
+    'AWS_ACCESS_KEY_ID': 'AWS_ACCESS_KEY_ID',
+    'AWS_SECRET_ACCESS_KEY': 'AWS_SECRET_ACCESS_KEY',
+    'ENABLE_EMAILS': False,
+}
+
+LOCALLY_INSTALLED_APPS = (
+    'debug_toolbar',
+)
