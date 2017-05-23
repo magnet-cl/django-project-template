@@ -14,7 +14,7 @@ from users.models import User
 
 # forms
 from captcha.fields import ReCaptchaField
-from form_utils.forms import BetterModelForm
+from project.forms import BaseModelForm
 
 
 class AuthenticationForm(forms.Form):
@@ -111,7 +111,7 @@ class AdminAuthenticationForm(AuthenticationForm):
         return self.cleaned_data
 
 
-class UserCreationForm(BetterModelForm):
+class UserCreationForm(BaseModelForm):
     """
     A form that creates a user, with no privileges, from the given email and
     password.
@@ -232,7 +232,7 @@ class UserChangeForm(forms.ModelForm):
             f.queryset = f.queryset.select_related('content_type')
 
 
-class UserForm(BetterModelForm):
+class UserForm(BaseModelForm):
 
     class Meta:
         model = User
