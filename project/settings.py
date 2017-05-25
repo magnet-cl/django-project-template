@@ -164,7 +164,7 @@ AUTH_USER_MODEL = 'users.User'
 
 # set the precompilers
 COMPRESS_PRECOMPILERS = (
-    ('text/x-scss', 'node_modules/node-sass/bin/node-sass {infile} {outfile}'),
+    ('text/x-scss', 'django_libsass.SassCompiler'),
 )
 
 COMPRESS_CSS_FILTERS = [
