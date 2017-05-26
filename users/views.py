@@ -32,9 +32,16 @@ def login(request):
     if request.user.is_authenticated():
         return redirect('home')
 
-    def captched_form(req=None, data=None):
-        return CaptchaAuthenticationForm(
-            req, data, initial={'captcha': request.META['REMOTE_ADDR']})
+    def captched_form(*args, **kwargs):
+        if 'initial' in kwargs:
+            initial = kwargs['initial']
+        else:
+            initial = {}
+            kwargs['initial']
+
+        initial['captcha'] = request.META['REMOTE_ADDR']
+
+        return CaptchaAuthenticationForm(*args, **kwargs)
 
     template_name = "accounts/login.pug"
 
@@ -44,7 +51,7 @@ def login(request):
     if request.method == "POST":
         request.session['login_try_count'] = login_try_count + 1
 
-    if login_try_count >= 2:
+    if login_try_count >= 20:
         return django_login_view(request, authentication_form=captched_form,
                                  template_name=template_name)
 

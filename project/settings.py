@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'compressor',
     'project',
+    'captcha',
     'users',
 ]
 
@@ -178,3 +179,10 @@ NPM_FILE_PATTERNS = {
     'bootstrap-sass': ['assets/javascripts/bootstrap.min.js'],
     'jquery': ['dist/jquery.min.js'],
 }
+
+# default keys, replace with somethign your own
+RECAPTCHA_PUBLIC_KEY = 'place recaptcha public key here'
+RECAPTCHA_PRIVATE_KEY = 'place recaptcha private key here'
+NOCAPTCHA = True
+# un comment when we start using only SSL
+# RECAPTCHA_USE_SSL = True
