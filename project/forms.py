@@ -22,9 +22,11 @@ class BaseModelForm(BetterModelForm):
                 field.widget.attrs['class'] = 'datetime-picker form-control'
             elif isinstance(field.widget, forms.widgets.Textarea):
                 field.widget.attrs['class'] = 'form-control'
+            elif isinstance(field.widget, forms.widgets.EmailInput):
+                field.widget.attrs['class'] = 'form-control'
             elif isinstance(field.widget, forms.widgets.TextInput):
                 field.widget.attrs['class'] = 'form-control'
-            elif isinstance(field.widget, forms.widgets.EmailInput):
+            elif isinstance(field.widget, forms.widgets.PasswordInput):
                 field.widget.attrs['class'] = 'form-control'
 
     def hide_field(self, field_name):
