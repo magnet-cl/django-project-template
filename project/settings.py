@@ -32,9 +32,16 @@ ALLOWED_HOSTS = []
 
 SITE_ID = 1
 
+# Local time zone for this installation. Choices can be found here:
+# http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
+# although not all choices may be available on all operating systems.
+# In a Windows environment this must be set to your system time zone.
+TIME_ZONE = 'America/Santiago'
+
 # Application definition
 
 INSTALLED_APPS = [
+    'djangocms_admin_style',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -107,6 +114,15 @@ except:
     )
 else:
     DATABASES.update(LOCAL_DATABASES)
+
+# The email backend to use. For possible shortcuts see django.core.mail.
+# The default is to use the SMTP backend.
+# Third-party backends can be specified by providing a Python path
+# to a module that defines an EmailBackend class.
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 
 # Password validation
@@ -181,8 +197,8 @@ NPM_FILE_PATTERNS = {
 }
 
 # default keys, replace with somethign your own
-RECAPTCHA_PUBLIC_KEY = 'place recaptcha public key here'
-RECAPTCHA_PRIVATE_KEY = 'place recaptcha private key here'
+RECAPTCHA_PUBLIC_KEY = '6LcqFiMUAAAAAF5emCxyuzFJsD2tn2C84MoHc-Va'
+RECAPTCHA_PRIVATE_KEY = '6LcqFiMUAAAAAP12IhWi3v06FjQ0Vk8_vCRfFMMt'
 NOCAPTCHA = True
 # un comment when we start using only SSL
 # RECAPTCHA_USE_SSL = True
