@@ -1,6 +1,20 @@
 # -*- coding: utf-8 -*-
 """ The users app views"""
 
+# django
+from django.contrib import messages
+from django.contrib.auth import views as auth_views
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.tokens import default_token_generator
+from django.core.urlresolvers import reverse
+from django.shortcuts import redirect
+from django.shortcuts import render
+from django.utils.http import base36_to_int
+from django.utils.translation import ugettext_lazy as _
+from django.views.decorators.cache import never_cache
+from django.views.decorators.debug import sensitive_post_parameters
+from django.views.generic.edit import CreateView
+
 # forms
 from users.forms import AuthenticationForm
 from users.forms import CaptchaAuthenticationForm
@@ -10,130 +24,73 @@ from users.forms import UserForm
 # models
 from users.models import User
 
-# django
-from django.contrib import messages
-from django.contrib.auth import logout as django_logout
-from django.contrib.auth import views as auth_views
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.tokens import default_token_generator
-from django.contrib.auth.views import login as django_login_view
-from django.core.urlresolvers import reverse
-from django.shortcuts import redirect
-from django.shortcuts import render
-from django.utils.http import base36_to_int
-from django.utils.translation import ugettext_lazy as _
-from django.views.decorators.cache import never_cache
-from django.views.decorators.debug import sensitive_post_parameters
+# views
 
 
-def login(request):
+class LoginView(auth_views.LoginView):
     """ view that renders the login """
+    template_name = "registration/login.pug"
+    form_class = AuthenticationForm
 
-    if request.user.is_authenticated():
-        return redirect('home')
+    def get_form_class(self):
+        """
+        Returns the form class, if the user has tried too many times to login
+        without success, then it passes on the captcha login
+        """
+        login_try_count = self.request.session.get('login_try_count', 0)
 
-    def captched_form(*args, **kwargs):
-        if 'initial' in kwargs:
-            initial = kwargs['initial']
-        else:
-            initial = {}
-            kwargs['initial']
+        # If the form has been submitted...
+        if self.request.method == "POST":
+            self.request.session['login_try_count'] = login_try_count + 1
 
-        initial['captcha'] = request.META['REMOTE_ADDR']
+        if login_try_count >= 20:
+            return CaptchaAuthenticationForm
 
-        return CaptchaAuthenticationForm(*args, **kwargs)
-
-    template_name = "accounts/login.pug"
-
-    login_try_count = request.session.get('login_try_count', 0)
-
-    # If the form has been submitted...
-    if request.method == "POST":
-        request.session['login_try_count'] = login_try_count + 1
-
-    if login_try_count >= 20:
-        return django_login_view(request, authentication_form=captched_form,
-                                 template_name=template_name)
-
-    return django_login_view(request, authentication_form=AuthenticationForm,
-                             template_name=template_name)
+        return super(LoginView, self).get_form_class()
 
 
-def logout(request):
-    """ view that handles the logout """
-    django_logout(request)
-    return redirect('home')
+class LogoutView(auth_views.LogoutView):
+    next_page = 'home'
 
 
-@login_required
-def password_change(request):
-    """ view that renders the login """
-    # If the form has been submitted...
-    template_name = "accounts/password_change.pug"
-
-    return auth_views.password_change(request, post_change_redirect="/",
-                                      template_name=template_name)
+class PasswordChangeView(auth_views.PasswordChangeView):
+    """ view that renders the password change form """
+    template_name = "registration/password_change_form.pug"
 
 
-def password_reset(request):
+class PasswordResetView(auth_views.PasswordResetView):
     """ view that handles the recover password process """
-
-    template_name = "accounts/password_reset_form.pug"
+    template_name = "registration/password_reset_form.pug"
     email_template_name = "emails/password_reset.html"
 
     success_url = "/accounts/password-email-sent"
 
-    res = auth_views.password_reset(
-        request,
-        post_reset_redirect=success_url,
-        template_name=template_name,
-        email_template_name=email_template_name)
-    return res
 
-
-def password_reset_email_sent(request):
-    messages.add_message(request, messages.INFO,
-                         _("An email has been sent to you. Please check it "
-                           "to reset your password."))
-    return redirect('home')
-
-
-def password_reset_confirm(request, uidb64, token):
+class PasswordResetConfirmView(auth_views.PasswordResetConfirmView):
     """ view that handles the recover password process """
-    template_name = "accounts/password_reset_confirm.html"
+    template_name = "registration/password_reset_confirm.pug"
     success_url = "/accounts/reset/done/"
 
-    return auth_views.password_reset_confirm(request, uidb64, token,
-                                             template_name=template_name,
-                                             post_reset_redirect=success_url)
+
+class PasswordResetCompleteView(auth_views.PasswordResetCompleteView):
+    """ View that shows a success message to the user"""
+    template_name = "registration/password_reset_complete.pug"
 
 
-def password_reset_complete(request):
-    """ view that handles the recover password process """
+class UserCreateView(CreateView):
+    template_name = 'users/create.pug'
+    form_class = CaptchaUserCreationForm
 
-    template_name = "accounts/password_reset_complete.html"
-    return auth_views.password_reset_complete(request,
-                                              template_name=template_name)
+    def form_valid(self, form):
+        form.save(verify_email_address=True, request=self.request)
+        messages.add_message(
+            self.request,
+            messages.INFO,
+            _("An email has been sent to you. Please "
+              "check it to verify your email.")
+        )
 
-
-def user_new(request):
-    if request.method == 'POST':
-        form = CaptchaUserCreationForm(
-            request.POST, initial={'captcha': request.META['REMOTE_ADDR']})
-        if form.is_valid():
-            form.save(verify_email_address=True, request=request)
-            messages.add_message(request, messages.INFO,
-                                 _("An email has been sent to you. Please "
-                                   "check it to verify your email."))
-            return redirect('home')
-    else:
-        form = CaptchaUserCreationForm()
-
-    context = {
-        'form': form,
-    }
-
-    return render(request, 'accounts/user_new.html', context)
+        return redirect('home')
 
 
 @login_required

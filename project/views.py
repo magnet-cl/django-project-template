@@ -7,6 +7,7 @@
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404
+from django.shortcuts import render
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.utils.decorators import method_decorator
@@ -24,8 +25,7 @@ from project.utils import camel_to_underscore
 @login_required
 def index(request):
     """ view that renders a default home"""
-    return render_to_response('index.pug',
-                              context_instance=RequestContext(request))
+    return render(request, 'index.pug')
 
 
 def bad_request_view(request):

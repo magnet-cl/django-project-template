@@ -1,9 +1,9 @@
-{% load i18n %}{% load url from future %}{% autoescape off %}
+{% load i18n %}{% autoescape off %}
 {% blocktrans %}You're receiving this e-mail because you registered a new account at {{ site_name }}.{% endblocktrans %}
 
 {% trans "Please go to the following page to confirm your email address:" %}
 {% block reset_link %}
-{{ protocol }}://{{ domain }}{% url 'users.views.user_new_confirm' uidb36=uid token=token %}
+{{ protocol }}://{{ domain }}{% url 'user_new_confirm' uidb36=uid token=token %}
 {% endblock %}
 
 {% trans "Thanks for using our site!" %}

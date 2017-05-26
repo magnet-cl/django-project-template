@@ -6,37 +6,32 @@ from users import views as users_views
 urlpatterns = [
     url(
         r'^login/$',
-        users_views.login,
+        users_views.LoginView.as_view(),
         name='login'
     ),
     url(
         r'^password-change/$',
-        users_views.password_change,
+        users_views.PasswordChangeView.as_view(),
         name='password_change'
     ),
     url(
         r'^logout/$',
-        users_views.logout,
+        users_views.LogoutView.as_view(),
         name='logout'
     ),
     url(
         r'^register/$',
-        users_views.user_new,
+        users_views.UserCreateView.as_view(),
         name='register',
     ),
     url(
-        r'^password-email-sent/$',
-        users_views.password_reset_email_sent,
-        name='password_email_sent'
-    ),
-    url(
         r'^password-reset/$',
-        users_views.password_reset,
+        users_views.PasswordResetView.as_view(),
         name='password_reset'
     ),
     url(
         r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>.+)/$',
-        users_views.password_reset_confirm,
+        users_views.PasswordResetConfirmView.as_view(),
         name='password_reset_confirm'
     ),
     url(
@@ -47,7 +42,7 @@ urlpatterns = [
     ),
     url(
         r'^reset/done/$',
-        users_views.password_reset_complete,
+        users_views.PasswordResetCompleteView.as_view(),
         name='password_reset_complete'
     ),
     url(

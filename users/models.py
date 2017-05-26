@@ -39,17 +39,20 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
 
     # required fields
     email = models.EmailField(
-        _('email address'), unique=True, db_index=True,
-        help_text=_("An email address that identifies this user")
+        _('email address'),
+        unique=True,
+        db_index=True,
     )
     # optional fields
     first_name = models.CharField(
-        _('first name'), max_length=30, blank=True,
-        help_text=_("The first name of this user"),
+        _('first name'),
+        max_length=30,
+        blank=True,
     )
     last_name = models.CharField(
-        _('last name'), max_length=30, blank=True,
-        help_text=_("The last name of this user"),
+        _('last name'),
+        max_length=30,
+        blank=True,
     )
     is_staff = models.BooleanField(
         _('staff status'), default=False,

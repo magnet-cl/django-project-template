@@ -1,4 +1,4 @@
-extends "base.pug"
+extends "form.pug"
 
 - load i18n static
 
@@ -19,19 +19,23 @@ block content
               .alert.alert-error {{ error }}
 
           .form-group(class="{% if form.email.errors %}has-error{% endif %}")
-            label.control-label.col-lg-2.required(for='id_email') 
+            label.control-label.col-sm-2.required(for='id_email') 
               | {% trans 'E-mail:' %}
 
-            .col-lg-10
-              input#id_email.form-control(name='email', type='text',
-                placeholder="{% trans 'E-mail' %}")
+            .col-sm-10
+              input#id_email.form-control(
+                name='email',
+                type='text',
+                value="{{request.POST.email}}",
+                placeholder="{% trans 'E-mail' %}"
+              )
               span.help-inline.help-block {{ form.email.errors|striptags }}
 
           .form-group(class="{% if form.password.errors %}has-error{% endif %}")
-            label.control-label.col-lg-2.required(for='id_password')
+            label.control-label.col-sm-2.required(for='id_password')
               | {% trans 'Password' %}
 
-            .col-lg-10
+            .col-sm-10
               input#id_password.form-control(name='password', type='password',
                 placeholder="{% trans 'Password' %}")
               span.help-inline.help-block {{ form.password.errors|striptags }}
@@ -40,17 +44,19 @@ block content
             input(type='hidden', name='next', value='{{ next }}')
 
           - if form.captcha
-            label.control-label.required(for='id_captcha')
-              | {{ form.captcha.label }}
-            {{ form.captcha }}
-            span.help-inline.help-block {{ form.captcha.errors|striptags }}
+            .form-group(class="{% if form.captcha.errors %}has-error{% endif %}")
+              label.control-label.col-sm-2.required(for='id_captcha')
+                | {{ form.captcha.label }}
+              .col-sm-10
+                {{ form.captcha }}
+                span.help-inline.help-block {{ form.captcha.errors|striptags }}
 
           .form-group
-            .col-md-offset-2.col-lg-10
+            .col-md-offset-2.col-sm-10
               a(href="{% url 'password_reset' %}")
                 | {% trans 'Forgotten your password?' %}
           .form-group
-            .col-md-offset-2.col-lg-10
+            .col-md-offset-2.col-sm-10
               a(href="{% url 'register' %}")
                 | {% trans 'New? Register here.' %}
         .form-group
