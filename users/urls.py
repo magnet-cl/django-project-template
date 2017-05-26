@@ -43,7 +43,7 @@ urlpatterns = [
     url(
         r'^reset/done/$',
         users_views.PasswordResetCompleteView.as_view(),
-        name='password_reset_complete'
+        name='password_reset_done'
     ),
     url(
         r'^edit/$',

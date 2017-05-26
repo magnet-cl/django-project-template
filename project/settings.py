@@ -114,9 +114,9 @@ else:
 # Third-party backends can be specified by providing a Python path
 # to a module that defines an EmailBackend class.
 if DEBUG:
-    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-else:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 
 # Password validation
