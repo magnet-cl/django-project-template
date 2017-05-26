@@ -107,7 +107,7 @@ def user_edit(request):
         'form': form,
     }
 
-    return render(request, 'accounts/edit.pug', context)
+    return render(request, 'users/edit.pug', context)
 
 
 @login_required
@@ -115,7 +115,7 @@ def user_profile(request):
     context = {
     }
 
-    return render(request, 'accounts/detail.pug', context)
+    return render(request, 'users/detail.pug', context)
 
 
 # Doesn't need csrf_protect since no-one can guess the URL
