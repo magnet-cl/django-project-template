@@ -7,7 +7,7 @@ doctype 5
 html(lang="es")
   head
     meta(charset="utf-8")
-    title Project {% block title %} {%endblock%}
+    title Project {% block title %} {{title}} {%endblock%}
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
     meta(name="description", content="")
     meta(name="author", content="http://magnet.cl")
@@ -49,6 +49,13 @@ html(lang="es")
           {% endfor %}
           {% endif %}
       div.container
+        ol.breadcrumb
+          li
+            a(href="{% url 'home' %}") 
+              {% trans 'Home' %}
+          block breadcrumbs
+        block content_title 
+          h1 {{ title }}
         block content
 
       // Javascript Placed at the end of the document so the pages load faster
@@ -65,7 +72,7 @@ html(lang="es")
 
       {% compress js %}
       if debug
-        script(src="{% static 'dist/jquery.min.js' %}")
+        script(src="{% static 'jquery/dist/jquery.min.js' %}")
         script(src="{% static 'bootstrap-sass/assets/javascripts/bootstrap.min.js' %}")
       {% endcompress %}
 
