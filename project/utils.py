@@ -18,6 +18,7 @@ def today():
     return timezone.localtime(timezone.now()).date()
 
 
+# BROKEN
 def grouper(iterable, n):
     args = [iter(iterable)] * n
     return ([e for e in t if e is not None] for t in itertools.izip_longest(
@@ -61,6 +62,7 @@ def strip_accents(s):
     )
 
 
+# BROKEN
 def tz_datetime(s, *args, **kwargs):
     """
     Creates a datetime.datetime object but with the current timezone
