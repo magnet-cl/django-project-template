@@ -7,45 +7,48 @@ block uncompressible_javascripts
 
 block stylesheets
 
+block title 
+  {{ title }}
+
+block content_title 
+  h1 {{ title }}
+
 block content
-  div.content.clear_down
-    h1.page-header
-        block form_title
-    block content_header
-    div
-      {% if form.errors %}
-      {% for error in form.non_field_errors %}
-      div.alert.alert-error
-        | {{ error }}
-      {% endfor %}
-      {% endif %}
+  {{content}}
+  block content_header
+  div
+    {% if form.errors %}
+    {% for error in form.non_field_errors %}
+    div.alert.alert-error
+      | {{ error }}
+    {% endfor %}
+    {% endif %}
 
-    div
-      form.model-form.form-horizontal(method="post",
-        enctype="multipart/form-data", role="form", action="{{action}}")
-        block top_fields
-        block form_fields
-          {% include "includes/form.pug"%}
-        block bottom_fields
+  div
+    form.model-form(method="post",
+      enctype="multipart/form-data", role="form", action="{{action}}")
+      block top_fields
+      block form_fields
+        {% include "includes/form.pug"%}
+      block bottom_fields
 
-        {{ formset.management_form }}
+      {{ formset.management_form }}
 
-        if formset
-          for form in formset
-            div
-              {% include "includes/form.pug" with form=form%}
-            hr
-        
-
-        - if not hide_buttons
-          div.form-group
-            div.col-md-offset-3.col-md-6.pull-right
-              .btn-group
+      if formset
+        for form in formset
+          div
+            {% include "includes/form.pug" with form=form%}
+          hr
+      
+      - if not hide_buttons
+        div.form-group
+          div.col-md-offset-3.col-md-6.pull-right
+            .btn-group
+              block buttons
                 button.btn.btn-primary.js-submit-button(type="submit")
                   | {% block submit_button_value%}Guardar{% endblock%}
-                block extra_buttons
                 a.btn.btn-danger.js-cancel-btn(
                   href="{% block cancel_button_url %}{{cancel_url}}{% endblock %}")
                   | {% block cancel_button_value%}Cancelar{% endblock%}
 
-    block extra_content
+  block content_footer
