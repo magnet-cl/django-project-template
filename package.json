@@ -1,13 +1,13 @@
 {
   "name": "django-project-template-py3",
   "version": "0.1.0",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/magnet-cl/django-project-template-py3"
-  },
+  "repository": "https://github.com/magnet-cl/django-project-template-py3",
   "author": "Magnet S.P.A.",
   "dependencies": {
-    "node-sass": "^4.5.3",
-    "pug": "^2.0.0-rc.1"
-  }
+    "bootstrap-sass": "^3.3.7",
+    "jquery": "^3.2.1"
+  },
+  "description": "A base for a django project on python 3",
+  "main": "index.js",
+  "license": "MIT"
 }

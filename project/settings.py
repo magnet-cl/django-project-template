@@ -148,7 +148,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATIC_ROOT = os.path.join(PROJECT_DIR, 'static/')
+STATIC_ROOT = os.path.join(PROJECT_DIR, 'public/')
 STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(PROJECT_DIR, 'media/')
@@ -158,6 +158,7 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'compressor.finders.CompressorFinder',
+    'npm.finders.NpmFinder',
 )
 
 AUTH_USER_MODEL = 'users.User'
@@ -171,3 +172,9 @@ COMPRESS_CSS_FILTERS = [
     'compressor.filters.css_default.CssAbsoluteFilter',
     'compressor.filters.cssmin.CSSMinFilter',
 ]
+
+# NPM
+NPM_FILE_PATTERNS = {
+    'bootstrap-sass': ['assets/javascripts/bootstrap.min.js'],
+    'jquery': ['dist/jquery.min.js'],
+}
