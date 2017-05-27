@@ -12,8 +12,6 @@ block content
         {% csrf_token %}
 
         .form-signin-inner
-          h2 {% blocktrans %}Login{% endblocktrans %}
-
           - if form.non_field_errors
             - for error in form.non_field_errors
               .alert.alert-error {{ error }}

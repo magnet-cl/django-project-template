@@ -31,6 +31,13 @@ class LoginView(auth_views.LoginView):
     """ view that renders the login """
     template_name = "registration/login.pug"
     form_class = AuthenticationForm
+    title = _('Login')
+
+    def get_context_data(self, **kwargs):
+        context = super(LoginView, self).get_context_data(**kwargs)
+        context['title'] = self.title
+
+        return context
 
     def get_form_class(self):
         """
