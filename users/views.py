@@ -77,6 +77,13 @@ class PasswordResetCompleteView(auth_views.PasswordResetCompleteView):
 class UserCreateView(CreateView):
     template_name = 'users/create.pug'
     form_class = CaptchaUserCreationForm
+    title = _('Registration')
+
+    def get_context_data(self, **kwargs):
+        context = super(UserCreateView, self).get_context_data(**kwargs)
+        context['title'] = self.title
+
+        return context
 
     def form_valid(self, form):
         form.save(verify_email_address=True, request=self.request)
@@ -113,6 +120,7 @@ def user_edit(request):
 @login_required
 def user_profile(request):
     context = {
+        'title': _('My profile')
     }
 
     return render(request, 'users/detail.pug', context)

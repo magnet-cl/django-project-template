@@ -11,6 +11,7 @@ from django.shortcuts import render
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.utils.decorators import method_decorator
+from django.utils.translation import ugettext_lazy as _
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 from django.views.generic.edit import DeleteView
@@ -59,6 +60,13 @@ class PermissionRequiredMixin:
 
 class BaseDetailView(DetailView, PermissionRequiredMixin):
 
+    def get_context_data(self, **kwargs):
+        context = super(BaseDetailView, self).get_context_data(**kwargs)
+
+        context['title'] = self.object.__unicode__()
+
+        return context
+
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         self.check_permission_required()
@@ -66,6 +74,14 @@ class BaseDetailView(DetailView, PermissionRequiredMixin):
 
 
 class BaseCreateView(CreateView, PermissionRequiredMixin):
+
+    def get_context_data(self, **kwargs):
+        context = super(BaseCreateView, self).get_context_data(**kwargs)
+
+        context['title'] = _('Create %s') % self.model.verbose_name
+
+        return context
+
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         self.check_permission_required()
@@ -106,6 +122,7 @@ class BaseSubModelCreateView(CreateView, PermissionRequiredMixin):
         )
 
         context[model_underscore_name] = obj
+        context['title'] = _('Create %s') % self.model.verbose_name
 
         return context
 
@@ -128,6 +145,7 @@ class BaseListView(ListView, PermissionRequiredMixin):
         context = super(BaseListView, self).get_context_data(**kwargs)
         context['clean_query_string'] = clean_query_string(self.request)
         context['q'] = self.request.GET.get('q')
+        context['title'] = _('%s List') % self.model.verbose_name
         return context
 
     @method_decorator(login_required)
@@ -147,6 +165,7 @@ class BaseUpdateView(UpdateView, PermissionRequiredMixin):
         context = super(BaseUpdateView, self).get_context_data(**kwargs)
 
         context['cancel_url'] = self.object.get_absolute_url()
+        context['title'] = _('Update %s') % self.object.__unicode__()
 
         return context
 
@@ -156,3 +175,10 @@ class BaseDeleteView(DeleteView, PermissionRequiredMixin):
     def dispatch(self, *args, **kwargs):
         self.check_permission_required()
         return super(BaseDeleteView, self).dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(BaseDeleteView, self).get_context_data(**kwargs)
+
+        context['title'] = _('Delete %s') % self.object.__unicode__()
+
+        return context

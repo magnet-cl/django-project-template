@@ -2,21 +2,9 @@ extends base.pug
 
 block content
   div.detail
-    div.header.row.well
-      div.col-md-9
-        h1 Usuario: {{user.first_name}} {{user.last_name}}
-        form.js-status-form(action="", method="post")
-          {% csrf_token %}
-          input.js-reason-input(type="hidden", name="reason")
-
-          div.btn-group
-            a.btn.btn-primary(href="{% url 'user_edit' %}")
-              | Editar
-
     div.row
       div.col-md-7
-        h3 Datos personales
-        table.table.table-striped.table-hover
+        table.table.table-striped.table-hover.table-bordered
           tr
             th Nombre
             td {{user.first_name}}
@@ -24,17 +12,9 @@ block content
             th Apellido
             td {{user.last_name}}
           tr
-            th RUT
-            td {{user.rut}}
-          tr
-            th Sexo
-            td {{user.get_gender_display}}
-          tr
-            th Fecha de nacimiento
-            td {{user.birth_date}}
-          tr
-            th Dirección
-            td {{user.address}}
-          tr
             th Correo Electrónico
             td {{user.email}}
+        div.text-right
+          .btn-group
+            a.btn.btn-primary(href="{% url 'user_edit' %}")
+              | Editar
