@@ -1,4 +1,4 @@
-Django==1.11.1
+Django==1.11.2
 django-compressor==2.1.1
 django-debug-toolbar==1.8
 django-form-utils==1.0.3
