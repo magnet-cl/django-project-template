@@ -100,4 +100,4 @@ node_modules
 test_app
 
 project/media
-project/public
+project/static

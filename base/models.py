@@ -14,9 +14,9 @@ from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
 # base
-from project import utils
-from project.managers import BaseManager
-from project.serializers import ModelEncoder
+from base import utils
+from base.managers import BaseManager
+from base.serializers import ModelEncoder
 
 
 # public methods

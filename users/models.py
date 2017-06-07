@@ -21,7 +21,7 @@ from django.utils.translation import ugettext_noop
 from users.managers import UserManager
 
 # models
-from project.models import BaseModel
+from base.models import BaseModel
 
 # messaging
 from messaging import email_manager
@@ -72,12 +72,17 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
     # Use UserManager to get the create_user method, etc.
     objects = UserManager()
 
+    EMAIL_FIELD = 'email'
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name']
 
     class Meta:
         verbose_name = _('user')
         verbose_name_plural = _('users')
+
+    def clean(self):
+        super(User, self).clean()
+        self.email = self.__class__.objects.normalize_email(self.email)
 
     # public methods
     def get_full_name(self):

@@ -15,7 +15,7 @@ from users.models import User
 
 # forms
 from captcha.fields import ReCaptchaField
-from project.forms import BaseModelForm
+from base.forms import BaseModelForm
 
 
 class AuthenticationForm(forms.Form):

@@ -17,10 +17,10 @@ from django.conf.urls import include
 from django.conf.urls import url
 from django.contrib import admin
 
-from project import views as project_views
+from base import views as base_views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/', include('users.urls')),
-    url(r'^$', project_views.index, name='home'),
+    url(r'^$', base_views.index, name='home'),
 ]

@@ -19,8 +19,8 @@ from django.views.generic.edit import UpdateView
 from django.views.generic.list import ListView
 
 # utils
-from project.view_utils import clean_query_string
-from project.utils import camel_to_underscore
+from base.view_utils import clean_query_string
+from base.utils import camel_to_underscore
 
 
 @login_required
