@@ -140,12 +140,6 @@ if  $INSTALL_PIP ; then
 
     # install pip requirements in the virtual environment
     .env/bin/pip install --requirement requirements.txt
-
-    if [[ "$INSTALL_POSTGRE" ]]
-    then
-        pip install psycopg2
-    fi
-
 fi
 
 # create the local_settings file if it does not exist
