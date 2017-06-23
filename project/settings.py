@@ -19,6 +19,11 @@ except:
 else:
     DEBUG = LOCAL_DEBUG
 
+if DEBUG:
+    env = 'development'
+else:
+    env = 'production'
+
 PROJECT_DIR = os.path.dirname(__file__)
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
@@ -97,7 +102,6 @@ DATABASES = {}
 try:
     from .local_settings import LOCAL_DATABASES
 except:
-    print("fail")
     DATABASES.update(
         {
             'default': {
@@ -200,3 +204,42 @@ RECAPTCHA_PRIVATE_KEY = '6LcqFiMUAAAAAP12IhWi3v06FjQ0Vk8_vCRfFMMt'
 NOCAPTCHA = True
 # un comment when we start using only SSL
 # RECAPTCHA_USE_SSL = True
+#
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
+        }
+    },
+    'formatters': {
+        'standard': {
+            'format': (
+                '%(asctime)s %(levelname)s: file %(filename)s line %(lineno)d '
+                '%(message)s'
+            )
+        },
+    },
+    'handlers': {
+        'mail_admins': {
+            'class': 'django.utils.log.AdminEmailHandler',
+            'filters': ['require_debug_false'],
+            'formatter': 'standard',
+            'level': 'ERROR',
+        },
+        'file': {
+            'class': 'logging.FileHandler',
+            'filename': '{}/logs/{}/error.log'.format(BASE_DIR, env),
+            'formatter': 'standard',
+            'level': 'ERROR',
+        },
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['mail_admins', 'file'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    }
+}
