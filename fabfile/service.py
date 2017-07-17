@@ -1,5 +1,6 @@
 from fabric.api import env
 from fabric.api import sudo
+from fabric.api import task
 from fabric.contrib.files import upload_template
 
 
@@ -29,3 +30,9 @@ def add_systemd_service(filename, context):
     # set root as file owner
     cmd = 'chown root:root {}'.format(destination)
     sudo(cmd)
+
+
+@task
+def logs():
+    """ Shows systemd django service log """
+    sudo('journalctl -u django-{}-{}.service'.format(env.prefix, env.branch))
