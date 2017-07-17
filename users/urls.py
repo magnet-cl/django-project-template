@@ -15,6 +15,11 @@ urlpatterns = [
         name='password_change'
     ),
     url(
+        r'^password_change/done/$',
+        users_views.PasswordChangeDoneView.as_view(),
+        name='password_change_done'
+    ),
+    url(
         r'^logout/$',
         users_views.LogoutView.as_view(),
         name='logout'
@@ -43,6 +48,11 @@ urlpatterns = [
     url(
         r'^reset/done/$',
         users_views.PasswordResetCompleteView.as_view(),
+        name='password_reset_complete'
+    ),
+    url(
+        r'^password-reset/done/$',
+        users_views.PasswordResetDoneView.as_view(),
         name='password_reset_done'
     ),
     url(

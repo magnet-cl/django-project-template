@@ -65,6 +65,10 @@ class PasswordChangeView(auth_views.PasswordChangeView):
     template_name = "registration/password_change_form.pug"
 
 
+class PasswordChangeDoneView(auth_views.PasswordChangeDoneView):
+    template_name = 'registration/password_change_done.pug'
+
+
 class PasswordResetView(auth_views.PasswordResetView):
     """ view that handles the recover password process """
     template_name = "registration/password_reset_form.pug"
@@ -74,6 +78,11 @@ class PasswordResetView(auth_views.PasswordResetView):
 class PasswordResetConfirmView(auth_views.PasswordResetConfirmView):
     """ view that handles the recover password process """
     template_name = "registration/password_reset_confirm.pug"
+
+
+class PasswordResetDoneView(auth_views.PasswordResetDoneView):
+    """ View that shows a success message to the user"""
+    template_name = "registration/password_reset_done.pug"
 
 
 class PasswordResetCompleteView(auth_views.PasswordResetCompleteView):
