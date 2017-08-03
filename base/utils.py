@@ -72,8 +72,11 @@ def tz_datetime(s, *args, **kwargs):
     return timezone.make_aware(naive_dt, tz)
 
 
-def random_string(length=6, chars=None):
+def random_string(length=6, chars=None, include_spaces=True):
     if chars is None:
         chars = string.ascii_uppercase + string.digits
+
+    if include_spaces:
+        chars += ' '
 
     return ''.join(random.choice(chars) for x in range(length))
