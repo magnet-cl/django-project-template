@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 # standard library
-from threading import Thread
 
 # django
 from django.conf import settings
@@ -11,9 +10,9 @@ from django.template.loader import get_template
 from django.utils.translation import ugettext_lazy as _
 
 
-def _send_emails(emails, template_name, subject, sender=None,
-                 context=None, fail_silently=False,
-                 attachments=None, headers=None):
+def send_emails(emails, template_name, subject, sender=None,
+                context=None, fail_silently=False,
+                attachments=None, headers=None):
     """ Sends an email to a list of emails using a given template name """
 
     if context is None:
@@ -21,9 +20,6 @@ def _send_emails(emails, template_name, subject, sender=None,
 
     if attachments is None:
         attachments = []
-
-    if not settings.ENABLE_EMAILS:
-        return
 
     text_template = get_template("emails/%s.txt" % template_name)
     html_template = get_template("emails/%s.html" % template_name)
@@ -53,17 +49,6 @@ def _send_emails(emails, template_name, subject, sender=None,
         return
 
     msg.send(fail_silently=fail_silently)
-
-
-def send_emails(**kwargs):
-    """
-    Sends an email to a list of emails using a given template name
-    """
-    if settings.TEST:
-        _send_emails(**kwargs)
-    else:
-        t = Thread(target=_send_emails, kwargs=kwargs)
-        t.start()
 
 
 def send_example_email(email):
