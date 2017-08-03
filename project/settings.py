@@ -12,12 +12,9 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 
-try:
-    from .local_settings import LOCAL_DEBUG
-except:
-    DEBUG = True
-else:
-    DEBUG = LOCAL_DEBUG
+from project.local_settings import DEBUG, LOCAL_DATABASES
+from project.local_settings import LOCALLY_INSTALLED_APPS
+from project.local_settings import ENABLE_EMAILS
 
 if DEBUG:
     env = 'development'
@@ -53,6 +50,9 @@ INSTALLED_APPS = [
     'captcha',
     'users',
 ]
+
+# Set the apps that are installed locally
+INSTALLED_APPS = INSTALLED_APPS + LOCALLY_INSTALLED_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -97,27 +97,14 @@ WSGI_APPLICATION = 'project.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
-
 DATABASES = {}
-try:
-    from .local_settings import LOCAL_DATABASES
-except:
-    DATABASES.update(
-        {
-            'default': {
-                'ENGINE': 'django.db.backends.sqlite3',
-                'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-            }
-        }
-    )
-else:
-    DATABASES.update(LOCAL_DATABASES)
+DATABASES.update(LOCAL_DATABASES)
 
 # The email backend to use. For possible shortcuts see django.core.mail.
 # The default is to use the SMTP backend.
 # Third-party backends can be specified by providing a Python path
 # to a module that defines an EmailBackend class.
-if DEBUG:
+if DEBUG or ENABLE_EMAILS:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 else:
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

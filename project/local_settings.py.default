@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
-LOCAL_DEBUG = True
+DEBUG = True
 
+# Database
+# https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 LOCAL_DATABASES = {
     'default': {
         # engines: 'postgresql', 'mysql', 'sqlite3' or 'oracle'
@@ -14,16 +16,12 @@ LOCAL_DATABASES = {
     }
 }
 
-LOCAL_EMAIL_SETTINGS = {
-    'EMAIL_SENDER_NAME': "Sender name",
-    'SENDER_EMAIL': 'sender email',
+if DEBUG:
+    # only if we are on debug should we have locally installed apps
+    LOCALLY_INSTALLED_APPS = [
+        'debug_toolbar',
+    ]
+else:
+    LOCALLY_INSTALLED_APPS = []
 
-    # Amazon AWS settings
-    'AWS_ACCESS_KEY_ID': 'AWS_ACCESS_KEY_ID',
-    'AWS_SECRET_ACCESS_KEY': 'AWS_SECRET_ACCESS_KEY',
-    'ENABLE_EMAILS': False,
-}
-
-LOCALLY_INSTALLED_APPS = (
-    'debug_toolbar',
-)
+ENABLE_EMAILS = True
