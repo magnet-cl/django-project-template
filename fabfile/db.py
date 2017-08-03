@@ -145,7 +145,7 @@ def export_db(compressed_file=None):
     # env.host replaced with staging host
     with settings(host_string=staging_host):
         print(green('get database name on destination sever'))
-        db_name = get_db_data(setting='NAME')
+        db_name = get_db_data(root_dir=staging_root_dir, setting='NAME')
 
         print(green('Uploading file'))
         # upload the compressed file
