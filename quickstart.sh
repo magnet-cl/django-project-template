@@ -152,7 +152,7 @@ if [ ! -f ./project/settings/local_settings.py ] ; then
         EXP="s/database-name/${PWD##*/}/g"
         echo $i|sed -i '' $EXP project/local_settings.py
 
-        echo "remember to configure in project/local_setings.py your database"
+        print_green "remember to configure in project/local_setings.py your database"
     else
         EXP="s/postgresql_psycopg2/sqlite3/g"
         echo $i|sed -i '' $EXP project/local_settings.py
