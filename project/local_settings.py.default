@@ -16,12 +16,7 @@ LOCAL_DATABASES = {
     }
 }
 
-if DEBUG:
-    # only if we are on debug should we have locally installed apps
-    LOCALLY_INSTALLED_APPS = [
-        'debug_toolbar',
-    ]
-else:
-    LOCALLY_INSTALLED_APPS = []
+LOCALLY_INSTALLED_APPS = [
+]
 
 ENABLE_EMAILS = True

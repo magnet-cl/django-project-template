@@ -21,6 +21,21 @@ if DEBUG:
 else:
     env = 'production'
 
+
+# People who get code error notifications.
+# In the format [
+#     ('Full Name', 'email@example.com'),
+#     ('Full Name', 'anotheremail@example.com'),
+# ]
+ADMINS = []
+
+
+# List of IP addresses, as strings, that:
+#   * See debug comments, when DEBUG is true
+#   * Receive x-headers
+INTERNAL_IPS = []
+
+
 PROJECT_DIR = os.path.dirname(__file__)
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
@@ -51,8 +66,14 @@ INSTALLED_APPS = [
     'users',
 ]
 
-# Set the apps that are installed locally
-INSTALLED_APPS = INSTALLED_APPS + LOCALLY_INSTALLED_APPS
+if DEBUG:
+    INSTALLED_APPS += [
+        'debug_toolbar',
+    ]
+
+    # Set the apps that are installed locally
+    # only if we are on debug should we have locally installed apps
+    INSTALLED_APPS = INSTALLED_APPS + LOCALLY_INSTALLED_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -63,6 +84,11 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+if DEBUG:
+    MIDDLEWARE += [
+        'debug_toolbar.middleware.DebugToolbarMiddleware',
+    ]
 
 ROOT_URLCONF = 'project.urls'
 
