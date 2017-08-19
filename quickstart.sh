@@ -123,8 +123,10 @@ if  $INSTALL_SYSTEM_DEPENDENCIES ; then
         fi
     fi
 
-    print_green "set a new virtual environment"
-    virtualenv -p python3 .env
+    if [ ! -d ".env" ]; then
+        print_green "set a new virtual environment"
+        virtualenv -p python3 .env
+    fi
 fi
 if  $INSTALL_PIP ; then
     print_green "Installing pip requirements on requirement.txt"
