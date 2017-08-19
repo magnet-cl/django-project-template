@@ -3,7 +3,8 @@
 # standard library
 
 # django
-{{ unicode_literals }}from django.db import models
+{{ unicode_literals }}from django.core.urlresolvers import reverse
+from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 # models
@@ -32,3 +33,8 @@ class {{camel_case_app_name}}(BaseModel):
     def __unicode__(self):
         # TODO this is an example unicode return, change it
         return self.name
+
+    def get_absolute_url(self):
+        """ Returns the canonical URL for the {{app_name|slice:":-1"}} object """
+        # TODO this is an example, change it
+        return reverse('{{app_name|slice:":-1"}}_detail', args=(self.pk,))
