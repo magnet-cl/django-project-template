@@ -14,7 +14,7 @@ from users.models import User
 
 class {{camel_case_app_name}}(BaseModel):
     # foreign keys
-    user = models.CharField(
+    user = models.ForeignKey(
         User,
         verbose_name=_('user'),
     )
