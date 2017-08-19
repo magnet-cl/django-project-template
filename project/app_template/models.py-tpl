@@ -1,0 +1,34 @@
+# -*- coding: utf-8 -*-
+""" Models for the {{app_name}} application. """
+# standard library
+
+# django
+{{ unicode_literals }}from django.db import models
+from django.utils.translation import ugettext_lazy as _
+
+# models
+from base.models import BaseModel
+from users.models import User
+
+
+class {{camel_case_app_name}}(BaseModel):
+    # foreign keys
+    user = models.CharField(
+        User,
+        verbose_name=_('user'),
+    )
+    # required fields
+    name = models.CharField(
+        _('name'),
+        max_length=30,
+        blank=True,
+    )
+    # optional fields
+
+    class Meta:
+        verbose_name = _('{{app_name|slice:":-1"}}')
+        verbose_name_plural = _('{{app_name}}')
+
+    def __unicode__(self):
+        # TODO this is an example unicode return, change it
+        return self.name

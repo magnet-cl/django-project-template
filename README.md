@@ -16,3 +16,8 @@ Push to your own repo
 * `git push origin master`
 
 Now you have your own django project in your repository.
+
+## Start new app
+Use the custom app template to create your apps:
+
+    python manage.py startapp --template=project/app_template answers
