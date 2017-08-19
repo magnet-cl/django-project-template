@@ -148,15 +148,15 @@ if [ ! -f ./project/settings/local_settings.py ] ; then
 
     if [ INSTALL_POSTGRE ] ; then
         EXP="s/database-name/${PWD##*/}/g"
-        print_green $i|sed -i $EXP project/local_settings.py
+        echo $i|sed -i '' $EXP project/local_settings.py
 
-        print_green "remember to configure in project/local_setings.py your database"
+        echo "remember to configure in project/local_setings.py your database"
     else
         EXP="s/postgresql_psycopg2/sqlite3/g"
-        print_green $i|sed -i $EXP project/local_settings.py
+        echo $i|sed -i '' $EXP project/local_settings.py
 
         EXP="s/database-name/\/tmp/${PWD##*/}.sql/g"
-        print_green $i|sed -i $EXP project/local_settings.py
+        echo $i|sed -i '' $EXP project/local_settings.py
     fi
 fi
 
@@ -171,9 +171,9 @@ fi
 if  $INSTALL_NPM ; then
     # package.json modification
     EXP="s/NAME/${PWD##*/}/g"
-    print_green $i|sed -i $EXP package.json
+    print_green $i|sed -i '' $EXP package.json
     EXP="s/HOMEPAGE/https:\/\/bitbucket.org\/magnet-cl\/${PWD##*/}/g"
-    print_green $i|sed -i $EXP package.json
+    print_green $i|sed -i '' $EXP package.json
 
     npm install
 fi
