@@ -28,4 +28,4 @@ block content
             a(href="{% url 'MODEL_delete' MODEL.id %}")
               i.fa.fa-times
 
-  {% include 'includes/pagination.jade' with objects=object_list %}
+  {% include 'includes/pagination.pug' with objects=object_list %}
