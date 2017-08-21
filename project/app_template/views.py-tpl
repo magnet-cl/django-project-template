@@ -24,6 +24,7 @@ class {{camel_case_app_name|slice:":-1"}}ListView(BaseListView):
     """
     model = {{camel_case_app_name|slice:":-1"}}
     template_name = '{{app_name}}/list.pug'
+    permission_required = '{{app_name}}.view_{{app_name|slice:":-1"}}'
 
 
 class {{camel_case_app_name|slice:":-1"}}CreateView(BaseCreateView):
@@ -33,7 +34,7 @@ class {{camel_case_app_name|slice:":-1"}}CreateView(BaseCreateView):
     model = {{camel_case_app_name|slice:":-1"}}
     form_class = {{camel_case_app_name|slice:":-1"}}Form
     template_name = '{{app_name}}/create.pug'
-    permission_required = 'add_{{app_name|slice:":-1"}}'
+    permission_required = '{{app_name}}.add_{{app_name|slice:":-1"}}'
 
 
 class {{camel_case_app_name|slice:":-1"}}DetailView(BaseDetailView):
@@ -42,6 +43,7 @@ class {{camel_case_app_name|slice:":-1"}}DetailView(BaseDetailView):
     """
     model = {{camel_case_app_name|slice:":-1"}}
     template_name = '{{app_name}}/detail.pug'
+    permission_required = '{{app_name}}.view_{{app_name|slice:":-1"}}'
 
 
 class {{camel_case_app_name|slice:":-1"}}UpdateView(BaseUpdateView):
@@ -51,7 +53,7 @@ class {{camel_case_app_name|slice:":-1"}}UpdateView(BaseUpdateView):
     model = {{camel_case_app_name|slice:":-1"}}
     form_class = {{camel_case_app_name|slice:":-1"}}Form
     template_name = '{{app_name}}/update.pug'
-    permission_required = 'change_{{app_name|slice:":-1"}}'
+    permission_required = '{{app_name}}.change_{{app_name|slice:":-1"}}'
 
 
 class {{camel_case_app_name|slice:":-1"}}DeleteView(BaseDeleteView):
@@ -59,5 +61,5 @@ class {{camel_case_app_name|slice:":-1"}}DeleteView(BaseDeleteView):
     A view for deleting a single {{app_name}}
     """
     model = {{camel_case_app_name|slice:":-1"}}
-    permission_required = 'delete_{{app_name|slice:":-1"}}'
+    permission_required = '{{app_name}}.delete_{{app_name|slice:":-1"}}'
     template_name = '{{app_name}}/delete.pug'
