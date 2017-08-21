@@ -23,7 +23,7 @@ class {{camel_case_app_name|slice:":-1"}}ListView(BaseListView):
     View for displaying a list of {{app_name}}.
     """
     model = {{camel_case_app_name|slice:":-1"}}
-    template_name = '{{app_name}}/list.jade'
+    template_name = '{{app_name}}/list.pug'
 
 
 class {{camel_case_app_name|slice:":-1"}}CreateView(BaseCreateView):
@@ -32,7 +32,7 @@ class {{camel_case_app_name|slice:":-1"}}CreateView(BaseCreateView):
     """
     model = {{camel_case_app_name|slice:":-1"}}
     form_class = {{camel_case_app_name|slice:":-1"}}Form
-    template_name = '{{app_name}}/create.jade'
+    template_name = '{{app_name}}/create.pug'
     permission_required = 'add_{{app_name|slice:":-1"}}'
 
 
@@ -41,7 +41,7 @@ class {{camel_case_app_name|slice:":-1"}}DetailView(BaseDetailView):
     A view for displaying a single {{app_name}}
     """
     model = {{camel_case_app_name|slice:":-1"}}
-    template_name = '{{app_name}}/detail.jade'
+    template_name = '{{app_name}}/detail.pug'
 
 
 class {{camel_case_app_name|slice:":-1"}}UpdateView(BaseUpdateView):
@@ -50,7 +50,7 @@ class {{camel_case_app_name|slice:":-1"}}UpdateView(BaseUpdateView):
     """
     model = {{camel_case_app_name|slice:":-1"}}
     form_class = {{camel_case_app_name|slice:":-1"}}Form
-    template_name = '{{app_name}}/update.jade'
+    template_name = '{{app_name}}/update.pug'
     permission_required = 'change_{{app_name|slice:":-1"}}'
 
 
@@ -60,4 +60,4 @@ class {{camel_case_app_name|slice:":-1"}}DeleteView(BaseDeleteView):
     """
     model = {{camel_case_app_name|slice:":-1"}}
     permission_required = 'delete_{{app_name|slice:":-1"}}'
-    template_name = '{{app_name}}/delete.jade'
+    template_name = '{{app_name}}/delete.pug'
