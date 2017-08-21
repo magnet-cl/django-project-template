@@ -29,6 +29,9 @@ class {{camel_case_app_name|slice:":-1"}}(BaseModel):
     class Meta:
         verbose_name = _('{{app_name|slice:":-1"}}')
         verbose_name_plural = _('{{app_name}}')
+        permissions = (
+            ('view_{{app_name|slice:":-1"}}', _('Can view {{app_name}}')),
+        )
 
     def __unicode__(self):
         # TODO this is an example unicode return, change it
