@@ -1,0 +1,26 @@
+extends base.pug
+
+block content
+  .page-title
+    h1 {{title}}
+
+  .text-right
+    a.btn.btn-primary(href="{% url '{{app_name|slice:":-1"}}_delete' {{app_name|slice:":-1"}}.id %}")
+      i.fa.fa-plus
+
+  table.table.table-bordered.table-hover
+    thead
+      th ID
+    tbody
+      for {{app_name|slice:":-1"}} in {{app_name}}
+        tr
+          td
+            a(href="{% url '{{app_name|slice:":-1"}}_detail' {{app_name|slice:":-1"}}.id %}")
+          td
+            a(href="{% url '{{app_name|slice:":-1"}}_update' {{app_name|slice:":-1"}}.id %}")
+              i.fa.fa-edit
+          td
+            a(href="{% url '{{app_name|slice:":-1"}}_delete' {{app_name|slice:":-1"}}.id %}")
+              i.fa.fa-times
+
+  {% include 'includes/pagination.jade' with objects={{app_name}} %}
