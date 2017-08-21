@@ -78,7 +78,7 @@ class BaseCreateView(CreateView, PermissionRequiredMixin):
     def get_context_data(self, **kwargs):
         context = super(BaseCreateView, self).get_context_data(**kwargs)
 
-        context['title'] = _('Create %s') % self.model.verbose_name
+        context['title'] = _('Create %s') % self.model._meta.verbose_name
 
         return context
 
@@ -122,7 +122,7 @@ class BaseSubModelCreateView(CreateView, PermissionRequiredMixin):
         )
 
         context[model_underscore_name] = obj
-        context['title'] = _('Create %s') % self.model.verbose_name
+        context['title'] = _('Create %s') % self.model._meta.verbose_name
 
         return context
 
@@ -145,7 +145,7 @@ class BaseListView(ListView, PermissionRequiredMixin):
         context = super(BaseListView, self).get_context_data(**kwargs)
         context['clean_query_string'] = clean_query_string(self.request)
         context['q'] = self.request.GET.get('q')
-        context['title'] = _('%s List') % self.model.verbose_name
+        context['title'] = _('%s List') % self.model._meta.verbose_name
         return context
 
     @method_decorator(login_required)
