@@ -1,0 +1,32 @@
+from django.conf.urls import url
+
+from . import views
+
+
+urlpatterns = [
+    url(
+        r'^$',
+        views.{{camel_case_app_name|slice:":-1"}}ListView.as_view(),
+        name='{{app_name|slice:":-1"}}_list'
+    ),
+    url(
+        r'^create/$',
+        views.{{camel_case_app_name|slice:":-1"}}CreateView.as_view(),
+        name='{{app_name|slice:":-1"}}_create'
+    ),
+    url(
+        r'^(?P<slug>[\w-]+)/$',
+        views.{{camel_case_app_name|slice:":-1"}}DetailView.as_view(),
+        name='{{app_name|slice:":-1"}}_detail'
+    ),
+    url(
+        r'^(?P<slug>[\w-]+)/update/$',
+        views.{{camel_case_app_name|slice:":-1"}}UpdateView.as_view(),
+        name='{{app_name|slice:":-1"}}_update'
+    ),
+    url(
+        r'^(?P<slug>[\w-]+)/delete/$',
+        views.{{camel_case_app_name|slice:":-1"}}DeleteView.as_view(),
+        name='{{app_name|slice:":-1"}}_delete',
+    ),
+]

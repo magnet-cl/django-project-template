@@ -1,0 +1,22 @@
+# -*- coding: utf-8 -*-
+""" Forms for the {{app_name}} application. """
+# standard library
+
+# django
+from django import forms
+
+# models
+from {{app_name}}.models import {{camel_case_app_name|slice:":-1"}}
+
+# views
+from base.forms import BaseModelForm
+
+
+class {{camel_case_app_name|slice:":-1"}}Form(BaseModelForm):
+    """
+    Form {{camel_case_app_name|slice:":-1"}} model.
+    """
+
+    class Meta:
+        model = {{camel_case_app_name|slice:":-1"}}
+        exclude = ()
