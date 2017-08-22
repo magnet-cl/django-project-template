@@ -4,6 +4,15 @@ function print_green(){
     echo -e "\033[32m$1\033[39m"
 }
 
+function replace(){
+    echo $1 $2
+    if [ "$OS" == "Darwin" ] ; then
+        echo $i|sed -i '' $1 $2
+    else
+        echo $i|sed -i $1 $2
+    fi
+}
+
 INSTALL_SYSTEM_DEPENDENCIES=true
 INSTALL_PIP=true
 INSTALL_BOWER=true
@@ -149,16 +158,13 @@ if [ ! -f ./project/settings/local_settings.py ] ; then
     cp project/local_settings.py.default project/local_settings.py
 
     if [ INSTALL_POSTGRE ] ; then
-        EXP="s/database-name/${PWD##*/}/g"
-        echo $i|sed -i '' $EXP project/local_settings.py
+        replace "s/database-name/${PWD##*/}/g" project/local_settings.py
 
         print_green "remember to configure in project/local_setings.py your database"
     else
-        EXP="s/postgresql_psycopg2/sqlite3/g"
-        echo $i|sed -i '' $EXP project/local_settings.py
+        replace "s/postgresql_psycopg2/sqlite3/g" project/local_settings.py
 
-        EXP="s/database-name/\/tmp/${PWD##*/}.sql/g"
-        echo $i|sed -i '' $EXP project/local_settings.py
+        replace "s/database-name/\/tmp/${PWD##*/}.sql/g" project/local_settings.py
     fi
 fi
 
@@ -172,10 +178,8 @@ fi
 
 if  $INSTALL_NPM ; then
     # package.json modification
-    EXP="s/NAME/${PWD##*/}/g"
-    print_green $i|sed -i '' $EXP package.json
-    EXP="s/HOMEPAGE/https:\/\/bitbucket.org\/magnet-cl\/${PWD##*/}/g"
-    print_green $i|sed -i '' $EXP package.json
+    replace "s/NAME/${PWD##*/}/g" package.json
+    replace "s/HOMEPAGE/https:\/\/bitbucket.org\/magnet-cl\/${PWD##*/}/g" package.json
 
     npm install
 fi
