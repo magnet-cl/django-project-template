@@ -1,3 +1,11 @@
+# -*- coding: utf-8 -*-
+""" Administration classes for the {{app_name}} application. """
+# standard library
+
+# django
 {{ unicode_literals }}from django.contrib import admin
 
-# Register your models here.
+
+@admin.register({{camel_case_app_name|slice:":-1"}})
+class {{camel_case_app_name|slice:":-1"}}Admin(admin.ModelAdmin):
+    pass
