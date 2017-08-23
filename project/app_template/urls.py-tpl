@@ -15,17 +15,17 @@ urlpatterns = [
         name='{{app_name|slice:":-1"}}_create'
     ),
     url(
-        r'^(?P<pk>[\d-]+)/$',
+        r'^(?P<pk>[\d]+)/$',
         views.{{camel_case_app_name|slice:":-1"}}DetailView.as_view(),
         name='{{app_name|slice:":-1"}}_detail'
     ),
     url(
-        r'^(?P<pk>[\d-]+)/update/$',
+        r'^(?P<pk>[\d]+)/update/$',
         views.{{camel_case_app_name|slice:":-1"}}UpdateView.as_view(),
         name='{{app_name|slice:":-1"}}_update'
     ),
     url(
-        r'^(?P<pk>[\d-]+)/delete/$',
+        r'^(?P<pk>[\d]+)/delete/$',
         views.{{camel_case_app_name|slice:":-1"}}DeleteView.as_view(),
         name='{{app_name|slice:":-1"}}_delete',
     ),
