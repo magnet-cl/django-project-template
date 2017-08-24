@@ -5,7 +5,7 @@
 # django
 
 # models
-from {{app_name}}.models import {{camel_case_app_name|slice:":-1"}}
+from .models import {{camel_case_app_name|slice:":-1"}}
 
 # views
 from base.views import BaseCreateView
@@ -15,7 +15,7 @@ from base.views import BaseListView
 from base.views import BaseUpdateView
 
 # forms
-from {{app_name}}.forms import {{camel_case_app_name|slice:":-1"}}Form
+from .forms import {{camel_case_app_name|slice:":-1"}}Form
 
 
 class {{camel_case_app_name|slice:":-1"}}ListView(BaseListView):
