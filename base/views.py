@@ -145,7 +145,9 @@ class BaseListView(ListView, PermissionRequiredMixin):
         context = super(BaseListView, self).get_context_data(**kwargs)
         context['clean_query_string'] = clean_query_string(self.request)
         context['q'] = self.request.GET.get('q')
-        context['title'] = _('%s List') % self.model._meta.verbose_name
+        context['title'] = (
+            _('%s list') % self.model._meta.verbose_name
+        ).capitalize()
         return context
 
     @method_decorator(login_required)
