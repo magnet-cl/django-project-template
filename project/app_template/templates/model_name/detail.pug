@@ -1,6 +1,13 @@
 extends base.pug
 // TODO replace MODEL with the model name
 
+- load i18n
+
+block breadcrumbs
+  li
+    a(href="{% url 'MODEL_list' %}")
+      | {% trans 'MODEL list'|capfirst %}
+
 block content
   .text-right
     .btn-group
