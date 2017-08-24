@@ -3,7 +3,7 @@
 # standard library
 
 # django
-{{ unicode_literals }}from django.contrib import admin
+from django.contrib import admin
 
 
 @admin.register({{camel_case_app_name|slice:":-1"}})

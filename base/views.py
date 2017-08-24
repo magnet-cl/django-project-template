@@ -63,7 +63,7 @@ class BaseDetailView(DetailView, PermissionRequiredMixin):
     def get_context_data(self, **kwargs):
         context = super(BaseDetailView, self).get_context_data(**kwargs)
 
-        context['title'] = self.object.__unicode__()
+        context['title'] = str(self.object)
 
         return context
 
@@ -165,7 +165,7 @@ class BaseUpdateView(UpdateView, PermissionRequiredMixin):
         context = super(BaseUpdateView, self).get_context_data(**kwargs)
 
         context['cancel_url'] = self.object.get_absolute_url()
-        context['title'] = _('Update %s') % self.object.__unicode__()
+        context['title'] = _('Update %s') % str(self.object)
 
         return context
 
@@ -179,6 +179,6 @@ class BaseDeleteView(DeleteView, PermissionRequiredMixin):
     def get_context_data(self, **kwargs):
         context = super(BaseDeleteView, self).get_context_data(**kwargs)
 
-        context['title'] = _('Delete %s') % self.object.__unicode__()
+        context['title'] = _('Delete %s') % str(self.object)
 
         return context
