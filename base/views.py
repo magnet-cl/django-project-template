@@ -10,6 +10,7 @@ from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic.detail import DetailView
@@ -78,7 +79,9 @@ class BaseCreateView(CreateView, PermissionRequiredMixin):
     def get_context_data(self, **kwargs):
         context = super(BaseCreateView, self).get_context_data(**kwargs)
 
-        context['title'] = _('Create %s') % self.model._meta.verbose_name
+        model_name = self.model._meta.verbose_name
+        context['title'] = _('Create %s') % model_name
+        context['cancel_url'] = reverse('{}_list'.format(model_name))
 
         return context
 
@@ -123,6 +126,7 @@ class BaseSubModelCreateView(CreateView, PermissionRequiredMixin):
 
         context[model_underscore_name] = obj
         context['title'] = _('Create %s') % self.model._meta.verbose_name
+        context['cancel_url'] = obj.get_absolute_url()
 
         return context
 
