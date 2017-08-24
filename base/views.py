@@ -188,3 +188,7 @@ class BaseDeleteView(DeleteView, PermissionRequiredMixin):
         context['title'] = _('Delete %s') % str(self.object)
 
         return context
+
+    def get_success_url(self):
+        model_name = self.model._meta.verbose_name
+        return reverse('{}_list'.format(model_name))
