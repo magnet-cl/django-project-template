@@ -78,6 +78,13 @@ html(lang="es")
         script(src="{% static 'bootstrap-sass/assets/javascripts/bootstrap.min.js' %}")
       {% endcompress %}
 
+      // templates
+
+      {% compress js %}
+      script(type="text/pug", src="{% static 'templates/users/list.pug' %}")
+      script(type="text/pug", src="{% static 'templates/users/detail.pug' %}")
+      {% endcompress %}
+
       block javascript_data
 
       {% compress js %}

@@ -198,6 +198,7 @@ AUTH_USER_MODEL = 'users.User'
 # set the precompilers
 COMPRESS_PRECOMPILERS = (
     ('text/x-scss', 'django_libsass.SassCompiler'),
+    ('text/pug', 'base.filters.pug.PugCompilerFilter'),
 )
 
 COMPRESS_CSS_FILTERS = [
