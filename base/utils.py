@@ -2,12 +2,14 @@
 
 # standard library
 import itertools
+import os
 import random
 import re
 import string
 import unicodedata
 
 # django
+from django.apps import apps
 from django.utils import timezone
 
 
@@ -80,3 +82,12 @@ def random_string(length=6, chars=None, include_spaces=True):
         chars += ' '
 
     return ''.join(random.choice(chars) for x in range(length))
+
+
+def get_our_models():
+    for model in apps.get_models():
+        app_label = model._meta.app_label
+
+        # test only those models that we created
+        if os.path.isdir(app_label):
+            yield model
