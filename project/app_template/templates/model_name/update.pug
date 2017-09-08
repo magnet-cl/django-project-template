@@ -8,5 +8,5 @@ block breadcrumbs
     a(href="{% url 'MODEL_list' %}")
       | {% trans 'MODEL list'|capfirst %}
   li
-    a(href="{% url 'MODEL_detail' object.pk %}")
+    a(href="{{object.get_absolute_url}}")
       | {{object}}
