@@ -81,9 +81,13 @@ class BaseCreateView(CreateView, PermissionRequiredMixin):
 
         model_name = self.model._meta.verbose_name
         context['title'] = _('Create %s') % model_name
-        context['cancel_url'] = reverse('{}_list'.format(model_name))
+        context['cancel_url'] = self.get_cancel_url()
 
         return context
+
+    def get_cancel_url(self):
+        model_name = self.model._meta.verbose_name
+        return reverse('{}_list'.format(model_name))
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
