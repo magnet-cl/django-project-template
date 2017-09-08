@@ -19,7 +19,7 @@ block content
       for MODEL in object_list
         tr
           td
-            a(href="{% url 'MODEL_detail' MODEL.id %}")
+            a(href="{{ MODEL.get_absolute_url }}")
               | {{MODEL.id}}
           if perms.MODELs.change_MODEL
             td
