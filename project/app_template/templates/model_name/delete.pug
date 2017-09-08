@@ -20,5 +20,5 @@ block content
     .text-right
       .btn-group
         input.btn.btn-primary(type="submit" value="{% trans 'Confirm' %}")
-        a.btn.btn-default(href="{% url 'MODEL_detail' object.pk %}")
+        a.btn.btn-default(href="{{object.get_absolute_url}}")
           | {% trans 'Cancel' %}
