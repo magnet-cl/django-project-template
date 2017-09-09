@@ -6,4 +6,4 @@ extends form.pug
 block breadcrumbs
   li
     a(href="{% url 'MODEL_list' %}")
-      | {% trans 'MODEL list'|capfirst %}
+      | {{opts.verbose_name_plural.capitalize}}

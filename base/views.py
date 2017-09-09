@@ -85,6 +85,7 @@ class BaseCreateView(CreateView, PermissionRequiredMixin):
         context = super(BaseCreateView, self).get_context_data(**kwargs)
 
         model_name = self.model._meta.verbose_name
+        context['opts'] = self.model._meta
         context['title'] = _('Create %s') % model_name
         context['cancel_url'] = self.get_cancel_url()
 
