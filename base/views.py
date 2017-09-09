@@ -61,10 +61,15 @@ class PermissionRequiredMixin:
 
 class BaseDetailView(DetailView, PermissionRequiredMixin):
 
+    def get_title(self):
+        model_name = self.model._meta.verbose_name
+        return '{}: {}'.format(model_name, self.object).capitalize()
+
     def get_context_data(self, **kwargs):
         context = super(BaseDetailView, self).get_context_data(**kwargs)
 
-        context['title'] = str(self.object)
+        context['opts'] = self.model._meta
+        context['title'] = self.get_title()
 
         return context
 
@@ -151,11 +156,10 @@ class BaseListView(ListView, PermissionRequiredMixin):
 
     def get_context_data(self, **kwargs):
         context = super(BaseListView, self).get_context_data(**kwargs)
+        context['opts'] = self.model._meta
         context['clean_query_string'] = clean_query_string(self.request)
         context['q'] = self.request.GET.get('q')
-        context['title'] = (
-            _('%s list') % self.model._meta.verbose_name
-        ).capitalize()
+        context['title'] = self.model._meta.verbose_name_plural.capitalize()
         return context
 
     @method_decorator(login_required)
@@ -174,6 +178,7 @@ class BaseUpdateView(UpdateView, PermissionRequiredMixin):
     def get_context_data(self, **kwargs):
         context = super(BaseUpdateView, self).get_context_data(**kwargs)
 
+        context['opts'] = self.model._meta
         context['cancel_url'] = self.object.get_absolute_url()
         context['title'] = _('Update %s') % str(self.object)
 
@@ -189,6 +194,7 @@ class BaseDeleteView(DeleteView, PermissionRequiredMixin):
     def get_context_data(self, **kwargs):
         context = super(BaseDeleteView, self).get_context_data(**kwargs)
 
+        context['opts'] = self.model._meta
         context['title'] = _('Delete %s') % str(self.object)
 
         return context
