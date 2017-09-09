@@ -1,6 +1,8 @@
 extends base.pug
 // TODO replace MODEL with the model name
 
+- load i18n
+
 block content
   .text-right
     .btn-group
@@ -10,17 +12,22 @@ block content
 
   table.table.table-bordered.table-hover
     thead
-      th Id
-      if perms.MODELs.change_MODEL
-        th
-      if perms.MODELs.delete_MODEL
-        th
+      tr
+        th Id
+        th {% trans 'name'|capitalize %}
+        if perms.MODELs.change_MODEL
+          th
+        if perms.MODELs.delete_MODEL
+          th
     tbody
       for MODEL in object_list
         tr
           td
             a(href="{{ MODEL.get_absolute_url }}")
               | {{MODEL.id}}
+          td
+            a(href="{{ MODEL.get_absolute_url }}")
+              | {{MODEL}}
           if perms.MODELs.change_MODEL
             td
               a(href="{% url 'MODEL_update' MODEL.id %}")
