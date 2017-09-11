@@ -1,3 +1,6 @@
+# standard library
+from os.path import isfile
+
 # fabric
 from fabric.api import cd
 from fabric.api import env
@@ -11,17 +14,14 @@ from fabric.colors import red
 from fabric.contrib import files
 
 # local tasks
-from db import backup_db
-from db import migrate
-from utils import confirm_target
-from utils import git_checkout
-from utils import git_clone
-
-# standard library
-from os.path import isfile
-import deb_handler
-import gunicorn
-import nginx
+from . import deb_handler
+from . import gunicorn
+from . import nginx
+from .db import backup_db
+from .db import migrate
+from .utils import confirm_target
+from .utils import git_checkout
+from .utils import git_clone
 
 
 @task
