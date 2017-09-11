@@ -130,9 +130,9 @@ def set_deploy_key():
         local('ssh-keygen -t rsa -f %s' % ssh_key)
 
     run('mkdir -p -m 0700 .ssh')
-    put(ssh_key, '.ssh/id_rsa', mode=0600)
+    put(ssh_key, '.ssh/id_rsa', mode=0o600)
     pub_key = '{}.pub'.format(ssh_key)
-    put(pub_key, '.ssh/id_rsa.pub', mode=0644)
+    put(pub_key, '.ssh/id_rsa.pub', mode=0o644)
 
 
 @task
