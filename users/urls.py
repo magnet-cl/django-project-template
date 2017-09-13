@@ -1,5 +1,6 @@
 """ this document defines the users app urls """
 from django.conf.urls import url
+from django.contrib.auth import views as auth_views
 
 from users import views as users_views
 
@@ -21,7 +22,7 @@ urlpatterns = [
     ),
     url(
         r'^logout/$',
-        users_views.LogoutView.as_view(),
+        auth_views.LogoutView.as_view(),
         name='logout'
     ),
     url(

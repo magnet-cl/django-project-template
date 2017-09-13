@@ -56,10 +56,6 @@ class LoginView(auth_views.LoginView):
         return super(LoginView, self).get_form_class()
 
 
-class LogoutView(auth_views.LogoutView):
-    next_page = 'home'
-
-
 class PasswordChangeView(auth_views.PasswordChangeView):
     """ view that renders the password change form """
     template_name = "registration/password_change_form.pug"

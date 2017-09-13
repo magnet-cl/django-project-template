@@ -91,3 +91,8 @@ def get_our_models():
         # test only those models that we created
         if os.path.isdir(app_label):
             yield model
+
+
+def can_loginas(request, target_user):
+    """ This will only allow admins to log in as other users """
+    return request.user.is_superuser and not target_user.is_superuser

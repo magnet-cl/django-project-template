@@ -23,12 +23,14 @@ def force_logout(modeladmin, request, queryset):
     messages.add_message(request, messages.SUCCESS,
                          _("Selected users where logged out"))
 
+
 force_logout.short_description = _("Logs out the user from all devices")
 
 
 class UserAdmin(DjangoUserAdmin):
     """ Configuration for the User admin page"""
     add_form_template = 'admin/users/user/add_form.html'
+    change_form_template = 'loginas/change_form.html'
 
     add_form = UserCreationForm
     list_display = ('email', 'first_name', 'last_name', 'is_staff',
@@ -61,5 +63,6 @@ class UserAdmin(DjangoUserAdmin):
                                                      _("change password"))
     change_password_link.allow_tags = True
     change_password_link.short_description = _("change password")
+
 
 admin.site.register(User, UserAdmin)

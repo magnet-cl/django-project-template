@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 
+# django
+from django.core.urlresolvers import reverse_lazy
+
 from project.local_settings import DEBUG, LOCAL_DATABASES
 from project.local_settings import LOCALLY_INSTALLED_APPS
 from project.local_settings import ENABLE_EMAILS
@@ -60,9 +63,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.staticfiles',
+    # external
     'compressor',
-    'base',
     'captcha',
+    'loginas',
+
+    # internal
+    'base',
     'users',
 ]
 
@@ -193,7 +200,12 @@ STATICFILES_FINDERS = (
     'npm.finders.NpmFinder',
 )
 
+##################
+# AUTHENTICATION #
+##################
+
 AUTH_USER_MODEL = 'users.User'
+LOGOUT_REDIRECT_URL = '/'
 
 # set the precompilers
 COMPRESS_PRECOMPILERS = (
@@ -257,3 +269,9 @@ LOGGING = {
         },
     }
 }
+
+
+# ### Login as settings ###
+CAN_LOGIN_AS = "base.utils.can_loginas"
+LOGOUT_URL = reverse_lazy('loginas-logout')
+LOGINAS_LOGOUT_REDIRECT_URL = reverse_lazy('admin:index')
