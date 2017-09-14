@@ -62,8 +62,8 @@ class PermissionRequiredMixin:
 class BaseDetailView(DetailView, PermissionRequiredMixin):
 
     def get_title(self):
-        model_name = self.model.__name__.lower()
-        return '{}: {}'.format(model_name, self.object).capitalize()
+        verbose_name = self.model._meta.verbose_name
+        return '{}: {}'.format(verbose_name, self.object).capitalize()
 
     def get_context_data(self, **kwargs):
         context = super(BaseDetailView, self).get_context_data(**kwargs)
@@ -84,9 +84,9 @@ class BaseCreateView(CreateView, PermissionRequiredMixin):
     def get_context_data(self, **kwargs):
         context = super(BaseCreateView, self).get_context_data(**kwargs)
 
-        model_name = self.model.__name__.lower()
+        verbose_name = self.model._meta.verbose_name
         context['opts'] = self.model._meta
-        context['title'] = _('Create %s') % model_name
+        context['title'] = _('Create %s') % verbose_name
         context['cancel_url'] = self.get_cancel_url()
 
         return context
