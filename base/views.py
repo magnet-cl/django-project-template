@@ -62,7 +62,7 @@ class PermissionRequiredMixin:
 class BaseDetailView(DetailView, PermissionRequiredMixin):
 
     def get_title(self):
-        model_name = self.model._meta.verbose_name
+        model_name = self.model.__name__.lower()
         return '{}: {}'.format(model_name, self.object).capitalize()
 
     def get_context_data(self, **kwargs):
@@ -84,7 +84,7 @@ class BaseCreateView(CreateView, PermissionRequiredMixin):
     def get_context_data(self, **kwargs):
         context = super(BaseCreateView, self).get_context_data(**kwargs)
 
-        model_name = self.model._meta.verbose_name
+        model_name = self.model.__name__.lower()
         context['opts'] = self.model._meta
         context['title'] = _('Create %s') % model_name
         context['cancel_url'] = self.get_cancel_url()
@@ -92,7 +92,7 @@ class BaseCreateView(CreateView, PermissionRequiredMixin):
         return context
 
     def get_cancel_url(self):
-        model_name = self.model._meta.verbose_name
+        model_name = self.model.__name__.lower()
         return reverse('{}_list'.format(model_name))
 
     @method_decorator(login_required)
@@ -201,5 +201,5 @@ class BaseDeleteView(DeleteView, PermissionRequiredMixin):
         return context
 
     def get_success_url(self):
-        model_name = self.model._meta.verbose_name
+        model_name = self.model.__name__.lower()
         return reverse('{}_list'.format(model_name))
