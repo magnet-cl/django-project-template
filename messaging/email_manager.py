@@ -5,7 +5,6 @@
 # django
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
-from django.template import Context
 from django.template.loader import get_template
 from django.utils.translation import ugettext_lazy as _
 
@@ -23,7 +22,6 @@ def send_emails(emails, template_name, subject, sender=None,
 
     text_template = get_template("emails/%s.txt" % template_name)
     html_template = get_template("emails/%s.html" % template_name)
-    context = Context(context)
 
     text_content = text_template.render(context)
     html_content = html_template.render(context)

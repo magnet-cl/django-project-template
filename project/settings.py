@@ -73,6 +73,11 @@ INSTALLED_APPS = [
     'users',
 ]
 
+# Default email address to use for various automated correspondence from
+# the site managers.
+DEFAULT_FROM_EMAIL = 'webmaster@localhost'
+EMAIL_SENDER_NAME = 'My project'
+
 if DEBUG:
     INSTALLED_APPS += [
         'debug_toolbar',
