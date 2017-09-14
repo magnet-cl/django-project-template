@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import sys
 
 # django
 from django.core.urlresolvers import reverse_lazy
@@ -23,6 +24,9 @@ if DEBUG:
     env = 'development'
 else:
     env = 'production'
+
+# TEST should be true if we are running python tests
+TEST = 'test' in sys.argv
 
 
 # People who get code error notifications.

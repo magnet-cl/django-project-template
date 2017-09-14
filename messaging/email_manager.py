@@ -9,7 +9,7 @@ from django.template.loader import get_template
 from django.utils.translation import ugettext_lazy as _
 
 
-def send_emails(emails, template_name, subject, sender=None,
+def send_emails(emails, template_name, subject, from_email=None,
                 context=None, fail_silently=False,
                 attachments=None, headers=None):
     """ Sends an email to a list of emails using a given template name """
@@ -26,14 +26,19 @@ def send_emails(emails, template_name, subject, sender=None,
     text_content = text_template.render(context)
     html_content = html_template.render(context)
 
-    if sender is None:
-        sender = "{} <{}>".format(
+    if from_email is None:
+        from_email = "{} <{}>".format(
             settings.EMAIL_SENDER_NAME,
-            settings.SENDER_EMAIL
+            settings.DEFAULT_FROM_EMAIL
         )
 
-    msg = EmailMultiAlternatives(subject, text_content,
-                                 sender, emails, headers=headers)
+    msg = EmailMultiAlternatives(
+        subject=subject,
+        body=text_content,
+        from_email=from_email,
+        to=emails,
+        headers=headers
+    )
 
     for attachment in attachments:
         attachment.seek(0)
