@@ -1,16 +1,16 @@
 .paginator-container
   ul.pagination
-    -if objects.has_previous
+    -if page_obj.has_previous
       li
-        a(href="?p={{ objects.previous_page_number }}&{{clean_query_string}}&o_={{request.GET.o_}}") «
-    {% for page in objects.paginator.page_range %}
-    -if page == objects.number
+        a(href="?p={{ page_obj.previous_page_number }}&{{clean_query_string}}&o_={{request.GET.o_}}") «
+    {% for page in page_obj.paginator.page_range %}
+    -if page == page_obj.number
       li.active
         a(href="?p={{ page }}&{{clean_query_string}}&o_={{request.GET.o_}}") {{ page }}
     -else
       li
         a(href="?p={{ page }}&{{clean_query_string}}&o_={{request.GET.o_}}") {{ page }}
     {% endfor %}
-    -if objects.has_next
+    -if page_obj.has_next
       li
-        a(href="?p={{ objects.next_page_number }}&{{clean_query_string}}&o_={{request.GET.o_}}") »
+        a(href="?p={{ page_obj.next_page_number }}&{{clean_query_string}}&o_={{request.GET.o_}}") »
