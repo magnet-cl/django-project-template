@@ -18,6 +18,7 @@ from django.views.generic.edit import CreateView
 from django.views.generic.edit import DeleteView
 from django.views.generic.edit import UpdateView
 from django.views.generic.list import ListView
+from django.views.generic.list import RedirectView
 
 # utils
 from base.view_utils import clean_query_string
@@ -203,3 +204,10 @@ class BaseDeleteView(DeleteView, PermissionRequiredMixin):
     def get_success_url(self):
         model_name = self.model.__name__.lower()
         return reverse('{}_list'.format(model_name))
+
+
+class BaseRedirectView(RedirectView, PermissionRequiredMixin):
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        self.check_permission_required()
+        return super(BaseRedirectView, self).dispatch(*args, **kwargs)
