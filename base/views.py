@@ -18,7 +18,7 @@ from django.views.generic.edit import CreateView
 from django.views.generic.edit import DeleteView
 from django.views.generic.edit import UpdateView
 from django.views.generic.list import ListView
-from django.views.generic.list import RedirectView
+from django.views.generic import RedirectView
 
 # utils
 from base.view_utils import clean_query_string
