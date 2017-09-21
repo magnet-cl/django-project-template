@@ -18,7 +18,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext_noop
 
 # managers
-from users.managers import UserQuerySet
+from users.managers import UserManager
 
 # models
 from base.models import BaseModel
@@ -70,7 +70,7 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
         help_text=_("The date this user was created in the database"),
     )
     # Use UserManager to get the create_user method, etc.
-    objects = UserQuerySet.as_manager()
+    objects = UserManager()
 
     EMAIL_FIELD = 'email'
     USERNAME_FIELD = 'email'
