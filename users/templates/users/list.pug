@@ -1,0 +1,40 @@
+extends base.pug
+
+block content
+  .row
+    .col-sm-4
+      form()
+        .view-controls.text-left
+          .input-group
+            input.form-control(type="text", name="q", value="{{q|default:''}}")
+            span.input-group-btn
+              button.btn.btn-default(type="submit")
+                i.fa.fa-search
+
+        for order in ordering
+          input(type="hidden", name="o", value="{{order}}")
+
+
+    .col-sm-8
+      .view-controls.text-right
+        .btn-group
+          if perms.users.add_user
+            a.btn.btn-primary(href="{% url 'register' %}")
+              | Agregar usuario
+              i.fa.fa-plus
+
+  table.table
+    thead
+      tr
+        {% include 'includes/list_th.pug' with order_by='first_name' verbose_name='Nombre'%}
+        {% include 'includes/list_th.pug' with order_by='email' verbose_name='Email'%}
+        {% include 'includes/list_th.pug' with order_by='groups' verbose_name='Grupos'%}
+
+    tbody
+      for iter_user in user_list
+        tr
+          td {{ iter_user.get_full_name }}
+          td {{ iter_user.email }}
+          td {{ iter_user.group_names }}
+
+  {% include 'includes/pagination.pug' with objects=page_obj %}

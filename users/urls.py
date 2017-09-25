@@ -6,6 +6,11 @@ from users import views as users_views
 
 urlpatterns = [
     url(
+        r'^$',
+        users_views.UserListView.as_view(),
+        name='user_list',
+    ),
+    url(
         r'^login/$',
         users_views.LoginView.as_view(),
         name='login'
