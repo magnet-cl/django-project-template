@@ -1,7 +1,7 @@
 - load order_by_querystring
 
 th
-  a(href="?{% get_order_by_querytring ordering=ordering current_order=order_by %}{% if clean_query_string %}&{{clean_query_string}}{% endif %}") 
+  a(href="?{% get_order_by_querytring ordering=ordering current_order=order_by %}&{{clean_query_string}}") 
     | {{verbose_name}}
 
     for order in ordering
@@ -14,5 +14,5 @@ th
 
           span.label.label-info
             | {{forloop.counter}}
-          a(href="?{% get_order_by_querytring ordering=ordering current_order=order_by remove=True %}{% if clean_query_string %}&{{clean_query_string}}{% endif %}") 
+          a(href="?{% get_order_by_querytring ordering=ordering current_order=order_by remove=True %}&{{clean_query_string}}") 
             i.fa.fa-times.text-danger
