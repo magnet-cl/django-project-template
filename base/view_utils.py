@@ -24,7 +24,7 @@ def clean_query_string(request):
     clean_query_set = request.GET.copy()
 
     clean_query_set = dict(
-        (k, v) for k, v in request.GET.items() if not k.startswith('o_')
+        (k, v) for k, v in request.GET.items() if not k.startswith('o')
     )
 
     try:

@@ -1,16 +1,23 @@
-.paginator-container
-  ul.pagination
-    -if page_obj.has_previous
-      li
-        a(href="?p={{ page_obj.previous_page_number }}&{{clean_query_string}}&o_={{request.GET.o_}}") «
-    {% for page in page_obj.paginator.page_range %}
-    -if page == page_obj.number
-      li.active
-        a(href="?p={{ page }}&{{clean_query_string}}&o_={{request.GET.o_}}") {{ page }}
-    -else
-      li
-        a(href="?p={{ page }}&{{clean_query_string}}&o_={{request.GET.o_}}") {{ page }}
-    {% endfor %}
-    -if page_obj.has_next
-      li
-        a(href="?p={{ page_obj.next_page_number }}&{{clean_query_string}}&o_={{request.GET.o_}}") »
+.row
+  .col-sm-8.col-sm-offset-2
+    .paginator-container.text-center
+      ul.pagination
+        -if page_obj.has_previous
+          li
+            a(href="?p={{ page_obj.previous_page_number }}{% for order in ordering %}&o={{order}}{% endfor %}{% if clean_query_string %}&{{clean_query_string}}{% endif %}") «
+        {% for page in page_obj.paginator.page_range %}
+        -if page == page_obj.number
+          li.active
+            a(href="?p={{ page }}{% for order in ordering %}&o={{order}}{% endfor %}{% if clean_query_string %}&{{clean_query_string}}{% endif %}") {{ page }}
+        -else
+          li
+            a(href="?p={{ page }}{% for order in ordering %}&o={{order}}{% endfor %}{% if clean_query_string %}&{{clean_query_string}}{% endif %}") {{ page }}
+        {% endfor %}
+        -if page_obj.has_next
+          li
+            a(href="?p={{ page_obj.next_page_number }}{% for order in ordering %}&o={{order}}{% endfor %}{% if clean_query_string %}&{{clean_query_string}}{% endif %}") »
+  .col-sm-2
+    strong.text-muted.pull-right
+      | {{ objects.start_index }}-{{ objects.end_index }}
+      | de {{ paginator.count }}
+      | &nbsp;

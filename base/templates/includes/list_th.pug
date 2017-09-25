@@ -1,0 +1,18 @@
+- load order_by_querystring
+
+th
+  a(href="?{% get_order_by_querytring ordering=ordering current_order=order_by %}{% if clean_query_string %}&{{clean_query_string}}{% endif %}") 
+    | {{verbose_name}}
+
+    for order in ordering
+      if order_by in order
+        .pull-right
+          if order_by == order
+            i.fa.fa-chevron-down
+          else
+            i.fa.fa-chevron-up
+
+          span.label.label-info
+            | {{forloop.counter}}
+          a(href="?{% get_order_by_querytring ordering=ordering current_order=order_by remove=True %}{% if clean_query_string %}&{{clean_query_string}}{% endif %}") 
+            i.fa.fa-times.text-danger

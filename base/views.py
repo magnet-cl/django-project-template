@@ -150,9 +150,9 @@ class BaseListView(ListView, PermissionRequiredMixin):
         """
         Return the field or fields to use for ordering the queryset.
         """
-        order = self.request.GET.get('_o')
+        order = self.request.GET.getlist('o')
         if order:
-            return (order,)
+            return order
 
         return self.ordering
 
@@ -162,6 +162,7 @@ class BaseListView(ListView, PermissionRequiredMixin):
         context['clean_query_string'] = clean_query_string(self.request)
         context['q'] = self.request.GET.get('q')
         context['title'] = self.model._meta.verbose_name_plural.capitalize()
+        context['ordering'] = self.request.GET.getlist('o')
         return context
 
     @method_decorator(login_required)
