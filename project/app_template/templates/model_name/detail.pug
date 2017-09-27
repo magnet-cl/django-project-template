@@ -6,7 +6,7 @@ extends base.pug
 block breadcrumbs
   li
     a(href="{% url 'MODEL_list' %}")
-      | {{opts.verbose_name_plural.capitalize}}
+      | {{opts.verbose_name_plural.capfirst}}
 
 block content
   .text-right

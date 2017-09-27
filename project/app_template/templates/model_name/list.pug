@@ -14,7 +14,7 @@ block content
     thead
       tr
         th Id
-        th {% trans 'name'|capitalize %}
+        th {% trans 'name'|capfirst %}
         if perms.MODELs.change_MODEL
           th
         if perms.MODELs.delete_MODEL
