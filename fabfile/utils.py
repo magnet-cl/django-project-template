@@ -24,5 +24,5 @@ def confirm_target(msg):
     if host == env.host and branch == env.branch:
         return True
 
-    print 'Invalid host or branch.'
+    print('Invalid host or branch.')
     sys.exit(1)

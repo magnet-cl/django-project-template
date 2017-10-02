@@ -4,8 +4,8 @@ from fabric.api import sudo
 from fabric.api import task
 from fabric.contrib.files import upload_template
 
-import deb_handler
-from service import nginx_handler
+from . import deb_handler
+from .service import nginx_handler
 
 
 @task

@@ -1,9 +1,9 @@
-import config
-import db
-import gunicorn
-import nginx
-import project
-import utils
+from . import config
+from . import db
+from . import gunicorn
+from . import nginx
+from . import project
+from . import utils
 
 assert config
 assert db
