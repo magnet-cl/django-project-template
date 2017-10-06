@@ -94,5 +94,6 @@ html(lang="es")
 
       {% compress js %}
       block javascripts
+      script(src="{% static 'moment/min/moment-with-locales.min.js' %}")
       script(src="{% static 'eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js' %}")
       {% endcompress %}
