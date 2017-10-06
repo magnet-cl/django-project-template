@@ -1,7 +1,7 @@
 var $datetimePicker = $('.datetime-picker');
 if ($datetimePicker.datetimepicker) {
     $datetimePicker.datetimepicker({
-        date: $datetimepicker.val(),
+        date: $datetimePicker.val(),
         format: 'DD/MM/YYYY HH:mm',
         locale: 'es'
     });
@@ -10,7 +10,7 @@ if ($datetimePicker.datetimepicker) {
 var $datePicker = $('.date-picker');
 if ($datePicker.datetimepicker) {
     $datePicker.datetimepicker({
-        date: $datepicker.val(),
+        date: $datePicker.val(),
         format: 'DD/MM/YYYY',
         locale: 'es'
     });
@@ -19,7 +19,7 @@ if ($datePicker.datetimepicker) {
 var $timePicker = $('.time-picker');
 if ($timePicker.datetimepicker) {
     $timePicker.datetimepicker({
-        date: $timepicker.val(),
+        date: $timePicker.val(),
         format: 'HH:mm',
         locale: 'es'
     });
