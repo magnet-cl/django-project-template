@@ -7,6 +7,7 @@
     "bootstrap-sass": "^3.3.7",
     "jquery": "^3.2.1",
     "pug-cli": "^1.0.0-alpha6",
+    "select2": "^4.0.3",
     "eonasdan-bootstrap-datetimepicker": "^4.17.47"
   },
   "description": "A base for a django project on python 3",
