@@ -34,6 +34,11 @@ html(lang="es")
     )
     {% endcompress %}
 
+    link(
+      href="{% static 'eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css' %}",
+      rel="stylesheet"
+    )
+
     {% compress css %}
     block stylesheets
     {% endcompress %}
@@ -89,4 +94,5 @@ html(lang="es")
 
       {% compress js %}
       block javascripts
+      script(src="{% static 'eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js' %}")
       {% endcompress %}
