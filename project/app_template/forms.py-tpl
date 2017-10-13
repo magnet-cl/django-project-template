@@ -6,17 +6,17 @@
 from django import forms
 
 # models
-from .models import {{camel_case_app_name|slice:":-1"}}
+from .models import {{model_name}}
 
 # views
 from base.forms import BaseModelForm
 
 
-class {{camel_case_app_name|slice:":-1"}}Form(BaseModelForm):
+class {{model_name}}Form(BaseModelForm):
     """
-    Form {{camel_case_app_name|slice:":-1"}} model.
+    Form {{model_name}} model.
     """
 
     class Meta:
-        model = {{camel_case_app_name|slice:":-1"}}
+        model = {{model_name}}
         exclude = ()

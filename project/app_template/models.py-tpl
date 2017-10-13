@@ -12,7 +12,7 @@ from base.models import BaseModel
 from users.models import User
 
 
-class {{camel_case_app_name|slice:":-1"}}(BaseModel):
+class {{model_name}}(BaseModel):
     # foreign keys
     user = models.ForeignKey(
         User,
@@ -27,10 +27,10 @@ class {{camel_case_app_name|slice:":-1"}}(BaseModel):
     # optional fields
 
     class Meta:
-        verbose_name = _('{{app_name|slice:":-1"}}')
-        verbose_name_plural = _('{{app_name}}')
+        verbose_name = _('{{model_verbose_name}}')
+        verbose_name_plural = _('{{plural_model_verbose_name}}')
         permissions = (
-            ('view_{{app_name|slice:":-1"}}', _('Can view {{app_name}}')),
+            ('view_{{model_name.lower}}', _('Can view {{model_verbose_name}}')),
         )
 
     def __str__(self):
@@ -38,6 +38,6 @@ class {{camel_case_app_name|slice:":-1"}}(BaseModel):
         return self.name
 
     def get_absolute_url(self):
-        """ Returns the canonical URL for the {{app_name|slice:":-1"}} object """
+        """ Returns the canonical URL for the {{model_name}} object """
         # TODO this is an example, change it
-        return reverse('{{app_name|slice:":-1"}}_detail', args=(self.pk,))
+        return reverse('{{model_name.lower}}_detail', args=(self.pk,))

@@ -22,7 +22,7 @@ from django.views.generic import RedirectView
 
 # utils
 from base.view_utils import clean_query_string
-from base.utils import camel_to_underscore
+from inflection import underscore
 
 
 @login_required
@@ -113,7 +113,7 @@ class BaseSubModelCreateView(CreateView, PermissionRequiredMixin):
         return super(BaseSubModelCreateView, self).dispatch(*args, **kwargs)
 
     def get_form_kwargs(self):
-        model_underscore_name = camel_to_underscore(self.parent_model.__name__)
+        model_underscore_name = underscore(self.parent_model.__name__)
 
         obj = get_object_or_404(
             self.parent_model,
@@ -128,7 +128,7 @@ class BaseSubModelCreateView(CreateView, PermissionRequiredMixin):
         context = super(BaseSubModelCreateView, self).get_context_data(
             **kwargs
         )
-        model_underscore_name = camel_to_underscore(self.parent_model.__name__)
+        model_underscore_name = underscore(self.parent_model.__name__)
 
         obj = get_object_or_404(
             self.parent_model,

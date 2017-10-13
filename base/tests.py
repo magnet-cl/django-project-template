@@ -19,7 +19,7 @@ from django.test import TestCase
 from project.urls import urlpatterns
 
 # utils
-from base.utils import camel_to_underscore
+from inflection import underscore
 from base.utils import get_our_models
 
 # Third-party app imports
@@ -82,9 +82,6 @@ class IntegrityOnDeleteTestCase(BaseTestCase):
 
                 self.assertEqual(obj_count, model.objects.count(), error_msg)
 
-            # feedback that the test passed
-            print('.', end='')
-
 
 def reverse_pattern(pattern, namespace, args=None, kwargs=None):
     try:
@@ -117,7 +114,7 @@ class UrlsTest(BaseTestCase):
         self.default_params = {}
 
         for model in get_our_models():
-            model_name = camel_to_underscore(model.__name__)
+            model_name = underscore(model.__name__)
             method_name = 'create_{}'.format(model_name)
             param_name = '{}_id'.format(model_name)
 
@@ -180,8 +177,6 @@ class UrlsTest(BaseTestCase):
                         response.status_code,
                         (200, 302, 403), msg
                     )
-                    # feedback that the test passed
-                    print('.', end='')
                 else:
                     test_url_patterns(pattern.url_patterns, pattern.namespace)
 

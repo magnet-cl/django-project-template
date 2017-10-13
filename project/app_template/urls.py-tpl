@@ -6,27 +6,27 @@ from . import views
 urlpatterns = [
     url(
         r'^$',
-        views.{{camel_case_app_name|slice:":-1"}}ListView.as_view(),
-        name='{{app_name|slice:":-1"}}_list'
+        views.{{model_name}}ListView.as_view(),
+        name='{{snake_case_model_name}}_list'
     ),
     url(
         r'^create/$',
-        views.{{camel_case_app_name|slice:":-1"}}CreateView.as_view(),
-        name='{{app_name|slice:":-1"}}_create'
+        views.{{model_name}}CreateView.as_view(),
+        name='{{snake_case_model_name}}_create'
     ),
     url(
         r'^(?P<pk>[\d]+)/$',
-        views.{{camel_case_app_name|slice:":-1"}}DetailView.as_view(),
-        name='{{app_name|slice:":-1"}}_detail'
+        views.{{model_name}}DetailView.as_view(),
+        name='{{snake_case_model_name}}_detail'
     ),
     url(
         r'^(?P<pk>[\d]+)/update/$',
-        views.{{camel_case_app_name|slice:":-1"}}UpdateView.as_view(),
-        name='{{app_name|slice:":-1"}}_update'
+        views.{{model_name}}UpdateView.as_view(),
+        name='{{snake_case_model_name}}_update'
     ),
     url(
         r'^(?P<pk>[\d]+)/delete/$',
-        views.{{camel_case_app_name|slice:":-1"}}DeleteView.as_view(),
-        name='{{app_name|slice:":-1"}}_delete',
+        views.{{model_name}}DeleteView.as_view(),
+        name='{{snake_case_model_name}}_delete',
     ),
 ]

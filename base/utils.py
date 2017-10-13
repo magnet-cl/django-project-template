@@ -48,15 +48,6 @@ def format_rut(rut):
     return '%s-%s' % (code, verifier)
 
 
-def camel_to_underscore(string):
-    s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', string)
-    return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower()
-
-
-def underscore_to_camel(word):
-    return ''.join(x.capitalize() or '_' for x in word.split('_'))
-
-
 def strip_accents(s):
     return ''.join(
         c for c in unicodedata.normalize('NFD', s)

@@ -50,7 +50,7 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'CHANGE ME'
+SECRET_KEY = 'wwrb!e&@-%_scw^v8o-q9)v3x7%(3^%12_r_$rt9prby!l1)h#'
 
 ALLOWED_HOSTS = []
 
@@ -232,6 +232,10 @@ COMPRESS_CSS_FILTERS = [
 NPM_FILE_PATTERNS = {
     'bootstrap-sass': ['assets/javascripts/bootstrap.min.js'],
     'jquery': ['dist/jquery.min.js'],
+    'moment': ['min/moment-with-locales.min.js'],
+    'eonasdan-bootstrap-datetimepicker': [
+        'build/js/bootstrap-datetimepicker.min.js',
+    ],
 }
 
 # default keys, replace with somethign your own
