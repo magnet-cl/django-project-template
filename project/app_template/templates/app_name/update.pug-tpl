@@ -1,0 +1,11 @@
+extends form.pug
+
+- load i18n
+
+block breadcrumbs
+  li
+    a(href="{% templatetag closeblock %} url '{{snake_case_model_name}}_list' {% templatetag closeblock %}")
+      | {% templatetag openvariable %}opts.verbose_name_plural|capfirst{% templatetag closevariable %}
+  li
+    a(href="{% templatetag openvariable %}object.get_absolute_url{% templatetag closevariable %}")
+      | {% templatetag openvariable %}object{% templatetag closevariable %}

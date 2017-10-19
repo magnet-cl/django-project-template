@@ -5,7 +5,7 @@
 # django
 
 # models
-from .models import {{camel_case_app_name|slice:":-1"}}
+from .models import {{model_name}}
 
 # views
 from base.views import BaseCreateView
@@ -15,51 +15,51 @@ from base.views import BaseListView
 from base.views import BaseUpdateView
 
 # forms
-from .forms import {{camel_case_app_name|slice:":-1"}}Form
+from .forms import {{model_name}}Form
 
 
-class {{camel_case_app_name|slice:":-1"}}ListView(BaseListView):
+class {{model_name}}ListView(BaseListView):
     """
     View for displaying a list of {{app_name}}.
     """
-    model = {{camel_case_app_name|slice:":-1"}}
-    template_name = '{{app_name}}/list.pug'
-    permission_required = '{{app_name}}.view_{{app_name|slice:":-1"}}'
+    model = {{model_name}}
+    template_name = '{{app_name}}/{{model_name.lower}}_list.pug'
+    permission_required = '{{app_name}}.view_{{snake_case_model_name}}'
 
 
-class {{camel_case_app_name|slice:":-1"}}CreateView(BaseCreateView):
+class {{model_name}}CreateView(BaseCreateView):
     """
-    A view for creating a single {{app_name|slice:":-1"}}
+    A view for creating a single {{snake_case_model_name}}
     """
-    model = {{camel_case_app_name|slice:":-1"}}
-    form_class = {{camel_case_app_name|slice:":-1"}}Form
-    template_name = '{{app_name}}/create.pug'
-    permission_required = '{{app_name}}.add_{{app_name|slice:":-1"}}'
+    model = {{model_name}}
+    form_class = {{model_name}}Form
+    template_name = '{{app_name}}/{{model_name.lower}}_create.pug'
+    permission_required = '{{app_name}}.add_{{snake_case_model_name}}'
 
 
-class {{camel_case_app_name|slice:":-1"}}DetailView(BaseDetailView):
+class {{model_name}}DetailView(BaseDetailView):
     """
-    A view for displaying a single {{app_name|slice:":-1"}}
+    A view for displaying a single {{snake_case_model_name}}
     """
-    model = {{camel_case_app_name|slice:":-1"}}
-    template_name = '{{app_name}}/detail.pug'
-    permission_required = '{{app_name}}.view_{{app_name|slice:":-1"}}'
+    model = {{model_name}}
+    template_name = '{{app_name}}/{{model_name.lower}}_detail.pug'
+    permission_required = '{{app_name}}.view_{{snake_case_model_name}}'
 
 
-class {{camel_case_app_name|slice:":-1"}}UpdateView(BaseUpdateView):
+class {{model_name}}UpdateView(BaseUpdateView):
     """
-    A view for editing a single {{app_name|slice:":-1"}}
+    A view for editing a single {{snake_case_model_name}}
     """
-    model = {{camel_case_app_name|slice:":-1"}}
-    form_class = {{camel_case_app_name|slice:":-1"}}Form
-    template_name = '{{app_name}}/update.pug'
-    permission_required = '{{app_name}}.change_{{app_name|slice:":-1"}}'
+    model = {{model_name}}
+    form_class = {{model_name}}Form
+    template_name = '{{app_name}}/{{model_name.lower}}_update.pug'
+    permission_required = '{{app_name}}.change_{{snake_case_model_name}}'
 
 
-class {{camel_case_app_name|slice:":-1"}}DeleteView(BaseDeleteView):
+class {{model_name}}DeleteView(BaseDeleteView):
     """
-    A view for deleting a single {{app_name|slice:":-1"}}
+    A view for deleting a single {{snake_case_model_name}}
     """
-    model = {{camel_case_app_name|slice:":-1"}}
-    permission_required = '{{app_name}}.delete_{{app_name|slice:":-1"}}'
-    template_name = '{{app_name}}/delete.pug'
+    model = {{model_name}}
+    permission_required = '{{app_name}}.delete_{{snake_case_model_name}}'
+    template_name = '{{app_name}}/{{model_name.lower}}_delete.pug'
