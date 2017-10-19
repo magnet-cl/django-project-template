@@ -1,0 +1,23 @@
+extends base.pug
+
+- load i18n
+
+block breadcrumbs
+  li
+    a(href="{% templatetag openblock %} url '{{snake_case_model_name}}_list' {% templatetag closeblock %}")
+      | {% templatetag openvariable %}opts.verbose_name_plural|capfirst{% templatetag closevariable %}
+  li
+    a(href="{% templatetag openvariable %}object.get_absolute_url{% templatetag closevariable %}")
+      | {% templatetag openvariable %}object{% templatetag closevariable %}
+
+
+block content
+  form(action="" method="post")
+    {% templatetag openblock %} csrf_token {% templatetag closeblock %}
+    .alert.alert-danger
+      {% templatetag openblock %} blocktrans {% templatetag closeblock %}Are you sure you want to delete' "{% templatetag openvariable %} object {% templatetag closevariable %}"?{% templatetag openblock %} endblocktrans {% templatetag closeblock %}
+    .text-right
+      .btn-group
+        input.btn.btn-primary(type="submit" value="{% templatetag openblock %} trans 'Confirm' {% templatetag closeblock %}")
+        a.btn.btn-default(href="{% templatetag openvariable %}object.get_absolute_url{% templatetag closevariable %}")
+          | {% templatetag openblock %} trans 'Cancel' {% templatetag closeblock %}

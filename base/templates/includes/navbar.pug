@@ -19,7 +19,7 @@ div.navbar.navbar-inverse.navbar-fixed-top
         {% endif %}
         ul.nav.navbar-nav
           li
-            a(href="#") Link 1
+            a(href="{% url 'user_list' %}") Usuarios
         ul.nav.navbar-nav
           li
             a(href="#") Link 2
@@ -38,7 +38,10 @@ div.navbar.navbar-inverse.navbar-fixed-top
               a(href="{% url 'password_change' %}")
                 | Modificar Contraseña
             li
-              a(href="{% url 'logout' %}") Logout
+              if request.session.loginas_from_user
+                a(href="{% url 'loginas-logout' %}") Logout
+              else
+                a(href="{% url 'logout' %}") Logout
         {% else %}
         li.dropdown
           a.dropdown-toggle(href="#", data-toggle="dropdown")

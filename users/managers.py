@@ -1,7 +1,26 @@
 """ This document defines the UserManager class"""
 
 # django
+from django.db.models import Q
 from django.contrib.auth.models import BaseUserManager
+
+# base
+from base.managers import QuerySet
+
+
+class UserQuerySet(QuerySet):
+    def search(self, query):
+
+        queryset = self
+
+        for term in query.split(' '):
+            queryset = queryset.filter(
+                Q(first_name__unaccent__icontains=term) |
+                Q(last_name__unaccent__icontains=term) |
+                Q(email__icontains=term)
+            )
+
+        return queryset
 
 
 class UserManager(BaseUserManager):
@@ -32,3 +51,15 @@ class UserManager(BaseUserManager):
             raise ValueError('Superuser must have is_superuser=True.')
 
         return self._create_user(email, password, **extra_fields)
+
+    def get_queryset(self):
+        return UserQuerySet(self.model, using=self._db)
+
+    def to_json(self):
+        return self.get_queryset().to_json()
+
+    def find_duplicates(self, *fields):
+        return self.get_queryset().find_duplicates(*fields)
+
+    def get_or_none(self, **fields):
+        return self.get_queryset().get_or_none(**fields)

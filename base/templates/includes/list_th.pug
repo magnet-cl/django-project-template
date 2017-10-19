@@ -1,0 +1,18 @@
+- load order_by_querystring
+
+th
+  a(href="?{% get_order_by_querytring ordering=ordering current_order=order_by %}&{{clean_query_string}}") 
+    | {{verbose_name}}
+
+    for order in ordering
+      if order_by in order
+        .pull-right
+          if order_by == order
+            i.fa.fa-chevron-down
+          else
+            i.fa.fa-chevron-up
+
+          span.label.label-info
+            | {{forloop.counter}}
+          a(href="?{% get_order_by_querytring ordering=ordering current_order=order_by remove=True %}&{{clean_query_string}}") 
+            i.fa.fa-times.text-danger

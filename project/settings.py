@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import sys
+
+# django
+from django.core.urlresolvers import reverse_lazy
 
 from project.local_settings import DEBUG, LOCAL_DATABASES
 from project.local_settings import LOCALLY_INSTALLED_APPS
@@ -20,6 +24,9 @@ if DEBUG:
     env = 'development'
 else:
     env = 'production'
+
+# TEST should be true if we are running python tests
+TEST = 'test' in sys.argv
 
 
 # People who get code error notifications.
@@ -43,7 +50,7 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'CHANGE ME'
+SECRET_KEY = 'wwrb!e&@-%_scw^v8o-q9)v3x7%(3^%12_r_$rt9prby!l1)h#'
 
 ALLOWED_HOSTS = []
 
@@ -60,11 +67,21 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.staticfiles',
+    'django.contrib.postgres',
+    # external
     'compressor',
-    'base',
     'captcha',
+    'loginas',
+
+    # internal
+    'base',
     'users',
 ]
+
+# Default email address to use for various automated correspondence from
+# the site managers.
+DEFAULT_FROM_EMAIL = 'webmaster@localhost'
+EMAIL_SENDER_NAME = 'My project'
 
 if DEBUG:
     INSTALLED_APPS += [
@@ -130,7 +147,7 @@ DATABASES.update(LOCAL_DATABASES)
 # The default is to use the SMTP backend.
 # Third-party backends can be specified by providing a Python path
 # to a module that defines an EmailBackend class.
-if DEBUG or ENABLE_EMAILS:
+if DEBUG or not ENABLE_EMAILS:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 else:
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -193,7 +210,12 @@ STATICFILES_FINDERS = (
     'npm.finders.NpmFinder',
 )
 
+##################
+# AUTHENTICATION #
+##################
+
 AUTH_USER_MODEL = 'users.User'
+LOGOUT_REDIRECT_URL = '/'
 
 # set the precompilers
 COMPRESS_PRECOMPILERS = (
@@ -210,6 +232,10 @@ COMPRESS_CSS_FILTERS = [
 NPM_FILE_PATTERNS = {
     'bootstrap-sass': ['assets/javascripts/bootstrap.min.js'],
     'jquery': ['dist/jquery.min.js'],
+    'moment': ['min/moment-with-locales.min.js'],
+    'eonasdan-bootstrap-datetimepicker': [
+        'build/js/bootstrap-datetimepicker.min.js',
+    ],
 }
 
 # default keys, replace with somethign your own
@@ -257,3 +283,9 @@ LOGGING = {
         },
     }
 }
+
+
+# ### Login as settings ###
+CAN_LOGIN_AS = "base.utils.can_loginas"
+LOGOUT_URL = reverse_lazy('loginas-logout')
+LOGINAS_LOGOUT_REDIRECT_URL = reverse_lazy('admin:index')

@@ -5,8 +5,8 @@ from fabric.api import run
 from fabric.api import task
 from fabric.contrib.files import upload_template
 
-from service import add_systemd_service
-from service import gunicorn_handler
+from .service import add_systemd_service
+from .service import gunicorn_handler
 
 # standard library
 from re import search

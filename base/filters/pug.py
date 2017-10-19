@@ -92,14 +92,20 @@ class PugCompilerFilter(CompilerFilter):
             if outfile_path:
                 with io.open(outfile_path, 'r', encoding=encoding) as file:
                     filtered = file.read()
-            filtered = '{}window.templates["{}"] = {};'.format(
-                'window.templates = window.templates || {};',
-                relative_path,
-                filtered,
-            )
+            filtered = self.wrap_code(filtered, relative_path)
         finally:
             if self.infile is not None:
                 self.infile.close()
             if self.outfile is not None:
                 self.outfile.close()
         return smart_text(filtered)
+
+    def wrap_code(self, filtered, relative_path):
+        wrapper = """
+            (function(){{
+            window.templates = window.templates || {{}};
+            {};
+            window.templates["{}"] = template;
+            }}());
+        """
+        return wrapper.format(filtered, relative_path)

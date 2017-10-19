@@ -21,10 +21,13 @@ from django.contrib import admin
 from base import views as base_views
 
 urlpatterns = [
+    url(r'^admin/', include('loginas.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/', include('users.urls')),
+    url(r'^roles/', include('roles.urls')),
     url(r'^$', base_views.index, name='home'),
 ]
+
 
 if settings.DEBUG:
     import debug_toolbar

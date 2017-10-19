@@ -18,10 +18,11 @@ from django.views.generic.edit import CreateView
 from django.views.generic.edit import DeleteView
 from django.views.generic.edit import UpdateView
 from django.views.generic.list import ListView
+from django.views.generic import RedirectView
 
 # utils
 from base.view_utils import clean_query_string
-from base.utils import camel_to_underscore
+from inflection import underscore
 
 
 @login_required
@@ -61,10 +62,15 @@ class PermissionRequiredMixin:
 
 class BaseDetailView(DetailView, PermissionRequiredMixin):
 
+    def get_title(self):
+        verbose_name = self.model._meta.verbose_name
+        return '{}: {}'.format(verbose_name, self.object).capitalize()
+
     def get_context_data(self, **kwargs):
         context = super(BaseDetailView, self).get_context_data(**kwargs)
 
-        context['title'] = str(self.object)
+        context['opts'] = self.model._meta
+        context['title'] = self.get_title()
 
         return context
 
@@ -79,11 +85,16 @@ class BaseCreateView(CreateView, PermissionRequiredMixin):
     def get_context_data(self, **kwargs):
         context = super(BaseCreateView, self).get_context_data(**kwargs)
 
-        model_name = self.model._meta.verbose_name
-        context['title'] = _('Create %s') % model_name
-        context['cancel_url'] = reverse('{}_list'.format(model_name))
+        verbose_name = self.model._meta.verbose_name
+        context['opts'] = self.model._meta
+        context['title'] = _('Create %s') % verbose_name
+        context['cancel_url'] = self.get_cancel_url()
 
         return context
+
+    def get_cancel_url(self):
+        model_name = self.model.__name__.lower()
+        return reverse('{}_list'.format(model_name))
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
@@ -102,7 +113,7 @@ class BaseSubModelCreateView(CreateView, PermissionRequiredMixin):
         return super(BaseSubModelCreateView, self).dispatch(*args, **kwargs)
 
     def get_form_kwargs(self):
-        model_underscore_name = camel_to_underscore(self.parent_model.__name__)
+        model_underscore_name = underscore(self.parent_model.__name__)
 
         obj = get_object_or_404(
             self.parent_model,
@@ -117,7 +128,7 @@ class BaseSubModelCreateView(CreateView, PermissionRequiredMixin):
         context = super(BaseSubModelCreateView, self).get_context_data(
             **kwargs
         )
-        model_underscore_name = camel_to_underscore(self.parent_model.__name__)
+        model_underscore_name = underscore(self.parent_model.__name__)
 
         obj = get_object_or_404(
             self.parent_model,
@@ -139,19 +150,19 @@ class BaseListView(ListView, PermissionRequiredMixin):
         """
         Return the field or fields to use for ordering the queryset.
         """
-        order = self.request.GET.get('_o')
+        order = self.request.GET.getlist('o')
         if order:
-            return (order,)
+            return order
 
         return self.ordering
 
     def get_context_data(self, **kwargs):
         context = super(BaseListView, self).get_context_data(**kwargs)
+        context['opts'] = self.model._meta
         context['clean_query_string'] = clean_query_string(self.request)
         context['q'] = self.request.GET.get('q')
-        context['title'] = (
-            _('%s list') % self.model._meta.verbose_name
-        ).capitalize()
+        context['title'] = self.model._meta.verbose_name_plural.capitalize()
+        context['ordering'] = self.request.GET.getlist('o')
         return context
 
     @method_decorator(login_required)
@@ -170,6 +181,7 @@ class BaseUpdateView(UpdateView, PermissionRequiredMixin):
     def get_context_data(self, **kwargs):
         context = super(BaseUpdateView, self).get_context_data(**kwargs)
 
+        context['opts'] = self.model._meta
         context['cancel_url'] = self.object.get_absolute_url()
         context['title'] = _('Update %s') % str(self.object)
 
@@ -185,10 +197,18 @@ class BaseDeleteView(DeleteView, PermissionRequiredMixin):
     def get_context_data(self, **kwargs):
         context = super(BaseDeleteView, self).get_context_data(**kwargs)
 
+        context['opts'] = self.model._meta
         context['title'] = _('Delete %s') % str(self.object)
 
         return context
 
     def get_success_url(self):
-        model_name = self.model._meta.verbose_name
+        model_name = self.model.__name__.lower()
         return reverse('{}_list'.format(model_name))
+
+
+class BaseRedirectView(RedirectView, PermissionRequiredMixin):
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        self.check_permission_required()
+        return super(BaseRedirectView, self).dispatch(*args, **kwargs)

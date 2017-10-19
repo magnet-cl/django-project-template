@@ -1,0 +1,25 @@
+extends base.pug
+
+- load i18n
+
+block breadcrumbs
+  li
+    a(href="{% templatetag openblock %} url '{{snake_case_model_name}}_list' {% templatetag closeblock %}")
+      | {% templatetag openvariable %}opts.verbose_name_plural|capfirst{% templatetag closevariable %}
+
+block content
+  .text-right
+    .btn-group
+      if perms.{{app_name}}.change_{{snake_case_model_name}}
+        a.btn.btn-primary(href="{% templatetag openblock %} url '{{snake_case_model_name}}_update' {{snake_case_model_name}}.id {% templatetag closeblock %}")
+          {% templatetag openblock %} trans 'Update {{model_verbose_name}}' {% templatetag closeblock %}
+          i.fa.fa-edit
+      if perms.{{app_name}}.delete_{{snake_case_model_name}}
+        a.btn.btn-danger(href="{% templatetag openblock %} url '{{snake_case_model_name}}_delete' {{snake_case_model_name}}.id {% templatetag closeblock %}")
+          {% templatetag openblock %} trans 'Delete {{model_verbose_name}}' {% templatetag closeblock %}
+          i.fa.fa-times
+
+  table.table.table-bordered.table-hover
+    tbody
+      th Id
+      td {% templatetag openvariable %}{{snake_case_model_name}}.id{% templatetag closevariable %}
