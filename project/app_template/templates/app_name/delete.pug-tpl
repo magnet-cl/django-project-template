@@ -1,5 +1,4 @@
 extends base.pug
-// TODO replace {{snake_case_model_name}} with the model name
 
 - load i18n
 
