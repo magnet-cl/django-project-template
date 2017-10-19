@@ -69,7 +69,7 @@ class PasswordChangeDoneView(auth_views.PasswordChangeDoneView):
 class PasswordResetView(auth_views.PasswordResetView):
     """ view that handles the recover password process """
     template_name = "registration/password_reset_form.pug"
-    email_template_name = "emails/password_reset.html"
+    email_template_name = "emails/password_reset.txt"
 
 
 class PasswordResetConfirmView(auth_views.PasswordResetConfirmView):
