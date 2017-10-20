@@ -6,9 +6,9 @@
 from django.contrib import admin
 
 # models
-from .models import {{camel_case_app_name|slice:":-1"}}
+from .models import {{model_model}}
 
 
-@admin.register({{camel_case_app_name|slice:":-1"}})
-class {{camel_case_app_name|slice:":-1"}}Admin(admin.ModelAdmin):
+@admin.register({{model_model}})
+class {{model_model}}Admin(admin.ModelAdmin):
     pass
