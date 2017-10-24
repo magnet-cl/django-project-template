@@ -17,6 +17,7 @@ from django.conf import settings
 from django.conf.urls import include
 from django.conf.urls import url
 from django.contrib import admin
+from django.conf.urls.static import static
 
 from base import views as base_views
 
@@ -33,4 +34,7 @@ if settings.DEBUG:
     import debug_toolbar
     urlpatterns = [
         url(r'^__debug__/', include(debug_toolbar.urls)),
-    ] + urlpatterns
+    ] + urlpatterns + static(
+        settings.MEDIA_URL,
+        document_root=settings.MEDIA_ROOT,
+    )
