@@ -13,6 +13,7 @@ from django.template import RequestContext
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
+from django.views.generic import TemplateView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 from django.views.generic.edit import DeleteView
@@ -169,6 +170,22 @@ class BaseListView(ListView, PermissionRequiredMixin):
     def dispatch(self, *args, **kwargs):
         self.check_permission_required()
         return super(BaseListView, self).dispatch(*args, **kwargs)
+
+
+class BaseTemplateView(TemplateView, PermissionRequiredMixin):
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        self.check_permission_required()
+        return super(BaseTemplateView, self).dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(BaseTemplateView, self).get_context_data(**kwargs)
+
+        context['opts'] = self.model._meta
+        context['title'] = self.model._meta
+
+        return context
 
 
 class BaseUpdateView(UpdateView, PermissionRequiredMixin):
