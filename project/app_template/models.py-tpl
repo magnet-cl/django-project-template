@@ -40,4 +40,4 @@ class {{model_name}}(BaseModel):
     def get_absolute_url(self):
         """ Returns the canonical URL for the {{model_name}} object """
         # TODO this is an example, change it
-        return reverse('{{model_name.lower}}_detail', args=(self.pk,))
+        return reverse('{{snake_case_model_name}}_detail', args=(self.pk,))
