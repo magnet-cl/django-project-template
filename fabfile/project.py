@@ -64,14 +64,14 @@ def update_server():
             print(green('installing pip requirements'))
             run('pip install --requirement requirements.txt')
 
+            print(green('installing npm packages'))
+            run('npm install')
+
             print(green('collecting static files'))
             run('yes yes | python manage.py collectstatic')
 
             print(green('compiling translations'))
             run('./translate.sh -c')
-
-            print(green('installing npm packages'))
-            run('npm install')
 
     print(green('Migrate database'))
     migrate()
