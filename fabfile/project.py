@@ -70,6 +70,9 @@ def update_server():
             print(green('compiling translations'))
             run('./translate.sh -c')
 
+            print(green('installing npm packages'))
+            run('npm install')
+
     print(green('Migrate database'))
     migrate()
 
