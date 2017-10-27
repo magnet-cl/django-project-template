@@ -54,6 +54,13 @@ SECRET_KEY = 'wwrb!e&@-%_scw^v8o-q9)v3x7%(3^%12_r_$rt9prby!l1)h#'
 
 ALLOWED_HOSTS = []
 
+try:
+    from project.local_settings import LOCALLY_ALLOWED_HOSTS
+except:
+    pass
+else:
+    ALLOWED_HOSTS += LOCALLY_ALLOWED_HOSTS
+
 SITE_ID = 1
 
 # Application definition
