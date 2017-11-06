@@ -194,7 +194,12 @@ LANGUAGE_CODE = 'es'
 # In a Windows environment this must be set to your system time zone.
 TIME_ZONE = 'America/Santiago'
 
+# If you set this to False, Django will make some optimizations so as not
+# to load the internationalization machinery.
 USE_I18N = True
+LOCALE_PATHS = [
+    PROJECT_DIR + '/locale'
+]
 
 USE_L10N = True
 
