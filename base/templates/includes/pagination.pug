@@ -20,6 +20,6 @@
             a(href="?p={{ page_obj.next_page_number }}&{% get_order_by_querytring ordering=ordering %}&{{clean_query_string}}") »
   .col-sm-2
     strong.text-muted.pull-right
-      | {{ objects.start_index }}-{{ objects.end_index }}
+      | {{ page_obj.start_index }}-{{ page_obj.end_index }}
       | de {{ paginator.count }}
       | &nbsp;
