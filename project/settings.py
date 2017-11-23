@@ -16,9 +16,21 @@ import sys
 # django
 from django.core.urlresolvers import reverse_lazy
 
-from project.local_settings import DEBUG, LOCAL_DATABASES
-from project.local_settings import LOCALLY_INSTALLED_APPS
-from project.local_settings import ENABLE_EMAILS
+# local settings
+if 'CIRCLECI' in os.environ:
+    from project.circleci_settings import DEBUG
+    from project.circleci_settings import LOCAL_DATABASES
+    from project.circleci_settings import LOCALLY_INSTALLED_APPS
+    from project.circleci_settings import ENABLE_EMAILS
+    from project.circleci_settings import ADMINS
+    from project.circleci_settings import LOCALLY_ALLOWED_HOSTS
+else:
+    from project.local_settings import DEBUG
+    from project.local_settings import LOCAL_DATABASES
+    from project.local_settings import LOCALLY_INSTALLED_APPS
+    from project.local_settings import ENABLE_EMAILS
+    from project.local_settings import ADMINS
+    from project.local_settings import LOCALLY_ALLOWED_HOSTS
 
 if DEBUG:
     env = 'development'
@@ -34,8 +46,7 @@ TEST = 'test' in sys.argv
 #     ('Full Name', 'email@example.com'),
 #     ('Full Name', 'anotheremail@example.com'),
 # ]
-ADMINS = []
-
+ADMINS = ADMINS
 
 # List of IP addresses, as strings, that:
 #   * See debug comments, when DEBUG is true
@@ -53,13 +64,7 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 SECRET_KEY = 'CHANGE ME'
 
 ALLOWED_HOSTS = []
-
-try:
-    from project.local_settings import LOCALLY_ALLOWED_HOSTS
-except:
-    pass
-else:
-    ALLOWED_HOSTS += LOCALLY_ALLOWED_HOSTS
+ALLOWED_HOSTS += LOCALLY_ALLOWED_HOSTS
 
 SITE_ID = 1
 
