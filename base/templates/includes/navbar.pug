@@ -11,12 +11,11 @@ div.navbar.navbar-inverse.navbar-fixed-top
       a.navbar-brand(href="{% url 'home' %}") Project
         i.fa.fa-spinner.fa-spin.page-loading-icon
     div.navbar-collapse.collapse
-      - if user.is_authenticated 
-        {% if user.is_staff %}
-        ul.nav.navbar-nav
-          li
-            a(href="{% url 'admin:index' %}") Administración
-        {% endif %}
+      if user.is_authenticated 
+        if user.is_staff
+          ul.nav.navbar-nav
+            li
+              a(href="{% url 'admin:index' %}") Administración
         ul.nav.navbar-nav
           li
             a(href="{% url 'user_list' %}") Usuarios

@@ -21,5 +21,6 @@ block content
 
   table.table.table-bordered.table-hover
     tbody
-      th Id
-      td {% templatetag openvariable %}{{snake_case_model_name}}.id{% templatetag closevariable %}
+      tr
+        th Id
+        td {% templatetag openvariable %}{{snake_case_model_name}}.id{% templatetag closevariable %}
