@@ -1,8 +1,9 @@
 - load order_by_querystring
+- load i18n
 
 th
   a(href="?{% get_order_by_querytring ordering=ordering current_order=order_by %}&{{clean_query_string}}") 
-    | {{verbose_name}}
+    | {% trans verbose_name %}
 
     for order in ordering
       if order_by in order
