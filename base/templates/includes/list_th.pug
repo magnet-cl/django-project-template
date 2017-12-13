@@ -6,7 +6,7 @@ th
     | {% trans verbose_name %}
 
     for order in ordering
-      if order_by in order
+      if order_by == order or order_by == order|slice:"1:"
         .pull-right
           if order_by == order
             i.fa.fa-chevron-down
