@@ -146,6 +146,21 @@ class BaseSubModelCreateView(CreateView, PermissionRequiredMixin):
 class BaseListView(ListView, PermissionRequiredMixin):
     paginate_by = 25
     page_kwarg = 'p'
+    ignore_kwargs_on_filter = ('q', page_kwarg, 'o')
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        self.check_permission_required()
+        return super(BaseListView, self).dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(BaseListView, self).get_context_data(**kwargs)
+        context['opts'] = self.model._meta
+        context['clean_query_string'] = clean_query_string(self.request)
+        context['q'] = self.request.GET.get('q')
+        context['title'] = self.model._meta.verbose_name_plural.capitalize()
+        context['ordering'] = self.request.GET.getlist('o')
+        return context
 
     def get_ordering(self):
         """
@@ -157,19 +172,26 @@ class BaseListView(ListView, PermissionRequiredMixin):
 
         return self.ordering
 
-    def get_context_data(self, **kwargs):
-        context = super(BaseListView, self).get_context_data(**kwargs)
-        context['opts'] = self.model._meta
-        context['clean_query_string'] = clean_query_string(self.request)
-        context['q'] = self.request.GET.get('q')
-        context['title'] = self.model._meta.verbose_name_plural.capitalize()
-        context['ordering'] = self.request.GET.getlist('o')
-        return context
+    def get_queryset(self):
+        """
+        return the queryset to use on the list and filter by what comes on the
+        query string
+        """
+        queryset = super(BaseListView, self).get_queryset()
 
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        self.check_permission_required()
-        return super(BaseListView, self).dispatch(*args, **kwargs)
+        # obtain non ignored kwargs for the filter method
+        items = self.request.GET.items()
+        params = dict(
+            (k, v) for k, v in items if k not in self.ignore_kwargs_on_filter
+        )
+
+        # filter
+        for key, value in params.items():
+            try:
+                queryset = queryset.filter(**{key: value})
+            except:
+                pass
+        return queryset
 
 
 class BaseTemplateView(TemplateView, PermissionRequiredMixin):
