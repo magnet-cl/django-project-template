@@ -55,7 +55,6 @@ class UserAdmin(DjangoUserAdmin):
                        'password2')}
          ),
     )
-    search_fields = ('first_name', 'last_name', 'email')
     ordering = ('email',)
 
     def change_password_link(self, obj):

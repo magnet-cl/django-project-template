@@ -16,7 +16,7 @@ function replace(){
 INSTALL_SYSTEM_DEPENDENCIES=true
 INSTALL_PIP=true
 INSTALL_BOWER=true
-INSTALL_NPM=true
+INSTALL_YARN=true
 TRANSLATE=true
 BUILD_JAVASCRIPT=true
 
@@ -39,7 +39,7 @@ case "$(uname -s)" in
 esac
 
 
-while getopts “napbj” OPTION
+while getopts “yapbj” OPTION
 do
     case $OPTION in
         a)
@@ -47,7 +47,7 @@ do
              INSTALL_SYSTEM_DEPENDENCIES=true
              INSTALL_PIP=false
              INSTALL_BOWER=false
-             INSTALL_NPM=false
+             INSTALL_YARN=false
              TRANSLATE=false
              BUILD_JAVASCRIPT=false
              ;;
@@ -56,7 +56,7 @@ do
              INSTALL_SYSTEM_DEPENDENCIES=false
              INSTALL_PIP=true
              INSTALL_BOWER=false
-             INSTALL_NPM=false
+             INSTALL_YARN=false
              TRANSLATE=false
              BUILD_JAVASCRIPT=false
              ;;
@@ -65,16 +65,16 @@ do
              INSTALL_SYSTEM_DEPENDENCIES=false
              INSTALL_PIP=false
              INSTALL_BOWER=true
-             INSTALL_NPM=false
+             INSTALL_YARN=false
              TRANSLATE=false
              BUILD_JAVASCRIPT=false
              ;;
-        n)
-             print_green "only node install"
+        y)
+             print_green "only yarn install"
              INSTALL_SYSTEM_DEPENDENCIES=false
              INSTALL_PIP=false
              INSTALL_BOWER=false
-             INSTALL_NPM=true
+             INSTALL_YARN=true
              TRANSLATE=false
              BUILD_JAVASCRIPT=false
              ;;
@@ -83,7 +83,7 @@ do
              INSTALL_SYSTEM_DEPENDENCIES=false
              INSTALL_PIP=false
              INSTALL_BOWER=false
-             INSTALL_NPM=false
+             INSTALL_YARN=false
              TRANSLATE=false
              BUILD_JAVASCRIPT=true
              ;;
@@ -155,6 +155,8 @@ fi
 
 # create the local_settings file if it does not exist
 if [ ! -f ./project/settings/local_settings.py ] ; then
+    print_green "Generating local settings"
+
     cp project/local_settings.py.default project/local_settings.py
 
     if [ INSTALL_POSTGRE ] ; then
@@ -171,12 +173,15 @@ fi
 # Change the project/settings.py file if it contains the CHANGE ME string
 if grep -q "CHANGE ME" "project/settings.py"; then
     print_green "Generate secret key"
+
     # change the SECRET_KEY value on project settings
     python manage.py generatesecretkey
 fi
 
 
-if  $INSTALL_NPM ; then
+if  $INSTALL_YARN ; then
+    print_green "Installing yarn dependencies"
+
     # package.json modification
     replace "s/NAME/${PWD##*/}/g" package.json
     replace "s/HOMEPAGE/https:\/\/bitbucket.org\/magnet-cl\/${PWD##*/}/g" package.json
