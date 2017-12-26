@@ -15,7 +15,7 @@ block content
   form(action="" method="post")
     {% templatetag openblock %} csrf_token {% templatetag closeblock %}
     .alert.alert-danger
-      {% templatetag openblock %} blocktrans {% templatetag closeblock %}Are you sure you want to delete' "{% templatetag openvariable %} object {% templatetag closevariable %}"?{% templatetag openblock %} endblocktrans {% templatetag closeblock %}
+      {% templatetag openblock %} blocktrans {% templatetag closeblock %}Are you sure you want to delete "{% templatetag openvariable %} object {% templatetag closevariable %}"?{% templatetag openblock %} endblocktrans {% templatetag closeblock %}
     .text-right
       .btn-group
         input.btn.btn-primary(type="submit" value="{% templatetag openblock %} trans 'Confirm' {% templatetag closeblock %}")
