@@ -65,7 +65,7 @@ class BaseDetailView(DetailView, PermissionRequiredMixin):
 
     def get_title(self):
         verbose_name = self.model._meta.verbose_name
-        return '{}: {}'.format(verbose_name, self.object).capitalize()
+        return '{}: {}'.format(verbose_name, self.object).title()
 
     def get_context_data(self, **kwargs):
         context = super(BaseDetailView, self).get_context_data(**kwargs)
@@ -158,7 +158,7 @@ class BaseListView(ListView, PermissionRequiredMixin):
         context['opts'] = self.model._meta
         context['clean_query_string'] = clean_query_string(self.request)
         context['q'] = self.request.GET.get('q')
-        context['title'] = self.model._meta.verbose_name_plural.capitalize()
+        context['title'] = self.model._meta.verbose_name_plural.title()
         context['ordering'] = self.request.GET.getlist('o')
         return context
 
