@@ -1,0 +1,3643 @@
+[
+{
+    "pk": 1,
+    "model": "regions.region",
+    "fields": {
+        "created_at": "2014-08-08T22:21:45.576Z",
+        "updated_at": "2014-08-08T22:21:45.576Z",
+        "short_name": "RM",
+        "name": "Región Metropolitana de Santiago",
+        "order": 7,
+        "importance": 1
+    }
+},
+{
+    "pk": 2,
+    "model": "regions.region",
+    "fields": {
+        "created_at": "2014-08-08T22:21:45.583Z",
+        "updated_at": "2014-08-08T22:21:45.583Z",
+        "short_name": "I",
+        "name": "Región de Tarapacá",
+        "order": 2,
+        "importance": 11
+
+    }
+},
+{
+    "pk": 3,
+    "model": "regions.region",
+    "fields": {
+        "created_at": "2014-08-08T22:21:45.607Z",
+        "updated_at": "2014-08-08T22:21:45.607Z",
+        "short_name": "II",
+        "name": "Región de Antofagasta",
+        "order": 3,
+        "importance": 9
+    }
+},
+{
+    "pk": 4,
+    "model": "regions.region",
+    "fields": {
+        "created_at": "2014-08-08T22:21:45.610Z",
+        "updated_at": "2014-08-08T22:21:45.610Z",
+        "short_name": "III",
+        "name": "Región de Atacama",
+        "order": 4,
+        "importance": 12
+    }
+},
+{
+    "pk": 5,
+    "model": "regions.region",
+    "fields": {
+        "created_at": "2014-08-08T22:21:45.612Z",
+        "updated_at": "2014-08-08T22:21:45.612Z",
+        "short_name": "IV",
+        "name": "Región de Coquimbo",
+        "order": 5,
+        "importance": 8
+    }
+},
+{
+    "pk": 6,
+    "model": "regions.region",
+    "fields": {
+        "created_at": "2014-08-08T22:21:45.615Z",
+        "updated_at": "2014-08-08T22:21:45.615Z",
+        "short_name": "V",
+        "name": "Región de Valparaíso",
+        "order": 6,
+        "importance": 3
+    }
+},
+{
+    "pk": 7,
+    "model": "regions.region",
+    "fields": {
+        "created_at": "2014-08-08T22:21:45.618Z",
+        "updated_at": "2014-08-08T22:21:45.618Z",
+        "short_name": "VI",
+        "name": "Región del Libertador Bernardo O'Higgins",
+        "order": 8,
+        "importance": 6
+    }
+},
+{
+    "pk": 8,
+    "model": "regions.region",
+    "fields": {
+        "created_at": "2014-08-08T22:21:45.621Z",
+        "updated_at": "2014-08-08T22:21:45.621Z",
+        "short_name": "VII",
+        "name": "Región del Maule",
+        "order": 9,
+        "importance": 4
+    }
+},
+{
+    "pk": 9,
+    "model": "regions.region",
+    "fields": {
+        "created_at": "2014-08-08T22:21:45.623Z",
+        "updated_at": "2014-08-08T22:21:45.623Z",
+        "short_name": "VIII",
+        "name": "Región del Bío Bío",
+        "order": 10,
+        "importance": 2
+    }
+},
+{
+    "pk": 10,
+    "model": "regions.region",
+    "fields": {
+        "created_at": "2014-08-08T22:21:45.625Z",
+        "updated_at": "2014-08-08T22:21:45.625Z",
+        "short_name": "IX",
+        "name": "Región de la Araucanía",
+        "order": 11,
+        "importance": 5
+    }
+},
+{
+    "pk": 11,
+    "model": "regions.region",
+    "fields": {
+        "created_at": "2014-08-08T22:21:45.627Z",
+        "updated_at": "2014-08-08T22:21:45.627Z",
+        "short_name": "X",
+        "name": "Región de los Lagos",
+        "order": 13,
+        "importance": 7
+    }
+},
+{
+    "pk": 12,
+    "model": "regions.region",
+    "fields": {
+        "created_at": "2014-08-08T22:21:45.629Z",
+        "updated_at": "2014-08-08T22:21:45.629Z",
+        "short_name": "XI",
+        "name": "Región de Aysén del General Carlos Ibáñez del Campo",
+        "order": 14,
+        "importance": 15
+    }
+},
+{
+    "pk": 13,
+    "model": "regions.region",
+    "fields": {
+        "created_at": "2014-08-08T22:21:45.631Z",
+        "updated_at": "2014-08-08T22:21:45.631Z",
+        "short_name": "XII",
+        "name": "Región de Magallanes y la Antártica Chilena",
+        "order": 15,
+        "importance": 14
+    }
+},
+{
+    "pk": 14,
+    "model": "regions.region",
+    "fields": {
+        "created_at": "2014-08-08T22:21:45.634Z",
+        "updated_at": "2014-08-08T22:21:45.634Z",
+        "short_name": "XIV",
+        "name": "Región de Los Ríos",
+        "order": 12,
+        "importance": 10
+    }
+},
+{
+    "pk": 15,
+    "model": "regions.region",
+    "fields": {
+        "created_at": "2014-08-08T22:21:45.636Z",
+        "updated_at": "2014-08-08T22:21:45.636Z",
+        "short_name": "XV",
+        "name": "Región de Arica-Parinacota",
+        "order": 1,
+        "importance": 13
+    }
+},
+{
+    "pk": 1,
+    "model": "regions.commune",
+    "fields": {
+        "region": 15,
+        "created_at": "2014-08-08T22:23:57.810Z",
+        "updated_at": "2014-08-08T22:23:57.810Z",
+        "name": "Arica"
+    }
+},
+{
+    "pk": 2,
+    "model": "regions.commune",
+    "fields": {
+        "region": 15,
+        "created_at": "2014-08-08T22:23:57.882Z",
+        "updated_at": "2014-08-08T22:23:57.882Z",
+        "name": "Camarones"
+    }
+},
+{
+    "pk": 3,
+    "model": "regions.commune",
+    "fields": {
+        "region": 15,
+        "created_at": "2014-08-08T22:23:57.888Z",
+        "updated_at": "2014-08-08T22:23:57.888Z",
+        "name": "Putre"
+    }
+},
+{
+    "pk": 4,
+    "model": "regions.commune",
+    "fields": {
+        "region": 15,
+        "created_at": "2014-08-08T22:23:57.892Z",
+        "updated_at": "2014-08-08T22:23:57.892Z",
+        "name": "General Lagos"
+    }
+},
+{
+    "pk": 5,
+    "model": "regions.commune",
+    "fields": {
+        "region": 2,
+        "created_at": "2014-08-08T22:23:57.895Z",
+        "updated_at": "2014-08-08T22:23:57.895Z",
+        "name": "Iquique"
+    }
+},
+{
+    "pk": 6,
+    "model": "regions.commune",
+    "fields": {
+        "region": 2,
+        "created_at": "2014-08-08T22:23:57.898Z",
+        "updated_at": "2014-08-08T22:23:57.899Z",
+        "name": "Alto Hospicio"
+    }
+},
+{
+    "pk": 7,
+    "model": "regions.commune",
+    "fields": {
+        "region": 2,
+        "created_at": "2014-08-08T22:23:57.901Z",
+        "updated_at": "2014-08-08T22:23:57.901Z",
+        "name": "Pozo Almonte"
+    }
+},
+{
+    "pk": 8,
+    "model": "regions.commune",
+    "fields": {
+        "region": 2,
+        "created_at": "2014-08-08T22:23:57.906Z",
+        "updated_at": "2014-08-08T22:23:57.906Z",
+        "name": "Camiña"
+    }
+},
+{
+    "pk": 9,
+    "model": "regions.commune",
+    "fields": {
+        "region": 2,
+        "created_at": "2014-08-08T22:23:57.909Z",
+        "updated_at": "2014-08-08T22:23:57.909Z",
+        "name": "Colchane"
+    }
+},
+{
+    "pk": 10,
+    "model": "regions.commune",
+    "fields": {
+        "region": 2,
+        "created_at": "2014-08-08T22:23:57.912Z",
+        "updated_at": "2014-08-08T22:23:57.912Z",
+        "name": "Huara"
+    }
+},
+{
+    "pk": 11,
+    "model": "regions.commune",
+    "fields": {
+        "region": 2,
+        "created_at": "2014-08-08T22:23:57.915Z",
+        "updated_at": "2014-08-08T22:23:57.915Z",
+        "name": "Pica"
+    }
+},
+{
+    "pk": 12,
+    "model": "regions.commune",
+    "fields": {
+        "region": 3,
+        "created_at": "2014-08-08T22:23:57.918Z",
+        "updated_at": "2014-08-08T22:23:57.918Z",
+        "name": "Antofagasta"
+    }
+},
+{
+    "pk": 13,
+    "model": "regions.commune",
+    "fields": {
+        "region": 3,
+        "created_at": "2014-08-08T22:23:57.921Z",
+        "updated_at": "2014-08-08T22:23:57.921Z",
+        "name": "Mejillones"
+    }
+},
+{
+    "pk": 14,
+    "model": "regions.commune",
+    "fields": {
+        "region": 3,
+        "created_at": "2014-08-08T22:23:57.924Z",
+        "updated_at": "2014-08-08T22:23:57.924Z",
+        "name": "Sierra Gorda"
+    }
+},
+{
+    "pk": 15,
+    "model": "regions.commune",
+    "fields": {
+        "region": 3,
+        "created_at": "2014-08-08T22:23:57.926Z",
+        "updated_at": "2014-08-08T22:23:57.927Z",
+        "name": "Taltal"
+    }
+},
+{
+    "pk": 16,
+    "model": "regions.commune",
+    "fields": {
+        "region": 3,
+        "created_at": "2014-08-08T22:23:57.929Z",
+        "updated_at": "2014-08-08T22:23:57.929Z",
+        "name": "Calama"
+    }
+},
+{
+    "pk": 17,
+    "model": "regions.commune",
+    "fields": {
+        "region": 3,
+        "created_at": "2014-08-08T22:23:57.932Z",
+        "updated_at": "2014-08-08T22:23:57.932Z",
+        "name": "Ollagüe"
+    }
+},
+{
+    "pk": 18,
+    "model": "regions.commune",
+    "fields": {
+        "region": 3,
+        "created_at": "2014-08-08T22:23:57.934Z",
+        "updated_at": "2014-08-08T22:23:57.934Z",
+        "name": "San Pedro de Atacama"
+    }
+},
+{
+    "pk": 19,
+    "model": "regions.commune",
+    "fields": {
+        "region": 3,
+        "created_at": "2014-08-08T22:23:57.937Z",
+        "updated_at": "2014-08-08T22:23:57.937Z",
+        "name": "Tocopilla"
+    }
+},
+{
+    "pk": 20,
+    "model": "regions.commune",
+    "fields": {
+        "region": 3,
+        "created_at": "2014-08-08T22:23:57.940Z",
+        "updated_at": "2014-08-08T22:23:57.940Z",
+        "name": "María Elena"
+    }
+},
+{
+    "pk": 21,
+    "model": "regions.commune",
+    "fields": {
+        "region": 4,
+        "created_at": "2014-08-08T22:23:57.943Z",
+        "updated_at": "2014-08-08T22:23:57.943Z",
+        "name": "Copiapó"
+    }
+},
+{
+    "pk": 22,
+    "model": "regions.commune",
+    "fields": {
+        "region": 4,
+        "created_at": "2014-08-08T22:23:57.945Z",
+        "updated_at": "2014-08-08T22:23:57.945Z",
+        "name": "Caldera"
+    }
+},
+{
+    "pk": 23,
+    "model": "regions.commune",
+    "fields": {
+        "region": 4,
+        "created_at": "2014-08-08T22:23:57.948Z",
+        "updated_at": "2014-08-08T22:23:57.948Z",
+        "name": "Tierra Amarilla"
+    }
+},
+{
+    "pk": 24,
+    "model": "regions.commune",
+    "fields": {
+        "region": 4,
+        "created_at": "2014-08-08T22:23:57.951Z",
+        "updated_at": "2014-08-08T22:23:57.951Z",
+        "name": "Chañaral"
+    }
+},
+{
+    "pk": 25,
+    "model": "regions.commune",
+    "fields": {
+        "region": 4,
+        "created_at": "2014-08-08T22:23:57.953Z",
+        "updated_at": "2014-08-08T22:23:57.953Z",
+        "name": "Diego de Almagro"
+    }
+},
+{
+    "pk": 26,
+    "model": "regions.commune",
+    "fields": {
+        "region": 4,
+        "created_at": "2014-08-08T22:23:57.956Z",
+        "updated_at": "2014-08-08T22:23:57.956Z",
+        "name": "Vallenar"
+    }
+},
+{
+    "pk": 27,
+    "model": "regions.commune",
+    "fields": {
+        "region": 4,
+        "created_at": "2014-08-08T22:23:57.959Z",
+        "updated_at": "2014-08-08T22:23:57.959Z",
+        "name": "Alto del Carmen"
+    }
+},
+{
+    "pk": 28,
+    "model": "regions.commune",
+    "fields": {
+        "region": 4,
+        "created_at": "2014-08-08T22:23:57.962Z",
+        "updated_at": "2014-08-08T22:23:57.962Z",
+        "name": "Freirina"
+    }
+},
+{
+    "pk": 29,
+    "model": "regions.commune",
+    "fields": {
+        "region": 4,
+        "created_at": "2014-08-08T22:23:57.964Z",
+        "updated_at": "2014-08-08T22:23:57.964Z",
+        "name": "Huasco"
+    }
+},
+{
+    "pk": 30,
+    "model": "regions.commune",
+    "fields": {
+        "region": 5,
+        "created_at": "2014-08-08T22:23:57.967Z",
+        "updated_at": "2014-08-08T22:23:57.967Z",
+        "name": "La Serena"
+    }
+},
+{
+    "pk": 31,
+    "model": "regions.commune",
+    "fields": {
+        "region": 5,
+        "created_at": "2014-08-08T22:23:57.969Z",
+        "updated_at": "2014-08-08T22:23:57.969Z",
+        "name": "Coquimbo"
+    }
+},
+{
+    "pk": 32,
+    "model": "regions.commune",
+    "fields": {
+        "region": 5,
+        "created_at": "2014-08-08T22:23:57.972Z",
+        "updated_at": "2014-08-08T22:23:57.972Z",
+        "name": "Andacollo"
+    }
+},
+{
+    "pk": 33,
+    "model": "regions.commune",
+    "fields": {
+        "region": 5,
+        "created_at": "2014-08-08T22:23:57.975Z",
+        "updated_at": "2014-08-08T22:23:57.975Z",
+        "name": "La Higuera"
+    }
+},
+{
+    "pk": 34,
+    "model": "regions.commune",
+    "fields": {
+        "region": 5,
+        "created_at": "2014-08-08T22:23:57.978Z",
+        "updated_at": "2014-08-08T22:23:57.978Z",
+        "name": "Paiguano"
+    }
+},
+{
+    "pk": 35,
+    "model": "regions.commune",
+    "fields": {
+        "region": 5,
+        "created_at": "2014-08-08T22:23:57.981Z",
+        "updated_at": "2014-08-08T22:23:57.981Z",
+        "name": "Vicuña"
+    }
+},
+{
+    "pk": 36,
+    "model": "regions.commune",
+    "fields": {
+        "region": 5,
+        "created_at": "2014-08-08T22:23:57.984Z",
+        "updated_at": "2014-08-08T22:23:57.984Z",
+        "name": "Illapel"
+    }
+},
+{
+    "pk": 37,
+    "model": "regions.commune",
+    "fields": {
+        "region": 5,
+        "created_at": "2014-08-08T22:23:57.986Z",
+        "updated_at": "2014-08-08T22:23:57.986Z",
+        "name": "Canela"
+    }
+},
+{
+    "pk": 38,
+    "model": "regions.commune",
+    "fields": {
+        "region": 5,
+        "created_at": "2014-08-08T22:23:57.989Z",
+        "updated_at": "2014-08-08T22:23:57.989Z",
+        "name": "Los Vilos"
+    }
+},
+{
+    "pk": 39,
+    "model": "regions.commune",
+    "fields": {
+        "region": 5,
+        "created_at": "2014-08-08T22:23:57.996Z",
+        "updated_at": "2014-08-08T22:23:57.996Z",
+        "name": "Salamanca"
+    }
+},
+{
+    "pk": 40,
+    "model": "regions.commune",
+    "fields": {
+        "region": 5,
+        "created_at": "2014-08-08T22:23:58.005Z",
+        "updated_at": "2014-08-08T22:23:58.005Z",
+        "name": "Ovalle"
+    }
+},
+{
+    "pk": 41,
+    "model": "regions.commune",
+    "fields": {
+        "region": 5,
+        "created_at": "2014-08-08T22:23:58.007Z",
+        "updated_at": "2014-08-08T22:23:58.007Z",
+        "name": "Combarbalá"
+    }
+},
+{
+    "pk": 42,
+    "model": "regions.commune",
+    "fields": {
+        "region": 5,
+        "created_at": "2014-08-08T22:23:58.009Z",
+        "updated_at": "2014-08-08T22:23:58.009Z",
+        "name": "Monte Patria"
+    }
+},
+{
+    "pk": 43,
+    "model": "regions.commune",
+    "fields": {
+        "region": 5,
+        "created_at": "2014-08-08T22:23:58.013Z",
+        "updated_at": "2014-08-08T22:23:58.013Z",
+        "name": "Punitaqui"
+    }
+},
+{
+    "pk": 44,
+    "model": "regions.commune",
+    "fields": {
+        "region": 5,
+        "created_at": "2014-08-08T22:23:58.015Z",
+        "updated_at": "2014-08-08T22:23:58.015Z",
+        "name": "Río Hurtado"
+    }
+},
+{
+    "pk": 45,
+    "model": "regions.commune",
+    "fields": {
+        "region": 6,
+        "created_at": "2014-08-08T22:23:58.018Z",
+        "updated_at": "2014-08-08T22:23:58.018Z",
+        "name": "Valparaíso"
+    }
+},
+{
+    "pk": 46,
+    "model": "regions.commune",
+    "fields": {
+        "region": 6,
+        "created_at": "2014-08-08T22:23:58.020Z",
+        "updated_at": "2014-08-08T22:23:58.020Z",
+        "name": "Casablanca"
+    }
+},
+{
+    "pk": 47,
+    "model": "regions.commune",
+    "fields": {
+        "region": 6,
+        "created_at": "2014-08-08T22:23:58.025Z",
+        "updated_at": "2014-08-08T22:23:58.025Z",
+        "name": "Concón"
+    }
+},
+{
+    "pk": 48,
+    "model": "regions.commune",
+    "fields": {
+        "region": 6,
+        "created_at": "2014-08-08T22:23:58.028Z",
+        "updated_at": "2014-08-08T22:23:58.028Z",
+        "name": "Juan Fernández"
+    }
+},
+{
+    "pk": 49,
+    "model": "regions.commune",
+    "fields": {
+        "region": 6,
+        "created_at": "2014-08-08T22:23:58.030Z",
+        "updated_at": "2014-08-08T22:23:58.030Z",
+        "name": "Puchuncaví"
+    }
+},
+{
+    "pk": 50,
+    "model": "regions.commune",
+    "fields": {
+        "region": 6,
+        "created_at": "2014-08-08T22:23:58.033Z",
+        "updated_at": "2014-08-08T22:23:58.033Z",
+        "name": "Quintero"
+    }
+},
+{
+    "pk": 51,
+    "model": "regions.commune",
+    "fields": {
+        "region": 6,
+        "created_at": "2014-08-08T22:23:58.036Z",
+        "updated_at": "2014-08-08T22:23:58.036Z",
+        "name": "Viña del Mar"
+    }
+},
+{
+    "pk": 52,
+    "model": "regions.commune",
+    "fields": {
+        "region": 6,
+        "created_at": "2014-08-08T22:23:58.038Z",
+        "updated_at": "2014-08-08T22:23:58.038Z",
+        "name": "Isla de Pascua"
+    }
+},
+{
+    "pk": 53,
+    "model": "regions.commune",
+    "fields": {
+        "region": 6,
+        "created_at": "2014-08-08T22:23:58.041Z",
+        "updated_at": "2014-08-08T22:23:58.041Z",
+        "name": "Los Andes"
+    }
+},
+{
+    "pk": 54,
+    "model": "regions.commune",
+    "fields": {
+        "region": 6,
+        "created_at": "2014-08-08T22:23:58.043Z",
+        "updated_at": "2014-08-08T22:23:58.043Z",
+        "name": "Calle Larga"
+    }
+},
+{
+    "pk": 55,
+    "model": "regions.commune",
+    "fields": {
+        "region": 6,
+        "created_at": "2014-08-08T22:23:58.046Z",
+        "updated_at": "2014-08-08T22:23:58.046Z",
+        "name": "Rinconada"
+    }
+},
+{
+    "pk": 56,
+    "model": "regions.commune",
+    "fields": {
+        "region": 6,
+        "created_at": "2014-08-08T22:23:58.049Z",
+        "updated_at": "2014-08-08T22:23:58.049Z",
+        "name": "San Esteban"
+    }
+},
+{
+    "pk": 57,
+    "model": "regions.commune",
+    "fields": {
+        "region": 6,
+        "created_at": "2014-08-08T22:23:58.052Z",
+        "updated_at": "2014-08-08T22:23:58.052Z",
+        "name": "La Ligua"
+    }
+},
+{
+    "pk": 58,
+    "model": "regions.commune",
+    "fields": {
+        "region": 6,
+        "created_at": "2014-08-08T22:23:58.054Z",
+        "updated_at": "2014-08-08T22:23:58.054Z",
+        "name": "Cabildo"
+    }
+},
+{
+    "pk": 59,
+    "model": "regions.commune",
+    "fields": {
+        "region": 6,
+        "created_at": "2014-08-08T22:23:58.057Z",
+        "updated_at": "2014-08-08T22:23:58.057Z",
+        "name": "Papudo"
+    }
+},
+{
+    "pk": 60,
+    "model": "regions.commune",
+    "fields": {
+        "region": 6,
+        "created_at": "2014-08-08T22:23:58.060Z",
+        "updated_at": "2014-08-08T22:23:58.060Z",
+        "name": "Petorca"
+    }
+},
+{
+    "pk": 61,
+    "model": "regions.commune",
+    "fields": {
+        "region": 6,
+        "created_at": "2014-08-08T22:23:58.062Z",
+        "updated_at": "2014-08-08T22:23:58.062Z",
+        "name": "Zapallar"
+    }
+},
+{
+    "pk": 62,
+    "model": "regions.commune",
+    "fields": {
+        "region": 6,
+        "created_at": "2014-08-08T22:23:58.065Z",
+        "updated_at": "2014-08-08T22:23:58.065Z",
+        "name": "Quillota"
+    }
+},
+{
+    "pk": 63,
+    "model": "regions.commune",
+    "fields": {
+        "region": 6,
+        "created_at": "2014-08-08T22:23:58.067Z",
+        "updated_at": "2014-08-08T22:23:58.067Z",
+        "name": "Calera"
+    }
+},
+{
+    "pk": 64,
+    "model": "regions.commune",
+    "fields": {
+        "region": 6,
+        "created_at": "2014-08-08T22:23:58.070Z",
+        "updated_at": "2014-08-08T22:23:58.070Z",
+        "name": "Hijuelas"
+    }
+},
+{
+    "pk": 65,
+    "model": "regions.commune",
+    "fields": {
+        "region": 6,
+        "created_at": "2014-08-08T22:23:58.073Z",
+        "updated_at": "2014-08-08T22:23:58.073Z",
+        "name": "La Cruz"
+    }
+},
+{
+    "pk": 66,
+    "model": "regions.commune",
+    "fields": {
+        "region": 6,
+        "created_at": "2014-08-08T22:23:58.075Z",
+        "updated_at": "2014-08-08T22:23:58.075Z",
+        "name": "Nogales"
+    }
+},
+{
+    "pk": 67,
+    "model": "regions.commune",
+    "fields": {
+        "region": 6,
+        "created_at": "2014-08-08T22:23:58.078Z",
+        "updated_at": "2014-08-08T22:23:58.078Z",
+        "name": "San Antonio"
+    }
+},
+{
+    "pk": 68,
+    "model": "regions.commune",
+    "fields": {
+        "region": 6,
+        "created_at": "2014-08-08T22:23:58.081Z",
+        "updated_at": "2014-08-08T22:23:58.081Z",
+        "name": "Algarrobo"
+    }
+},
+{
+    "pk": 69,
+    "model": "regions.commune",
+    "fields": {
+        "region": 6,
+        "created_at": "2014-08-08T22:23:58.083Z",
+        "updated_at": "2014-08-08T22:23:58.083Z",
+        "name": "Cartagena"
+    }
+},
+{
+    "pk": 70,
+    "model": "regions.commune",
+    "fields": {
+        "region": 6,
+        "created_at": "2014-08-08T22:23:58.086Z",
+        "updated_at": "2014-08-08T22:23:58.086Z",
+        "name": "El Quisco"
+    }
+},
+{
+    "pk": 71,
+    "model": "regions.commune",
+    "fields": {
+        "region": 6,
+        "created_at": "2014-08-08T22:23:58.089Z",
+        "updated_at": "2014-08-08T22:23:58.089Z",
+        "name": "El Tabo"
+    }
+},
+{
+    "pk": 72,
+    "model": "regions.commune",
+    "fields": {
+        "region": 6,
+        "created_at": "2014-08-08T22:23:58.091Z",
+        "updated_at": "2014-08-08T22:23:58.091Z",
+        "name": "Santo Domingo"
+    }
+},
+{
+    "pk": 73,
+    "model": "regions.commune",
+    "fields": {
+        "region": 6,
+        "created_at": "2014-08-08T22:23:58.094Z",
+        "updated_at": "2014-08-08T22:23:58.094Z",
+        "name": "San Felipe"
+    }
+},
+{
+    "pk": 74,
+    "model": "regions.commune",
+    "fields": {
+        "region": 6,
+        "created_at": "2014-08-08T22:23:58.097Z",
+        "updated_at": "2014-08-08T22:23:58.097Z",
+        "name": "Catemu"
+    }
+},
+{
+    "pk": 75,
+    "model": "regions.commune",
+    "fields": {
+        "region": 6,
+        "created_at": "2014-08-08T22:23:58.100Z",
+        "updated_at": "2014-08-08T22:23:58.100Z",
+        "name": "Llaillay"
+    }
+},
+{
+    "pk": 76,
+    "model": "regions.commune",
+    "fields": {
+        "region": 6,
+        "created_at": "2014-08-08T22:23:58.102Z",
+        "updated_at": "2014-08-08T22:23:58.102Z",
+        "name": "Panquehue"
+    }
+},
+{
+    "pk": 77,
+    "model": "regions.commune",
+    "fields": {
+        "region": 6,
+        "created_at": "2014-08-08T22:23:58.105Z",
+        "updated_at": "2014-08-08T22:23:58.105Z",
+        "name": "Putaendo"
+    }
+},
+{
+    "pk": 78,
+    "model": "regions.commune",
+    "fields": {
+        "region": 6,
+        "created_at": "2014-08-08T22:23:58.108Z",
+        "updated_at": "2014-08-08T22:23:58.108Z",
+        "name": "Santa María"
+    }
+},
+{
+    "pk": 79,
+    "model": "regions.commune",
+    "fields": {
+        "region": 6,
+        "created_at": "2014-08-08T22:23:58.111Z",
+        "updated_at": "2014-08-08T22:23:58.111Z",
+        "name": "Quilpué"
+    }
+},
+{
+    "pk": 80,
+    "model": "regions.commune",
+    "fields": {
+        "region": 6,
+        "created_at": "2014-08-08T22:23:58.113Z",
+        "updated_at": "2014-08-08T22:23:58.114Z",
+        "name": "Limache"
+    }
+},
+{
+    "pk": 81,
+    "model": "regions.commune",
+    "fields": {
+        "region": 6,
+        "created_at": "2014-08-08T22:23:58.116Z",
+        "updated_at": "2014-08-08T22:23:58.116Z",
+        "name": "Olmué"
+    }
+},
+{
+    "pk": 82,
+    "model": "regions.commune",
+    "fields": {
+        "region": 6,
+        "created_at": "2014-08-08T22:23:58.119Z",
+        "updated_at": "2014-08-08T22:23:58.119Z",
+        "name": "Villa Alemana"
+    }
+},
+{
+    "pk": 83,
+    "model": "regions.commune",
+    "fields": {
+        "region": 7,
+        "created_at": "2014-08-08T22:23:58.122Z",
+        "updated_at": "2014-08-08T22:23:58.122Z",
+        "name": "Rancagua"
+    }
+},
+{
+    "pk": 84,
+    "model": "regions.commune",
+    "fields": {
+        "region": 7,
+        "created_at": "2014-08-08T22:23:58.124Z",
+        "updated_at": "2014-08-08T22:23:58.124Z",
+        "name": "Codegua"
+    }
+},
+{
+    "pk": 85,
+    "model": "regions.commune",
+    "fields": {
+        "region": 7,
+        "created_at": "2014-08-08T22:23:58.127Z",
+        "updated_at": "2014-08-08T22:23:58.127Z",
+        "name": "Coinco"
+    }
+},
+{
+    "pk": 86,
+    "model": "regions.commune",
+    "fields": {
+        "region": 7,
+        "created_at": "2014-08-08T22:23:58.130Z",
+        "updated_at": "2014-08-08T22:23:58.130Z",
+        "name": "Coltauco"
+    }
+},
+{
+    "pk": 87,
+    "model": "regions.commune",
+    "fields": {
+        "region": 7,
+        "created_at": "2014-08-08T22:23:58.132Z",
+        "updated_at": "2014-08-08T22:23:58.132Z",
+        "name": "Doñihue"
+    }
+},
+{
+    "pk": 88,
+    "model": "regions.commune",
+    "fields": {
+        "region": 7,
+        "created_at": "2014-08-08T22:23:58.135Z",
+        "updated_at": "2014-08-08T22:23:58.135Z",
+        "name": "Graneros"
+    }
+},
+{
+    "pk": 89,
+    "model": "regions.commune",
+    "fields": {
+        "region": 7,
+        "created_at": "2014-08-08T22:23:58.138Z",
+        "updated_at": "2014-08-08T22:23:58.138Z",
+        "name": "Las Cabras"
+    }
+},
+{
+    "pk": 90,
+    "model": "regions.commune",
+    "fields": {
+        "region": 7,
+        "created_at": "2014-08-08T22:23:58.140Z",
+        "updated_at": "2014-08-08T22:23:58.141Z",
+        "name": "Machalí"
+    }
+},
+{
+    "pk": 91,
+    "model": "regions.commune",
+    "fields": {
+        "region": 7,
+        "created_at": "2014-08-08T22:23:58.143Z",
+        "updated_at": "2014-08-08T22:23:58.143Z",
+        "name": "Malloa"
+    }
+},
+{
+    "pk": 92,
+    "model": "regions.commune",
+    "fields": {
+        "region": 7,
+        "created_at": "2014-08-08T22:23:58.146Z",
+        "updated_at": "2014-08-08T22:23:58.146Z",
+        "name": "Mostazal"
+    }
+},
+{
+    "pk": 93,
+    "model": "regions.commune",
+    "fields": {
+        "region": 7,
+        "created_at": "2014-08-08T22:23:58.149Z",
+        "updated_at": "2014-08-08T22:23:58.149Z",
+        "name": "Olivar"
+    }
+},
+{
+    "pk": 94,
+    "model": "regions.commune",
+    "fields": {
+        "region": 7,
+        "created_at": "2014-08-08T22:23:58.152Z",
+        "updated_at": "2014-08-08T22:23:58.152Z",
+        "name": "Peumo"
+    }
+},
+{
+    "pk": 95,
+    "model": "regions.commune",
+    "fields": {
+        "region": 7,
+        "created_at": "2014-08-08T22:23:58.154Z",
+        "updated_at": "2014-08-08T22:23:58.154Z",
+        "name": "Pichidegua"
+    }
+},
+{
+    "pk": 96,
+    "model": "regions.commune",
+    "fields": {
+        "region": 7,
+        "created_at": "2014-08-08T22:23:58.157Z",
+        "updated_at": "2014-08-08T22:23:58.157Z",
+        "name": "Quinta de Tilcoco"
+    }
+},
+{
+    "pk": 97,
+    "model": "regions.commune",
+    "fields": {
+        "region": 7,
+        "created_at": "2014-08-08T22:23:58.160Z",
+        "updated_at": "2014-08-08T22:23:58.160Z",
+        "name": "Rengo"
+    }
+},
+{
+    "pk": 98,
+    "model": "regions.commune",
+    "fields": {
+        "region": 7,
+        "created_at": "2014-08-08T22:23:58.162Z",
+        "updated_at": "2014-08-08T22:23:58.162Z",
+        "name": "Requínoa"
+    }
+},
+{
+    "pk": 99,
+    "model": "regions.commune",
+    "fields": {
+        "region": 7,
+        "created_at": "2014-08-08T22:23:58.165Z",
+        "updated_at": "2014-08-08T22:23:58.165Z",
+        "name": "San Vicente"
+    }
+},
+{
+    "pk": 100,
+    "model": "regions.commune",
+    "fields": {
+        "region": 7,
+        "created_at": "2014-08-08T22:23:58.168Z",
+        "updated_at": "2014-08-08T22:23:58.168Z",
+        "name": "Pichilemu"
+    }
+},
+{
+    "pk": 101,
+    "model": "regions.commune",
+    "fields": {
+        "region": 7,
+        "created_at": "2014-08-08T22:23:58.170Z",
+        "updated_at": "2014-08-08T22:23:58.170Z",
+        "name": "La Estrella"
+    }
+},
+{
+    "pk": 102,
+    "model": "regions.commune",
+    "fields": {
+        "region": 7,
+        "created_at": "2014-08-08T22:23:58.173Z",
+        "updated_at": "2014-08-08T22:23:58.173Z",
+        "name": "Litueche"
+    }
+},
+{
+    "pk": 103,
+    "model": "regions.commune",
+    "fields": {
+        "region": 7,
+        "created_at": "2014-08-08T22:23:58.175Z",
+        "updated_at": "2014-08-08T22:23:58.175Z",
+        "name": "Marchihue"
+    }
+},
+{
+    "pk": 104,
+    "model": "regions.commune",
+    "fields": {
+        "region": 7,
+        "created_at": "2014-08-08T22:23:58.178Z",
+        "updated_at": "2014-08-08T22:23:58.178Z",
+        "name": "Navidad"
+    }
+},
+{
+    "pk": 105,
+    "model": "regions.commune",
+    "fields": {
+        "region": 7,
+        "created_at": "2014-08-08T22:23:58.181Z",
+        "updated_at": "2014-08-08T22:23:58.181Z",
+        "name": "Paredones"
+    }
+},
+{
+    "pk": 106,
+    "model": "regions.commune",
+    "fields": {
+        "region": 7,
+        "created_at": "2014-08-08T22:23:58.183Z",
+        "updated_at": "2014-08-08T22:23:58.183Z",
+        "name": "San Fernando"
+    }
+},
+{
+    "pk": 107,
+    "model": "regions.commune",
+    "fields": {
+        "region": 7,
+        "created_at": "2014-08-08T22:23:58.186Z",
+        "updated_at": "2014-08-08T22:23:58.186Z",
+        "name": "Chépica"
+    }
+},
+{
+    "pk": 108,
+    "model": "regions.commune",
+    "fields": {
+        "region": 7,
+        "created_at": "2014-08-08T22:23:58.189Z",
+        "updated_at": "2014-08-08T22:23:58.189Z",
+        "name": "Chimbarongo"
+    }
+},
+{
+    "pk": 109,
+    "model": "regions.commune",
+    "fields": {
+        "region": 7,
+        "created_at": "2014-08-08T22:23:58.191Z",
+        "updated_at": "2014-08-08T22:23:58.191Z",
+        "name": "Lolol"
+    }
+},
+{
+    "pk": 110,
+    "model": "regions.commune",
+    "fields": {
+        "region": 7,
+        "created_at": "2014-08-08T22:23:58.194Z",
+        "updated_at": "2014-08-08T22:23:58.194Z",
+        "name": "Nancagua"
+    }
+},
+{
+    "pk": 111,
+    "model": "regions.commune",
+    "fields": {
+        "region": 7,
+        "created_at": "2014-08-08T22:23:58.197Z",
+        "updated_at": "2014-08-08T22:23:58.197Z",
+        "name": "Palmilla"
+    }
+},
+{
+    "pk": 112,
+    "model": "regions.commune",
+    "fields": {
+        "region": 7,
+        "created_at": "2014-08-08T22:23:58.201Z",
+        "updated_at": "2014-08-08T22:23:58.201Z",
+        "name": "Peralillo"
+    }
+},
+{
+    "pk": 113,
+    "model": "regions.commune",
+    "fields": {
+        "region": 7,
+        "created_at": "2014-08-08T22:23:58.203Z",
+        "updated_at": "2014-08-08T22:23:58.203Z",
+        "name": "Placilla"
+    }
+},
+{
+    "pk": 114,
+    "model": "regions.commune",
+    "fields": {
+        "region": 7,
+        "created_at": "2014-08-08T22:23:58.206Z",
+        "updated_at": "2014-08-08T22:23:58.206Z",
+        "name": "Pumanque"
+    }
+},
+{
+    "pk": 115,
+    "model": "regions.commune",
+    "fields": {
+        "region": 7,
+        "created_at": "2014-08-08T22:23:58.209Z",
+        "updated_at": "2014-08-08T22:23:58.209Z",
+        "name": "Santa Cruz"
+    }
+},
+{
+    "pk": 116,
+    "model": "regions.commune",
+    "fields": {
+        "region": 8,
+        "created_at": "2014-08-08T22:23:58.212Z",
+        "updated_at": "2014-08-08T22:23:58.212Z",
+        "name": "Talca"
+    }
+},
+{
+    "pk": 117,
+    "model": "regions.commune",
+    "fields": {
+        "region": 8,
+        "created_at": "2014-08-08T22:23:58.214Z",
+        "updated_at": "2014-08-08T22:23:58.214Z",
+        "name": "Constitución"
+    }
+},
+{
+    "pk": 118,
+    "model": "regions.commune",
+    "fields": {
+        "region": 8,
+        "created_at": "2014-08-08T22:23:58.217Z",
+        "updated_at": "2014-08-08T22:23:58.217Z",
+        "name": "Curepto"
+    }
+},
+{
+    "pk": 119,
+    "model": "regions.commune",
+    "fields": {
+        "region": 8,
+        "created_at": "2014-08-08T22:23:58.220Z",
+        "updated_at": "2014-08-08T22:23:58.220Z",
+        "name": "Empedrado"
+    }
+},
+{
+    "pk": 120,
+    "model": "regions.commune",
+    "fields": {
+        "region": 8,
+        "created_at": "2014-08-08T22:23:58.222Z",
+        "updated_at": "2014-08-08T22:23:58.222Z",
+        "name": "Maule"
+    }
+},
+{
+    "pk": 121,
+    "model": "regions.commune",
+    "fields": {
+        "region": 8,
+        "created_at": "2014-08-08T22:23:58.225Z",
+        "updated_at": "2014-08-08T22:23:58.225Z",
+        "name": "Pelarco"
+    }
+},
+{
+    "pk": 122,
+    "model": "regions.commune",
+    "fields": {
+        "region": 8,
+        "created_at": "2014-08-08T22:23:58.228Z",
+        "updated_at": "2014-08-08T22:23:58.228Z",
+        "name": "Pencahue"
+    }
+},
+{
+    "pk": 123,
+    "model": "regions.commune",
+    "fields": {
+        "region": 8,
+        "created_at": "2014-08-08T22:23:58.231Z",
+        "updated_at": "2014-08-08T22:23:58.231Z",
+        "name": "Río Claro"
+    }
+},
+{
+    "pk": 124,
+    "model": "regions.commune",
+    "fields": {
+        "region": 8,
+        "created_at": "2014-08-08T22:23:58.233Z",
+        "updated_at": "2014-08-08T22:23:58.233Z",
+        "name": "San Clemente"
+    }
+},
+{
+    "pk": 125,
+    "model": "regions.commune",
+    "fields": {
+        "region": 8,
+        "created_at": "2014-08-08T22:23:58.236Z",
+        "updated_at": "2014-08-08T22:23:58.236Z",
+        "name": "San Rafael"
+    }
+},
+{
+    "pk": 126,
+    "model": "regions.commune",
+    "fields": {
+        "region": 8,
+        "created_at": "2014-08-08T22:23:58.238Z",
+        "updated_at": "2014-08-08T22:23:58.238Z",
+        "name": "Cauquenes"
+    }
+},
+{
+    "pk": 127,
+    "model": "regions.commune",
+    "fields": {
+        "region": 8,
+        "created_at": "2014-08-08T22:23:58.241Z",
+        "updated_at": "2014-08-08T22:23:58.241Z",
+        "name": "Chanco"
+    }
+},
+{
+    "pk": 128,
+    "model": "regions.commune",
+    "fields": {
+        "region": 8,
+        "created_at": "2014-08-08T22:23:58.244Z",
+        "updated_at": "2014-08-08T22:23:58.244Z",
+        "name": "Pelluhue"
+    }
+},
+{
+    "pk": 129,
+    "model": "regions.commune",
+    "fields": {
+        "region": 8,
+        "created_at": "2014-08-08T22:23:58.247Z",
+        "updated_at": "2014-08-08T22:23:58.247Z",
+        "name": "Curicó"
+    }
+},
+{
+    "pk": 130,
+    "model": "regions.commune",
+    "fields": {
+        "region": 8,
+        "created_at": "2014-08-08T22:23:58.249Z",
+        "updated_at": "2014-08-08T22:23:58.249Z",
+        "name": "Hualañé"
+    }
+},
+{
+    "pk": 131,
+    "model": "regions.commune",
+    "fields": {
+        "region": 8,
+        "created_at": "2014-08-08T22:23:58.252Z",
+        "updated_at": "2014-08-08T22:23:58.252Z",
+        "name": "Licantén"
+    }
+},
+{
+    "pk": 132,
+    "model": "regions.commune",
+    "fields": {
+        "region": 8,
+        "created_at": "2014-08-08T22:23:58.254Z",
+        "updated_at": "2014-08-08T22:23:58.254Z",
+        "name": "Molina"
+    }
+},
+{
+    "pk": 133,
+    "model": "regions.commune",
+    "fields": {
+        "region": 8,
+        "created_at": "2014-08-08T22:23:58.262Z",
+        "updated_at": "2014-08-08T22:23:58.262Z",
+        "name": "Rauco"
+    }
+},
+{
+    "pk": 134,
+    "model": "regions.commune",
+    "fields": {
+        "region": 8,
+        "created_at": "2014-08-08T22:23:58.265Z",
+        "updated_at": "2014-08-08T22:23:58.265Z",
+        "name": "Romeral"
+    }
+},
+{
+    "pk": 135,
+    "model": "regions.commune",
+    "fields": {
+        "region": 8,
+        "created_at": "2014-08-08T22:23:58.268Z",
+        "updated_at": "2014-08-08T22:23:58.268Z",
+        "name": "Sagrada Familia"
+    }
+},
+{
+    "pk": 136,
+    "model": "regions.commune",
+    "fields": {
+        "region": 8,
+        "created_at": "2014-08-08T22:23:58.270Z",
+        "updated_at": "2014-08-08T22:23:58.271Z",
+        "name": "Teno"
+    }
+},
+{
+    "pk": 137,
+    "model": "regions.commune",
+    "fields": {
+        "region": 8,
+        "created_at": "2014-08-08T22:23:58.273Z",
+        "updated_at": "2014-08-08T22:23:58.273Z",
+        "name": "Vichuquén"
+    }
+},
+{
+    "pk": 138,
+    "model": "regions.commune",
+    "fields": {
+        "region": 8,
+        "created_at": "2014-08-08T22:23:58.275Z",
+        "updated_at": "2014-08-08T22:23:58.275Z",
+        "name": "Linares"
+    }
+},
+{
+    "pk": 139,
+    "model": "regions.commune",
+    "fields": {
+        "region": 8,
+        "created_at": "2014-08-08T22:23:58.278Z",
+        "updated_at": "2014-08-08T22:23:58.278Z",
+        "name": "Colbún"
+    }
+},
+{
+    "pk": 140,
+    "model": "regions.commune",
+    "fields": {
+        "region": 8,
+        "created_at": "2014-08-08T22:23:58.281Z",
+        "updated_at": "2014-08-08T22:23:58.281Z",
+        "name": "Longaví"
+    }
+},
+{
+    "pk": 141,
+    "model": "regions.commune",
+    "fields": {
+        "region": 8,
+        "created_at": "2014-08-08T22:23:58.283Z",
+        "updated_at": "2014-08-08T22:23:58.283Z",
+        "name": "Parral"
+    }
+},
+{
+    "pk": 142,
+    "model": "regions.commune",
+    "fields": {
+        "region": 8,
+        "created_at": "2014-08-08T22:23:58.287Z",
+        "updated_at": "2014-08-08T22:23:58.287Z",
+        "name": "Retiro"
+    }
+},
+{
+    "pk": 143,
+    "model": "regions.commune",
+    "fields": {
+        "region": 8,
+        "created_at": "2014-08-08T22:23:58.289Z",
+        "updated_at": "2014-08-08T22:23:58.289Z",
+        "name": "San Javier"
+    }
+},
+{
+    "pk": 144,
+    "model": "regions.commune",
+    "fields": {
+        "region": 8,
+        "created_at": "2014-08-08T22:23:58.292Z",
+        "updated_at": "2014-08-08T22:23:58.292Z",
+        "name": "Villa Alegre"
+    }
+},
+{
+    "pk": 145,
+    "model": "regions.commune",
+    "fields": {
+        "region": 8,
+        "created_at": "2014-08-08T22:23:58.295Z",
+        "updated_at": "2014-08-08T22:23:58.295Z",
+        "name": "Yerbas Buenas"
+    }
+},
+{
+    "pk": 146,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.297Z",
+        "updated_at": "2014-08-08T22:23:58.297Z",
+        "name": "Concepción"
+    }
+},
+{
+    "pk": 147,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.300Z",
+        "updated_at": "2014-08-08T22:23:58.300Z",
+        "name": "Coronel"
+    }
+},
+{
+    "pk": 148,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.302Z",
+        "updated_at": "2014-08-08T22:23:58.302Z",
+        "name": "Chiguayante"
+    }
+},
+{
+    "pk": 149,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.305Z",
+        "updated_at": "2014-08-08T22:23:58.305Z",
+        "name": "Florida"
+    }
+},
+{
+    "pk": 150,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.308Z",
+        "updated_at": "2014-08-08T22:23:58.308Z",
+        "name": "Hualqui"
+    }
+},
+{
+    "pk": 151,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.312Z",
+        "updated_at": "2014-08-08T22:23:58.312Z",
+        "name": "Lota"
+    }
+},
+{
+    "pk": 152,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.314Z",
+        "updated_at": "2014-08-08T22:23:58.314Z",
+        "name": "Penco"
+    }
+},
+{
+    "pk": 153,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.317Z",
+        "updated_at": "2014-08-08T22:23:58.317Z",
+        "name": "San Pedro de La Paz"
+    }
+},
+{
+    "pk": 154,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.320Z",
+        "updated_at": "2014-08-08T22:23:58.320Z",
+        "name": "Santa Juana"
+    }
+},
+{
+    "pk": 155,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.322Z",
+        "updated_at": "2014-08-08T22:23:58.322Z",
+        "name": "Talcahuano"
+    }
+},
+{
+    "pk": 156,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.325Z",
+        "updated_at": "2014-08-08T22:23:58.325Z",
+        "name": "Tomé"
+    }
+},
+{
+    "pk": 157,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.328Z",
+        "updated_at": "2014-08-08T22:23:58.328Z",
+        "name": "Hualpén"
+    }
+},
+{
+    "pk": 158,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.331Z",
+        "updated_at": "2014-08-08T22:23:58.331Z",
+        "name": "Lebu"
+    }
+},
+{
+    "pk": 159,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.333Z",
+        "updated_at": "2014-08-08T22:23:58.333Z",
+        "name": "Arauco"
+    }
+},
+{
+    "pk": 160,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.336Z",
+        "updated_at": "2014-08-08T22:23:58.336Z",
+        "name": "Cañete"
+    }
+},
+{
+    "pk": 161,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.339Z",
+        "updated_at": "2014-08-08T22:23:58.339Z",
+        "name": "Contulmo"
+    }
+},
+{
+    "pk": 162,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.342Z",
+        "updated_at": "2014-08-08T22:23:58.342Z",
+        "name": "Curanilahue"
+    }
+},
+{
+    "pk": 163,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.344Z",
+        "updated_at": "2014-08-08T22:23:58.344Z",
+        "name": "Los Álamos"
+    }
+},
+{
+    "pk": 164,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.347Z",
+        "updated_at": "2014-08-08T22:23:58.347Z",
+        "name": "Tirúa"
+    }
+},
+{
+    "pk": 165,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.349Z",
+        "updated_at": "2014-08-08T22:23:58.349Z",
+        "name": "Los Ángeles"
+    }
+},
+{
+    "pk": 166,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.352Z",
+        "updated_at": "2014-08-08T22:23:58.352Z",
+        "name": "Antuco"
+    }
+},
+{
+    "pk": 167,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.355Z",
+        "updated_at": "2014-08-08T22:23:58.355Z",
+        "name": "Cabrero"
+    }
+},
+{
+    "pk": 168,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.359Z",
+        "updated_at": "2014-08-08T22:23:58.359Z",
+        "name": "Laja"
+    }
+},
+{
+    "pk": 169,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.361Z",
+        "updated_at": "2014-08-08T22:23:58.361Z",
+        "name": "Mulchén"
+    }
+},
+{
+    "pk": 170,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.364Z",
+        "updated_at": "2014-08-08T22:23:58.364Z",
+        "name": "Nacimiento"
+    }
+},
+{
+    "pk": 171,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.367Z",
+        "updated_at": "2014-08-08T22:23:58.367Z",
+        "name": "Negrete"
+    }
+},
+{
+    "pk": 172,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.369Z",
+        "updated_at": "2014-08-08T22:23:58.369Z",
+        "name": "Quilaco"
+    }
+},
+{
+    "pk": 173,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.373Z",
+        "updated_at": "2014-08-08T22:23:58.373Z",
+        "name": "Quilleco"
+    }
+},
+{
+    "pk": 174,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.375Z",
+        "updated_at": "2014-08-08T22:23:58.375Z",
+        "name": "San Rosendo"
+    }
+},
+{
+    "pk": 175,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.378Z",
+        "updated_at": "2014-08-08T22:23:58.379Z",
+        "name": "Santa Bárbara"
+    }
+},
+{
+    "pk": 176,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.381Z",
+        "updated_at": "2014-08-08T22:23:58.381Z",
+        "name": "Tucapel"
+    }
+},
+{
+    "pk": 177,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.384Z",
+        "updated_at": "2014-08-08T22:23:58.384Z",
+        "name": "Yumbel"
+    }
+},
+{
+    "pk": 178,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.387Z",
+        "updated_at": "2014-08-08T22:23:58.387Z",
+        "name": "Alto Biobío"
+    }
+},
+{
+    "pk": 179,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.389Z",
+        "updated_at": "2014-08-08T22:23:58.389Z",
+        "name": "Chillán"
+    }
+},
+{
+    "pk": 180,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.392Z",
+        "updated_at": "2014-08-08T22:23:58.392Z",
+        "name": "Bulnes"
+    }
+},
+{
+    "pk": 181,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.395Z",
+        "updated_at": "2014-08-08T22:23:58.395Z",
+        "name": "Cobquecura"
+    }
+},
+{
+    "pk": 182,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.397Z",
+        "updated_at": "2014-08-08T22:23:58.397Z",
+        "name": "Coelemu"
+    }
+},
+{
+    "pk": 183,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.440Z",
+        "updated_at": "2014-08-08T22:23:58.440Z",
+        "name": "Coihueco"
+    }
+},
+{
+    "pk": 184,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.443Z",
+        "updated_at": "2014-08-08T22:23:58.443Z",
+        "name": "Chillán Viejo"
+    }
+},
+{
+    "pk": 185,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.446Z",
+        "updated_at": "2014-08-08T22:23:58.446Z",
+        "name": "El Carmen"
+    }
+},
+{
+    "pk": 186,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.449Z",
+        "updated_at": "2014-08-08T22:23:58.449Z",
+        "name": "Ninhue"
+    }
+},
+{
+    "pk": 187,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.451Z",
+        "updated_at": "2014-08-08T22:23:58.451Z",
+        "name": "Ñiquén"
+    }
+},
+{
+    "pk": 188,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.454Z",
+        "updated_at": "2014-08-08T22:23:58.454Z",
+        "name": "Pemuco"
+    }
+},
+{
+    "pk": 189,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.456Z",
+        "updated_at": "2014-08-08T22:23:58.456Z",
+        "name": "Pinto"
+    }
+},
+{
+    "pk": 190,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.459Z",
+        "updated_at": "2014-08-08T22:23:58.459Z",
+        "name": "Portezuelo"
+    }
+},
+{
+    "pk": 191,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.461Z",
+        "updated_at": "2014-08-08T22:23:58.461Z",
+        "name": "Quillón"
+    }
+},
+{
+    "pk": 192,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.464Z",
+        "updated_at": "2014-08-08T22:23:58.464Z",
+        "name": "Quirihue"
+    }
+},
+{
+    "pk": 193,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.467Z",
+        "updated_at": "2014-08-08T22:23:58.467Z",
+        "name": "Ránquil"
+    }
+},
+{
+    "pk": 194,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.469Z",
+        "updated_at": "2014-08-08T22:23:58.469Z",
+        "name": "San Carlos"
+    }
+},
+{
+    "pk": 195,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.472Z",
+        "updated_at": "2014-08-08T22:23:58.472Z",
+        "name": "San Fabián"
+    }
+},
+{
+    "pk": 196,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.474Z",
+        "updated_at": "2014-08-08T22:23:58.474Z",
+        "name": "San Ignacio"
+    }
+},
+{
+    "pk": 197,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.477Z",
+        "updated_at": "2014-08-08T22:23:58.477Z",
+        "name": "San Nicolás"
+    }
+},
+{
+    "pk": 198,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.480Z",
+        "updated_at": "2014-08-08T22:23:58.480Z",
+        "name": "Treguaco"
+    }
+},
+{
+    "pk": 199,
+    "model": "regions.commune",
+    "fields": {
+        "region": 9,
+        "created_at": "2014-08-08T22:23:58.482Z",
+        "updated_at": "2014-08-08T22:23:58.482Z",
+        "name": "Yungay"
+    }
+},
+{
+    "pk": 200,
+    "model": "regions.commune",
+    "fields": {
+        "region": 10,
+        "created_at": "2014-08-08T22:23:58.484Z",
+        "updated_at": "2014-08-08T22:23:58.484Z",
+        "name": "Temuco"
+    }
+},
+{
+    "pk": 201,
+    "model": "regions.commune",
+    "fields": {
+        "region": 10,
+        "created_at": "2014-08-08T22:23:58.487Z",
+        "updated_at": "2014-08-08T22:23:58.487Z",
+        "name": "Carahue"
+    }
+},
+{
+    "pk": 202,
+    "model": "regions.commune",
+    "fields": {
+        "region": 10,
+        "created_at": "2014-08-08T22:23:58.490Z",
+        "updated_at": "2014-08-08T22:23:58.490Z",
+        "name": "Cunco"
+    }
+},
+{
+    "pk": 203,
+    "model": "regions.commune",
+    "fields": {
+        "region": 10,
+        "created_at": "2014-08-08T22:23:58.493Z",
+        "updated_at": "2014-08-08T22:23:58.493Z",
+        "name": "Curarrehue"
+    }
+},
+{
+    "pk": 204,
+    "model": "regions.commune",
+    "fields": {
+        "region": 10,
+        "created_at": "2014-08-08T22:23:58.495Z",
+        "updated_at": "2014-08-08T22:23:58.495Z",
+        "name": "Freire"
+    }
+},
+{
+    "pk": 205,
+    "model": "regions.commune",
+    "fields": {
+        "region": 10,
+        "created_at": "2014-08-08T22:23:58.498Z",
+        "updated_at": "2014-08-08T22:23:58.498Z",
+        "name": "Galvarino"
+    }
+},
+{
+    "pk": 206,
+    "model": "regions.commune",
+    "fields": {
+        "region": 10,
+        "created_at": "2014-08-08T22:23:58.500Z",
+        "updated_at": "2014-08-08T22:23:58.500Z",
+        "name": "Gorbea"
+    }
+},
+{
+    "pk": 207,
+    "model": "regions.commune",
+    "fields": {
+        "region": 10,
+        "created_at": "2014-08-08T22:23:58.503Z",
+        "updated_at": "2014-08-08T22:23:58.503Z",
+        "name": "Lautaro"
+    }
+},
+{
+    "pk": 208,
+    "model": "regions.commune",
+    "fields": {
+        "region": 10,
+        "created_at": "2014-08-08T22:23:58.506Z",
+        "updated_at": "2014-08-08T22:23:58.506Z",
+        "name": "Loncoche"
+    }
+},
+{
+    "pk": 209,
+    "model": "regions.commune",
+    "fields": {
+        "region": 10,
+        "created_at": "2014-08-08T22:23:58.508Z",
+        "updated_at": "2014-08-08T22:23:58.508Z",
+        "name": "Melipeuco"
+    }
+},
+{
+    "pk": 210,
+    "model": "regions.commune",
+    "fields": {
+        "region": 10,
+        "created_at": "2014-08-08T22:23:58.511Z",
+        "updated_at": "2014-08-08T22:23:58.511Z",
+        "name": "Nueva Imperial"
+    }
+},
+{
+    "pk": 211,
+    "model": "regions.commune",
+    "fields": {
+        "region": 10,
+        "created_at": "2014-08-08T22:23:58.514Z",
+        "updated_at": "2014-08-08T22:23:58.514Z",
+        "name": "Padre Las Casas"
+    }
+},
+{
+    "pk": 212,
+    "model": "regions.commune",
+    "fields": {
+        "region": 10,
+        "created_at": "2014-08-08T22:23:58.516Z",
+        "updated_at": "2014-08-08T22:23:58.516Z",
+        "name": "Perquenco"
+    }
+},
+{
+    "pk": 213,
+    "model": "regions.commune",
+    "fields": {
+        "region": 10,
+        "created_at": "2014-08-08T22:23:58.519Z",
+        "updated_at": "2014-08-08T22:23:58.519Z",
+        "name": "Pitrufquén"
+    }
+},
+{
+    "pk": 214,
+    "model": "regions.commune",
+    "fields": {
+        "region": 10,
+        "created_at": "2014-08-08T22:23:58.522Z",
+        "updated_at": "2014-08-08T22:23:58.522Z",
+        "name": "Pucón"
+    }
+},
+{
+    "pk": 215,
+    "model": "regions.commune",
+    "fields": {
+        "region": 10,
+        "created_at": "2014-08-08T22:23:58.524Z",
+        "updated_at": "2014-08-08T22:23:58.524Z",
+        "name": "Saavedra"
+    }
+},
+{
+    "pk": 216,
+    "model": "regions.commune",
+    "fields": {
+        "region": 10,
+        "created_at": "2014-08-08T22:23:58.527Z",
+        "updated_at": "2014-08-08T22:23:58.527Z",
+        "name": "Teodoro Schmidt"
+    }
+},
+{
+    "pk": 217,
+    "model": "regions.commune",
+    "fields": {
+        "region": 10,
+        "created_at": "2014-08-08T22:23:58.529Z",
+        "updated_at": "2014-08-08T22:23:58.529Z",
+        "name": "Toltén"
+    }
+},
+{
+    "pk": 218,
+    "model": "regions.commune",
+    "fields": {
+        "region": 10,
+        "created_at": "2014-08-08T22:23:58.531Z",
+        "updated_at": "2014-08-08T22:23:58.531Z",
+        "name": "Vilcún"
+    }
+},
+{
+    "pk": 219,
+    "model": "regions.commune",
+    "fields": {
+        "region": 10,
+        "created_at": "2014-08-08T22:23:58.534Z",
+        "updated_at": "2014-08-08T22:23:58.534Z",
+        "name": "Villarrica"
+    }
+},
+{
+    "pk": 220,
+    "model": "regions.commune",
+    "fields": {
+        "region": 10,
+        "created_at": "2014-08-08T22:23:58.537Z",
+        "updated_at": "2014-08-08T22:23:58.537Z",
+        "name": "Cholchol"
+    }
+},
+{
+    "pk": 221,
+    "model": "regions.commune",
+    "fields": {
+        "region": 10,
+        "created_at": "2014-08-08T22:23:58.540Z",
+        "updated_at": "2014-08-08T22:23:58.540Z",
+        "name": "Angol"
+    }
+},
+{
+    "pk": 222,
+    "model": "regions.commune",
+    "fields": {
+        "region": 10,
+        "created_at": "2014-08-08T22:23:58.542Z",
+        "updated_at": "2014-08-08T22:23:58.542Z",
+        "name": "Collipulli"
+    }
+},
+{
+    "pk": 223,
+    "model": "regions.commune",
+    "fields": {
+        "region": 10,
+        "created_at": "2014-08-08T22:23:58.545Z",
+        "updated_at": "2014-08-08T22:23:58.545Z",
+        "name": "Curacautín"
+    }
+},
+{
+    "pk": 224,
+    "model": "regions.commune",
+    "fields": {
+        "region": 10,
+        "created_at": "2014-08-08T22:23:58.547Z",
+        "updated_at": "2014-08-08T22:23:58.547Z",
+        "name": "Ercilla"
+    }
+},
+{
+    "pk": 225,
+    "model": "regions.commune",
+    "fields": {
+        "region": 10,
+        "created_at": "2014-08-08T22:23:58.550Z",
+        "updated_at": "2014-08-08T22:23:58.550Z",
+        "name": "Lonquimay"
+    }
+},
+{
+    "pk": 226,
+    "model": "regions.commune",
+    "fields": {
+        "region": 10,
+        "created_at": "2014-08-08T22:23:58.553Z",
+        "updated_at": "2014-08-08T22:23:58.553Z",
+        "name": "Los Sauces"
+    }
+},
+{
+    "pk": 227,
+    "model": "regions.commune",
+    "fields": {
+        "region": 10,
+        "created_at": "2014-08-08T22:23:58.555Z",
+        "updated_at": "2014-08-08T22:23:58.555Z",
+        "name": "Lumaco"
+    }
+},
+{
+    "pk": 228,
+    "model": "regions.commune",
+    "fields": {
+        "region": 10,
+        "created_at": "2014-08-08T22:23:58.558Z",
+        "updated_at": "2014-08-08T22:23:58.558Z",
+        "name": "Purén"
+    }
+},
+{
+    "pk": 229,
+    "model": "regions.commune",
+    "fields": {
+        "region": 10,
+        "created_at": "2014-08-08T22:23:58.560Z",
+        "updated_at": "2014-08-08T22:23:58.560Z",
+        "name": "Renaico"
+    }
+},
+{
+    "pk": 230,
+    "model": "regions.commune",
+    "fields": {
+        "region": 10,
+        "created_at": "2014-08-08T22:23:58.563Z",
+        "updated_at": "2014-08-08T22:23:58.563Z",
+        "name": "Traiguén"
+    }
+},
+{
+    "pk": 231,
+    "model": "regions.commune",
+    "fields": {
+        "region": 10,
+        "created_at": "2014-08-08T22:23:58.565Z",
+        "updated_at": "2014-08-08T22:23:58.565Z",
+        "name": "Victoria"
+    }
+},
+{
+    "pk": 232,
+    "model": "regions.commune",
+    "fields": {
+        "region": 14,
+        "created_at": "2014-08-08T22:23:58.568Z",
+        "updated_at": "2014-08-08T22:23:58.568Z",
+        "name": "Valdivia"
+    }
+},
+{
+    "pk": 233,
+    "model": "regions.commune",
+    "fields": {
+        "region": 14,
+        "created_at": "2014-08-08T22:23:58.571Z",
+        "updated_at": "2014-08-08T22:23:58.571Z",
+        "name": "Corral"
+    }
+},
+{
+    "pk": 234,
+    "model": "regions.commune",
+    "fields": {
+        "region": 14,
+        "created_at": "2014-08-08T22:23:58.573Z",
+        "updated_at": "2014-08-08T22:23:58.573Z",
+        "name": "Lanco"
+    }
+},
+{
+    "pk": 235,
+    "model": "regions.commune",
+    "fields": {
+        "region": 14,
+        "created_at": "2014-08-08T22:23:58.576Z",
+        "updated_at": "2014-08-08T22:23:58.576Z",
+        "name": "Los Lagos"
+    }
+},
+{
+    "pk": 236,
+    "model": "regions.commune",
+    "fields": {
+        "region": 14,
+        "created_at": "2014-08-08T22:23:58.579Z",
+        "updated_at": "2014-08-08T22:23:58.579Z",
+        "name": "Máfil"
+    }
+},
+{
+    "pk": 237,
+    "model": "regions.commune",
+    "fields": {
+        "region": 14,
+        "created_at": "2014-08-08T22:23:58.581Z",
+        "updated_at": "2014-08-08T22:23:58.581Z",
+        "name": "Mariquina"
+    }
+},
+{
+    "pk": 238,
+    "model": "regions.commune",
+    "fields": {
+        "region": 14,
+        "created_at": "2014-08-08T22:23:58.584Z",
+        "updated_at": "2014-08-08T22:23:58.584Z",
+        "name": "Paillaco"
+    }
+},
+{
+    "pk": 239,
+    "model": "regions.commune",
+    "fields": {
+        "region": 14,
+        "created_at": "2014-08-08T22:23:58.586Z",
+        "updated_at": "2014-08-08T22:23:58.587Z",
+        "name": "Panguipulli"
+    }
+},
+{
+    "pk": 240,
+    "model": "regions.commune",
+    "fields": {
+        "region": 14,
+        "created_at": "2014-08-08T22:23:58.589Z",
+        "updated_at": "2014-08-08T22:23:58.589Z",
+        "name": "La Unión"
+    }
+},
+{
+    "pk": 241,
+    "model": "regions.commune",
+    "fields": {
+        "region": 14,
+        "created_at": "2014-08-08T22:23:58.592Z",
+        "updated_at": "2014-08-08T22:23:58.592Z",
+        "name": "Futrono"
+    }
+},
+{
+    "pk": 242,
+    "model": "regions.commune",
+    "fields": {
+        "region": 14,
+        "created_at": "2014-08-08T22:23:58.594Z",
+        "updated_at": "2014-08-08T22:23:58.594Z",
+        "name": "Lago Ranco"
+    }
+},
+{
+    "pk": 243,
+    "model": "regions.commune",
+    "fields": {
+        "region": 14,
+        "created_at": "2014-08-08T22:23:58.597Z",
+        "updated_at": "2014-08-08T22:23:58.597Z",
+        "name": "Río Bueno"
+    }
+},
+{
+    "pk": 244,
+    "model": "regions.commune",
+    "fields": {
+        "region": 11,
+        "created_at": "2014-08-08T22:23:58.599Z",
+        "updated_at": "2014-08-08T22:23:58.599Z",
+        "name": "Puerto Montt"
+    }
+},
+{
+    "pk": 245,
+    "model": "regions.commune",
+    "fields": {
+        "region": 11,
+        "created_at": "2014-08-08T22:23:58.602Z",
+        "updated_at": "2014-08-08T22:23:58.602Z",
+        "name": "Calbuco"
+    }
+},
+{
+    "pk": 246,
+    "model": "regions.commune",
+    "fields": {
+        "region": 11,
+        "created_at": "2014-08-08T22:23:58.605Z",
+        "updated_at": "2014-08-08T22:23:58.605Z",
+        "name": "Cochamó"
+    }
+},
+{
+    "pk": 247,
+    "model": "regions.commune",
+    "fields": {
+        "region": 11,
+        "created_at": "2014-08-08T22:23:58.607Z",
+        "updated_at": "2014-08-08T22:23:58.607Z",
+        "name": "Fresia"
+    }
+},
+{
+    "pk": 248,
+    "model": "regions.commune",
+    "fields": {
+        "region": 11,
+        "created_at": "2014-08-08T22:23:58.610Z",
+        "updated_at": "2014-08-08T22:23:58.610Z",
+        "name": "Frutillar"
+    }
+},
+{
+    "pk": 249,
+    "model": "regions.commune",
+    "fields": {
+        "region": 11,
+        "created_at": "2014-08-08T22:23:58.613Z",
+        "updated_at": "2014-08-08T22:23:58.613Z",
+        "name": "Los Muermos"
+    }
+},
+{
+    "pk": 250,
+    "model": "regions.commune",
+    "fields": {
+        "region": 11,
+        "created_at": "2014-08-08T22:23:58.615Z",
+        "updated_at": "2014-08-08T22:23:58.615Z",
+        "name": "Llanquihue"
+    }
+},
+{
+    "pk": 251,
+    "model": "regions.commune",
+    "fields": {
+        "region": 11,
+        "created_at": "2014-08-08T22:23:58.618Z",
+        "updated_at": "2014-08-08T22:23:58.618Z",
+        "name": "Maullín"
+    }
+},
+{
+    "pk": 252,
+    "model": "regions.commune",
+    "fields": {
+        "region": 11,
+        "created_at": "2014-08-08T22:23:58.621Z",
+        "updated_at": "2014-08-08T22:23:58.621Z",
+        "name": "Puerto Varas"
+    }
+},
+{
+    "pk": 253,
+    "model": "regions.commune",
+    "fields": {
+        "region": 11,
+        "created_at": "2014-08-08T22:23:58.623Z",
+        "updated_at": "2014-08-08T22:23:58.623Z",
+        "name": "Castro"
+    }
+},
+{
+    "pk": 254,
+    "model": "regions.commune",
+    "fields": {
+        "region": 11,
+        "created_at": "2014-08-08T22:23:58.625Z",
+        "updated_at": "2014-08-08T22:23:58.625Z",
+        "name": "Ancud"
+    }
+},
+{
+    "pk": 255,
+    "model": "regions.commune",
+    "fields": {
+        "region": 11,
+        "created_at": "2014-08-08T22:23:58.628Z",
+        "updated_at": "2014-08-08T22:23:58.628Z",
+        "name": "Chonchi"
+    }
+},
+{
+    "pk": 256,
+    "model": "regions.commune",
+    "fields": {
+        "region": 11,
+        "created_at": "2014-08-08T22:23:58.630Z",
+        "updated_at": "2014-08-08T22:23:58.630Z",
+        "name": "Curaco de Vélez"
+    }
+},
+{
+    "pk": 257,
+    "model": "regions.commune",
+    "fields": {
+        "region": 11,
+        "created_at": "2014-08-08T22:23:58.633Z",
+        "updated_at": "2014-08-08T22:23:58.633Z",
+        "name": "Dalcahue"
+    }
+},
+{
+    "pk": 258,
+    "model": "regions.commune",
+    "fields": {
+        "region": 11,
+        "created_at": "2014-08-08T22:23:58.635Z",
+        "updated_at": "2014-08-08T22:23:58.635Z",
+        "name": "Puqueldón"
+    }
+},
+{
+    "pk": 259,
+    "model": "regions.commune",
+    "fields": {
+        "region": 11,
+        "created_at": "2014-08-08T22:23:58.638Z",
+        "updated_at": "2014-08-08T22:23:58.638Z",
+        "name": "Queilén"
+    }
+},
+{
+    "pk": 260,
+    "model": "regions.commune",
+    "fields": {
+        "region": 11,
+        "created_at": "2014-08-08T22:23:58.641Z",
+        "updated_at": "2014-08-08T22:23:58.641Z",
+        "name": "Quellón"
+    }
+},
+{
+    "pk": 261,
+    "model": "regions.commune",
+    "fields": {
+        "region": 11,
+        "created_at": "2014-08-08T22:23:58.643Z",
+        "updated_at": "2014-08-08T22:23:58.643Z",
+        "name": "Quemchi"
+    }
+},
+{
+    "pk": 262,
+    "model": "regions.commune",
+    "fields": {
+        "region": 11,
+        "created_at": "2014-08-08T22:23:58.645Z",
+        "updated_at": "2014-08-08T22:23:58.646Z",
+        "name": "Quinchao"
+    }
+},
+{
+    "pk": 263,
+    "model": "regions.commune",
+    "fields": {
+        "region": 11,
+        "created_at": "2014-08-08T22:23:58.648Z",
+        "updated_at": "2014-08-08T22:23:58.648Z",
+        "name": "Osorno"
+    }
+},
+{
+    "pk": 264,
+    "model": "regions.commune",
+    "fields": {
+        "region": 11,
+        "created_at": "2014-08-08T22:23:58.651Z",
+        "updated_at": "2014-08-08T22:23:58.651Z",
+        "name": "Puerto Octay"
+    }
+},
+{
+    "pk": 265,
+    "model": "regions.commune",
+    "fields": {
+        "region": 11,
+        "created_at": "2014-08-08T22:23:58.653Z",
+        "updated_at": "2014-08-08T22:23:58.653Z",
+        "name": "Purranque"
+    }
+},
+{
+    "pk": 266,
+    "model": "regions.commune",
+    "fields": {
+        "region": 11,
+        "created_at": "2014-08-08T22:23:58.656Z",
+        "updated_at": "2014-08-08T22:23:58.656Z",
+        "name": "Puyehue"
+    }
+},
+{
+    "pk": 267,
+    "model": "regions.commune",
+    "fields": {
+        "region": 11,
+        "created_at": "2014-08-08T22:23:58.659Z",
+        "updated_at": "2014-08-08T22:23:58.659Z",
+        "name": "Río Negro"
+    }
+},
+{
+    "pk": 268,
+    "model": "regions.commune",
+    "fields": {
+        "region": 11,
+        "created_at": "2014-08-08T22:23:58.661Z",
+        "updated_at": "2014-08-08T22:23:58.661Z",
+        "name": "San Juan de la Costa"
+    }
+},
+{
+    "pk": 269,
+    "model": "regions.commune",
+    "fields": {
+        "region": 11,
+        "created_at": "2014-08-08T22:23:58.664Z",
+        "updated_at": "2014-08-08T22:23:58.664Z",
+        "name": "San Pablo"
+    }
+},
+{
+    "pk": 270,
+    "model": "regions.commune",
+    "fields": {
+        "region": 11,
+        "created_at": "2014-08-08T22:23:58.667Z",
+        "updated_at": "2014-08-08T22:23:58.667Z",
+        "name": "Chaitén"
+    }
+},
+{
+    "pk": 271,
+    "model": "regions.commune",
+    "fields": {
+        "region": 11,
+        "created_at": "2014-08-08T22:23:58.669Z",
+        "updated_at": "2014-08-08T22:23:58.669Z",
+        "name": "Futaleufú"
+    }
+},
+{
+    "pk": 272,
+    "model": "regions.commune",
+    "fields": {
+        "region": 11,
+        "created_at": "2014-08-08T22:23:58.672Z",
+        "updated_at": "2014-08-08T22:23:58.672Z",
+        "name": "Hualaihué"
+    }
+},
+{
+    "pk": 273,
+    "model": "regions.commune",
+    "fields": {
+        "region": 11,
+        "created_at": "2014-08-08T22:23:58.674Z",
+        "updated_at": "2014-08-08T22:23:58.674Z",
+        "name": "Palena"
+    }
+},
+{
+    "pk": 274,
+    "model": "regions.commune",
+    "fields": {
+        "region": 12,
+        "created_at": "2014-08-08T22:23:58.677Z",
+        "updated_at": "2014-08-08T22:23:58.677Z",
+        "name": "Coyhaique"
+    }
+},
+{
+    "pk": 275,
+    "model": "regions.commune",
+    "fields": {
+        "region": 12,
+        "created_at": "2014-08-08T22:23:58.679Z",
+        "updated_at": "2014-08-08T22:23:58.679Z",
+        "name": "Lago Verde"
+    }
+},
+{
+    "pk": 276,
+    "model": "regions.commune",
+    "fields": {
+        "region": 12,
+        "created_at": "2014-08-08T22:23:58.682Z",
+        "updated_at": "2014-08-08T22:23:58.682Z",
+        "name": "Aysén"
+    }
+},
+{
+    "pk": 277,
+    "model": "regions.commune",
+    "fields": {
+        "region": 12,
+        "created_at": "2014-08-08T22:23:58.684Z",
+        "updated_at": "2014-08-08T22:23:58.684Z",
+        "name": "Cisnes"
+    }
+},
+{
+    "pk": 278,
+    "model": "regions.commune",
+    "fields": {
+        "region": 12,
+        "created_at": "2014-08-08T22:23:58.687Z",
+        "updated_at": "2014-08-08T22:23:58.687Z",
+        "name": "Guaitecas"
+    }
+},
+{
+    "pk": 279,
+    "model": "regions.commune",
+    "fields": {
+        "region": 12,
+        "created_at": "2014-08-08T22:23:58.689Z",
+        "updated_at": "2014-08-08T22:23:58.689Z",
+        "name": "Cochrane"
+    }
+},
+{
+    "pk": 280,
+    "model": "regions.commune",
+    "fields": {
+        "region": 12,
+        "created_at": "2014-08-08T22:23:58.691Z",
+        "updated_at": "2014-08-08T22:23:58.691Z",
+        "name": "O'Higgins"
+    }
+},
+{
+    "pk": 281,
+    "model": "regions.commune",
+    "fields": {
+        "region": 12,
+        "created_at": "2014-08-08T22:23:58.694Z",
+        "updated_at": "2014-08-08T22:23:58.694Z",
+        "name": "Tortel"
+    }
+},
+{
+    "pk": 282,
+    "model": "regions.commune",
+    "fields": {
+        "region": 12,
+        "created_at": "2014-08-08T22:23:58.697Z",
+        "updated_at": "2014-08-08T22:23:58.697Z",
+        "name": "Chile Chico"
+    }
+},
+{
+    "pk": 283,
+    "model": "regions.commune",
+    "fields": {
+        "region": 12,
+        "created_at": "2014-08-08T22:23:58.699Z",
+        "updated_at": "2014-08-08T22:23:58.699Z",
+        "name": "Río Ibáñez"
+    }
+},
+{
+    "pk": 284,
+    "model": "regions.commune",
+    "fields": {
+        "region": 13,
+        "created_at": "2014-08-08T22:23:58.702Z",
+        "updated_at": "2014-08-08T22:23:58.702Z",
+        "name": "Punta Arenas"
+    }
+},
+{
+    "pk": 285,
+    "model": "regions.commune",
+    "fields": {
+        "region": 13,
+        "created_at": "2014-08-08T22:23:58.704Z",
+        "updated_at": "2014-08-08T22:23:58.704Z",
+        "name": "Laguna Blanca"
+    }
+},
+{
+    "pk": 286,
+    "model": "regions.commune",
+    "fields": {
+        "region": 13,
+        "created_at": "2014-08-08T22:23:58.707Z",
+        "updated_at": "2014-08-08T22:23:58.707Z",
+        "name": "Río Verde"
+    }
+},
+{
+    "pk": 287,
+    "model": "regions.commune",
+    "fields": {
+        "region": 13,
+        "created_at": "2014-08-08T22:23:58.710Z",
+        "updated_at": "2014-08-08T22:23:58.710Z",
+        "name": "San Gregorio"
+    }
+},
+{
+    "pk": 288,
+    "model": "regions.commune",
+    "fields": {
+        "region": 13,
+        "created_at": "2014-08-08T22:23:58.712Z",
+        "updated_at": "2014-08-08T22:23:58.712Z",
+        "name": "Cabo de Hornos"
+    }
+},
+{
+    "pk": 289,
+    "model": "regions.commune",
+    "fields": {
+        "region": 13,
+        "created_at": "2014-08-08T22:23:58.716Z",
+        "updated_at": "2014-08-08T22:23:58.716Z",
+        "name": "Antártica"
+    }
+},
+{
+    "pk": 290,
+    "model": "regions.commune",
+    "fields": {
+        "region": 13,
+        "created_at": "2014-08-08T22:23:58.718Z",
+        "updated_at": "2014-08-08T22:23:58.718Z",
+        "name": "Porvenir"
+    }
+},
+{
+    "pk": 291,
+    "model": "regions.commune",
+    "fields": {
+        "region": 13,
+        "created_at": "2014-08-08T22:23:58.721Z",
+        "updated_at": "2014-08-08T22:23:58.721Z",
+        "name": "Primavera"
+    }
+},
+{
+    "pk": 292,
+    "model": "regions.commune",
+    "fields": {
+        "region": 13,
+        "created_at": "2014-08-08T22:23:58.723Z",
+        "updated_at": "2014-08-08T22:23:58.723Z",
+        "name": "Timaukel"
+    }
+},
+{
+    "pk": 293,
+    "model": "regions.commune",
+    "fields": {
+        "region": 13,
+        "created_at": "2014-08-08T22:23:58.726Z",
+        "updated_at": "2014-08-08T22:23:58.726Z",
+        "name": "Natales"
+    }
+},
+{
+    "pk": 294,
+    "model": "regions.commune",
+    "fields": {
+        "region": 13,
+        "created_at": "2014-08-08T22:23:58.728Z",
+        "updated_at": "2014-08-08T22:23:58.728Z",
+        "name": "Torres del Paine"
+    }
+},
+{
+    "pk": 295,
+    "model": "regions.commune",
+    "fields": {
+        "region": 1,
+        "created_at": "2014-08-08T22:23:58.730Z",
+        "updated_at": "2014-08-08T22:23:58.731Z",
+        "name": "Santiago"
+    }
+},
+{
+    "pk": 296,
+    "model": "regions.commune",
+    "fields": {
+        "region": 1,
+        "created_at": "2014-08-08T22:23:58.733Z",
+        "updated_at": "2014-08-08T22:23:58.733Z",
+        "name": "Cerrillos"
+    }
+},
+{
+    "pk": 297,
+    "model": "regions.commune",
+    "fields": {
+        "region": 1,
+        "created_at": "2014-08-08T22:23:58.736Z",
+        "updated_at": "2014-08-08T22:23:58.736Z",
+        "name": "Cerro Navia"
+    }
+},
+{
+    "pk": 298,
+    "model": "regions.commune",
+    "fields": {
+        "region": 1,
+        "created_at": "2014-08-08T22:23:58.738Z",
+        "updated_at": "2014-08-08T22:23:58.738Z",
+        "name": "Conchalí"
+    }
+},
+{
+    "pk": 299,
+    "model": "regions.commune",
+    "fields": {
+        "region": 1,
+        "created_at": "2014-08-08T22:23:58.741Z",
+        "updated_at": "2014-08-08T22:23:58.741Z",
+        "name": "El Bosque"
+    }
+},
+{
+    "pk": 300,
+    "model": "regions.commune",
+    "fields": {
+        "region": 1,
+        "created_at": "2014-08-08T22:23:58.743Z",
+        "updated_at": "2014-08-08T22:23:58.743Z",
+        "name": "Estación Central"
+    }
+},
+{
+    "pk": 301,
+    "model": "regions.commune",
+    "fields": {
+        "region": 1,
+        "created_at": "2014-08-08T22:23:58.746Z",
+        "updated_at": "2014-08-08T22:23:58.746Z",
+        "name": "Huechuraba"
+    }
+},
+{
+    "pk": 302,
+    "model": "regions.commune",
+    "fields": {
+        "region": 1,
+        "created_at": "2014-08-08T22:23:58.748Z",
+        "updated_at": "2014-08-08T22:23:58.748Z",
+        "name": "Independencia"
+    }
+},
+{
+    "pk": 303,
+    "model": "regions.commune",
+    "fields": {
+        "region": 1,
+        "created_at": "2014-08-08T22:23:58.751Z",
+        "updated_at": "2014-08-08T22:23:58.751Z",
+        "name": "La Cisterna"
+    }
+},
+{
+    "pk": 304,
+    "model": "regions.commune",
+    "fields": {
+        "region": 1,
+        "created_at": "2014-08-08T22:23:58.753Z",
+        "updated_at": "2014-08-08T22:23:58.753Z",
+        "name": "La Florida"
+    }
+},
+{
+    "pk": 305,
+    "model": "regions.commune",
+    "fields": {
+        "region": 1,
+        "created_at": "2014-08-08T22:23:58.755Z",
+        "updated_at": "2014-08-08T22:23:58.755Z",
+        "name": "La Granja"
+    }
+},
+{
+    "pk": 306,
+    "model": "regions.commune",
+    "fields": {
+        "region": 1,
+        "created_at": "2014-08-08T22:23:58.758Z",
+        "updated_at": "2014-08-08T22:23:58.758Z",
+        "name": "La Pintana"
+    }
+},
+{
+    "pk": 307,
+    "model": "regions.commune",
+    "fields": {
+        "region": 1,
+        "created_at": "2014-08-08T22:23:58.761Z",
+        "updated_at": "2014-08-08T22:23:58.761Z",
+        "name": "La Reina"
+    }
+},
+{
+    "pk": 308,
+    "model": "regions.commune",
+    "fields": {
+        "region": 1,
+        "created_at": "2014-08-08T22:23:58.763Z",
+        "updated_at": "2014-08-08T22:23:58.763Z",
+        "name": "Las Condes"
+    }
+},
+{
+    "pk": 309,
+    "model": "regions.commune",
+    "fields": {
+        "region": 1,
+        "created_at": "2014-08-08T22:23:58.766Z",
+        "updated_at": "2014-08-08T22:23:58.766Z",
+        "name": "Lo Barnechea"
+    }
+},
+{
+    "pk": 310,
+    "model": "regions.commune",
+    "fields": {
+        "region": 1,
+        "created_at": "2014-08-08T22:23:58.769Z",
+        "updated_at": "2014-08-08T22:23:58.769Z",
+        "name": "Lo Espejo"
+    }
+},
+{
+    "pk": 311,
+    "model": "regions.commune",
+    "fields": {
+        "region": 1,
+        "created_at": "2014-08-08T22:23:58.772Z",
+        "updated_at": "2014-08-08T22:23:58.772Z",
+        "name": "Lo Prado"
+    }
+},
+{
+    "pk": 312,
+    "model": "regions.commune",
+    "fields": {
+        "region": 1,
+        "created_at": "2014-08-08T22:23:58.774Z",
+        "updated_at": "2014-08-08T22:23:58.774Z",
+        "name": "Macul"
+    }
+},
+{
+    "pk": 313,
+    "model": "regions.commune",
+    "fields": {
+        "region": 1,
+        "created_at": "2014-08-08T22:23:58.777Z",
+        "updated_at": "2014-08-08T22:23:58.777Z",
+        "name": "Maipú"
+    }
+},
+{
+    "pk": 314,
+    "model": "regions.commune",
+    "fields": {
+        "region": 1,
+        "created_at": "2014-08-08T22:23:58.780Z",
+        "updated_at": "2014-08-08T22:23:58.780Z",
+        "name": "Ñuñoa"
+    }
+},
+{
+    "pk": 315,
+    "model": "regions.commune",
+    "fields": {
+        "region": 1,
+        "created_at": "2014-08-08T22:23:58.783Z",
+        "updated_at": "2014-08-08T22:23:58.783Z",
+        "name": "Pedro Aguirre Cerda"
+    }
+},
+{
+    "pk": 316,
+    "model": "regions.commune",
+    "fields": {
+        "region": 1,
+        "created_at": "2014-08-08T22:23:58.785Z",
+        "updated_at": "2014-08-08T22:23:58.785Z",
+        "name": "Peñalolén"
+    }
+},
+{
+    "pk": 317,
+    "model": "regions.commune",
+    "fields": {
+        "region": 1,
+        "created_at": "2014-08-08T22:23:58.788Z",
+        "updated_at": "2014-08-08T22:23:58.788Z",
+        "name": "Providencia"
+    }
+},
+{
+    "pk": 318,
+    "model": "regions.commune",
+    "fields": {
+        "region": 1,
+        "created_at": "2014-08-08T22:23:58.790Z",
+        "updated_at": "2014-08-08T22:23:58.791Z",
+        "name": "Pudahuel"
+    }
+},
+{
+    "pk": 319,
+    "model": "regions.commune",
+    "fields": {
+        "region": 1,
+        "created_at": "2014-08-08T22:23:58.793Z",
+        "updated_at": "2014-08-08T22:23:58.793Z",
+        "name": "Quilicura"
+    }
+},
+{
+    "pk": 320,
+    "model": "regions.commune",
+    "fields": {
+        "region": 1,
+        "created_at": "2014-08-08T22:23:58.796Z",
+        "updated_at": "2014-08-08T22:23:58.796Z",
+        "name": "Quinta Normal"
+    }
+},
+{
+    "pk": 321,
+    "model": "regions.commune",
+    "fields": {
+        "region": 1,
+        "created_at": "2014-08-08T22:23:58.799Z",
+        "updated_at": "2014-08-08T22:23:58.799Z",
+        "name": "Recoleta"
+    }
+},
+{
+    "pk": 322,
+    "model": "regions.commune",
+    "fields": {
+        "region": 1,
+        "created_at": "2014-08-08T22:23:58.801Z",
+        "updated_at": "2014-08-08T22:23:58.801Z",
+        "name": "Renca"
+    }
+},
+{
+    "pk": 323,
+    "model": "regions.commune",
+    "fields": {
+        "region": 1,
+        "created_at": "2014-08-08T22:23:58.804Z",
+        "updated_at": "2014-08-08T22:23:58.804Z",
+        "name": "San Joaquín"
+    }
+},
+{
+    "pk": 324,
+    "model": "regions.commune",
+    "fields": {
+        "region": 1,
+        "created_at": "2014-08-08T22:23:58.807Z",
+        "updated_at": "2014-08-08T22:23:58.807Z",
+        "name": "San Miguel"
+    }
+},
+{
+    "pk": 325,
+    "model": "regions.commune",
+    "fields": {
+        "region": 1,
+        "created_at": "2014-08-08T22:23:58.809Z",
+        "updated_at": "2014-08-08T22:23:58.809Z",
+        "name": "San Ramón"
+    }
+},
+{
+    "pk": 326,
+    "model": "regions.commune",
+    "fields": {
+        "region": 1,
+        "created_at": "2014-08-08T22:23:58.812Z",
+        "updated_at": "2014-08-08T22:23:58.812Z",
+        "name": "Vitacura"
+    }
+},
+{
+    "pk": 327,
+    "model": "regions.commune",
+    "fields": {
+        "region": 1,
+        "created_at": "2014-08-08T22:23:58.815Z",
+        "updated_at": "2014-08-08T22:23:58.815Z",
+        "name": "Puente Alto"
+    }
+},
+{
+    "pk": 328,
+    "model": "regions.commune",
+    "fields": {
+        "region": 1,
+        "created_at": "2014-08-08T22:23:58.818Z",
+        "updated_at": "2014-08-08T22:23:58.818Z",
+        "name": "Pirque"
+    }
+},
+{
+    "pk": 329,
+    "model": "regions.commune",
+    "fields": {
+        "region": 1,
+        "created_at": "2014-08-08T22:23:58.820Z",
+        "updated_at": "2014-08-08T22:23:58.820Z",
+        "name": "San José de Maipo"
+    }
+},
+{
+    "pk": 330,
+    "model": "regions.commune",
+    "fields": {
+        "region": 1,
+        "created_at": "2014-08-08T22:23:58.823Z",
+        "updated_at": "2014-08-08T22:23:58.823Z",
+        "name": "Colina"
+    }
+},
+{
+    "pk": 331,
+    "model": "regions.commune",
+    "fields": {
+        "region": 1,
+        "created_at": "2014-08-08T22:23:58.825Z",
+        "updated_at": "2014-08-08T22:23:58.825Z",
+        "name": "Lampa"
+    }
+},
+{
+    "pk": 332,
+    "model": "regions.commune",
+    "fields": {
+        "region": 1,
+        "created_at": "2014-08-08T22:23:58.828Z",
+        "updated_at": "2014-08-08T22:23:58.828Z",
+        "name": "Tiltil"
+    }
+},
+{
+    "pk": 333,
+    "model": "regions.commune",
+    "fields": {
+        "region": 1,
+        "created_at": "2014-08-08T22:23:58.830Z",
+        "updated_at": "2014-08-08T22:23:58.830Z",
+        "name": "San Bernardo"
+    }
+},
+{
+    "pk": 334,
+    "model": "regions.commune",
+    "fields": {
+        "region": 1,
+        "created_at": "2014-08-08T22:23:58.833Z",
+        "updated_at": "2014-08-08T22:23:58.833Z",
+        "name": "Buin"
+    }
+},
+{
+    "pk": 335,
+    "model": "regions.commune",
+    "fields": {
+        "region": 1,
+        "created_at": "2014-08-08T22:23:58.835Z",
+        "updated_at": "2014-08-08T22:23:58.835Z",
+        "name": "Calera de Tango"
+    }
+},
+{
+    "pk": 336,
+    "model": "regions.commune",
+    "fields": {
+        "region": 1,
+        "created_at": "2014-08-08T22:23:58.837Z",
+        "updated_at": "2014-08-08T22:23:58.837Z",
+        "name": "Paine"
+    }
+},
+{
+    "pk": 337,
+    "model": "regions.commune",
+    "fields": {
+        "region": 1,
+        "created_at": "2014-08-08T22:23:58.840Z",
+        "updated_at": "2014-08-08T22:23:58.840Z",
+        "name": "Melipilla"
+    }
+},
+{
+    "pk": 338,
+    "model": "regions.commune",
+    "fields": {
+        "region": 1,
+        "created_at": "2014-08-08T22:23:58.842Z",
+        "updated_at": "2014-08-08T22:23:58.842Z",
+        "name": "Alhué"
+    }
+},
+{
+    "pk": 339,
+    "model": "regions.commune",
+    "fields": {
+        "region": 1,
+        "created_at": "2014-08-08T22:23:58.845Z",
+        "updated_at": "2014-08-08T22:23:58.845Z",
+        "name": "Curacaví"
+    }
+},
+{
+    "pk": 340,
+    "model": "regions.commune",
+    "fields": {
+        "region": 1,
+        "created_at": "2014-08-08T22:23:58.847Z",
+        "updated_at": "2014-08-08T22:23:58.847Z",
+        "name": "María Pinto"
+    }
+},
+{
+    "pk": 341,
+    "model": "regions.commune",
+    "fields": {
+        "region": 1,
+        "created_at": "2014-08-08T22:23:58.850Z",
+        "updated_at": "2014-08-08T22:23:58.850Z",
+        "name": "San Pedro"
+    }
+},
+{
+    "pk": 342,
+    "model": "regions.commune",
+    "fields": {
+        "region": 1,
+        "created_at": "2014-08-08T22:23:58.852Z",
+        "updated_at": "2014-08-08T22:23:58.852Z",
+        "name": "Talagante"
+    }
+},
+{
+    "pk": 343,
+    "model": "regions.commune",
+    "fields": {
+        "region": 1,
+        "created_at": "2014-08-08T22:23:58.855Z",
+        "updated_at": "2014-08-08T22:23:58.855Z",
+        "name": "El Monte"
+    }
+},
+{
+    "pk": 344,
+    "model": "regions.commune",
+    "fields": {
+        "region": 1,
+        "created_at": "2014-08-08T22:23:58.858Z",
+        "updated_at": "2014-08-08T22:23:58.858Z",
+        "name": "Isla de Maipo"
+    }
+},
+{
+    "pk": 345,
+    "model": "regions.commune",
+    "fields": {
+        "region": 1,
+        "created_at": "2014-08-08T22:23:58.861Z",
+        "updated_at": "2014-08-08T22:23:58.861Z",
+        "name": "Padre Hurtado"
+    }
+},
+{
+    "pk": 346,
+    "model": "regions.commune",
+    "fields": {
+        "region": 1,
+        "created_at": "2014-08-08T22:23:58.864Z",
+        "updated_at": "2014-08-08T22:23:58.864Z",
+        "name": "Peñaflor"
+    }
+}
+]
