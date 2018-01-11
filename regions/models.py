@@ -37,7 +37,7 @@ class Region(BaseModel):
     class Meta:
         verbose_name_plural = _('regions')
         verbose_name = _('region')
-        ordering = ['name']
+        ordering = ['order']
 
     def __str__(self):
         return self.name
