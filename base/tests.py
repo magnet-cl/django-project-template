@@ -22,20 +22,17 @@ from project.urls import urlpatterns
 from inflection import underscore
 from base.utils import get_our_models
 
-# Third-party app imports
-from model_mommy import mommy
-from model_mommy import random_gen
+# utils
+from base.mockups import Mockup
 
 
-class BaseTestCase(TestCase):
+class BaseTestCase(TestCase, Mockup):
 
     def setUp(self):
         super(BaseTestCase, self).setUp()
 
-        self.password = random_gen.gen_text()
-        self.user = mommy.prepare('users.User')
-        self.user.set_password(self.password)
-        self.user.save()
+        self.password = self.random_string()
+        self.user = self.create_user(self.password)
 
         self.login()
 
@@ -122,7 +119,7 @@ class UrlsTest(BaseTestCase):
             method_name = 'create_{}'.format(model_name)
             param_name = '{}_id'.format(model_name)
 
-            obj = mommy.make(model)
+            obj = getattr(self, method_name)()
 
             self.assertIsNotNone(obj, '{} returns None'.format(method_name))
 
