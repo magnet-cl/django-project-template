@@ -65,7 +65,7 @@ def update_server():
             run('pip install --requirement requirements.txt')
 
             print(green('installing npm packages'))
-            run('npm install')
+            run('yarn install')
 
             print(green('collecting static files'))
             run('yes yes | python manage.py collectstatic')

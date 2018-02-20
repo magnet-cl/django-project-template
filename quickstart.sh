@@ -186,5 +186,5 @@ if  $INSTALL_YARN ; then
     replace "s/NAME/${PWD##*/}/g" package.json
     replace "s/HOMEPAGE/https:\/\/bitbucket.org\/magnet-cl\/${PWD##*/}/g" package.json
 
-    npm install
+    yarn install
 fi
