@@ -12,13 +12,13 @@ def create_users(apps, schema_editor):
 
     User.objects.create(
         date_joined='2012-10-09T21:42:23Z',
-        email='admin@admin.com',
-        first_name='Adam',
+        email='alex@smith.com',
+        first_name='Alex',
         is_active=True,
         is_staff=True,
         is_superuser=True,
-        last_name='Minier',
-        password=make_password('admin'),
+        last_name='Smith',
+        password=make_password('códigofuente'),
     )
 
 
