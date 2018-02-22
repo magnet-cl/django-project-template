@@ -37,3 +37,9 @@ if settings.DEBUG:
         settings.MEDIA_URL,
         document_root=settings.MEDIA_ROOT,
     )
+
+# custom error pages
+handler400 = 'base.views.bad_request_view'
+handler403 = 'base.views.permission_denied_view'
+handler404 = 'base.views.page_not_found_view'
+handler500 = 'base.views.server_error_view'

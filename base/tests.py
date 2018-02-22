@@ -186,3 +186,9 @@ class UrlsTest(BaseTestCase):
         for model, model_admin in admin.site._registry.items():
             patterns = model_admin.get_urls()
             test_url_patterns(patterns, namespace='admin')
+
+
+class CheckErrorPages(TestCase):
+    def test_404(self):
+        response = self.client.get('/this-url-does-not-exist')
+        self.assertTemplateUsed(response, 'exceptions/404.pug')
