@@ -24,7 +24,7 @@ class {{model_name}}ListView(BaseListView):
     """
     model = {{model_name}}
     template_name = '{{app_name}}/{{snake_case_model_name}}_list.pug'
-    permission_required = '{{app_name}}.view_{{snake_case_model_name}}'
+    permission_required = '{{app_name}}.view_{{model_name.lower}}'
 
 
 class {{model_name}}CreateView(BaseCreateView):
@@ -34,7 +34,7 @@ class {{model_name}}CreateView(BaseCreateView):
     model = {{model_name}}
     form_class = {{model_name}}Form
     template_name = '{{app_name}}/{{snake_case_model_name}}_create.pug'
-    permission_required = '{{app_name}}.add_{{snake_case_model_name}}'
+    permission_required = '{{app_name}}.add_{{model_name.lower}}'
 
 
 class {{model_name}}DetailView(BaseDetailView):
@@ -43,7 +43,7 @@ class {{model_name}}DetailView(BaseDetailView):
     """
     model = {{model_name}}
     template_name = '{{app_name}}/{{snake_case_model_name}}_detail.pug'
-    permission_required = '{{app_name}}.view_{{snake_case_model_name}}'
+    permission_required = '{{app_name}}.view_{{model_name.lower}}'
 
 
 class {{model_name}}UpdateView(BaseUpdateView):
@@ -53,7 +53,7 @@ class {{model_name}}UpdateView(BaseUpdateView):
     model = {{model_name}}
     form_class = {{model_name}}Form
     template_name = '{{app_name}}/{{snake_case_model_name}}_update.pug'
-    permission_required = '{{app_name}}.change_{{snake_case_model_name}}'
+    permission_required = '{{app_name}}.change_{{model_name.lower}}'
 
 
 class {{model_name}}DeleteView(BaseDeleteView):
@@ -61,5 +61,5 @@ class {{model_name}}DeleteView(BaseDeleteView):
     A view for deleting a single {{snake_case_model_name}}
     """
     model = {{model_name}}
-    permission_required = '{{app_name}}.delete_{{snake_case_model_name}}'
+    permission_required = '{{app_name}}.delete_{{model_name.lower}}'
     template_name = '{{app_name}}/{{snake_case_model_name}}_delete.pug'
