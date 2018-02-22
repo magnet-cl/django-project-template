@@ -33,6 +33,13 @@ def add_systemd_service(filename, context):
 
 
 @task
+def enable_systemd_service():
+    # enable service
+    cmd = 'systemctl enable django-{}-{}'.format(env.prefix, env.branch)
+    sudo(cmd)
+
+
+@task
 def logs():
     """ Shows systemd django service log """
     sudo('journalctl -u django-{}-{}.service'.format(env.prefix, env.branch))

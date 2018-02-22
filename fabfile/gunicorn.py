@@ -6,6 +6,7 @@ from fabric.api import task
 from fabric.contrib.files import upload_template
 
 from .service import add_systemd_service
+from .service import enable_systemd_service
 from .service import gunicorn_handler
 
 # standard library
@@ -73,3 +74,4 @@ def add_gunicorn_service():
     }
 
     add_systemd_service(filename, context)
+    enable_systemd_service()
