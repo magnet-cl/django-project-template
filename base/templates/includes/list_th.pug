@@ -3,7 +3,7 @@
 
 th
   a(href="?{% get_order_by_querystring ordering=ordering current_order=order_by %}&{{clean_query_string}}") 
-    | {% trans verbose_name %}
+    | {% trans verbose_name|capfirst %}
 
     for order in ordering
       if order_by == order or order_by == order|slice:"1:"
