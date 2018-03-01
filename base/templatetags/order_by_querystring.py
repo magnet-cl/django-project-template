@@ -4,7 +4,7 @@ register = template.Library()
 
 
 @register.simple_tag
-def get_order_by_querytring(ordering, current_order=None, remove=False):
+def get_order_by_querystring(ordering, current_order=None, remove=False):
     """
     Using the ordering parameter (a list), returns a query string with the
     orders of the columns

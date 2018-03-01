@@ -2,7 +2,7 @@
 - load i18n
 
 th
-  a(href="?{% get_order_by_querytring ordering=ordering current_order=order_by %}&{{clean_query_string}}") 
+  a(href="?{% get_order_by_querystring ordering=ordering current_order=order_by %}&{{clean_query_string}}") 
     | {% trans verbose_name %}
 
     for order in ordering
@@ -15,5 +15,5 @@ th
 
           span.label.label-info
             | {{forloop.counter}}
-          a(href="?{% get_order_by_querytring ordering=ordering current_order=order_by remove=True %}&{{clean_query_string}}") 
+          a(href="?{% get_order_by_querystring ordering=ordering current_order=order_by remove=True %}&{{clean_query_string}}") 
             i.fa.fa-times.text-danger

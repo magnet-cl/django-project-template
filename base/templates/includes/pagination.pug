@@ -6,18 +6,18 @@
       ul.pagination
         -if page_obj.has_previous
           li
-            a(href="?p={{ page_obj.previous_page_number }}&{% get_order_by_querytring ordering=ordering %}&{{clean_query_string}}") «
+            a(href="?p={{ page_obj.previous_page_number }}&{% get_order_by_querystring ordering=ordering %}&{{clean_query_string}}") «
         {% for page in page_obj.paginator.page_range %}
         -if page == page_obj.number
           li.active
-            a(href="?p={{ page }}&{% get_order_by_querytring ordering=ordering %}&{{clean_query_string}}") {{ page }}
+            a(href="?p={{ page }}&{% get_order_by_querystring ordering=ordering %}&{{clean_query_string}}") {{ page }}
         -else
           li
-            a(href="?p={{ page }}&{% get_order_by_querytring ordering=ordering %}&{{clean_query_string}}") {{ page }}
+            a(href="?p={{ page }}&{% get_order_by_querystring ordering=ordering %}&{{clean_query_string}}") {{ page }}
         {% endfor %}
         -if page_obj.has_next
           li
-            a(href="?p={{ page_obj.next_page_number }}&{% get_order_by_querytring ordering=ordering %}&{{clean_query_string}}") »
+            a(href="?p={{ page_obj.next_page_number }}&{% get_order_by_querystring ordering=ordering %}&{{clean_query_string}}") »
   .col-sm-2
     strong.text-muted.pull-right
       | {{ page_obj.start_index }}-{{ page_obj.end_index }}
