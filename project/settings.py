@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
+from importlib import import_module
 import os
 import sys
 
@@ -18,19 +19,26 @@ from django.core.urlresolvers import reverse_lazy
 
 # local settings
 if 'CIRCLECI' in os.environ:
-    from project.circleci_settings import DEBUG
-    from project.circleci_settings import LOCAL_DATABASES
-    from project.circleci_settings import LOCALLY_INSTALLED_APPS
-    from project.circleci_settings import ENABLE_EMAILS
-    from project.circleci_settings import ADMINS
-    from project.circleci_settings import LOCALLY_ALLOWED_HOSTS
+    local_settings = import_module('project.production.local_settings')
 else:
-    from project.local_settings import DEBUG
-    from project.local_settings import LOCAL_DATABASES
-    from project.local_settings import LOCALLY_INSTALLED_APPS
-    from project.local_settings import ENABLE_EMAILS
-    from project.local_settings import ADMINS
-    from project.local_settings import LOCALLY_ALLOWED_HOSTS
+    local_settings = import_module('project.local_settings')
+
+DEBUG = local_settings.DEBUG
+LOCAL_DATABASES = local_settings.LOCAL_DATABASES
+LOCALLY_INSTALLED_APPS = local_settings.LOCALLY_INSTALLED_APPS
+ENABLE_EMAILS = local_settings.ENABLE_EMAILS
+ADMINS = local_settings.ADMINS
+LOCALLY_ALLOWED_HOSTS = local_settings.LOCALLY_ALLOWED_HOSTS
+
+
+def get_local_value(key, default_value):
+    try:
+        return getattr(local_settings, key)
+    except AttributeError:
+        return default_value
+
+GOOGLE_ANALYTICS_CODE = get_local_value('GOOGLE_ANALYTICS_CODE', None)
+
 
 if DEBUG:
     env = 'development'
@@ -136,6 +144,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'project.context_processors.google_analytics_code',
             ],
             'loaders': [
                 ('pypugjs.ext.django.Loader', (

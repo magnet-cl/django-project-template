@@ -6,6 +6,19 @@ doctype 5
 
 html(lang="es")
   head
+    if google_analytics_code
+      // Global site tag (gtag.js) - Google Analytics
+      script(
+        async,
+        src="https://www.googletagmanager.com/gtag/js?id={{google_analytics_code}}"
+      )
+      script.
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '{{google_analytics_code}}');
+
+
     meta(charset="utf-8")
     title Project {% block title %}{% if title%}- {{title}}{% endif %}{%endblock%}
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
