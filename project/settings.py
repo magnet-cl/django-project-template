@@ -19,7 +19,7 @@ from django.core.urlresolvers import reverse_lazy
 
 # local settings
 if 'CIRCLECI' in os.environ:
-    local_settings = import_module('project.production.local_settings')
+    local_settings = import_module('project.circleci_settings')
 else:
     local_settings = import_module('project.local_settings')
 
