@@ -40,3 +40,22 @@ dependencies of the project. It assumes you have yarn installed.
 Use the custom app template to create your apps:
 
     python manage.py startapp --template=project/app_template answers
+
+## Javascript stuff
+
+### Select2
+
+The project comes with select2 by default for all selects. If you wish to
+disable this feature add the class .js-not-select2 to the selec
+
+### eonasdan-bootstrap-datetimepicker
+
+The project comes with eonasdan-bootstrap-datetimepicker by default for all
+inputs that have the .datetime-picker class.
+
+### disable on submit
+
+The project disables all buttons and inputs of submit type
+within a form after submit. This is done with a timeout of 10 milliseconds to
+avoid not sending values of inputs with type submit. To disable this behaviour, add
+.js-do-not-disable-on-submit class to the buttons you don't want to disable.
