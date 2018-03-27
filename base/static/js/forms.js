@@ -33,16 +33,18 @@ $('select').not('.js-not-select2').select2({
 });
 
 $('form').submit(function() {
-  var $form = $(this);
+  var $buttons = $(this).find(':submit').not('.js-do-not-disable-on-submit');
 
   // disable buttons after submit to prevent disabling submit inputs
   // with values
   setTimeout(function() {
-    $form
-      .find(':submit')
-      .not('.js-do-not-disable-on-submit')
-      .addClass('disabled')
-      .prop('disabled', true);
+    $buttons.addClass('disabled').prop('disabled', true);
+    window.App.utils.showLoading($buttons);
+
+    setTimeout(function() {
+      $buttons.removeClass('disabled').prop('disabled', false);
+      window.App.utils.hideLoading();
+    }, 3000);
   }, 10);
 
   return true;
