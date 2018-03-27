@@ -60,12 +60,20 @@ html(lang="es")
     div
       {% include 'includes/navbar.pug' %}
       div.container
-        div.row
+        div.main-alert.fixed-notification
           {% if messages %}
           {% for message in messages %}
-          div(class="alert alert-{{ message.tags }}") {{ message }}
+          div(class="alert alert-{{ message.tags }}") 
+            button.close(type="button", data-dismiss="alert", aria-label="Close")
+              span.i.fa.fa-times
+                | 
+            {{ message }}
           {% endfor %}
           {% endif %}
+          .alert.alert-info
+            button.close(type="button", data-dismiss="alert", aria-label="Close")
+              span.i.fa.fa-times
+                | 
       div.container
         ol.breadcrumb
           li

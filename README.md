@@ -59,3 +59,14 @@ The project disables all buttons and inputs of submit type
 within a form after submit. This is done with a timeout of 10 milliseconds to
 avoid not sending values of inputs with type submit. To disable this behaviour, add
 .js-do-not-disable-on-submit class to the buttons you don't want to disable.
+
+
+### App.utils
+
+* App.utils.showLoading(): Shows a spinner on the navbar and puts the cursor
+on wait
+* App.utils.hideLoading(): Reverts changes caused by showLoading
+on wait
+* App.utils.thousandSeparator(): for a given number in text, returns the text
+with thoushand separators (for spanish)
+on wait

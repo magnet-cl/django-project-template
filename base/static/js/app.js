@@ -35,4 +35,12 @@ var App = {};
   $('.alert').each(function() {
     App.utils.highlight($(this));
   });
+
+  $(document).ready(function() {
+    var $alert = $('.main-alert .alert');
+
+    setTimeout(function() {
+      $alert.fadeOut();
+    }, 10000);
+  });
 }());
