@@ -260,8 +260,13 @@ NPM_FILE_PATTERNS = {
     'bootstrap-sass': ['assets/javascripts/bootstrap.min.js'],
     'jquery': ['dist/jquery.min.js'],
     'moment': ['min/moment-with-locales.min.js'],
+    'select2': [
+        'dist/js/select2.min.js',
+        'dist/css/select2.min.css'
+    ],
     'eonasdan-bootstrap-datetimepicker': [
         'build/js/bootstrap-datetimepicker.min.js',
+        'build/css/bootstrap-datetimepicker.min.css',
     ],
 }
 
