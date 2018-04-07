@@ -14,7 +14,7 @@ function replace(){
 }
 
 INSTALL_SYSTEM_DEPENDENCIES=true
-INSTALL_PIP=true
+PIPENV_INSTALL=true
 INSTALL_BOWER=true
 INSTALL_YARN=true
 TRANSLATE=true
@@ -45,7 +45,7 @@ do
         a)
              print_green "only install aptitude"
              INSTALL_SYSTEM_DEPENDENCIES=true
-             INSTALL_PIP=false
+             PIPENV_INSTALL=false
              INSTALL_BOWER=false
              INSTALL_YARN=false
              TRANSLATE=false
@@ -54,7 +54,7 @@ do
         p)
              print_green "only pip install"
              INSTALL_SYSTEM_DEPENDENCIES=false
-             INSTALL_PIP=true
+             PIPENV_INSTALL=true
              INSTALL_BOWER=false
              INSTALL_YARN=false
              TRANSLATE=false
@@ -63,7 +63,7 @@ do
         b)
              print_green "only bower install"
              INSTALL_SYSTEM_DEPENDENCIES=false
-             INSTALL_PIP=false
+             PIPENV_INSTALL=false
              INSTALL_BOWER=true
              INSTALL_YARN=false
              TRANSLATE=false
@@ -72,7 +72,7 @@ do
         y)
              print_green "only yarn install"
              INSTALL_SYSTEM_DEPENDENCIES=false
-             INSTALL_PIP=false
+             PIPENV_INSTALL=false
              INSTALL_BOWER=false
              INSTALL_YARN=true
              TRANSLATE=false
@@ -81,7 +81,7 @@ do
         j)
              print_green "only npm run build"
              INSTALL_SYSTEM_DEPENDENCIES=false
-             INSTALL_PIP=false
+             PIPENV_INSTALL=false
              INSTALL_BOWER=false
              INSTALL_YARN=false
              TRANSLATE=false
@@ -99,12 +99,10 @@ if  $INSTALL_SYSTEM_DEPENDENCIES ; then
         print_green "Installing python 3"
         brew install python3
 
-        print_green "Installing virtualenv"
-        pip install virtualenv
+        print_green "Installing pipenv"
+        brew install pipenv
     else
         print_green "Installing aptitude dependencies"
-
-        # Install base packages
         sudo apt-get -y install python-pip python-virtualenv python3-dev build-essential
 
         print_green "Installing image libraries"
@@ -113,6 +111,9 @@ if  $INSTALL_SYSTEM_DEPENDENCIES ; then
 
         print_green "Installing translation libraries"
         sudo apt-get -y install gettext
+
+        print_green "Installing pipenv"
+        sudo pip install pipenv
     fi
 
     print_green "Are you going to use postgre for your database? [Y/n]"
@@ -132,25 +133,18 @@ if  $INSTALL_SYSTEM_DEPENDENCIES ; then
         fi
     fi
 
-    if [ ! -d ".env" ]; then
-        print_green "set a new virtual environment"
-        virtualenv -p python3 .env
+    viertual_env_directory=`pipenv --venv`
+    if [ ! -d "$viertual_env_directory" ]; then
+        print_green "set a new python 3.6 project with pipenv"
+        pipenv --python 3.6
     fi
 fi
-if  $INSTALL_PIP ; then
-    print_green "Installing pip requirements on requirement.txt"
 
-    # activate the environment
-    source .env/bin/activate
+if  $PIPENV_INSTALL ; then
+    print_green "Installing python requirements with pipenv defined on Pipfile"
 
-    # install setuptools
-    pip install --upgrade setuptools
-
-    # upgrade pip
-    pip install --upgrade pip
-
-    # install pip requirements in the virtual environment
-    .env/bin/pip install --requirement requirements.txt
+    # install python requirements
+    pipenv install
 fi
 
 # create the local_settings file if it does not exist

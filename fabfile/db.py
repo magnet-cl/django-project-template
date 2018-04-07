@@ -33,7 +33,7 @@ def get_db_data(root_dir=None, setting=''):
     if not root_dir:
         root_dir = env.server_root_dir
     with cd(root_dir):
-        with prefix('. .env/bin/activate'):
+        with prefix('pipenv shell'):
             return run('python -Wi manage.py printdatabasedata {}'.format(
                 setting))
 
@@ -42,7 +42,7 @@ def get_db_data(root_dir=None, setting=''):
 def migrate():
     """ Migrates database to the latest south migration """
     with cd(env.server_root_dir):
-        with prefix('. .env/bin/activate'):
+        with prefix('pipenv shell'):
             run('python manage.py migrate')
 
 
@@ -99,7 +99,7 @@ def import_db(dump_name=None):
         dump_name = download_db()
 
     # get local database information
-    with prefix('. .env/bin/activate'):
+    with prefix('pipenv shell'):
         local_engine = local(
             'python -Wi manage.py printdatabasedata ENGINE', capture=True)
         local_name = local(

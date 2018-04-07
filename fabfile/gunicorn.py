@@ -17,7 +17,7 @@ from re import search
 def install():
     """ Installs gunicorn. """
     with cd(env.server_root_dir):
-        with prefix('. .env/bin/activate'):
+        with prefix('pipenv shell'):
             run('pip install gunicorn')
 
     # create logs directory
@@ -49,9 +49,14 @@ def add_gunicorn_conf():
     filename = '{}/fabfile/templates/gunicorn.conf'
     filename = filename.format(env.local_root_dir)
     destination = '{}/gunicorn_conf.py'.format(env.server_root_dir)
+
+    with cd(env.server_root_dir):
+        virtual_env_dir = run('pipenv --venv')
+
     context = {
         'user': env.user,
         'server_root_dir': env.server_root_dir,
+        'virtual_env_dir': virtual_env_dir,
         'django_port': env.django_port
     }
     upload_template(filename, destination, context=context)
