@@ -1,0 +1,39 @@
+extends base.pug
+
+block content
+  table.table.table-bordered.table-hover
+    tbody
+
+      tr
+        th Google Analytics
+        td
+          if settings.GOOGLE_ANALYTICS_CODE
+            i.fa.fa-check.text-success
+              |  
+            | Ready ({{settings.GOOGLE_ANALYTICS_CODE}})
+          else
+            i.fa.fa-times.text-danger
+              |  
+            | Not set
+
+      tr
+        th RECAPTCHA
+        if settings.RECAPTCHA_PUBLIC_KEY
+          td
+            if settings.RECAPTCHA_PUBLIC_KEY == '6LcqFiMUAAAAAF5emCxyuzFJsD2tn2C84MoHc-Va'
+              i.fa.fa-times.text-danger
+                |  
+              | Using default Recaptcha 
+              a(href="https://www.google.com/recaptcha/admin", target="_blank")
+                | Get one
+            else
+              i.fa.fa-check.text-success
+                |  
+              | Ready (settings.GOOGLE_ANALYTICS_CODE)
+        else
+          td.table-danger
+            i.fa.fa-times.text-danger
+              |  
+            | Not set
+            a(href="https://www.google.com/recaptcha/admin", target="_blank")
+              | Get one

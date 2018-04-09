@@ -18,7 +18,7 @@ def create_users(apps, schema_editor):
         is_staff=True,
         is_superuser=True,
         last_name='Smith',
-        password=make_password('códigofuente'),
+        password=make_password('codigofuente'),
     )
 
 

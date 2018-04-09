@@ -25,6 +25,7 @@ urlpatterns = [
     url(r'^admin/', include('loginas.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/', include('users.urls')),
+    url(r'^status/$', base_views.StatusView.as_view(), name='status'),
     url(r'^$', base_views.index, name='home'),
 ]
 
