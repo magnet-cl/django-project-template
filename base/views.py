@@ -4,6 +4,7 @@
 # standard library
 
 # django
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404
@@ -11,13 +12,13 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
+from django.views.generic import RedirectView
 from django.views.generic import TemplateView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 from django.views.generic.edit import DeleteView
 from django.views.generic.edit import UpdateView
 from django.views.generic.list import ListView
-from django.views.generic import RedirectView
 
 from django.views.defaults import bad_request
 from django.views.defaults import permission_denied
@@ -203,8 +204,7 @@ class BaseTemplateView(TemplateView, PermissionRequiredMixin):
     def get_context_data(self, **kwargs):
         context = super(BaseTemplateView, self).get_context_data(**kwargs)
 
-        context['opts'] = self.model._meta
-        context['title'] = self.model._meta
+        context['title'] = self.title
 
         return context
 
@@ -250,3 +250,15 @@ class BaseRedirectView(RedirectView, PermissionRequiredMixin):
     def dispatch(self, *args, **kwargs):
         self.check_permission_required()
         return super(BaseRedirectView, self).dispatch(*args, **kwargs)
+
+
+class StatusView(BaseTemplateView):
+    template_name = 'status.pug'
+    title = _('status').title()
+
+    def get_context_data(self, **kwargs):
+        context = super(StatusView, self).get_context_data(**kwargs)
+
+        context['settings'] = settings
+
+        return context

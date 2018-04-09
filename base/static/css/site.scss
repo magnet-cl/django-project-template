@@ -24,10 +24,10 @@ body {
     right: 30px;
     left: 30px;
     z-index: $zindex-tooltip + 10;
-    top: $navbar-height + 10px;
+    top: $nav-link-height + 2rem;
 }
 
-@media (min-width: $screen-md-min) {
+@media (min-width: map-get($grid-breakpoints, "md")) {
   .fixed-notification {
     width: 500px;
     left: auto;
@@ -40,19 +40,9 @@ body {
 }
 
 .highlight {
-  &.alert-primary {
-    background: darken($brand-primary, 10%);
-  }
-  &.alert-success{
-    background: darken($brand-success, 10%);
-  }
-  &.alert-info{
-    background: darken($brand-info, 10%);
-  }
-  &.alert-warning{
-    background: darken($brand-warning, 10%);
-  }
-  &.alert-danger{
-    background: darken($brand-danger, 10%);
+  @each $color, $value in $theme-colors {
+    &.alert-#{$color} {
+      background: darken($value, 10%);
+    }
   }
 }

@@ -2,15 +2,17 @@ extends base.pug
 
 - load i18n
 
-block content
-  .text-right
-    .btn-group
-      if perms.{{app_name}}.add_{{model_name.lower}}
-        a.btn.btn-primary(href="{% templatetag openblock %} url '{{snake_case_model_name}}_create' {% templatetag closeblock %}")
-          {% templatetag openblock %} trans 'Add {{model_verbose_name}}' {% templatetag closeblock %}
-          i.fa.fa-plus
+block options
+  if perms.{{app_name}}.add_{{model_name.lower}}
+    a.btn.btn-sm.btn-outline-secondary(
+      href="{% templatetag openblock %} url '{{snake_case_model_name}}_create' {% templatetag closeblock %}"
+    )
+      {% templatetag openblock %} trans 'Add {{model_verbose_name}}' {% templatetag closeblock %}
+      i.fa.fa-plus
 
-  table.table.table-bordered.table-hover
+block content
+
+  table.table.table-striped.table-hover.table-sm
     thead
       tr
         th Id
@@ -30,7 +32,7 @@ block content
               | {% templatetag openvariable %}{{snake_case_model_name}}{% templatetag closevariable %}
           if perms.{{app_name}}.change_{{model_name.lower}}
             td
-              a.btn.btn-primary(href="{% templatetag openblock %} url '{{snake_case_model_name}}_update' {{snake_case_model_name}}.id {% templatetag closeblock %}")
+              a.btn.btn-outline-secondary(href="{% templatetag openblock %} url '{{snake_case_model_name}}_update' {{snake_case_model_name}}.id {% templatetag closeblock %}")
                 {% templatetag openblock %} trans 'Update {{model_verbose_name}}' {% templatetag closeblock %}
                 i.fa.fa-edit
           if perms.{{app_name}}.delete_{{model_name.lower}}

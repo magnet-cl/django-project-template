@@ -1,29 +1,32 @@
 extends base.pug
 
+- load i18n
+
+block options
+  if perms.users.add_user
+    a.btn.btn-sm.btn-outline-secondary(href="{% url 'register' %}")
+      | {% trans 'Add user' %}
+
 block content
   .row
-    .col-sm-4
+    .offset-sm-8.col-sm-4
       form()
         .view-controls.text-left
-          .input-group
-            input.form-control(type="text", name="q", value="{{q|default:''}}")
-            span.input-group-btn
-              button.btn.btn-default(type="submit")
+          .input-group.mb-3
+            input.form-control(
+              name="q",
+              placeholder="{% trans 'Search by name or email' %}",
+              type="text",
+              value="{{q|default:''}}"
+            )
+            .input-group-append
+              button.btn.btn-outline-secondary(type="submit")
                 i.fa.fa-search
 
         for order in ordering
           input(type="hidden", name="o", value="{{order}}")
 
-
-    .col-sm-8
-      .view-controls.text-right
-        .btn-group
-          if perms.users.add_user
-            a.btn.btn-primary(href="{% url 'register' %}")
-              | Agregar usuario
-              i.fa.fa-plus
-
-  table.table
+  table.table.table-striped.table-sm
     thead
       tr
         {% include 'includes/list_th.pug' with order_by='first_name' verbose_name='Nombre'%}

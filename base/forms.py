@@ -15,11 +15,23 @@ class BaseModelForm(BetterModelForm):
     def __init__(self, *args, **kwargs):
         super(BaseModelForm, self).__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
-            if isinstance(field.widget, forms.widgets.DateInput):
-                field.widget.attrs['class'] = (
-                    'date-picker form-control vDateField')
-            elif isinstance(field.widget, forms.widgets.DateTimeInput):
-                field.widget.attrs['class'] = 'datetime-picker form-control'
+            attrs = field.widget.attrs
+
+            if isinstance(field.widget, forms.widgets.DateTimeInput):
+                attrs['class'] = 'datetimepicker-input form-control'
+                attrs['data-format'] = 'DD/MM/YYYY HH:mm'
+                attrs['data-toggle'] = 'datetimepicker'
+
+            elif isinstance(field.widget, forms.widgets.DateInput):
+                attrs['class'] = 'datetimepicker-input form-control'
+                attrs['data-format'] = 'DD/MM/YYYY'
+                attrs['data-toggle'] = 'datetimepicker'
+
+            elif isinstance(field.widget, forms.widgets.TimeInput):
+                attrs['class'] = 'datetimepicker-input form-control'
+                attrs['data-format'] = 'HH:mm'
+                attrs['data-toggle'] = 'datetimepicker'
+
             elif isinstance(field.widget, forms.widgets.Textarea):
                 field.widget.attrs['class'] = 'form-control'
             elif isinstance(field.widget, forms.widgets.EmailInput):

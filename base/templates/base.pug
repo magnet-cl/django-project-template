@@ -35,7 +35,9 @@ html(lang="es")
 
     {% compress css %}
     link(
-      type="text/x-scss", rel="stylesheet", href="{% static 'css/bootstrap.scss' %}",
+      type="text/x-scss",
+      rel="stylesheet",
+      href="{% static 'css/bootstrap.scss' %}",
       charset="utf-8"
     )
     link(
@@ -47,7 +49,7 @@ html(lang="es")
       rel="stylesheet"
     )
     link(
-      href="{% static 'eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css' %}",
+      href="{% static 'tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4.min.css' %}",
       rel="stylesheet"
     )
     {% endcompress %}
@@ -71,37 +73,56 @@ html(lang="es")
           {% endfor %}
           {% endif %}
       div.container
-        ol.breadcrumb
-          li
-            a(href="{% url 'home' %}") 
-              {% trans 'Home' %}
-          block breadcrumbs
-          if title
-            li {{title}}
+        nav(aria-label='breadcrumb')
+          ol.breadcrumb
+            if request.path == '/'
+              li.breadcrumb-item.active(aria-current='page') 
+                a(href="{% url 'home' %}") 
+                  {% trans 'Home' %}
+            else
+              li.breadcrumb-item
+                a(href="{% url 'home' %}") 
+                  {% trans 'Home' %}
+
+            block breadcrumbs
+
+            if title
+              li.breadcrumb-item.active(aria-current='page') {{title}}
+
         block content_title 
-          h1 {{ title }}
-        block content
+          .d-flex.justify-content-between.flex-wrap.flex-md-nowrap.align-items-center.pb-2.mb-3.border-bottom
+            h1 {{ title }}
+            .btn-toolbar.mb-2.mb-md-0
+              .btn-group.mr-2
+                block options
+
+        main(role="main")
+          block content
 
       // Javascript Placed at the end of the document so the pages load faster
       // uncompressible javascripts
       if not debug
         script(src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js")
+
         script(
-          src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js",
-          integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa",
+          src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js",
+          integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q",
           crossorigin="anonymous"
         )
 
+        script(
+          src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js",
+          integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl",
+          crossorigin="anonymous"
+        )
       block uncompressible_javascripts
 
-      {% compress js %}
       if debug
         script(src="{% static 'jquery/dist/jquery.min.js' %}")
-        script(src="{% static 'bootstrap-sass/assets/javascripts/bootstrap.min.js' %}")
-      {% endcompress %}
+        // bootstrap bundle includes popper
+        script(src="{% static 'bootstrap/dist/js/bootstrap.bundle.js' %}")
 
       // templates
-
       {% compress js %}
       script(type="text/pug", src="{% static 'templates/users/list.pug' %}")
       script(type="text/pug", src="{% static 'templates/users/detail.pug' %}")
@@ -113,7 +134,7 @@ html(lang="es")
       block javascripts
       script(src="{% static 'moment/min/moment-with-locales.min.js' %}")
       script(src="{% static 'select2/dist/js/select2.min.js' %}")
-      script(src="{% static 'eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js' %}")
+      script(src="{% static 'tempusdominus-bootstrap-4/build/js/tempusdominus-bootstrap-4.min.js' %}")
       script(src="{% static 'js/app.js' %}")
       script(src="{% static 'js/forms.js' %}")
       {% endcompress %}

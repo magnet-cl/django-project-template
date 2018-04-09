@@ -59,10 +59,10 @@ def update_server():
     update_helper(env.server_root_dir)
 
     with cd(env.server_root_dir):
-        with prefix('. .env/bin/activate'):
+        print(green('installing pipenv requirements'))
+        run('pipenv install')
 
-            print(green('installing pip requirements'))
-            run('pip install --requirement requirements.txt')
+        with prefix('pipenv shell'):
 
             print(green('installing npm packages'))
             run('yarn install')
@@ -114,7 +114,7 @@ def db_reset():
     # backup database before resetting
     backup_db()
     with cd(env.server_root_dir):
-        with prefix('. .env/bin/activate'):
+        with prefix('pipenv shell'):
             run('./reset.sh')
 
 
@@ -185,5 +185,5 @@ def install_project_handling_dependencies():
 @task
 def run_django_command(command):
     with cd(env.server_root_dir):
-        with prefix('. .env/bin/activate'):
+        with prefix('pipenv shell'):
             run('python manage.py {}'.format(command))
