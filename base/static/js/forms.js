@@ -1,30 +1,15 @@
-var $datetimePicker = $('.datetime-picker');
+var $datetimePicker = $('.datetimepicker-input');
 
-if ($datetimePicker.datetimepicker) {
-  $datetimePicker.datetimepicker({
-    date: $datetimePicker.val(),
-    format: 'DD/MM/YYYY HH:mm',
+$datetimePicker.each(function() {
+  var $this = $(this);
+  $this.data('target', '#' + $this.prop('id'));
+
+  $this.datetimepicker({
+    date: $this.val(),
+    format: $this.data('format'),
     locale: 'es'
   });
-}
-
-var $datePicker = $('.date-picker');
-if ($datePicker.datetimepicker) {
-  $datePicker.datetimepicker({
-    date: $datePicker.val(),
-    format: 'DD/MM/YYYY',
-    locale: 'es'
-  });
-}
-
-var $timePicker = $('.time-picker');
-if ($timePicker.datetimepicker) {
-  $timePicker.datetimepicker({
-    date: $timePicker.val(),
-    format: 'HH:mm',
-    locale: 'es'
-  });
-}
+});
 
 $('.model-form input:text').addClass('form-control');
 

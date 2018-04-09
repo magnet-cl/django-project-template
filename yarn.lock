@@ -70,11 +70,7 @@ babylon@^6.18.0:
   version "6.18.0"
   resolved "https://registry.yarnpkg.com/babylon/-/babylon-6.18.0.tgz#af2f3b88fa6f5c1e4c634d1a0f8eac4f55b395e3"
 
-bootstrap@^3.3:
-  version "3.3.7"
-  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-3.3.7.tgz#5a389394549f23330875a3b150656574f8a9eb71"
-
-bootstrap@^4.0.0:
+bootstrap@4.0.0, bootstrap@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-4.0.0.tgz#ceb03842c145fcc1b9b4e15da2a05656ba68469a"
 
@@ -144,15 +140,6 @@ doctypes@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/doctypes/-/doctypes-1.1.0.tgz#ea80b106a87538774e8a3a4a5afe293de489e0a9"
 
-eonasdan-bootstrap-datetimepicker@^4.17.47:
-  version "4.17.47"
-  resolved "https://registry.yarnpkg.com/eonasdan-bootstrap-datetimepicker/-/eonasdan-bootstrap-datetimepicker-4.17.47.tgz#7a49970044065276e7965efd16f822735219e735"
-  dependencies:
-    bootstrap "^3.3"
-    jquery "^1.8.3 || ^2.0 || ^3.0"
-    moment "^2.10"
-    moment-timezone "^0.4.0"
-
 escape-string-regexp@^1.0.2:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
@@ -202,9 +189,9 @@ jquery-mousewheel@~3.1.13:
   version "3.1.13"
   resolved "https://registry.yarnpkg.com/jquery-mousewheel/-/jquery-mousewheel-3.1.13.tgz#06f0335f16e353a695e7206bf50503cb523a6ee5"
 
-"jquery@^1.8.3 || ^2.0 || ^3.0", jquery@^3.2.1:
-  version "3.3.1"
-  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca"
+jquery@3.2.1, jquery@^3.0:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.2.1.tgz#5c4d9de652af6cd0a770154a631bba12b015c787"
 
 js-stringify@^1.0.1:
   version "1.0.2"
@@ -245,15 +232,15 @@ mkdirp@^0.5.1:
   dependencies:
     minimist "0.0.8"
 
-moment-timezone@^0.4.0:
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.4.1.tgz#81f598c3ad5e22cdad796b67ecd8d88d0f5baa06"
+moment-timezone@^0.5.11:
+  version "0.5.14"
+  resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.5.14.tgz#4eb38ff9538b80108ba467a458f3ed4268ccfcb1"
   dependencies:
-    moment ">= 2.6.0"
+    moment ">= 2.9.0"
 
-"moment@>= 2.6.0", moment@^2.10:
-  version "2.21.0"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.21.0.tgz#2a114b51d2a6ec9e6d83cf803f838a878d8a023a"
+"moment@>= 2.9.0", moment@^2.17:
+  version "2.22.0"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.22.0.tgz#7921ade01017dd45186e7fee5f424f0b8663a730"
 
 object-assign@^4.0.1, object-assign@^4.1.0:
   version "4.1.1"
@@ -262,6 +249,10 @@ object-assign@^4.0.1, object-assign@^4.1.0:
 path-parse@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/path-parse/-/path-parse-1.0.5.tgz#3c1adf871ea9cd6c9431b6ea2bd74a0ff055c4c1"
+
+popper.js@^1.12.9:
+  version "1.14.3"
+  resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.14.3.tgz#1438f98d046acf7b4d78cd502bf418ac64d4f095"
 
 promise@^7.0.1:
   version "7.3.1"
@@ -411,6 +402,16 @@ strip-ansi@^3.0.0:
 supports-color@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-2.0.0.tgz#535d045ce6b6363fa40117084629995e9df324c7"
+
+tempusdominus-bootstrap-4@^5.0.0-alpha18:
+  version "5.0.0-alpha18"
+  resolved "https://registry.yarnpkg.com/tempusdominus-bootstrap-4/-/tempusdominus-bootstrap-4-5.0.0-alpha18.tgz#3b6337f48761b2821fad1b0f90701afe762c7dcf"
+  dependencies:
+    bootstrap "4.0.0"
+    jquery "^3.0"
+    moment "^2.17"
+    moment-timezone "^0.5.11"
+    popper.js "^1.12.9"
 
 to-fast-properties@^1.0.3:
   version "1.0.3"

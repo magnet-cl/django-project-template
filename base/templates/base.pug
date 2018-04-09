@@ -49,7 +49,7 @@ html(lang="es")
       rel="stylesheet"
     )
     link(
-      href="{% static 'eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css' %}",
+      href="{% static 'tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4.min.css' %}",
       rel="stylesheet"
     )
     {% endcompress %}
@@ -102,11 +102,7 @@ html(lang="es")
       // Javascript Placed at the end of the document so the pages load faster
       // uncompressible javascripts
       if not debug
-        script(
-          src="https://code.jquery.com/jquery-3.2.1.slim.min.js",
-          integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN",
-          crossorigin="anonymous"
-        )
+        script(src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js")
 
         script(
           src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js",
@@ -138,7 +134,7 @@ html(lang="es")
       block javascripts
       script(src="{% static 'moment/min/moment-with-locales.min.js' %}")
       script(src="{% static 'select2/dist/js/select2.min.js' %}")
-      script(src="{% static 'eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js' %}")
+      script(src="{% static 'tempusdominus-bootstrap-4/build/js/tempusdominus-bootstrap-4.min.js' %}")
       script(src="{% static 'js/app.js' %}")
       script(src="{% static 'js/forms.js' %}")
       {% endcompress %}

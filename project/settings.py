@@ -267,9 +267,9 @@ NPM_FILE_PATTERNS = {
         'dist/js/select2.min.js',
         'dist/css/select2.min.css'
     ],
-    'eonasdan-bootstrap-datetimepicker': [
-        'build/js/bootstrap-datetimepicker.min.js',
-        'build/css/bootstrap-datetimepicker.min.css',
+    'tempusdominus-bootstrap-4': [
+        'build/js/tempusdominus-bootstrap-4.min.js',
+        'build/css/tempusdominus-bootstrap-4.min.css',
     ],
 }
 
