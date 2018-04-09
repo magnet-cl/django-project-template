@@ -4,7 +4,7 @@
   "repository": "https://github.com/magnet-cl/django-project-template-py3",
   "author": "Magnet S.P.A.",
   "dependencies": {
-    "bootstrap-sass": "^3.3.7",
+    "bootstrap": "^4.0.0",
     "eonasdan-bootstrap-datetimepicker": "^4.17.47",
     "jquery": "^3.2.1",
     "pug-cli": "^1.0.0-alpha6",

@@ -3,6 +3,6 @@ extends form.pug
 - load i18n
 
 block breadcrumbs
-  li
+  li.breadcrumb-item
     a(href="{% templatetag openblock %} url '{{snake_case_model_name}}_list' {% templatetag closeblock %}")
       | {% templatetag openvariable %}opts.verbose_name_plural.capfirst{% templatetag closevariable %}

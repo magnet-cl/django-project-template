@@ -28,4 +28,7 @@
       .form-group
         div 
           label &nbsp;
-        {{ field.help_text|safe }}
+        small.form-text.text-muted(
+          id="{{field.name}}_help"
+        )
+            {{ field.help_text|safe }}
