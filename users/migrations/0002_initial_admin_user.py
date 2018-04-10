@@ -12,7 +12,7 @@ def create_users(apps, schema_editor):
 
     User.objects.create(
         date_joined='2012-10-09T21:42:23Z',
-        email='alex@smith.com',
+        email='alex.smith@example.com',
         first_name='Alex',
         is_active=True,
         is_staff=True,
