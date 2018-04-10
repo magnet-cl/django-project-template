@@ -34,6 +34,11 @@ class LoginView(auth_views.LoginView):
     form_class = AuthenticationForm
     title = _('Login')
 
+    def get(self, *args, **kwargs):
+        if self.request.user.is_authenticated():
+            return redirect('home')
+        return super(LoginView, self).get(*args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super(LoginView, self).get_context_data(**kwargs)
         context['title'] = self.title
