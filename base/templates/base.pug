@@ -61,43 +61,45 @@ html(lang="es")
   body(class='{{body_class|default:""}}')
     div
       {% include 'includes/navbar.pug' %}
-      div.container
-        div.main-alert.fixed-notification
-          {% if messages %}
-          {% for message in messages %}
-          div(class="alert alert-{{ message.tags }}") 
-            button.close(type="button", data-dismiss="alert", aria-label="Close")
-              span.i.fa.fa-times
-                | 
-            {{ message }}
-          {% endfor %}
-          {% endif %}
-      div.container
-        nav(aria-label='breadcrumb')
-          ol.breadcrumb
-            if request.path == '/'
-              li.breadcrumb-item.active(aria-current='page') 
-                a(href="{% url 'home' %}") 
-                  {% trans 'Home' %}
-            else
-              li.breadcrumb-item
-                a(href="{% url 'home' %}") 
-                  {% trans 'Home' %}
+      main(role="main")
+        .container
+          div.main-alert.fixed-notification
+            {% if messages %}
+            {% for message in messages %}
+            div(class="alert alert-{{ message.tags }}") 
+              button.close(type="button", data-dismiss="alert", aria-label="Close")
+                span.i.fa.fa-times
+                  | 
+              {{ message }}
+            {% endfor %}
+            {% endif %}
+        .container
+          nav(aria-label='breadcrumb')
+            ol.breadcrumb
+              if request.path == '/'
+                li.breadcrumb-item.active(aria-current='page') 
+                  a(href="{% url 'home' %}") 
+                    {% trans 'Home' %}
+              else
+                li.breadcrumb-item
+                  a(href="{% url 'home' %}") 
+                    {% trans 'Home' %}
 
-            block breadcrumbs
+              block breadcrumbs
 
-            if title
-              li.breadcrumb-item.active(aria-current='page') {{title}}
-
-        block content_title 
-          .d-flex.justify-content-between.flex-wrap.flex-md-nowrap.align-items-center.pb-2.mb-3.border-bottom
-            h1 {{ title }}
-            .btn-toolbar.mb-2.mb-md-0
-              .btn-group.mr-2
-                block options
-
-        main(role="main")
+              if title
+                li.breadcrumb-item.active(aria-current='page') {{title}}
+        .container
+          block content_title 
+            .d-flex.justify-content-between.flex-wrap.flex-md-nowrap.align-items-center.pb-2.mb-3.border-bottom
+              h1 {{ title }}
+              .btn-toolbar.mb-2.mb-md-0
+                .btn-group.mr-2
+                  block options
           block content
+
+      {% include 'includes/footer.pug' %}
+
 
       // Javascript Placed at the end of the document so the pages load faster
       // uncompressible javascripts
