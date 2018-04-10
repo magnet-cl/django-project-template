@@ -122,16 +122,15 @@ html(lang="es")
         // bootstrap bundle includes popper
         script(src="{% static 'bootstrap/dist/js/bootstrap.bundle.js' %}")
 
-      // templates
+      // templates TODO: this is an example of pug templates, delete this
       {% compress js %}
       script(type="text/pug", src="{% static 'templates/users/list.pug' %}")
       script(type="text/pug", src="{% static 'templates/users/detail.pug' %}")
       {% endcompress %}
 
-      block javascript_data
+      block javascripts
 
       {% compress js %}
-      block javascripts
       script(src="{% static 'moment/min/moment-with-locales.min.js' %}")
       script(src="{% static 'select2/dist/js/select2.min.js' %}")
       script(src="{% static 'tempusdominus-bootstrap-4/build/js/tempusdominus-bootstrap-4.min.js' %}")
