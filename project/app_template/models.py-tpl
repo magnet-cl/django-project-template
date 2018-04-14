@@ -30,7 +30,7 @@ class {{model_name}}(BaseModel):
         verbose_name = _('{{model_verbose_name}}')
         verbose_name_plural = _('{{plural_model_verbose_name}}')
         permissions = (
-            ('view_{{model_name.lower}}', _('Can view {{model_verbose_name}}')),
+            ('view_{{plural_model_name.lower}}', _('Can view {{plural_model_verbose_name}}')),
         )
 
     def __str__(self):
