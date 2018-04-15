@@ -10,6 +10,7 @@ from django.utils.translation import ugettext_lazy as _
 # models
 from base.models import BaseModel
 from users.models import User
+from .managers import {{model_name}}QuerySet
 
 
 class {{model_name}}(BaseModel):
@@ -25,6 +26,9 @@ class {{model_name}}(BaseModel):
         blank=True,
     )
     # optional fields
+    
+    # Manager
+    objects = {{model_name}}QuerySet.as_manager()
 
     class Meta:
         verbose_name = _('{{model_verbose_name}}')
