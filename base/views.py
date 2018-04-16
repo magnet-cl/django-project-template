@@ -15,6 +15,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import RedirectView
 from django.views.generic import TemplateView
 from django.views.generic.detail import DetailView
+from django.views.generic.detail import SingleObjectMixin
 from django.views.generic.edit import CreateView
 from django.views.generic.edit import DeleteView
 from django.views.generic.edit import UpdateView
@@ -250,6 +251,38 @@ class BaseRedirectView(RedirectView, PermissionRequiredMixin):
     def dispatch(self, *args, **kwargs):
         self.check_permission_required()
         return super(BaseRedirectView, self).dispatch(*args, **kwargs)
+
+
+class BaseUpdateRedirectView(
+        PermissionRequiredMixin, SingleObjectMixin, RedirectView):
+
+    permanent = False
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return super(BaseUpdateRedirectView, self).get(
+            request, *args, **kwargs
+        )
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        self.do_action()
+        return super(BaseUpdateRedirectView, self).post(
+            request, *args, **kwargs
+        )
+
+    def do_action():
+        """
+        Implement this method with the action you want to do before redirect
+        """
+        pass
+
+    def get_redirect_url(self, *args, **kwargs):
+        next_url = self.request.GET.get('next')
+        if next_url:
+            return next_url
+
+        return self.object.get_absolute_url()
 
 
 class StatusView(BaseTemplateView):
