@@ -12,7 +12,6 @@ from fabric.api import cd
 from fabric.api import env
 from fabric.api import get
 from fabric.api import local
-from fabric.api import prefix
 from fabric.api import prompt
 from fabric.api import put
 from fabric.api import run
@@ -33,17 +32,14 @@ def get_db_data(root_dir=None, setting=''):
     if not root_dir:
         root_dir = env.server_root_dir
     with cd(root_dir):
-        with prefix('pipenv shell'):
-            return run('python -Wi manage.py printdatabasedata {}'.format(
-                setting))
+        return run('python -Wi manage.py printdatabasedata {}'.format(setting))
 
 
 @task
 def migrate():
     """ Migrates database to the latest south migration """
     with cd(env.server_root_dir):
-        with prefix('pipenv shell'):
-            run('python manage.py migrate')
+        run('python manage.py migrate')
 
 
 @task
@@ -99,11 +95,10 @@ def import_db(dump_name=None):
         dump_name = download_db()
 
     # get local database information
-    with prefix('pipenv shell'):
-        local_engine = local(
-            'python -Wi manage.py printdatabasedata ENGINE', capture=True)
-        local_name = local(
-            'python -Wi manage.py printdatabasedata NAME', capture=True)
+    local_engine = local(
+        'python -Wi manage.py printdatabasedata ENGINE', capture=True)
+    local_name = local(
+        'python -Wi manage.py printdatabasedata NAME', capture=True)
 
     # check local database engine
     if local_engine != 'django.db.backends.postgresql':
@@ -153,7 +148,9 @@ def export_db(compressed_file=None):
 
         run('dropdb "{}"'.format(db_name))
         run('createdb "{}"'.format(db_name))
-        run('pg_restore -d "{}" -j 2 "{}"'.format(db_name, uploaded_dump))
+        run('pg_restore -d "{}" -j 2 "{}" --no-acl'.format(
+            db_name, uploaded_dump
+        ))
 
         # cleanup files
         run('rm -f "{}"'.format(uploaded_dump))  # raw file
