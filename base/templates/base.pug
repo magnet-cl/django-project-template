@@ -54,9 +54,7 @@ html(lang="es")
     )
     {% endcompress %}
 
-    {% compress css %}
     block stylesheets
-    {% endcompress %}
 
   body(class='{{body_class|default:""}}')
     div
