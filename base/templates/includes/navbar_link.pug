@@ -1,8 +1,10 @@
 - load i18n
 
 {% url url_name as url %}
-li.nav-item(class="{% if request.path == url %}active{% endif %}")
+{% with current=request.path == url %}
+li.nav-item(class="{% if current %}active{% endif %}")
   a.nav-link(href="{{ url }}")
     | {% trans verbose_name|capfirst %}
-    if request.path == url
-      rpan.sr-only ({% trans 'current' %})
+    if current
+      span.sr-only ({% trans 'current' %})
+{% endwith %}
