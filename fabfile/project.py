@@ -16,6 +16,7 @@ from fabric.contrib import files
 # local tasks
 from . import deb_handler
 from . import gunicorn
+from . import memcached
 from . import nginx
 from .db import backup_db
 from .db import migrate
@@ -173,6 +174,10 @@ def initial_deploy():
     nginx.install()
     nginx.add_django_site()
     nginx.start()
+
+    # memcached installation and configuration
+    memcached.install()
+    memcached.restart()
 
 
 @task

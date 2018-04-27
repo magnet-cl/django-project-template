@@ -21,6 +21,11 @@ def gunicorn_handler(action):
     return handler(instance, action)
 
 
+def memcached_handler(action):
+    """ Helper method for memcadhed service operations. """
+    return handler('memcached', action)
+
+
 def add_systemd_service(filename, context):
     """ Deploys an upstart configuration task file. """
     destination = '/lib/systemd/system/django-{}-{}.service'.format(

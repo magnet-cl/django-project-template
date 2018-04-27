@@ -37,6 +37,7 @@ def get_local_value(key, default_value):
     except AttributeError:
         return default_value
 
+
 GOOGLE_ANALYTICS_CODE = get_local_value('GOOGLE_ANALYTICS_CODE', None)
 
 
@@ -324,3 +325,12 @@ LOGGING = {
 CAN_LOGIN_AS = "base.utils.can_loginas"
 LOGOUT_URL = reverse_lazy('loginas-logout')
 LOGINAS_LOGOUT_REDIRECT_URL = reverse_lazy('admin:index')
+
+# CACHE
+if not DEBUG:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+            'LOCATION': '127.0.0.1:11211',
+        }
+    }
