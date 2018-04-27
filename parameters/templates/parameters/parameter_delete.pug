@@ -1,0 +1,23 @@
+extends base.pug
+
+- load i18n
+
+block breadcrumbs
+  li.breadcrumb-item
+    a(href="{% url 'parameter_list' %}")
+      | {{opts.verbose_name_plural|capfirst}}
+  li.breadcrumb-item
+    a(href="{{object.get_absolute_url}}")
+      | {{object}}
+
+
+block content
+  form(action="" method="post")
+    {% csrf_token %}
+    .alert.alert-danger
+      {% blocktrans %}Are you sure you want to delete "{{ object }}"?{% endblocktrans %}
+    .text-right
+      .btn-group
+        input.btn.btn-outline-secondary(type="submit" value="{% trans 'Confirm' %}")
+        a.btn.btn-default(href="{{object.get_absolute_url}}")
+          | {% trans 'Cancel' %}

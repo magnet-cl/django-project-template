@@ -98,6 +98,7 @@ INSTALLED_APPS = [
     'base',
     'users',
     'regions',
+    'parameters',
 ]
 
 # Default email address to use for various automated correspondence from

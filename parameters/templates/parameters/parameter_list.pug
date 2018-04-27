@@ -1,0 +1,44 @@
+extends base.pug
+
+- load i18n
+
+block options
+  if perms.parameters.add_parameter
+    a.btn.btn-sm.btn-outline-secondary(
+      href="{% url 'parameter_create' %}"
+    )
+      {% trans 'Add parameter' %}
+      i.fa.fa-plus
+
+block content
+
+  table.table.table-striped.table-hover.table-sm
+    thead
+      tr
+        th Id
+        th {% trans 'name'|capfirst %}
+        if perms.parameters.change_parameter
+          th
+        if perms.parameters.delete_parameter
+          th
+    tbody
+      for parameter in object_list
+        tr
+          td
+            a(href="{{ parameter.get_absolute_url }}")
+              | {{parameter.id}}
+          td
+            a(href="{{ parameter.get_absolute_url }}")
+              | {{parameter}}
+          if perms.parameters.change_parameter
+            td
+              a.btn.btn-outline-secondary(href="{% url 'parameter_update' parameter.id %}")
+                {% trans 'Update parameter' %}
+                i.fa.fa-edit
+          if perms.parameters.delete_parameter
+            td
+              a.btn.btn-danger(href="{% url 'parameter_delete' parameter.id %}")
+                {% trans 'Delete parameter' %}
+                i.fa.fa-times
+
+  {% include 'includes/pagination.pug' %}

@@ -1,0 +1,25 @@
+extends base.pug
+
+- load i18n
+
+block options
+  if perms.parameters.change_parameter
+    a.btn.btn-sm.btn-outline-secondary(href="{% url 'parameter_update' parameter.id %}")
+      {% trans 'Update parameter' %}
+      i.fa.fa-edit
+  if perms.parameters.delete_parameter
+    a.btn.btn-sm.btn-danger(href="{% url 'parameter_delete' parameter.id %}")
+      {% trans 'Delete parameter' %}
+      i.fa.fa-times
+
+block breadcrumbs
+  li.breadcrumb-item
+    a(href="{% url 'parameter_list' %}")
+      | {{opts.verbose_name_plural|capfirst}}
+
+block content
+  table.table.table-striped.table-hover.table-sm
+    tbody
+      tr
+        th Id
+        td {{parameter.id}}

@@ -1,0 +1,11 @@
+extends form.pug
+
+- load i18n
+
+block breadcrumbs
+  li.breadcrumb-item
+    a(href="{% url 'parameter_list' %}")
+      | {{opts.verbose_name_plural|capfirst}}
+  li.breadcrumb-item
+    a(href="{{object.get_absolute_url}}")
+      | {{object}}
