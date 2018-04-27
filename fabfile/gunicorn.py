@@ -17,8 +17,7 @@ from re import search
 def install():
     """ Installs gunicorn. """
     with cd(env.server_root_dir):
-        with prefix('pipenv shell'):
-            run('pip install gunicorn')
+        run('pipenv install gunicorn')
 
     # create logs directory
     cmd = 'mkdir -p logs'
