@@ -101,7 +101,7 @@ class Parameter(BaseModel):
         cache.set(
             cache_key,
             json.dumps([parameter.raw_value, parameter.kind]),
-            parameter.cache_seconds  # store the value for 1 hour
+            parameter.cache_seconds  # the time in seconds to store the value
         )
 
         return parameter.value
