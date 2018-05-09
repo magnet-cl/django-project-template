@@ -63,16 +63,14 @@ def update_server():
         print(green('installing pipenv requirements'))
         run('pipenv install')
 
-        with prefix('pipenv shell'):
+        print(green('installing npm packages'))
+        run('yarn install')
 
-            print(green('installing npm packages'))
-            run('yarn install')
+        print(green('collecting static files'))
+        run('pipenv run python manage.py collectstatic --noinput')
 
-            print(green('collecting static files'))
-            run('yes yes | python manage.py collectstatic')
-
-            print(green('compiling translations'))
-            run('./translate.sh -c')
+        print(green('compiling translations'))
+        run('pipenv run python manage.py compilemessages')
 
     print(green('Migrate database'))
     migrate()
@@ -190,5 +188,4 @@ def install_project_handling_dependencies():
 @task
 def run_django_command(command):
     with cd(env.server_root_dir):
-        with prefix('pipenv shell'):
-            run('python manage.py {}'.format(command))
+        run('pipenv run python manage.py {}'.format(command))
