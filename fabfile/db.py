@@ -32,7 +32,8 @@ def get_db_data(root_dir=None, setting=''):
     if not root_dir:
         root_dir = env.server_root_dir
     with cd(root_dir):
-        return run('pipenv run python -Wi manage.py printdatabasedata {}'.format(setting))
+        cmd = 'pipenv run python manage.py printdatabasedata {}'
+        return run(cmd.format(setting))
 
 
 @task
@@ -52,7 +53,7 @@ def backup_db():
 
     # dumps folder creation
     dumps_folder = 'db_dumps/{}'.format(env.branch)
-    cmd = 'run mkdir -p {}'.format(dumps_folder)
+    cmd = 'mkdir -p {}'.format(dumps_folder)
     run(cmd)
     # generate backup file name based on its branch and current time
     dump_name = strftime("%Y-%m-%d-%H-%M-%S", gmtime())
@@ -96,9 +97,13 @@ def import_db(dump_name=None):
 
     # get local database information
     local_engine = local(
-        'pipenv run python -Wi manage.py printdatabasedata ENGINE', capture=True)
+        'pipenv run python manage.py printdatabasedata ENGINE',
+        capture=True
+    )
     local_name = local(
-        'pipenv run python -Wi manage.py printdatabasedata NAME', capture=True)
+        'pipenv run python manage.py printdatabasedata NAME',
+        capture=True
+    )
 
     # check local database engine
     if local_engine != 'django.db.backends.postgresql':

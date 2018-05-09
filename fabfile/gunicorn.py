@@ -1,6 +1,4 @@
-from fabric.api import cd
 from fabric.api import env
-from fabric.api import prefix
 from fabric.api import run
 from fabric.api import task
 from fabric.contrib.files import upload_template
@@ -16,8 +14,7 @@ from re import search
 @task
 def install():
     """ Installs gunicorn. """
-    with cd(env.server_root_dir):
-        run('pipenv install gunicorn')
+    # gunicorn included on Pipfile
 
     # create logs directory
     cmd = 'mkdir -p logs'
@@ -49,13 +46,9 @@ def add_gunicorn_conf():
     filename = filename.format(env.local_root_dir)
     destination = '{}/gunicorn_conf.py'.format(env.server_root_dir)
 
-    with cd(env.server_root_dir):
-        virtual_env_dir = run('pipenv --venv')
-
     context = {
         'user': env.user,
         'server_root_dir': env.server_root_dir,
-        'virtual_env_dir': virtual_env_dir,
         'django_port': env.django_port
     }
     upload_template(filename, destination, context=context)
