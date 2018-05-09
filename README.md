@@ -29,7 +29,7 @@ This project works with:
 * Python libraries defined in Pipfile 
 * Node >= 8.5
 * Node packages defined in package.json
-* Postgres >= 9.6 
+* PostgreSQL >= 9.6 
 
 ## Quickstart
 If you are using Ubuntu 16.04 or OS X, the script quickstart.sh installs all 
