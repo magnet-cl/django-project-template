@@ -25,14 +25,14 @@ Now you have your own django project in your repository.
 This project works with:
 
 * Python >= 3.6
-* Python libraries defined in requirements.txt 
+* pipenv >= 11.9.0
+* Python libraries defined in Pipfile 
 * Node >= 8.5
-* Node libraries defined in package.json 
-* Postgress >= 9.6 
-* pipenv, >= 11.9.0
+* Node packages defined in package.json
+* PostgreSQL >= 9.6 
 
 ## Quickstart
-If you are using Ubuntu 16.04 or OSX, the script quickstart.sh installs all 
+If you are using Ubuntu 16.04 or OS X, the script quickstart.sh installs all 
 dependencies of the project. It assumes you have yarn installed.
 
 * `./quickstart.sh`
@@ -47,7 +47,7 @@ Use the custom app template to create your apps:
 ### Select2
 
 The project comes with select2 by default for all selects. If you wish to
-disable this feature add the class .js-not-select2 to the selec
+disable this feature add the class .js-not-select2 to the select
 
 ### eonasdan-bootstrap-datetimepicker
 
