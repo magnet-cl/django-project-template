@@ -28,10 +28,11 @@ def file_path(self, name):
     This returns the name of the class, concatenated with the id of the
     object and the name of the file.
     """
-    base_path = "{}/{}/{}"
+    base_path = "{}/{}/{}/{}"
 
     return base_path.format(
         self.__class__.__name__,
+        self.id,
         utils.random_string(30),
         name
     )
