@@ -14,9 +14,10 @@ from django.utils import timezone
 from django.apps import apps
 
 # models
-from users.models import User
-from regions.models import Region
+from parameters.models import Parameter
 from regions.models import Commune
+from regions.models import Region
+from users.models import User
 
 # utils
 from inflection import underscore
@@ -24,14 +25,17 @@ from base.utils import random_string
 
 
 class Mockup(object):
-    def create_region(self, **kwargs):
-        self.set_required_string(kwargs, 'name')
-        return Region.objects.create(**kwargs)
-
     def create_commune(self, **kwargs):
         self.set_required_string(kwargs, 'name')
         self.set_required_foreign_key(kwargs, 'region')
         return Commune.objects.create(**kwargs)
+
+    def create_parameter(self, **kwargs):
+        return Parameter.objects.create(**kwargs)
+
+    def create_region(self, **kwargs):
+        self.set_required_string(kwargs, 'name')
+        return Region.objects.create(**kwargs)
 
     def create_user(self, password=None, **kwargs):
         if kwargs.get('first_name') is None:
