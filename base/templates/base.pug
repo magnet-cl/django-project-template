@@ -98,10 +98,16 @@ html(lang="es")
 
       {% include 'includes/footer.pug' %}
 
-
       // Javascript Placed at the end of the document so the pages load faster
       // uncompressible javascripts
-      if not debug
+
+      block uncompressible_javascripts
+
+      if debug
+        script(src="{% static 'jquery/dist/jquery.min.js' %}")
+        // bootstrap bundle includes popper
+        script(src="{% static 'bootstrap/dist/js/bootstrap.bundle.js' %}")
+      else
         script(src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js")
 
         script(
@@ -115,12 +121,6 @@ html(lang="es")
           integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl",
           crossorigin="anonymous"
         )
-      block uncompressible_javascripts
-
-      if debug
-        script(src="{% static 'jquery/dist/jquery.min.js' %}")
-        // bootstrap bundle includes popper
-        script(src="{% static 'bootstrap/dist/js/bootstrap.bundle.js' %}")
 
       // templates TODO: this is an example of pug templates, delete this
       {% compress js %}
