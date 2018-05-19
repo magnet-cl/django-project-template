@@ -22,6 +22,7 @@ from users.managers import UserManager
 
 # models
 from base.models import BaseModel
+from parameters.models import Parameter
 
 # messaging
 from messaging import email_manager
@@ -128,7 +129,7 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
             'uid': urlsafe_base64_encode(force_bytes(self.pk)),
             'user': self,
             'token': default_token_generator.make_token(self),
-            'protocol': 'http',
+            'protocol': Parameter.value_for('DEFAULT_URL_PROTOCOL'),
         }
 
         subject_template_name = 'registration/password_reset_subject.txt'
