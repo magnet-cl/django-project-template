@@ -8,6 +8,7 @@ import time
 # django
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
 
 # models
@@ -33,6 +34,7 @@ class Parameter(BaseModel):
             ('int', _('integer')),
             ('str', _('text')),
             ('time', _('time')),
+            ('date', _('date')),
             ('json', _('json')),
         )
     )
@@ -54,6 +56,12 @@ class Parameter(BaseModel):
             except ValueError:
                 raise ValidationError(_('Invalid time format'))
 
+        if self.kind == 'date':
+            try:
+                datetime.datetime.strptime(self.raw_value, '%Y-%m-%d')
+            except ValueError:
+                raise ValidationError(_('Invalid time format'))
+
     @property
     def value(self):
         if self.kind == 'int':
@@ -63,9 +71,10 @@ class Parameter(BaseModel):
             return json.loads(self.raw_value)
 
         if self.kind == 'time':
-            hour = int(self.raw_value.split(':')[0])
-            minute = int(self.raw_value.split(':')[1])
-            return datetime.time(hour, minute)
+            return time.strptime(self.raw_value, '%H:%M')
+
+        if self.kind == 'date':
+            return datetime.datetime.strptime(self.raw_value, '%Y-%m-%d')
 
         return self.raw_value
 
@@ -74,8 +83,13 @@ class Parameter(BaseModel):
         self.raw_value = value
 
     @classmethod
+    def cache_key(cls, name):
+        return 'parameters-{}'.format(slugify(name))
+
+    @classmethod
     def value_for(cls, name):
-        cache_key = 'parameters-{}'.format(name)
+        cache_key = cls.cache_key(name)
+
         cached_parameter = cache.get(cache_key)
 
         if cached_parameter:
@@ -98,10 +112,21 @@ class Parameter(BaseModel):
                         raw_value=parameter_definition.default,
                     )
 
-        cache.set(
-            cache_key,
-            json.dumps([parameter.raw_value, parameter.kind]),
-            parameter.cache_seconds  # the time in seconds to store the value
-        )
+        parameter.store_in_cache()
 
         return parameter.value
+
+    # django methods
+    def save(self, *args, **kwargs):
+        self.store_in_cache()
+        super(Parameter, self).save(*args, **kwargs)
+
+    # public methods
+    def store_in_cache(self):
+        cache_key = Parameter.cache_key(self.name)
+
+        cache.set(
+            cache_key,
+            json.dumps([self.raw_value, self.kind]),
+            self.cache_seconds  # the time in seconds to store the value
+        )
