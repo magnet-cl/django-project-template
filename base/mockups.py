@@ -86,6 +86,10 @@ class Mockup(object):
             else:
                 data[field] = default
 
+    def set_required_choice(self, data, field, choices, **kwargs):
+        if field not in data:
+            data[field] = random.choice(choices)[0]
+
     def set_required_date(self, data, field, **kwargs):
         if field not in data:
             data[field] = timezone.now().date()
