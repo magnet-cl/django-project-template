@@ -31,9 +31,7 @@
   .col-sm-3
     .text-muted.text-right
       div
-        {% blocktrans with start_index=page_obj.start_index end_index=page_obj.end_index %}
-        | Showing results from {{start_index}} to {{end_index}}
-        {% endblocktrans %}
+        | {% blocktrans with start_index=page_obj.start_index end_index=page_obj.end_index %}Showing results from {{start_index}} to {{end_index}}{% endblocktrans %}
       div
         | {% trans 'total'|capfirst %}: {{ paginator.count }}
 

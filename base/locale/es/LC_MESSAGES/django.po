@@ -1,0 +1,111 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-05-19 11:22-0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: models.py:43
+msgid "No"
+msgstr "No"
+
+#: models.py:43
+msgid "Yes"
+msgstr "Yes"
+
+#: models.py:47
+msgid "creation date"
+msgstr "fecha de creación"
+
+#: models.py:51
+msgid "edition date"
+msgstr "fecha de edición"
+
+#: templates/base.pug:80 templates/base.pug:84
+msgid "Home"
+msgstr "Inicio"
+
+#: templates/exceptions/400.pug:6
+msgid "bad request"
+msgstr "bad request"
+
+#: templates/exceptions/403.pug:6
+msgid "permission denied"
+msgstr "permiso denegado"
+
+#: templates/exceptions/404.pug:6
+msgid "page not found"
+msgstr "página no encontrada"
+
+#: templates/exceptions/500.pug:6
+msgid "There has been an error"
+msgstr "Ha ocurrido un error"
+
+#: templates/includes/field.pug:19
+msgid "optional"
+msgstr "opcional"
+
+#: templates/includes/navbar.pug:36
+msgid "Logged in as"
+msgstr "Ingresado como"
+
+#: templates/includes/navbar.pug:39
+msgid "My profile"
+msgstr "Mi perfil"
+
+#: templates/includes/navbar.pug:41
+msgid "Change password"
+msgstr "Cambiar contraseña"
+
+#: templates/includes/navbar.pug:44 templates/includes/navbar.pug:47
+msgid "Logout"
+msgstr "Cerrar sesión"
+
+#: templates/includes/navbar_link.pug:8
+msgid "current"
+msgstr "actual"
+
+#: templates/includes/pagination.pug:5
+msgid "pagination"
+msgstr "paginación"
+
+#: templates/includes/pagination.pug:34
+#, python-format
+msgid "Showing results from %(start_index)s to %(end_index)s"
+msgstr "Mostrando resultados desde %(start_index)s hasta %(end_index)s"
+
+#: templates/includes/pagination.pug:36
+msgid "total"
+msgstr "total"
+
+#: views.py:92 views.py:141
+#, python-format
+msgid "Create %s"
+msgstr "Crear %s"
+
+#: views.py:225
+#, python-format
+msgid "Update %s"
+msgstr "Actualizar %s"
+
+#: views.py:240
+#, python-format
+msgid "Delete %s"
+msgstr "Borrar %s"
+
+#: views.py:290
+msgid "status"
+msgstr "status"
