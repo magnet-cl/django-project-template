@@ -20,10 +20,10 @@ ParameterDefinition = collections.namedtuple(
 class ParameterDefinitionList(object):
     definitions = [
         ParameterDefinition(
-            name='DEFAULT_PROTOCOL',
+            name='DEFAULT_URL_PROTOCOL',
             default='https',
             kind='str',
-            verbose_name=_('default protocol: https'),
+            verbose_name=_('Default url protocol'),
         ),
     ]
 
