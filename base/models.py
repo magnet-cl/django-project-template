@@ -32,7 +32,7 @@ def file_path(self, name):
 
     return base_path.format(
         self.__class__.__name__,
-        self.id,
+        str(utils.today()),
         utils.random_string(30),
         name
     )
