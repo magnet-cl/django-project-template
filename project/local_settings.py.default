@@ -22,6 +22,7 @@ LOCALLY_INSTALLED_APPS = [
 ENABLE_EMAILS = True
 
 LOCALLY_ALLOWED_HOSTS = [
+    'localhost',
 ]
 
 ADMINS = ()
