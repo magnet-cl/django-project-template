@@ -4,14 +4,17 @@ project models
 """
 
 # standard library
+from shutil import copyfile
 import os
 import random
 import string
 import uuid
 
 # django
-from django.utils import timezone
 from django.apps import apps
+from django.conf import settings
+from django.core.files import File
+from django.utils import timezone
 
 # models
 from parameters.models import Parameter
