@@ -105,10 +105,10 @@ if  $INSTALL_SYSTEM_DEPENDENCIES ; then
         print_green "Installing python 3.6"
         sudo add-apt-repository ppa:deadsnakes/ppa
         sudo apt-get update
-        sudo apt-get -y install python3.6
+        sudo apt-get -y install python3.6 python3.6-dev
 
         print_green "Installing aptitude dependencies"
-        sudo apt-get -y install python-pip python-virtualenv python3-dev build-essential
+        sudo apt-get -y install python-pip python-virtualenv build-essential
 
         print_green "Installing image libraries"
         # Install image libs
