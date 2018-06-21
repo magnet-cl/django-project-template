@@ -89,14 +89,17 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.staticfiles',
     'django.contrib.postgres',
+
+    # required apps
+    'base',
+    'users',
+
     # external
     'compressor',
     'captcha',
     'loginas',
 
     # internal
-    'base',
-    'users',
     'regions',
     'parameters',
 ]
