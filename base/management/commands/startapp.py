@@ -27,6 +27,10 @@ class AppTemplateCommand(TemplateCommand):
             nargs='?', help='Optional destination directory'
         )
         parser.add_argument(
+            '--model_name',
+            help='The path or URL to load the template from.'
+        )
+        parser.add_argument(
             '--template',
             help='The path or URL to load the template from.'
         )
