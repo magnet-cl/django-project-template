@@ -59,7 +59,7 @@ class Command(AppTemplateCommand):
     def handle(self, **options):
         app_name, target = options.pop('name'), options.pop('directory')
 
-        if 'model_name' in options:
+        if options.get('model_name'):
             model_name = options.pop('model_name')
             snake_case_model_name = underscore(model_name)
         else:
