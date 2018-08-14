@@ -109,17 +109,27 @@ class Mockup(object):
         if field not in data:
             data[field] = self.random_email()
 
-    def set_required_file(self, data, field):
-        if field not in data:
-            test_root = os.path.realpath(os.path.dirname(__file__))
+    def set_required_file(self, data, field, file_path=None):
+        if field in data:
+            # do nothing if the field is in the data
+            return
 
-            final_path = '{}gondola.jpg'.format(settings.MEDIA_ROOT)
-            copyfile(
-                '{}/test_assets/gondola.jpg'.format(test_root),
-                final_path
-            )
+        if not os.path.exists(settings.MEDIA_ROOT):
+            os.makedirs(settings.MEDIA_ROOT)
 
-            data[field] = File(open(final_path, 'rb'))
+        test_root = os.path.realpath(os.path.dirname(__file__))
+
+        if file_path is None:
+            file_path = '{}/test_assets/gondola.jpg'.format(test_root)
+
+        final_path = '{}{}'.format(
+            settings.MEDIA_ROOT,
+            os.path.basename(file_path)
+        )
+
+        copyfile(file_path, final_path)
+
+        data[field] = File(open(final_path, 'rb'))
 
     def set_required_float(self, data, field, **kwargs):
         if field not in data:
