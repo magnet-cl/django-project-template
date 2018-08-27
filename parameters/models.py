@@ -64,19 +64,23 @@ class Parameter(BaseModel):
 
     @property
     def value(self):
-        if self.kind == 'int':
-            return int(self.raw_value)
+        return self.__class__.process_value(self.kind, self.raw_value)
 
-        if self.kind == 'json':
-            return json.loads(self.raw_value)
+    @classmethod
+    def process_value(cls, kind, raw_value):
+        if kind == 'int':
+            return int(raw_value)
 
-        if self.kind == 'time':
-            return time.strptime(self.raw_value, '%H:%M')
+        if kind == 'json':
+            return json.loads(raw_value)
 
-        if self.kind == 'date':
-            return datetime.datetime.strptime(self.raw_value, '%Y-%m-%d')
+        if kind == 'time':
+            return time.strptime(raw_value, '%H:%M')
 
-        return self.raw_value
+        if kind == 'date':
+            return datetime.datetime.strptime(raw_value, '%Y-%m-%d')
+
+        return raw_value
 
     @value.setter
     def value(self, value):
@@ -94,10 +98,7 @@ class Parameter(BaseModel):
 
         if cached_parameter:
             raw_value, kind = json.loads(cached_parameter)
-            parameter = Parameter.objects.get(
-                raw_value=raw_value,
-                kind=kind,
-            )
+            return cls.process_value(kind, raw_value)
 
         try:
             parameter = Parameter.objects.get(
