@@ -295,3 +295,65 @@ class StatusView(BaseTemplateView):
         context['settings'] = settings
 
         return context
+
+
+class FormsetViewMixin(object):
+    formset_class = None
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        formset = self.get_formset()
+        form = self.get_form()
+        return self.render_to_response(
+            self.get_context_data(formset=formset, form=form)
+        )
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        formset = self.get_formset()
+        if form.is_valid() and formset.is_valid():
+            return self.form_valid(form, formset)
+        else:
+            return self.form_invalid(form, formset)
+
+    def form_valid(self, form, formset):
+        form_valid = super(FormsetViewMixin, self).form_valid(form)
+        formset.instance = self.object
+        formset.save()
+        return form_valid
+
+    def form_invalid(self, form, formset):
+        return self.render_to_response(
+            self.get_context_data(form=form, formset=formset)
+        )
+
+
+class FormsetCreateView(FormsetViewMixin, BaseCreateView):
+
+    def get_object(self, queryset=None):
+        return None
+
+    def get_formset(self):
+        if self.request.POST:
+            formset = self.formset_class(
+                self.request.POST,
+            )
+        else:
+            formset = self.formset_class()
+        return formset
+
+
+class FormsetUpdateView(FormsetViewMixin, BaseUpdateView):
+
+    def get_formset(self):
+        if self.request.POST:
+            formset = self.formset_class(
+                self.request.POST,
+                instance=self.object,
+            )
+        else:
+            formset = self.formset_class(
+                instance=self.object,
+            )
+        return formset
