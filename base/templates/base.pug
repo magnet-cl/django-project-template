@@ -20,12 +20,71 @@ html(lang="es")
 
 
     meta(charset="utf-8")
-    title Project {% block title %}{% if title%}- {{title}}{% endif %}{%endblock%}
+    title 
+      | {% block title %}{% if title%}{{title}} - {% endif %}{%endblock%} Project
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
     meta(name="description", content="")
     meta(name="author", content="http://magnet.cl")
+    meta(name='keywords', content="")
 
-    script(defer, src="https://use.fontawesome.com/releases/v5.0.13/js/all.js")
+    // Schema.org for Google
+    meta(itemprop='name', content="")
+    meta(itemprop='description', content="")
+
+    script(defer, src="https://use.fontawesome.com/releases/v5.3.1/js/all.js")
+
+    // image
+    if object.image
+      meta(itemprop='image', content='{{ object.image.url }}')
+      meta(name='image', content='{{ object.image.url }}')
+      meta(name='twitter:image', content='{{ object.image.url }}')
+      meta(property='og:image', content="{{ object.image.url }}")
+      meta(property='og:image:width', content="{{ object.image.width }}")
+      meta(property='og:image:height', content="{{ object.image.height }}")
+    else
+      meta(
+        name="og:image",
+        content="{{request.scheme}}://{{request.META.HTTP_HOST}}/static/img/logo-1000x1000.png"
+      )
+      meta(
+        itemprop='image',
+        content='{{request.scheme}}://{{request.META.HTTP_HOST}}/static/img/logo-1000x1000.png'
+      )
+      meta(
+        name='image',
+        content='{{request.scheme}}://{{request.META.HTTP_HOST}}/static/img/logo-1000x1000.png'
+      )
+      meta(
+        name='twitter:image',
+        content='{{request.scheme}}://{{request.META.HTTP_HOST}}/static/img/logo-1000x1000.png'
+      )
+      meta(
+        property='og:image',
+        content="{{request.scheme}}://{{request.META.HTTP_HOST}}/static/img/logo-1000x1000.png"
+      )
+      meta(property='og:image:width', content="1000")
+      meta(property='og:image:height', content="1000")
+
+    // Twitter
+    meta(name='twitter:card', content="summary_large_image")
+    meta(name='twitter:title', content='{{title}}')
+    meta(name='twitter:site', content="@")
+    meta(name='twitter:description', content='')
+    meta(name='twitter:site', content='@')
+    meta(name='twitter:creator', content='@')
+
+    meta(name='og:site_name', content="Project")
+    meta(name='og:type', content='website')
+
+    // Open Graph general (Facebook, Pinterest & Google+)
+    meta(property='og:title', content='{{title}}')
+    meta(property='og:description', content='')
+
+    meta(
+      property='og:url',
+      content='{{ request.scheme }}://{{ request.get_host }}{{request.path}}'
+      )
+    meta(property='og:locale', content='{{request.LANGUAGE_CODE}}')
 
     //if lte IE 7
       script(src="http://html5shim.googlecode.com/svn/trunk/html5.js")

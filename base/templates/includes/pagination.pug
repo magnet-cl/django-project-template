@@ -18,7 +18,7 @@
               a.page-link(
                 href="?p={{ page }}&{% get_order_by_querystring ordering=ordering %}&{{clean_query_string}}"
               ) {{ page }}
-          else
+          elif page < page_obj.number|add:5 and page > page_obj.number|add:-5
             li.page-item
               a.page-link(
                 href="?p={{ page }}&{% get_order_by_querystring ordering=ordering %}&{{clean_query_string}}"

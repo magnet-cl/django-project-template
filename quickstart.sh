@@ -174,7 +174,7 @@ if grep -q "CHANGE ME" "project/settings.py"; then
     print_green "Generate secret key"
 
     # change the SECRET_KEY value on project settings
-    python manage.py generatesecretkey
+    pipenv run python manage.py generatesecretkey
 fi
 
 
