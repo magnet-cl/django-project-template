@@ -29,6 +29,7 @@ LOCALLY_INSTALLED_APPS = local_settings.LOCALLY_INSTALLED_APPS
 ENABLE_EMAILS = local_settings.ENABLE_EMAILS
 ADMINS = local_settings.ADMINS
 LOCALLY_ALLOWED_HOSTS = local_settings.LOCALLY_ALLOWED_HOSTS
+SECRET_KEY = local_settings.SECRET_KEY
 
 
 def get_local_value(key, default_value):
@@ -60,7 +61,9 @@ ADMINS = ADMINS
 # List of IP addresses, as strings, that:
 #   * See debug comments, when DEBUG is true
 #   * Receive x-headers
-INTERNAL_IPS = []
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
 
 
 PROJECT_DIR = os.path.dirname(__file__)
@@ -68,9 +71,6 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'CHANGE ME'
 
 ALLOWED_HOSTS = []
 ALLOWED_HOSTS += LOCALLY_ALLOWED_HOSTS

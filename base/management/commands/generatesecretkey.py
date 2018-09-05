@@ -14,10 +14,17 @@ class Command(BaseCommand):
         chars = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)'
         secret_key = get_random_string(50, chars)
 
-        file_path = "{}/settings.py".format(settings.PROJECT_DIR)
+        file_path = "{}/local_settings.py".format(settings.PROJECT_DIR)
+
+        line_found = False
 
         for line in fileinput.input(file_path, inplace=True):
             if line.startswith("SECRET_KEY = "):
                 print("SECRET_KEY = '{}'".format(secret_key))
+                line_found = True
             else:
                 print(line, end='')
+
+        if not line_found:
+            with open(file_path, "a") as myfile:
+                myfile.write("SECRET_KEY = '{}'".format(secret_key))
