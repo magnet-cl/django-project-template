@@ -1,5 +1,10 @@
 extends base.pug
 
+- load static
+
+block javascripts
+  script(src="{% static 'js/status.js' %}")
+
 block content
   table.table.table-bordered.table-hover
     tbody
@@ -37,3 +42,16 @@ block content
             | Not set
             a(href="https://www.google.com/recaptcha/admin", target="_blank")
               | Get one
+
+      tr
+        th Favicon
+        td
+          .favicon-not-ok.d-none
+            i.fa.fa-times.text-danger
+              |  
+            | Favicon missing
+          .favicon-ok.d-none
+            i.fa.fa-check.text-success
+              |  
+            | Ready 
+            span.favicon-href
