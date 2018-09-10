@@ -280,7 +280,7 @@ COMPRESS_CSS_FILTERS = [
 # NPM
 NPM_FILE_PATTERNS = {
     'bootstrap': [
-        'dist/js/bootstrap.bundle.js'
+        'dist/js/bootstrap.bundle.js',
         'scss/bootstrap.scss'
     ],
     'jquery': ['dist/jquery.min.js'],
