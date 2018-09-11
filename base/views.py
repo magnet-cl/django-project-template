@@ -190,7 +190,7 @@ class BaseListView(ListView, PermissionRequiredMixin):
         for key, value in params.items():
             try:
                 queryset = queryset.filter(**{key: value})
-            except:
+            except Exception:
                 pass
         return queryset
 
@@ -221,10 +221,13 @@ class BaseUpdateView(UpdateView, PermissionRequiredMixin):
         context = super(BaseUpdateView, self).get_context_data(**kwargs)
 
         context['opts'] = self.model._meta
-        context['cancel_url'] = self.object.get_absolute_url()
+        context['cancel_url'] = self.get_cancel_url()
         context['title'] = _('Update %s') % str(self.object)
 
         return context
+
+    def get_cancel_url(self):
+        return self.object.get_absolute_url()
 
 
 class BaseDeleteView(DeleteView, PermissionRequiredMixin):
