@@ -96,8 +96,8 @@ done
 
 if  $INSTALL_SYSTEM_DEPENDENCIES ; then
     if [ "$OS" == "Darwin" ] ; then
-        print_green "Installing python 3"
-        brew install python3
+        print_green "Installing pyenv"
+        brew install pyenv
 
         print_green "Installing pipenv"
         brew install pipenv
