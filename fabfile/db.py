@@ -111,7 +111,7 @@ def import_db(dump_name=None):
         print(red('Aborting current task.'))
         return
 
-    local('dropdb "{}"'.format(local_name))
+    local('dropdb --if-exists "{}"'.format(local_name))
     local('createdb "{}"'.format(local_name))
     local('pg_restore -d "{}" -O -j 2 "{}" --no-acl'.format(
         local_name, dump_name))
@@ -152,7 +152,7 @@ def export_db(compressed_file=None):
         # upload the compressed file
         uploaded_dump = put(dump_name)[0]  # put returns a list
 
-        run('dropdb "{}"'.format(db_name))
+        run('dropdb --if-exists "{}"'.format(db_name))
         run('createdb "{}"'.format(db_name))
         run('pg_restore -d "{}" -j 2 "{}" --no-acl'.format(
             db_name, uploaded_dump
