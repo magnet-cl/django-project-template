@@ -25,16 +25,9 @@ block content
         th RECAPTCHA
         if settings.RECAPTCHA_PUBLIC_KEY
           td
-            if settings.RECAPTCHA_PUBLIC_KEY == '6LcqFiMUAAAAAF5emCxyuzFJsD2tn2C84MoHc-Va'
-              i.fa.fa-times.text-danger
-                |  
-              | Using default Recaptcha 
-              a(href="https://www.google.com/recaptcha/admin", target="_blank")
-                | Get one
-            else
-              i.fa.fa-check.text-success
-                |  
-              | Ready (settings.GOOGLE_ANALYTICS_CODE)
+            i.fa.fa-check.text-success
+              |  
+            | Ready ({{settings.RECAPTCHA_PUBLIC_KEY}})
         else
           td.table-danger
             i.fa.fa-times.text-danger

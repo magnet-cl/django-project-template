@@ -41,6 +41,12 @@ def get_local_value(key, default_value):
 
 GOOGLE_ANALYTICS_CODE = get_local_value('GOOGLE_ANALYTICS_CODE', None)
 
+# default keys, replace with somethign your own
+RECAPTCHA_PUBLIC_KEY = get_local_value('RECAPTCHA_PUBLIC_KEY', None)
+RECAPTCHA_PRIVATE_KEY = get_local_value('RECAPTCHA_PRIVATE_KEY', None)
+# To use the new No Captcha reCaptcha
+NOCAPTCHA = True
+
 
 if DEBUG:
     env = 'development'
@@ -295,10 +301,6 @@ NPM_FILE_PATTERNS = {
     ],
 }
 
-# default keys, replace with somethign your own
-RECAPTCHA_PUBLIC_KEY = '6LcqFiMUAAAAAF5emCxyuzFJsD2tn2C84MoHc-Va'
-RECAPTCHA_PRIVATE_KEY = '6LcqFiMUAAAAAP12IhWi3v06FjQ0Vk8_vCRfFMMt'
-NOCAPTCHA = True
 # un comment when we start using only SSL
 # RECAPTCHA_USE_SSL = True
 #
