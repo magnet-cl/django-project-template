@@ -101,6 +101,9 @@ if  $INSTALL_SYSTEM_DEPENDENCIES ; then
 
         print_green "Installing pipenv"
         brew install pipenv
+
+        print_green "Installing gettext"
+        brew install gettext
     else
         print_green "Installing python 3.6"
         sudo add-apt-repository ppa:deadsnakes/ppa
