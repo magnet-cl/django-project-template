@@ -14,6 +14,10 @@ from django.core.urlresolvers import resolve
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.test import TestCase
+from django.conf import settings
+
+# django-cron
+from django_cron import get_class
 
 # urls
 from project.urls import urlpatterns
@@ -192,3 +196,15 @@ class CheckErrorPages(TestCase):
     def test_404(self):
         response = self.client.get('/this-url-does-not-exist')
         self.assertTemplateUsed(response, 'exceptions/404.pug')
+
+
+class CronTests(BaseTestCase):
+    def test_cron_classes_to_run(self):
+        """
+        Asserts that a cron class name can be imported using the canonical name
+        given in project settings
+        """
+
+        cron_class_names = getattr(settings, 'CRON_CLASSES', [])
+        for cron_class_name in cron_class_names:
+            assert get_class(cron_class_name)
