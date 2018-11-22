@@ -9,6 +9,11 @@ setattr(
     lambda self: isinstance(self.widget, forms.CheckboxInput)
 )
 
+setattr(
+    forms.fields.Field, 'is_file_input',
+    lambda self: isinstance(self.widget, forms.FileInput)
+)
+
 
 class BaseModelForm(BetterModelForm):
 
@@ -32,13 +37,12 @@ class BaseModelForm(BetterModelForm):
                 attrs['data-format'] = 'HH:mm'
                 attrs['data-toggle'] = 'datetimepicker'
 
-            elif isinstance(field.widget, forms.widgets.Textarea):
-                field.widget.attrs['class'] = 'form-control'
-            elif isinstance(field.widget, forms.widgets.EmailInput):
-                field.widget.attrs['class'] = 'form-control'
-            elif isinstance(field.widget, forms.widgets.TextInput):
-                field.widget.attrs['class'] = 'form-control'
-            elif isinstance(field.widget, forms.widgets.PasswordInput):
+            elif isinstance(field.widget, forms.widgets.FileInput):
+                field.widget.attrs['class'] = 'form-control is-invalid'
+
+            elif isinstance(field.widget, forms.widgets.CheckboxInput):
+                field.widget.attrs['class'] = 'form-check-input'
+            else:
                 field.widget.attrs['class'] = 'form-control'
 
     def hide_field(self, field_name):
