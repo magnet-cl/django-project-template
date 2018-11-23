@@ -61,7 +61,7 @@ def update_server():
 
     with cd(env.server_root_dir):
         print(green('installing pipenv requirements'))
-        run('pipenv install')
+        run('pipenv sync')
 
         print(green('installing npm packages'))
         run('yarn install')
