@@ -152,7 +152,7 @@ if  $PIPENV_INSTALL ; then
     print_green "Installing python requirements with pipenv defined on Pipfile"
 
     # install python requirements
-    pipenv install
+    pipenv sync
 fi
 
 # create the local_settings file if it does not exist
