@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-Django = "==1.11.13"
+Django = "==1.11.16"
 "Fabric3" = "==1.13.1.post1"
 django_compressor = "==2.2"
 django-debug-toolbar = "==1.9.1"
