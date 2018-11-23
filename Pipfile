@@ -22,6 +22,7 @@ ipython = "==6.0.0"
 pypugjs = "==5.5.0"
 pytz = ">=2018.4"
 python-memcached = "*"
+gunicorn = "==19.9.0"
 
 [dev-packages]
 
