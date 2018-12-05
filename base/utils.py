@@ -55,8 +55,7 @@ def strip_accents(s):
     )
 
 
-# BROKEN
-def tz_datetime(s, *args, **kwargs):
+def tz_datetime(*args, **kwargs):
     """
     Creates a datetime.datetime object but with the current timezone
     """
