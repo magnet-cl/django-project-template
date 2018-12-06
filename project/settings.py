@@ -101,8 +101,9 @@ INSTALLED_APPS = [
     'users',
 
     # external
-    'compressor',
     'captcha',
+    'compressor',
+    'django_cron',
     'loginas',
 
     # internal
