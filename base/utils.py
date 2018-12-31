@@ -1,6 +1,7 @@
 """ Small methods for generic use """
 
 # standard library
+from itertools import cycle
 import itertools
 import os
 import random
@@ -46,6 +47,26 @@ def format_rut(rut):
     code = code[::-1]
 
     return '%s-%s' % (code, verifier)
+
+
+def validate_rut(rut):
+    rut = rut.lower()
+    rut = rut.replace("-", "")
+    rut = rut.replace(".", "")
+    aux = rut[:-1]
+    dv = rut[-1:]
+
+    rev = map(int, reversed(str(aux)))
+    factors = cycle(range(2, 8))
+    s = sum(d * f for d, f in zip(rev, factors))
+    res = (-s) % 11
+
+    if str(res) == dv:
+        return True
+    elif dv == "k" and res == 10:
+        return True
+    else:
+        return False
 
 
 def strip_accents(s):
