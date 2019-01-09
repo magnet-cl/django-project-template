@@ -357,3 +357,5 @@ if not DEBUG:
             'LOCATION': '127.0.0.1:11211',
         }
     }
+
+FILE_UPLOAD_PERMISSIONS = 0o644
