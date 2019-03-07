@@ -104,6 +104,7 @@ INSTALLED_APPS = [
     'compressor',
     'captcha',
     'loginas',
+    'rest_framework',
 
     # internal
     'regions',
@@ -359,3 +360,20 @@ if not DEBUG:
     }
 
 FILE_UPLOAD_PERMISSIONS = 0o644
+
+
+# Rest Framework Settings
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': [
+        'djangorestframework_camel_case.render.CamelCaseJSONRenderer',
+    ],
+    'DEFAULT_PARSER_CLASSES': (
+        'djangorestframework_camel_case.parser.CamelCaseJSONParser',
+    ),
+}
+
+
+if DEBUG:
+    REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'].append(
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    )

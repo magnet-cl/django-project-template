@@ -23,6 +23,8 @@ pytz = ">=2018.4"
 python-memcached = "*"
 gunicorn = "==19.9.0"
 "psycopg2-binary" = "==2.7.6.1"
+djangorestframework = "*"
+djangorestframework-camel-case = "*"
 
 [dev-packages]
 

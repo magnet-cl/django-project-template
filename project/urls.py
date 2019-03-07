@@ -26,6 +26,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/', include('users.urls')),
     url(r'^status/$', base_views.StatusView.as_view(), name='status'),
+    url(r'^api/v1/', include('api.urls', namespace='api')),
     url(r'^$', base_views.index, name='home'),
 ]
 
