@@ -18,8 +18,8 @@ class Migration(migrations.Migration):
             name='Commune',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_now_add=True, help_text='creation date')),
-                ('updated_at', models.DateTimeField(auto_now=True, help_text='edition date', null=True)),
+                ('created_at', models.DateTimeField(auto_now_add=True, help_text='creation date', verbose_name='created at')),
+                ('updated_at', models.DateTimeField(auto_now=True, help_text='edition date', null=True, verbose_name='created at')),
                 ('name', models.CharField(help_text='The name of the commune', max_length=100, unique=True, verbose_name='name')),
             ],
             options={
