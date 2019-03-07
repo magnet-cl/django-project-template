@@ -5,6 +5,7 @@
 
 # django
 from django.conf import settings
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404
@@ -288,6 +289,7 @@ class BaseUpdateRedirectView(
         return self.object.get_absolute_url()
 
 
+@method_decorator(staff_member_required, name='dispatch')
 class StatusView(BaseTemplateView):
     template_name = 'status.pug'
     title = _('status').title()
