@@ -48,3 +48,16 @@ block content
               |  
             | Ready 
             span.favicon-href
+
+      tr
+        th DEBUG
+        if settings.DEBUG
+          td
+            i.fa.fa-check.text-success
+              |  
+            | False
+        else
+          td.table-danger
+            i.fa.fa-times.text-danger
+              |  
+            | True
