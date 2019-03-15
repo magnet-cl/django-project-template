@@ -115,7 +115,7 @@ if  $INSTALL_SYSTEM_DEPENDENCIES ; then
 
         print_green "Installing image libraries"
         # Install image libs
-        sudo apt-get -y install libjpeg-dev zlib1g-dev zlib1g-dev
+        sudo apt-get -y install libjpeg-dev zlib1g-dev
 
         print_green "Installing translation libraries"
         sudo apt-get -y install gettext
