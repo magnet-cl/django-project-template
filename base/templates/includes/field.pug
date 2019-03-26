@@ -22,7 +22,7 @@
           {{ field }}
 
         if field.errors
-          span.invalid-feedback.text-right(for="id_{{field.name}}")
+          span.text-danger.text-right(for="id_{{field.name}}")
             {% for error in field.errors %}
             | {{ error }}
             {% endfor %}
