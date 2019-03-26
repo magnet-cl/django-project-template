@@ -1,7 +1,4 @@
 {% csrf_token %}
-- for field in form.hidden_fields
-  {{field}}
-
 - if form.fieldsets
   - for fieldset in form.fieldsets
     fieldset(class="{{ fieldset.classes }}", data-index="{{forloop.counter0}}")
