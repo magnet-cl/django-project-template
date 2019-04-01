@@ -104,7 +104,7 @@
         "updated_at": "2014-08-08T22:21:45.623Z",
         "short_name": "VIII",
         "name": "Región del Bío Bío",
-        "order": 10,
+        "order": 11,
         "importance": 2
     }
 },
@@ -116,7 +116,7 @@
         "updated_at": "2014-08-08T22:21:45.625Z",
         "short_name": "IX",
         "name": "Región de la Araucanía",
-        "order": 11,
+        "order": 12,
         "importance": 5
     }
 },
@@ -128,7 +128,7 @@
         "updated_at": "2014-08-08T22:21:45.627Z",
         "short_name": "X",
         "name": "Región de los Lagos",
-        "order": 13,
+        "order": 14,
         "importance": 7
     }
 },
@@ -140,7 +140,7 @@
         "updated_at": "2014-08-08T22:21:45.629Z",
         "short_name": "XI",
         "name": "Región de Aysén del General Carlos Ibáñez del Campo",
-        "order": 14,
+        "order": 15,
         "importance": 15
     }
 },
@@ -152,7 +152,7 @@
         "updated_at": "2014-08-08T22:21:45.631Z",
         "short_name": "XII",
         "name": "Región de Magallanes y la Antártica Chilena",
-        "order": 15,
+        "order": 16,
         "importance": 14
     }
 },
@@ -164,7 +164,7 @@
         "updated_at": "2014-08-08T22:21:45.634Z",
         "short_name": "XIV",
         "name": "Región de Los Ríos",
-        "order": 12,
+        "order": 13,
         "importance": 10
     }
 },
@@ -178,6 +178,18 @@
         "name": "Región de Arica-Parinacota",
         "order": 1,
         "importance": 13
+    }
+},
+{
+    "pk": 16,
+    "model": "regions.region",
+    "fields": {
+        "created_at": "2014-08-08T22:21:45.636Z",
+        "updated_at": "2014-08-08T22:21:45.636Z",
+        "short_name": "XVI",
+        "name": "Región de Ñuble",
+        "order": 10,
+        "importance": 16
     }
 },
 {
@@ -1964,7 +1976,7 @@
     "pk": 179,
     "model": "regions.commune",
     "fields": {
-        "region": 9,
+        "region": 16,
         "created_at": "2014-08-08T22:23:58.389Z",
         "updated_at": "2014-08-08T22:23:58.389Z",
         "name": "Chillán"
@@ -1974,7 +1986,7 @@
     "pk": 180,
     "model": "regions.commune",
     "fields": {
-        "region": 9,
+        "region": 16,
         "created_at": "2014-08-08T22:23:58.392Z",
         "updated_at": "2014-08-08T22:23:58.392Z",
         "name": "Bulnes"
@@ -1984,7 +1996,7 @@
     "pk": 181,
     "model": "regions.commune",
     "fields": {
-        "region": 9,
+        "region": 16,
         "created_at": "2014-08-08T22:23:58.395Z",
         "updated_at": "2014-08-08T22:23:58.395Z",
         "name": "Cobquecura"
@@ -1994,7 +2006,7 @@
     "pk": 182,
     "model": "regions.commune",
     "fields": {
-        "region": 9,
+        "region": 16,
         "created_at": "2014-08-08T22:23:58.397Z",
         "updated_at": "2014-08-08T22:23:58.397Z",
         "name": "Coelemu"
@@ -2004,7 +2016,7 @@
     "pk": 183,
     "model": "regions.commune",
     "fields": {
-        "region": 9,
+        "region": 16,
         "created_at": "2014-08-08T22:23:58.440Z",
         "updated_at": "2014-08-08T22:23:58.440Z",
         "name": "Coihueco"
@@ -2014,7 +2026,7 @@
     "pk": 184,
     "model": "regions.commune",
     "fields": {
-        "region": 9,
+        "region": 16,
         "created_at": "2014-08-08T22:23:58.443Z",
         "updated_at": "2014-08-08T22:23:58.443Z",
         "name": "Chillán Viejo"
@@ -2024,7 +2036,7 @@
     "pk": 185,
     "model": "regions.commune",
     "fields": {
-        "region": 9,
+        "region": 16,
         "created_at": "2014-08-08T22:23:58.446Z",
         "updated_at": "2014-08-08T22:23:58.446Z",
         "name": "El Carmen"
@@ -2034,7 +2046,7 @@
     "pk": 186,
     "model": "regions.commune",
     "fields": {
-        "region": 9,
+        "region": 16,
         "created_at": "2014-08-08T22:23:58.449Z",
         "updated_at": "2014-08-08T22:23:58.449Z",
         "name": "Ninhue"
@@ -2044,7 +2056,7 @@
     "pk": 187,
     "model": "regions.commune",
     "fields": {
-        "region": 9,
+        "region": 16,
         "created_at": "2014-08-08T22:23:58.451Z",
         "updated_at": "2014-08-08T22:23:58.451Z",
         "name": "Ñiquén"
@@ -2054,7 +2066,7 @@
     "pk": 188,
     "model": "regions.commune",
     "fields": {
-        "region": 9,
+        "region": 16,
         "created_at": "2014-08-08T22:23:58.454Z",
         "updated_at": "2014-08-08T22:23:58.454Z",
         "name": "Pemuco"
@@ -2064,7 +2076,7 @@
     "pk": 189,
     "model": "regions.commune",
     "fields": {
-        "region": 9,
+        "region": 16,
         "created_at": "2014-08-08T22:23:58.456Z",
         "updated_at": "2014-08-08T22:23:58.456Z",
         "name": "Pinto"
@@ -2074,7 +2086,7 @@
     "pk": 190,
     "model": "regions.commune",
     "fields": {
-        "region": 9,
+        "region": 16,
         "created_at": "2014-08-08T22:23:58.459Z",
         "updated_at": "2014-08-08T22:23:58.459Z",
         "name": "Portezuelo"
@@ -2084,7 +2096,7 @@
     "pk": 191,
     "model": "regions.commune",
     "fields": {
-        "region": 9,
+        "region": 16,
         "created_at": "2014-08-08T22:23:58.461Z",
         "updated_at": "2014-08-08T22:23:58.461Z",
         "name": "Quillón"
@@ -2094,7 +2106,7 @@
     "pk": 192,
     "model": "regions.commune",
     "fields": {
-        "region": 9,
+        "region": 16,
         "created_at": "2014-08-08T22:23:58.464Z",
         "updated_at": "2014-08-08T22:23:58.464Z",
         "name": "Quirihue"
@@ -2104,7 +2116,7 @@
     "pk": 193,
     "model": "regions.commune",
     "fields": {
-        "region": 9,
+        "region": 16,
         "created_at": "2014-08-08T22:23:58.467Z",
         "updated_at": "2014-08-08T22:23:58.467Z",
         "name": "Ránquil"
@@ -2114,7 +2126,7 @@
     "pk": 194,
     "model": "regions.commune",
     "fields": {
-        "region": 9,
+        "region": 16,
         "created_at": "2014-08-08T22:23:58.469Z",
         "updated_at": "2014-08-08T22:23:58.469Z",
         "name": "San Carlos"
@@ -2124,7 +2136,7 @@
     "pk": 195,
     "model": "regions.commune",
     "fields": {
-        "region": 9,
+        "region": 16,
         "created_at": "2014-08-08T22:23:58.472Z",
         "updated_at": "2014-08-08T22:23:58.472Z",
         "name": "San Fabián"
@@ -2134,7 +2146,7 @@
     "pk": 196,
     "model": "regions.commune",
     "fields": {
-        "region": 9,
+        "region": 16,
         "created_at": "2014-08-08T22:23:58.474Z",
         "updated_at": "2014-08-08T22:23:58.474Z",
         "name": "San Ignacio"
@@ -2144,7 +2156,7 @@
     "pk": 197,
     "model": "regions.commune",
     "fields": {
-        "region": 9,
+        "region": 16,
         "created_at": "2014-08-08T22:23:58.477Z",
         "updated_at": "2014-08-08T22:23:58.477Z",
         "name": "San Nicolás"
@@ -2154,7 +2166,7 @@
     "pk": 198,
     "model": "regions.commune",
     "fields": {
-        "region": 9,
+        "region": 16,
         "created_at": "2014-08-08T22:23:58.480Z",
         "updated_at": "2014-08-08T22:23:58.480Z",
         "name": "Treguaco"
@@ -2164,7 +2176,7 @@
     "pk": 199,
     "model": "regions.commune",
     "fields": {
-        "region": 9,
+        "region": 16,
         "created_at": "2014-08-08T22:23:58.482Z",
         "updated_at": "2014-08-08T22:23:58.482Z",
         "name": "Yungay"
