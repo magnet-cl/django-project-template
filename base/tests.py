@@ -21,6 +21,7 @@ from project.urls import urlpatterns
 # utils
 from inflection import underscore
 from base.utils import get_our_models
+from base.utils import random_string
 
 # utils
 from base.mockups import Mockup
@@ -31,7 +32,7 @@ class BaseTestCase(TestCase, Mockup):
     def setUp(self):
         super(BaseTestCase, self).setUp()
 
-        self.password = self.random_string()
+        self.password = random_string()
         self.user = self.create_user(self.password)
 
         self.login()
