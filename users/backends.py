@@ -18,6 +18,12 @@ class CustomBackend(ModelBackend):
 
         """
         UserModel = get_user_model()
+
+        if email:
+            # stirp and lower the email, since it should be case insensitive
+            # and emails don't have spaces
+            email = email.strip().lower()
+
         try:
             user = UserModel._default_manager.get_by_natural_key(email)
         except UserModel.DoesNotExist:
