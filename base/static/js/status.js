@@ -3,7 +3,7 @@ $(document).ready(function() {
 
   if (favicon && favicon.href) {
     $('.favicon-ok').removeClass('d-none');
-    $('favicon-href').html(favicon.href);
+    $('.favicon-href').html(favicon.href);
   } else {
     $('.favicon-not-ok').removeClass('d-none');
   }
