@@ -160,9 +160,12 @@ class BaseListView(ListView, PermissionRequiredMixin):
         context['opts'] = self.model._meta
         context['clean_query_string'] = clean_query_string(self.request)
         context['q'] = self.request.GET.get('q')
-        context['title'] = self.model._meta.verbose_name_plural.title()
+        context['title'] = self.get_title()
         context['ordering'] = self.request.GET.getlist('o')
         return context
+
+    def get_title(self):
+        return self.model._meta.verbose_name_plural.title()
 
     def get_ordering(self):
         """
