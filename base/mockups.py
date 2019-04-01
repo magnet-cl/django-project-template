@@ -42,13 +42,13 @@ class Mockup(object):
 
     def create_user(self, password=None, **kwargs):
         if kwargs.get('first_name') is None:
-            kwargs['first_name'] = self.random_string(length=6)
+            kwargs['first_name'] = random_string(length=6)
 
         if kwargs.get('last_name') is None:
-            kwargs['last_name'] = self.random_string(length=6)
+            kwargs['last_name'] = random_string(length=6)
 
         if kwargs.get('email') is None:
-            kwargs['email'] = "%s@gmail.com" % self.random_string(length=6)
+            kwargs['email'] = "%s@gmail.com" % random_string(length=6)
 
         if kwargs.get('is_active') is None:
             kwargs['is_active'] = True
@@ -63,9 +63,9 @@ class Mockup(object):
 
     def random_email(self):
         return "{}@{}.{}".format(
-            self.random_string(length=6),
-            self.random_string(length=6),
-            self.random_string(length=2)
+            random_string(length=6),
+            random_string(length=6),
+            random_string(length=2)
         )
 
     def random_hex_int(self, *args, **kwargs):
@@ -77,9 +77,6 @@ class Mockup(object):
 
     def random_float(self, minimum=-100000, maximum=100000):
         return random.uniform(minimum, maximum)
-
-    def random_string(self, length=6, chars=None):
-        return random_string(length=length, chars=chars)
 
     def random_uuid(self, *args, **kwargs):
         chars = string.digits
@@ -167,18 +164,21 @@ class Mockup(object):
                 self.random_int(minimum=1, maximum=99),
                 self.random_int(minimum=100, maximum=990),
                 self.random_int(minimum=100, maximum=990),
-                self.random_string(length=1, chars='k' + string.digits),
+                random_string(length=1, chars='k' + string.digits),
             )
             data[field] = rut
 
-    def set_required_string(self, data, field, length=6):
+    def set_required_string(self, data, field, length=6, include_spaces=True):
         if field not in data:
-            data[field] = self.random_string(length=length)
+            data[field] = random_string(
+                length=length,
+                include_spaces=include_spaces,
+            )
 
     def set_required_url(self, data, field, length=6):
         if field not in data:
             data[field] = 'http://{}.com'.format(
-                self.random_string(length=length))
+                random_string(length=length))
 
 
 def add_get_or_create(cls, model):
