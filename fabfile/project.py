@@ -64,7 +64,7 @@ def update_server():
         run('pipenv sync')
 
         print(green('installing npm packages'))
-        run('yarn install')
+        run('npm install')
 
         print(green('collecting static files'))
         run('pipenv run python manage.py collectstatic --noinput')

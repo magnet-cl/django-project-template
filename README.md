@@ -33,7 +33,7 @@ This project works with:
 
 ## Quickstart
 If you are using Ubuntu 16.04 or OS X, the script quickstart.sh installs all 
-dependencies of the project. It assumes you have yarn installed.
+dependencies of the project. It assumes you have npm installed.
 
 * `./quickstart.sh`
 

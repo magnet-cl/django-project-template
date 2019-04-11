@@ -16,7 +16,7 @@ function replace(){
 INSTALL_SYSTEM_DEPENDENCIES=true
 PIPENV_INSTALL=true
 INSTALL_BOWER=true
-INSTALL_YARN=true
+INSTALL_NPM=true
 TRANSLATE=true
 BUILD_JAVASCRIPT=true
 
@@ -47,7 +47,7 @@ do
              INSTALL_SYSTEM_DEPENDENCIES=true
              PIPENV_INSTALL=false
              INSTALL_BOWER=false
-             INSTALL_YARN=false
+             INSTALL_NPM=false
              TRANSLATE=false
              BUILD_JAVASCRIPT=false
              ;;
@@ -56,7 +56,7 @@ do
              INSTALL_SYSTEM_DEPENDENCIES=false
              PIPENV_INSTALL=true
              INSTALL_BOWER=false
-             INSTALL_YARN=false
+             INSTALL_NPM=false
              TRANSLATE=false
              BUILD_JAVASCRIPT=false
              ;;
@@ -65,16 +65,16 @@ do
              INSTALL_SYSTEM_DEPENDENCIES=false
              PIPENV_INSTALL=false
              INSTALL_BOWER=true
-             INSTALL_YARN=false
+             INSTALL_NPM=false
              TRANSLATE=false
              BUILD_JAVASCRIPT=false
              ;;
         y)
-             print_green "only yarn install"
+             print_green "only npm install"
              INSTALL_SYSTEM_DEPENDENCIES=false
              PIPENV_INSTALL=false
              INSTALL_BOWER=false
-             INSTALL_YARN=true
+             INSTALL_NPM=true
              TRANSLATE=false
              BUILD_JAVASCRIPT=false
              ;;
@@ -83,7 +83,7 @@ do
              INSTALL_SYSTEM_DEPENDENCIES=false
              PIPENV_INSTALL=false
              INSTALL_BOWER=false
-             INSTALL_YARN=false
+             INSTALL_NPM=false
              TRANSLATE=false
              BUILD_JAVASCRIPT=true
              ;;
@@ -106,12 +106,15 @@ if  $INSTALL_SYSTEM_DEPENDENCIES ; then
         brew install gettext
     else
         print_green "Installing python 3.6"
-        sudo add-apt-repository ppa:deadsnakes/ppa
-        sudo apt-get update
+        if [[ ! $(lsb_release -a) =~ .*Ubuntu.18.04.* ]]
+        then
+            sudo add-apt-repository ppa:deadsnakes/ppa
+            sudo apt-get update
+        fi
         sudo apt-get -y install python3.6 python3.6-dev
 
         print_green "Installing aptitude dependencies"
-        sudo apt-get -y install python-pip python-virtualenv build-essential
+        sudo apt-get -y install python3-pip python3-virtualenv build-essential
 
         print_green "Installing image libraries"
         # Install image libs
@@ -121,7 +124,7 @@ if  $INSTALL_SYSTEM_DEPENDENCIES ; then
         sudo apt-get -y install gettext
 
         print_green "Installing pipenv"
-        sudo pip install pipenv
+        sudo -H pip install pipenv
     fi
 
     print_green "Are you going to use postgre for your database? [Y/n]"
@@ -181,12 +184,12 @@ if grep -q "CHANGE ME" "project/local_settings.py"; then
 fi
 
 
-if  $INSTALL_YARN ; then
-    print_green "Installing yarn dependencies"
+if  $INSTALL_NPM ; then
+    print_green "Installing npm dependencies"
 
     # package.json modification
     replace "s/NAME/${PWD##*/}/g" package.json
     replace "s/HOMEPAGE/https:\/\/bitbucket.org\/magnet-cl\/${PWD##*/}/g" package.json
 
-    yarn install
+    npm install
 fi
