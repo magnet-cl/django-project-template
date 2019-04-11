@@ -14,6 +14,10 @@ from .managers import {{model_name}}QuerySet
 
 
 class {{model_name}}(BaseModel):
+    """
+    TODO: Fill this description
+    The {{plural_model_verbose_name}} system is used to store {{model_verbose_name}}.
+    """
     # foreign keys
     user = models.ForeignKey(
         User,
