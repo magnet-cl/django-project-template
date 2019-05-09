@@ -34,3 +34,8 @@ $('form').submit(function() {
 
   return true;
 });
+
+// Initialize inputs rut
+$('input.rut').each((i, rutInput) => {
+  new RutInput($(rutInput));
+});

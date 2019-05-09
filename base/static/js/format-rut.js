@@ -106,9 +106,3 @@ class RutInput {
     }
   }
 }
-
-$(() => {
-  $('input.rut').each((i, rutInput) => {
-    new RutInput($(rutInput));
-  });
-});
