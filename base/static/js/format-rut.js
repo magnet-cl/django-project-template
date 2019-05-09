@@ -1,5 +1,5 @@
 class RutInput {
-  constructor($rutInput) {
+  constructor($rutInput, formatRut=true, validateRut=true) {
     this.$rutInput = $rutInput;
     this.$rutInputContainer = $rutInput.parent();
     this.$submitBtn = $rutInput.parents('form').find('[type="submit"]');
@@ -7,23 +7,22 @@ class RutInput {
     this.errorMessage = '* RUT inválido.';
     this.$errorMessage = $(`<p class='form-error'>${this.errorMessage}</p>`);
 
-    this.setListeners();
+    this.setListeners(formatRut, validateRut);
   }
 
   /**
    * Add event listeners
    */
-  setListeners() {
-    this.$rutInput.keyup(this.handleRut.bind(this));
-    this.$rutInput.blur(this.handleRut.bind(this));
-  }
+  setListeners(formatRut, validateRut) {
+    if (formatRut) {
+      this.$rutInput.keyup(this.formatRut.bind(this));
+      this.$rutInput.blur(this.formatRut.bind(this));
+    }
 
-  /**
-   * Handle event listeners
-   */
-  handleRut() {
-    this.formatRut();
-    this.validateRut();
+    if (validateRut) {
+      this.$rutInput.keyup(this.validateRut.bind(this));
+      this.$rutInput.blur(this.validateRut.bind(this));
+    }
   }
 
   /**
