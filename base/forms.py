@@ -24,7 +24,7 @@ class BaseModelForm(BetterModelForm):
 
             if isinstance(field.widget, forms.widgets.DateTimeInput):
                 attrs['class'] = 'datetimepicker-input form-control'
-                attrs['data-format'] = 'DD/MM/YYYY HH:mm'
+                attrs['data-format'] = 'DD/MM/YYYY HH:mm:s'
                 attrs['data-toggle'] = 'datetimepicker'
 
             elif isinstance(field.widget, forms.widgets.DateInput):
@@ -34,7 +34,7 @@ class BaseModelForm(BetterModelForm):
 
             elif isinstance(field.widget, forms.widgets.TimeInput):
                 attrs['class'] = 'datetimepicker-input form-control'
-                attrs['data-format'] = 'HH:mm'
+                attrs['data-format'] = 'HH:mm:s'
                 attrs['data-toggle'] = 'datetimepicker'
 
             elif isinstance(field.widget, forms.widgets.FileInput):
