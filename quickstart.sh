@@ -15,7 +15,6 @@ function replace(){
 
 INSTALL_SYSTEM_DEPENDENCIES=true
 PIPENV_INSTALL=true
-INSTALL_BOWER=true
 INSTALL_NPM=true
 TRANSLATE=true
 BUILD_JAVASCRIPT=true
@@ -46,7 +45,6 @@ do
              print_green "only install aptitude"
              INSTALL_SYSTEM_DEPENDENCIES=true
              PIPENV_INSTALL=false
-             INSTALL_BOWER=false
              INSTALL_NPM=false
              TRANSLATE=false
              BUILD_JAVASCRIPT=false
@@ -55,7 +53,6 @@ do
              print_green "only pip install"
              INSTALL_SYSTEM_DEPENDENCIES=false
              PIPENV_INSTALL=true
-             INSTALL_BOWER=false
              INSTALL_NPM=false
              TRANSLATE=false
              BUILD_JAVASCRIPT=false
@@ -64,7 +61,6 @@ do
              print_green "only bower install"
              INSTALL_SYSTEM_DEPENDENCIES=false
              PIPENV_INSTALL=false
-             INSTALL_BOWER=true
              INSTALL_NPM=false
              TRANSLATE=false
              BUILD_JAVASCRIPT=false
@@ -73,7 +69,6 @@ do
              print_green "only npm install"
              INSTALL_SYSTEM_DEPENDENCIES=false
              PIPENV_INSTALL=false
-             INSTALL_BOWER=false
              INSTALL_NPM=true
              TRANSLATE=false
              BUILD_JAVASCRIPT=false
@@ -82,7 +77,6 @@ do
              print_green "only npm run build"
              INSTALL_SYSTEM_DEPENDENCIES=false
              PIPENV_INSTALL=false
-             INSTALL_BOWER=false
              INSTALL_NPM=false
              TRANSLATE=false
              BUILD_JAVASCRIPT=true
@@ -114,7 +108,7 @@ if  $INSTALL_SYSTEM_DEPENDENCIES ; then
         sudo apt-get -y install python3.6 python3.6-dev
 
         print_green "Installing aptitude dependencies"
-        sudo apt-get -y install python3-pip python3-virtualenv build-essential
+        sudo apt-get -y install python3-pip build-essential
 
         print_green "Installing image libraries"
         # Install image libs
