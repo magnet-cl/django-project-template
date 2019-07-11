@@ -305,8 +305,13 @@ class StatusView(BaseTemplateView):
         return context
 
 
-class FormsetViewMixin(object):
+class FormsetViewMixin:
     formset_class = None
+    initial_formset = {}
+    prefix_formset = None
+
+    def get_formset_class(self):
+        return self.formset_class
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -326,10 +331,37 @@ class FormsetViewMixin(object):
             return self.form_invalid(form, formset)
 
     def form_valid(self, form, formset):
-        form_valid = super(FormsetViewMixin, self).form_valid(form)
+        form_valid = super().form_valid(form)
         formset.instance = self.object
         formset.save()
         return form_valid
+
+    def get_initial_formset(self):
+        """Return the initial data to use for formset on this view."""
+        return self.initial_formset.copy()
+
+    def get_prefix_formset(self):
+        """Return the prefix to use for formset."""
+        return self.prefix_formset
+
+    def get_formset_kwargs(self):
+        kwargs = {
+            'initial': self.get_initial_formset(),
+            'prefix': self.get_prefix_formset(),
+        }
+
+        if self.request.method in ('POST', 'PUT'):
+            kwargs.update({
+                'data': self.request.POST,
+                'files': self.request.FILES,
+            })
+        return kwargs
+
+    def get_formset(self, formset_class=None):
+        """Return an instance of the form to be used in this view."""
+        if formset_class is None:
+            formset_class = self.get_formset_class()
+        return formset_class(**self.get_formset_kwargs())
 
     def form_invalid(self, form, formset):
         return self.render_to_response(
@@ -342,26 +374,12 @@ class FormsetCreateView(FormsetViewMixin, BaseCreateView):
     def get_object(self, queryset=None):
         return None
 
-    def get_formset(self):
-        if self.request.POST:
-            formset = self.formset_class(
-                self.request.POST,
-            )
-        else:
-            formset = self.formset_class()
-        return formset
-
 
 class FormsetUpdateView(FormsetViewMixin, BaseUpdateView):
 
-    def get_formset(self):
-        if self.request.POST:
-            formset = self.formset_class(
-                self.request.POST,
-                instance=self.object,
-            )
-        else:
-            formset = self.formset_class(
-                instance=self.object,
-            )
-        return formset
+    def get_formset_kwargs(self):
+        """Return the keyword arguments for instantiating formset."""
+        kwargs = super().get_formset_kwargs()
+        if hasattr(self, 'object'):
+            kwargs.update({'instance': self.object})
+        return kwargs
