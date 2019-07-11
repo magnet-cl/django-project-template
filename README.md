@@ -61,6 +61,10 @@ within a form after submit. This is done with a timeout of 10 milliseconds to
 avoid not sending values of inputs with type submit. To disable this behaviour, add
 .js-do-not-disable-on-submit class to the buttons you don't want to disable.
 
+### chained regions and communes selects
+
+The project comes with chained regions and communes selects.
+To able this add regions.js in the regions and communes selects template.
 
 ### App.utils
 
