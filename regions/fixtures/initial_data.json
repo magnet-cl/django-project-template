@@ -115,7 +115,7 @@
         "created_at": "2014-08-08T22:21:45.625Z",
         "updated_at": "2014-08-08T22:21:45.625Z",
         "short_name": "IX",
-        "name": "Región de la Araucanía",
+        "name": "Región de La Araucanía",
         "order": 12,
         "importance": 5
     }
@@ -127,7 +127,7 @@
         "created_at": "2014-08-08T22:21:45.627Z",
         "updated_at": "2014-08-08T22:21:45.627Z",
         "short_name": "X",
-        "name": "Región de los Lagos",
+        "name": "Región de Los Lagos",
         "order": 14,
         "importance": 7
     }
