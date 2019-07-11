@@ -130,10 +130,10 @@ class UrlsTest(BaseTestCase):
         url = reverse_pattern(pattern, namespace)
 
         if url is None:
-            reverse_pattern(pattern, namespace, args=(1,))
+            url = reverse_pattern(pattern, namespace, args=(1,))
 
             if url is None:
-                reverse_pattern(pattern, namespace, args=(1, 1))
+                url = reverse_pattern(pattern, namespace, args=(1, 1))
 
         if url is None:
             return None
@@ -150,7 +150,9 @@ class UrlsTest(BaseTestCase):
 
     def test_responses(self):
 
-        ignored_namespaces = []
+        ignored_namespaces = [
+            'admin',
+        ]
 
         def test_url_patterns(patterns, namespace=''):
 
@@ -168,7 +170,7 @@ class UrlsTest(BaseTestCase):
 
                     try:
                         response = self.client.get(url)
-                    except:
+                    except Exception:
                         print("Url {} failed: ".format(url))
                         raise
 
@@ -177,7 +179,7 @@ class UrlsTest(BaseTestCase):
                     )
                     self.assertIn(
                         response.status_code,
-                        (200, 302, 403), msg
+                        (200, 302, 403, 405), msg
                     )
                 else:
                     test_url_patterns(pattern.url_patterns, pattern.namespace)
