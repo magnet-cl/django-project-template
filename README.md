@@ -26,13 +26,13 @@ This project works with:
 
 * Python >= 3.6
 * pipenv >= 11.9.0
-* Python libraries defined in Pipfile 
+* Python libraries defined in Pipfile
 * Node >= 8.5
 * Node packages defined in package.json
-* PostgreSQL >= 9.6 
+* PostgreSQL >= 9.6
 
 ## Quickstart
-If you are using Ubuntu 16.04 or OS X, the script quickstart.sh installs all 
+If you are using Ubuntu 16.04 or OS X, the script quickstart.sh installs all
 dependencies of the project. It assumes you have npm installed.
 
 * `./quickstart.sh`
@@ -65,6 +65,12 @@ avoid not sending values of inputs with type submit. To disable this behaviour, 
 
 The project comes with chained regions and communes selects.
 To able this add regions.js in the regions and communes selects template.
+
+### Rut formatter
+
+The project comes with rut formatter and validation for all inputs with .rut class.
+To disable any of this behaviour, add .js-do-not-format-rut or .js-do-not-validate-rut
+class to the inputs you don't want to format or validate, respectively.
 
 ### App.utils
 
