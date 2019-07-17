@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-Django = "==1.11.20"
+Django = "==2.2.3"
 "Fabric3" = "==1.13.1.post1"
 django_compressor = "==2.2"
 django-cron = "==0.5.1"
@@ -24,7 +24,7 @@ pytz = ">=2018.4"
 python-memcached = "*"
 gunicorn = "==19.9.0"
 "psycopg2-binary" = "==2.7.6.1"
-djangorestframework = "*"
+djangorestframework = "==3.9"
 djangorestframework-camel-case = "*"
 
 [dev-packages]

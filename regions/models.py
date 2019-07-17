@@ -48,6 +48,7 @@ class Commune(BaseModel):
 
     region = models.ForeignKey(
         Region,
+        on_delete=models.CASCADE,
     )
 
     # required fields

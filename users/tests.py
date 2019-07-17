@@ -3,7 +3,7 @@ Tests for the user app
 """
 
 # django
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 # tests
 from base.tests import BaseTestCase

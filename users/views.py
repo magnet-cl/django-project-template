@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.tokens import default_token_generator
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.shortcuts import redirect
 from django.shortcuts import render
 from django.utils.http import base36_to_int
@@ -35,7 +35,7 @@ class LoginView(auth_views.LoginView):
     title = _('Login')
 
     def get(self, *args, **kwargs):
-        if self.request.user.is_authenticated():
+        if self.request.user.is_authenticated:
             return redirect('home')
         return super(LoginView, self).get(*args, **kwargs)
 
