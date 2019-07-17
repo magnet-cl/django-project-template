@@ -3,7 +3,7 @@
 # standard library
 
 # django
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
@@ -21,6 +21,7 @@ class {{model_name}}(BaseModel):
     # foreign keys
     user = models.ForeignKey(
         User,
+        on_delete=models.CASCADE,
         verbose_name=_('user'),
     )
     # required fields
@@ -37,9 +38,6 @@ class {{model_name}}(BaseModel):
     class Meta:
         verbose_name = _('{{model_verbose_name}}')
         verbose_name_plural = _('{{plural_model_verbose_name}}')
-        permissions = (
-            ('view_{{model_name.lower}}', _('Can view {{plural_model_verbose_name}}')),
-        )
 
     def __str__(self):
         # TODO this is an example str return, change it

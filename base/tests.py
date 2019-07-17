@@ -10,10 +10,9 @@ Replace this with more appropriate tests for your application.
 # django
 from django.conf import settings
 from django.contrib import admin
-from django.core.urlresolvers import NoReverseMatch
-from django.core.urlresolvers import resolve
-from django.core.urlresolvers import reverse
-from django.db import models
+from django.urls import NoReverseMatch
+from django.urls import resolve
+from django.urls import reverse
 from django.test import TestCase
 
 # django-cron
@@ -47,46 +46,6 @@ class BaseTestCase(TestCase, Mockup):
             password = self.password
 
         return self.client.login(email=user.email, password=password)
-
-
-class IntegrityOnDeleteTestCase(BaseTestCase):
-    def create_full_object(self, model):
-        kwargs = {}
-        for f in model._meta.fields:
-            if isinstance(f, models.fields.related.ForeignKey) and f.null:
-                model_name = underscore(f.rel.to.__name__)
-                method_name = 'create_{}'.format(model_name)
-                kwargs[f.name] = getattr(self, method_name)()
-
-        method_name = 'create_{}'.format(underscore(model.__name__))
-
-        return getattr(self, method_name)(**kwargs), kwargs
-
-    def test_integrity_on_delete(self):
-
-        for model in get_our_models():
-            obj, related_nullable_objects = self.create_full_object(model)
-
-            obj_count = model.objects.count()
-
-            for relation_name, rel_obj in related_nullable_objects.items():
-
-                try:
-                    # check if the test should be skipped
-                    if relation_name in obj.exclude_on_on_delete_test:
-                        continue
-                except AttributeError:
-                    pass
-
-                rel_obj.delete()
-
-                error_msg = (
-                    '<{}> object, was deleted after deleting a nullable '
-                    'related <{}> object, the relation was "{}"'
-                ).format(model.__name__, rel_obj.__class__.__name__,
-                         relation_name)
-
-                self.assertEqual(obj_count, model.objects.count(), error_msg)
 
 
 def reverse_pattern(pattern, namespace, args=None, kwargs=None):

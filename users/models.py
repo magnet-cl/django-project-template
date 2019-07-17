@@ -80,9 +80,6 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
     class Meta:
         verbose_name = _('user')
         verbose_name_plural = _('users')
-        permissions = (
-            ('view_user', _('Can view user')),
-        )
 
     def clean(self):
         super(User, self).clean()

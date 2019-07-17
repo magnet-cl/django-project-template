@@ -16,6 +16,7 @@ router = DefaultRouter()
 router.register(r'communes', regions_views.CommuneViewSet)
 
 
+app_name = 'api'
 urlpatterns = [
     url(r'^', include(router.urls)),
 ]

@@ -9,7 +9,7 @@ from django.contrib.postgres.operations import UnaccentExtension
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('users', '0003_auto_20170919_1335'),
+        ('users', '0002_initial_admin_user'),
     ]
 
     operations = [
