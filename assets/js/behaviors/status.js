@@ -1,6 +1,5 @@
-$(document).ready(function() {
-  const favicon = document.querySelector('[rel=icon]');
-
+$(() => {
+  const favicon = $('[rel=icon]')[0];
   if (favicon && favicon.href) {
     $('.favicon-ok').removeClass('d-none');
     $('.favicon-href').html(favicon.href);

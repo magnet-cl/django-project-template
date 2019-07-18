@@ -1,6 +1,6 @@
 doctype 5
 
-- load compress
+- load render_bundle from webpack_loader
 - load staticfiles
 - load i18n static
 
@@ -20,7 +20,7 @@ html(lang="es")
 
 
     meta(charset="utf-8")
-    title 
+    title
       | {% block title %}{% if title%}{{title}} - {% endif %}{%endblock%} Project
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
     meta(name="description", content="")
@@ -30,8 +30,6 @@ html(lang="es")
     // Schema.org for Google
     meta(itemprop='name', content="")
     meta(itemprop='description', content="")
-
-    script(defer, src="https://use.fontawesome.com/releases/v5.3.1/js/all.js")
 
     // image
     if object.image
@@ -90,19 +88,10 @@ html(lang="es")
       script(src="http://html5shim.googlecode.com/svn/trunk/html5.js")
 
     //if lt IE 9
-      script(src="{% static 'bower_components/respond/respond.min.js' %}")
+      script(src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js")
 
-    {% compress css %}
-    link(
-      type="text/x-scss",
-      rel="stylesheet",
-      href="{% static 'css/bootstrap.scss' %}",
-      charset="utf-8"
-    )
-    link(
-      type="text/x-scss", rel="stylesheet", href="{% static 'css/site.scss' %}",
-      charset="utf-8"
-    )
+    link(href='https://fonts.googleapis.com/icon?family=Material+Icons', rel='stylesheet')
+
     link(
       href="{% static 'select2/dist/css/select2.min.css' %}",
       rel="stylesheet"
@@ -111,89 +100,96 @@ html(lang="es")
       href="{% static 'tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4.min.css' %}",
       rel="stylesheet"
     )
-    {% endcompress %}
+    {% render_bundle 'main' 'css' %}
 
     block stylesheets
 
   body(class='{{body_class|default:""}}')
-    div
-      {% include 'includes/navbar.pug' %}
-      main(role="main")
-        .container
-          div.main-alert.fixed-notification
-            {% if messages %}
-            {% for message in messages %}
-            div(class="alert alert-{{ message.tags }}") 
-              button.close(type="button", data-dismiss="alert", aria-label="Close")
-                span.i.fa.fa-times
-                  | 
-              {{ message }}
-            {% endfor %}
-            {% endif %}
-        .container
-          nav(aria-label='breadcrumb')
-            ol.breadcrumb
-              if request.path == '/'
-                li.breadcrumb-item.active(aria-current='page') 
-                  a(href="{% url 'home' %}") 
-                    {% trans 'Home' %}
-              else
-                li.breadcrumb-item
-                  a(href="{% url 'home' %}") 
-                    {% trans 'Home' %}
+    {% include 'includes/navbar.pug' %}
+    main(role="main")
+      .container
+        div.main-alert.fixed-notification
+          {% if messages %}
+          {% for message in messages %}
+          div(class="alert alert-{{ message.tags }}")
+            button.close(type="button", data-dismiss="alert", aria-label="Close")
+              span: i.material-icons close
+            {{ message }}
+          {% endfor %}
+          {% endif %}
 
-              block breadcrumbs
+      .container
+        nav(aria-label='breadcrumb')
+          ol.breadcrumb
+            if request.path == '/'
+              li.breadcrumb-item.active(aria-current='page')
+                a(href="{% url 'home' %}")
+                  {% trans 'Home' %}
+            else
+              li.breadcrumb-item
+                a(href="{% url 'home' %}")
+                  {% trans 'Home' %}
 
-              if title
-                li.breadcrumb-item.active(aria-current='page') {{title}}
-        .container
-          block content_title 
-            .d-flex.justify-content-between.flex-wrap.flex-md-nowrap.align-items-center.pb-2.mb-3.border-bottom
-              h1.display-4 {{ title }}
-              .btn-toolbar.mb-2.mb-md-0
-                .btn-group.mr-2
-                  block options
-          block content
+            block breadcrumbs
 
-      {% include 'includes/footer.pug' %}
+            if title
+              li.breadcrumb-item.active(aria-current='page') {{title}}
+      .container
+        block content_title
+          .d-flex.justify-content-between.flex-wrap.flex-md-nowrap.align-items-center.pb-2.mb-3.border-bottom
+            h1.display-4 {{ title }}
+            .btn-toolbar.mb-2.mb-md-0
+              .btn-group.mr-2
+                block options
+        block content
 
-      // Javascript Placed at the end of the document so the pages load faster
-      // uncompressible javascripts
+    {% include 'includes/footer.pug' %}
 
-      block uncompressible_javascripts
+    // Javascript Placed at the end of the document so the pages load faster
+    // uncompressible javascripts
 
-      if debug
-        script(src="{% static 'jquery/dist/jquery.min.js' %}")
-        // bootstrap bundle includes popper
-        script(src="{% static 'bootstrap/dist/js/bootstrap.bundle.js' %}")
-      else
-        script(src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js")
+    block uncompressible_javascripts
 
-        script(
-          src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js",
-          integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q",
-          crossorigin="anonymous"
-        )
+    if debug
+      script(src="{% static 'jquery/dist/jquery.js' %}")
+      script(src="{% static 'popper.js/dist/umd/popper.js' %}")
+      script(src="{% static 'bootstrap/dist/js/bootstrap.js' %}")
+      script(src="{% static 'moment/min/moment-with-locales.js' %}")
+      script(src="{% static 'select2/dist/js/select2.js' %}")
+      script(src="{% static 'tempusdominus-bootstrap-4/build/js/tempusdominus-bootstrap-4.js' %}")
+    else
+      script(src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
+      script(
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/popper.min.js",
+        integrity="sha256-1XfFQxRfNvDJW3FdZ+xlo2SbodG2+rFArw6XsVzu3bc=",
+        crossorigin="anonymous"
+      )
+      script(
+        src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js",
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM",
+        crossorigin="anonymous"
+      )
+      script(
+        src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js",
+        integrity="sha256-AdQN98MVZs44Eq2yTwtoKufhnU+uZ7v2kXnD5vqzZVo=",
+        crossorigin="anonymous"
+      )
+      script(
+        src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js",
+        integrity="sha256-GHC3xFbrevQ0aRcWg5JElUOncXYXxTtMOuA74cWAPTw=",
+        crossorigin="anonymous"
+      )
+      script(
+        src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js",
+        integrity="sha256-z0oKYg6xiLq3yJGsp/LsY9XykbweQlHl42jHv2XTBz4=",
+        crossorigin="anonymous"
+      )
 
-        script(
-          src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js",
-          integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl",
-          crossorigin="anonymous"
-        )
+    // templates TODO: this is an example of pug templates, delete this
+    script(type="text/pug", src="{% static 'templates/users/list.pug' %}")
+    script(type="text/pug", src="{% static 'templates/users/detail.pug' %}")
+    // end templates
 
-      // templates TODO: this is an example of pug templates, delete this
-      {% compress js %}
-      script(type="text/pug", src="{% static 'templates/users/list.pug' %}")
-      script(type="text/pug", src="{% static 'templates/users/detail.pug' %}")
-      {% endcompress %}
+    block javascripts
 
-      block javascripts
-
-      {% compress js %}
-      script(src="{% static 'moment/min/moment-with-locales.min.js' %}")
-      script(src="{% static 'select2/dist/js/select2.min.js' %}")
-      script(src="{% static 'tempusdominus-bootstrap-4/build/js/tempusdominus-bootstrap-4.min.js' %}")
-      script(src="{% static 'js/app.js' %}")
-      script(src="{% static 'js/format-rut.js' %}")
-      script(src="{% static 'js/forms.js' %}")
-      {% endcompress %}
+    {% render_bundle 'main' 'js' %}

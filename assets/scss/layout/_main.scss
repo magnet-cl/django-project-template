@@ -1,0 +1,3 @@
+main {
+  min-height: calc(100vh - #{$navbar-min-height + $footer-min-height});
+}

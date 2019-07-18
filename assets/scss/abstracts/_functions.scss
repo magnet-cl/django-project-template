@@ -1,0 +1,70 @@
+@function strip-unit($number) {
+
+  @if type-of($number) == "number" and not unitless($number) {
+
+    @return $number / ($number * 0 + 1);
+  }
+
+  @return $number;
+}
+
+@function unitless-rem($pixels, $context: $font-size-base-in-px) {
+
+  @if not (unitless($pixels)) {
+    $pixels: strip-unit($pixels);
+  }
+
+  @if not (unitless($context)) {
+    $context: strip-unit($context);
+  }
+
+  @return $pixels / $context;
+}
+
+@function rem($pixels, $context: $font-size-base-in-px) {
+
+  @return unitless-rem($pixels, $context) * 1rem;
+}
+
+@function unitless-px($rems, $context: $font-size-base-in-px) {
+
+  @if not (unitless($rems)) {
+    $rems: strip-unit($rems);
+  }
+
+  @if not (unitless($context)) {
+    $context: strip-unit($context);
+  }
+
+  @return $rems * $context;
+}
+
+@function px($rems, $context: $font-size-base-in-px) {
+
+  @return unitless-px($rems, $context) * 1px;
+}
+
+@function spacer($spacer: 1) {
+
+  @return map-get($spacers, $spacer);
+}
+
+@function font($level, $for: mobile) {
+
+  @if $for == desktop {
+
+    @return nth(map-get($font-lg-sizes, $level), 1);
+  }
+
+  @return nth(map-get($font-sizes, $level), 1);
+}
+
+@function line-height($level, $for: mobile) {
+
+  @if $for == desktop {
+
+    @return nth(map-get($font-lg-sizes, $level), 2);
+  }
+
+  @return nth(map-get($font-sizes, $level), 2);
+}

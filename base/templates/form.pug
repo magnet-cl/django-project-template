@@ -7,10 +7,10 @@ block uncompressible_javascripts
 
 block stylesheets
 
-block title 
+block title
   {{ title }}
 
-block content_title 
+block content_title
   h1 {{ title }}
 
 block content
@@ -19,7 +19,7 @@ block content
   div
     {% if form.errors %}
     {% for error in form.non_field_errors %}
-    div.alert.alert-error
+    div.alert.alert-danger
       | {{ error }}
     {% endfor %}
     {% endif %}
@@ -39,7 +39,7 @@ block content
           div
             {% include "includes/form.pug" with form=form%}
           hr
-      
+
       - if not hide_buttons
         div.form-group
           div.row

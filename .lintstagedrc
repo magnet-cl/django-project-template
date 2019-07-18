@@ -1,0 +1,9 @@
+{
+  "assets/scss/**/*.scss": [
+    "stylelint --fix --color",
+    "git add"
+  ],
+  "assets/js/**/*.js": [
+    "eslint --fix"
+  ]
+}

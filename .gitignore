@@ -103,3 +103,7 @@ project/media
 project/static
 
 propagate.sh
+.idea/
+
+assets/bundles
+webpack-stats.json

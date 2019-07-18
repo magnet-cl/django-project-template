@@ -1,0 +1,91 @@
+html {
+  position: relative;
+  min-height: 100%;
+  font-size: $font-size-base-in-px; // 62.5% = 10px | 100% = 16px
+}
+
+body {
+  .page-loading-icon {
+    position: relative;
+    left: 10px;
+    display: none;
+  }
+
+  &.wait {
+    cursor: wait !important; /* stylelint-disable-line */
+
+    .page-loading-icon {
+      display: inline-block;
+    }
+  }
+}
+
+.dim {
+  transition: background 2s;
+}
+
+.highlight {
+
+  @each $color, $value in $theme-colors {
+    &.alert-#{$color} {
+      background: darken($value, 10%);
+    }
+  }
+}
+
+@include from-colors using ($name, $value) {
+
+  @include bg-variant(".bg-#{$name}", $value);
+
+  .text-#{$name} {
+    color: $value !important;  /* stylelint-disable-line */
+  }
+
+  .text-focus-#{$name}:focus {
+    color: $value !important;  /* stylelint-disable-line */
+  }
+
+  .bg-layer-#{unquote($name)} {
+    position: relative;
+    background-color: transparent !important;  /* stylelint-disable-line */
+
+    &::before {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: -1;
+      content: "";
+      background-color: $value;
+    }
+  }
+
+  .border-#{$name} {
+    border-color: $value !important; /* stylelint-disable-line */
+  }
+
+  .text-before-#{$name} {
+    &::before {
+      color: $value !important; /* stylelint-disable-line */
+    }
+  }
+
+  .text-after-#{$name} {
+    &::before {
+      color: $value !important; /* stylelint-disable-line */
+    }
+  }
+
+  .bg-before-#{$name} {
+    &::before {
+      background-color: $value !important; /* stylelint-disable-line */
+    }
+  }
+
+  .bg-after-#{$name} {
+    &::before {
+      background-color: $value !important; /* stylelint-disable-line */
+    }
+  }
+}

@@ -6,7 +6,7 @@ block javascripts
   script(src="{% static 'js/login.js' %}")
 
 block content
-  .row 
+  .row
     .col-sm-12
       form.form-signin.form-horizontal(action='', method='post')
         {% csrf_token %}
@@ -14,10 +14,10 @@ block content
         .form-signin-inner
           - if form.non_field_errors
             - for error in form.non_field_errors
-              .alert.alert-error {{ error }}
+              .alert.alert-danger {{ error }}
 
           .form-group(class="{% if form.email.errors %}has-error{% endif %}")
-            label.control-label.col-sm-2.required(for='id_email') 
+            label.control-label.col-sm-2.required(for='id_email')
               | {% trans 'E-mail:' %}
 
             .col-sm-10

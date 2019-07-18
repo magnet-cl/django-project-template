@@ -1,0 +1,104 @@
+@mixin media(
+  $from: false,
+  $until: false,
+  $and: false,
+  $media-type: $media-type,
+  $breakpoints: $breakpoints,
+  $responsive: $responsive,
+  $static-breakpoint: $static-breakpoint
+) {
+  $min-width: 0;
+  $max-width: 0;
+  $media-query: "";
+
+  // From: this breakpoint (inclusive)
+
+  @if $from {
+
+    @if type-of($from) == number {
+      $min-width: $from;
+    }
+
+    @else {
+      $min-width: map-get($breakpoints, $from);
+    }
+  }
+
+  // Until: that breakpoint (exclusive)
+
+  @if $until {
+
+    @if type-of($until) == number {
+      $max-width: $until;
+    }
+
+    @else {
+      $max-width: map-get($breakpoints, $until) - 1px;
+    }
+  }
+
+  // Responsive support is disabled, rasterize the output outside @media blocks
+  // The browser will rely on the cascade itself.
+
+  @if $responsive == false {
+    $static-breakpoint-width: map-get($breakpoints, $static-breakpoint);
+    $target-width: $static-breakpoint-width;
+
+    // Output only rules that start at or span our target width
+
+    @if ($and == false and $min-width <= $target-width and ($until == false or $max-width >= $target-width)) {
+
+      @content;
+    }
+    // Responsive support is enabled, output rules inside @media queries
+  }
+
+  @else {
+
+    @if $min-width != 0 {
+      $media-query: "#{$media-query} and (min-width: #{$min-width})";
+    }
+
+    @if $max-width != 0 {
+      $media-query: "#{$media-query} and (max-width: #{$max-width})";
+    }
+
+    @if $and {
+      $media-query: "#{$media-query} and #{$and}";
+    }
+
+    // Remove unnecessary media query prefix 'all and '
+
+    @if ($media-type == "all" and $media-query != "") {
+      $media-type: "";
+      $media-query: str-slice(unquote($media-query), 6);
+    }
+
+    @media #{$media-type + $media-query} {
+
+      @content;
+    }
+  }
+}
+
+@mixin split-background($color-a, $color-b) {
+  background: linear-gradient(to right, $color-a 0%, $color-a 50%, $color-b 50%, $color-b 100%);
+}
+
+@mixin from-colors() {
+
+  @each $key, $value in $colors {
+
+    @content($key, $value); /* stylelint-disable-line */
+  }
+
+  @each $key, $value in $theme-colors {
+
+    @content($key, $value); /* stylelint-disable-line */
+  }
+
+  @each $key, $value in $grays {
+
+    @content("gray-#{$key}", $value); /* stylelint-disable-line */
+  }
+}

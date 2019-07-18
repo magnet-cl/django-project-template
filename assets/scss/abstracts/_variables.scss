@@ -1,0 +1,56 @@
+$images-path: "../img/";
+$fonts-path: "../fonts/";
+
+$media-type: all;
+$responsive: true;
+$static-breakpoint: desktop;
+
+$shadow-color: rgba(0, 0, 0, .22);
+
+$font-size-base-in-px: 16px;
+
+// font-size bootstrap reference for use font-size bootstrap mixin (responsive font size)
+// see bootstrap/scss/_type.scss
+// see bootstrap/scss/vendor/_rfs.scss
+$font-size-base: 1rem;
+$font-size-lg: $font-size-base * 1.25;
+$font-size-sm: $font-size-base * .875;
+
+$h1-font-size: $font-size-base * 2.5;
+$h2-font-size: $font-size-base * 2;
+$h3-font-size: $font-size-base * 1.75;
+$h4-font-size: $font-size-base * 1.5;
+$h5-font-size: $font-size-base * 1.25;
+$h6-font-size: $font-size-base;
+
+$display1-size: 6rem;
+$display2-size: 5.5rem;
+$display3-size: 4.5rem;
+$display4-size: 3.5rem;
+
+$lead-font-size: $font-size-base * 1.25;
+$small-font-size: 80%;
+// end font-size
+
+// set color and set theme color example
+$blue-magnet: #28afce;
+
+$colors: (
+  "magnet": $blue-magnet
+);
+
+$magnet: $blue-magnet;
+
+$theme-colors: (
+  "magnet": $magnet
+);
+
+$line-height-base: 1.5;
+$headings-line-height: 1.2;
+$display-line-height: $headings-line-height;
+
+
+$navbar-min-height: 56px;
+$navbar-nav-item-link-padding-x: 14.4px;
+
+$footer-min-height: 56px;
