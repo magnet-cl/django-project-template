@@ -34,7 +34,11 @@ jobs:
 
       - run:
           name: install node packages
-          command: yarn install
+          command: npm install
+
+      - run:
+          name: generate bundles
+          command: npm run build
 
       - run:
           name: collect static files
