@@ -44,6 +44,19 @@ Use the custom app template to create your apps:
 
 ## Javascript stuff
 
+on development run on separated console: 
+
+    npm run start
+    
+for generate production bundle run:
+
+    npm run build
+    
+### webpack
+
+The project use `django-webpack-loader` and `webpack` for js, scss and assets with 
+`babel` for es6+ support and `dart-sass` for new features of scss support.
+    
 ### Select2
 
 The project comes with select2 by default for all selects. If you wish to
