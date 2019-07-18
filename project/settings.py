@@ -45,8 +45,8 @@ def get_local_value(key, default_value):
 GOOGLE_ANALYTICS_CODE = get_local_value('GOOGLE_ANALYTICS_CODE', None)
 
 # default keys, replace with somethign your own
-RECAPTCHA_PUBLIC_KEY = get_local_value('RECAPTCHA_PUBLIC_KEY', None)
-RECAPTCHA_PRIVATE_KEY = get_local_value('RECAPTCHA_PRIVATE_KEY', None)
+RECAPTCHA_PUBLIC_KEY = get_local_value('RECAPTCHA_PUBLIC_KEY', '')
+RECAPTCHA_PRIVATE_KEY = get_local_value('RECAPTCHA_PRIVATE_KEY', '')
 # To use the new No Captcha reCaptcha
 NOCAPTCHA = True
 
