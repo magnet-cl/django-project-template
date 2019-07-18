@@ -4,7 +4,7 @@ header
   // Fixed navbar
   nav.navbar.navbar-expand-md.navbar-dark.fixed-top.bg-dark
     a.navbar-brand(href="{% url 'home' %}") Project
-      i.fa.fa-spinner.fa-spin.page-loading-icon
+      i.material-icons.page-loading-icon timelapse
     button.navbar-toggler(
       type='button',
       data-toggle='collapse',
@@ -17,7 +17,7 @@ header
 
     #navbarCollapse.collapse.navbar-collapse
       ul.navbar-nav.mr-auto
-        if user.is_authenticated 
+        if user.is_authenticated
           if user.is_staff
             {% include 'includes/navbar_link.pug' with url_name='admin:index' verbose_name='Administration' %}
 
@@ -35,7 +35,7 @@ header
               aria-expanded='false'
             ) {% trans 'Logged in as' %} {{user.email}}
             .dropdown-menu(aria-labelledby='dropdown-logged-in')
-              a.dropdown-item(href="{% url 'user_profile' %}") 
+              a.dropdown-item(href="{% url 'user_profile' %}")
                 {% trans 'My profile' %}
               a.dropdown-item(href="{% url 'password_change' %}")
                 {% trans 'Change password' %}
@@ -46,5 +46,5 @@ header
                 a.dropdown-item(href="{% url 'logout' %}")
                   {% trans 'Logout' %}
 
-        else 
+        else
           {% include 'includes/navbar_link.pug' with url_name='login' verbose_name='login' %}

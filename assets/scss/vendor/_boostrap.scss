@@ -1,0 +1,10 @@
+@import "../../../node_modules/bootstrap/scss/bootstrap";
+
+$line-height-base: unitless-rem($font-size-base);
+
+$breakpoints: (
+  mobile: map-get($grid-breakpoints, sm),
+  tablet: map-get($grid-breakpoints, md),
+  desktop: map-get($grid-breakpoints, lg),
+  wide: map-get($grid-breakpoints, xl)
+) !default;

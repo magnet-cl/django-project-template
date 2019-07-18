@@ -1,0 +1,19 @@
+nav.navbar {
+  min-height: $navbar-min-height;
+  box-shadow: 0 -1px 8px 0 $shadow-color;
+
+  .navbar-brand {
+    padding: 0;
+  }
+
+  .navbar-toggler {
+    min-height: $navbar-min-height;
+    padding: $navbar-toggler-padding-y px($navbar-toggler-padding-x);
+    font-size: px($navbar-toggler-font-size);
+    border: none;
+  }
+}
+
+main {
+  margin-top: $navbar-min-height;
+}

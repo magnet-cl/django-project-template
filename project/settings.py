@@ -104,10 +104,10 @@ INSTALLED_APPS = [
     'users',
 
     # external
-    'compressor',
     'captcha',
     'loginas',
     'rest_framework',
+    'webpack_loader',
 
     # internal
     'regions',
@@ -272,7 +272,6 @@ MEDIA_URL = '/uploads/'
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'compressor.finders.CompressorFinder',
     'npm.finders.NpmFinder',
 )
 
@@ -285,29 +284,24 @@ LOGOUT_REDIRECT_URL = '/'
 
 # set the precompilers
 COMPRESS_PRECOMPILERS = (
-    ('text/x-scss', 'django_libsass.SassCompiler'),
     ('text/pug', 'base.filters.pug.PugCompilerFilter'),
 )
-
-COMPRESS_CSS_FILTERS = [
-    'compressor.filters.css_default.CssAbsoluteFilter',
-    'compressor.filters.cssmin.CSSMinFilter',
-]
 
 # NPM
 NPM_FILE_PATTERNS = {
     'bootstrap': [
-        'dist/js/bootstrap.bundle.js',
+        'dist/js/bootstrap.js',
         'scss/bootstrap.scss'
     ],
-    'jquery': ['dist/jquery.min.js'],
-    'moment': ['min/moment-with-locales.min.js'],
+    'jquery': ['dist/jquery.js'],
+    'popper.js': ['dist/umd/popper.js'],
+    'moment': ['min/moment-with-locales.js'],
     'select2': [
-        'dist/js/select2.min.js',
+        'dist/js/select2.js',
         'dist/css/select2.min.css'
     ],
     'tempusdominus-bootstrap-4': [
-        'build/js/tempusdominus-bootstrap-4.min.js',
+        'build/js/tempusdominus-bootstrap-4.js',
         'build/css/tempusdominus-bootstrap-4.min.css',
     ],
 }
@@ -368,6 +362,17 @@ if not DEBUG:
             'LOCATION': '127.0.0.1:11211',
         }
     }
+
+WEBPACK_LOADER = {
+    "DEFAULT": {
+        "CACHE": False,
+        "BUNDLE_DIR_NAME": "bundles/",
+        "STATS_FILE": os.path.join(BASE_DIR, "webpack-stats.json"),
+        "POLL_INTERVAL": 0.1,
+        "TIMEOUT": None,
+        "IGNORE": [r'.+\.hot-update.js', r'.+\.map']
+    }
+}
 
 FILE_UPLOAD_PERMISSIONS = 0o644
 

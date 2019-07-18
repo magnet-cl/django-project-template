@@ -1,0 +1,12 @@
+.fixed-notification {
+  position: fixed;
+  top: $nav-link-height + 2rem;
+  right: 30px;
+  left: 30px;
+  z-index: $zindex-tooltip + 10;
+
+  @include media($from: tablet) {
+    left: auto;
+    width: 500px;
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "extends": [
+    "airbnb-base"
+  ],
+  "plugins": [
+    "import"
+  ],
+  "parser": "babel-eslint",
+  "rules": {
+    "arrow-body-style": ["error", "as-needed"],
+    "comma-dangle": ["error", "never"],
+    "import/prefer-default-export": "off",
+    "function-paren-newline": "off",
+    "lines-between-class-members": "off"
+  },
+  "globals": {
+    "window": true,
+    "fetch": true,
+    "$": true,
+    "localStorage": true,
+    "document": true
+  }
+}
