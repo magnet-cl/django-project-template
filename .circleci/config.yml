@@ -37,10 +37,6 @@ jobs:
           command: npm install
 
       - run:
-          name: install node development packages
-          command: npm install --only=dev
-
-      - run:
           name: generate bundles
           command: npm run build
 

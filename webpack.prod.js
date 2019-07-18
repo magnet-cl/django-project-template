@@ -5,7 +5,7 @@ const path = require('path');
 const glob = require('glob');
 const sass = require('sass');
 
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -24,7 +24,7 @@ module.exports = merge(common, {
       filename: '[name]-[hash].css',
       chunkFilename: '[id]-[hash].css'
     }),
-    new CleanWebpackPlugin(['./assets/bundles']),
+    new CleanWebpackPlugin(),
     new OptimizeCSSAssetsPlugin({})
   ],
 
