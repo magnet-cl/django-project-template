@@ -4,7 +4,7 @@ const path = require('path');
 const glob = require('glob');
 const autoprefixer = require('autoprefixer');
 const merge = require('webpack-merge');
-const sass = require("sass");
+const sass = require('sass');
 
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
