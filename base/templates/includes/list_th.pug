@@ -9,11 +9,11 @@ th
       if order_by == order or order_by == order|slice:"1:"
         .pull-right
           if order_by == order
-            i.material-icons keyboard_arrow_down
+            i.fa.fa-chevron-down
           else
-            i.material-icons keyboard_arrow_up
+            i.fa.fa-chevron-up
 
           span.label.label-info
             | {{forloop.counter}}
           a(href="?{% get_order_by_querystring ordering=ordering current_order=order_by remove=True %}&{{clean_query_string}}")
-            i.material-icons.text-danger close
+            i.fa.fa-times.text-danger close

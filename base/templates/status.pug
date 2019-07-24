@@ -13,22 +13,24 @@ block content
         th Google Analytics
         td
           if settings.GOOGLE_ANALYTICS_CODE
-            i.material-icons.text-success check
+            i.fa.fa-check.text-success
+              |
             | Ready ({{settings.GOOGLE_ANALYTICS_CODE}})
           else
-            i.material-icons.text-danger close
+            i.fa.fa-times.text-danger
+              |
             | Not set
 
       tr
         th RECAPTCHA
         if settings.RECAPTCHA_PUBLIC_KEY
           td
-            i.material-icons.text-success check
+            i.fa.fa-check.text-success
               |
             | Ready ({{settings.RECAPTCHA_PUBLIC_KEY}})
         else
           td.table-danger
-            i.material-icons.text-danger close
+            i.fa.fa-times.text-danger
               |
             | Not set
             a(href="https://www.google.com/recaptcha/admin", target="_blank")
@@ -38,7 +40,7 @@ block content
         th Favicon
         td
           .favicon-not-ok.d-none
-            i.material-icons.text-danger close
+            i.fa.fa-times.text-danger
               |
             | Favicon missing
           .favicon-ok.d-none
@@ -51,11 +53,11 @@ block content
         th DEBUG
         if settings.DEBUG
           td
-            i.material-icons.text-success check
+            i.fa.fa-check.text-success
               |
             | False
         else
           td.table-danger
-            i.material-icons.text-danger close
+            i.fa.fa-times.text-danger
               |
             | True
