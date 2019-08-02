@@ -7,7 +7,7 @@
 from django.conf import settings
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
-from django.core.exceptions import PermissionDenied
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.urls import reverse
@@ -54,16 +54,24 @@ def server_error_view(request, template=None):
     return server_error(request, 'exceptions/500.pug')
 
 
-class PermissionRequiredMixin:
-    permission_required = None
+class LoginPermissionRequiredMixin(PermissionRequiredMixin):
+    """
+    Verify that the current user is authenticated and has the required
+    permission
+    """
+    def dispatch(self, request, *args, **kwargs):
+        if self.login_required and not request.user.is_authenticated:
+            return self.handle_no_permission()
 
-    def check_permission_required(self):
-        if self.permission_required:
-            if not self.request.user.has_perm(self.permission_required):
-                raise PermissionDenied
+        if not self.has_permission():
+            return self.handle_no_permission()
+
+        return super().dispatch(request, *args, **kwargs)
 
 
-class BaseDetailView(DetailView, PermissionRequiredMixin):
+class BaseDetailView(LoginPermissionRequiredMixin, DetailView):
+    login_required = True
+    permission_required = ''
 
     def get_title(self):
         verbose_name = self.model._meta.verbose_name
@@ -77,13 +85,10 @@ class BaseDetailView(DetailView, PermissionRequiredMixin):
 
         return context
 
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        self.check_permission_required()
-        return super(BaseDetailView, self).dispatch(*args, **kwargs)
 
-
-class BaseCreateView(CreateView, PermissionRequiredMixin):
+class BaseCreateView(LoginPermissionRequiredMixin, CreateView):
+    login_required = True
+    permission_required = ''
 
     def get_context_data(self, **kwargs):
         context = super(BaseCreateView, self).get_context_data(**kwargs)
@@ -99,21 +104,13 @@ class BaseCreateView(CreateView, PermissionRequiredMixin):
         model_name = self.model.__name__.lower()
         return reverse('{}_list'.format(model_name))
 
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        self.check_permission_required()
-        return super(BaseCreateView, self).dispatch(*args, **kwargs)
 
-
-class BaseSubModelCreateView(CreateView, PermissionRequiredMixin):
+class BaseSubModelCreateView(LoginPermissionRequiredMixin, CreateView):
     """
     Create view when the object is nested within a parent object
     """
-
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        self.check_permission_required()
-        return super(BaseSubModelCreateView, self).dispatch(*args, **kwargs)
+    login_required = True
+    permission_required = ''
 
     def get_form_kwargs(self):
         model_underscore_name = underscore(self.parent_model.__name__)
@@ -145,15 +142,12 @@ class BaseSubModelCreateView(CreateView, PermissionRequiredMixin):
         return context
 
 
-class BaseListView(ListView, PermissionRequiredMixin):
+class BaseListView(LoginPermissionRequiredMixin, ListView):
+    login_required = True
+    permission_required = ''
     paginate_by = 25
     page_kwarg = 'p'
     ignore_kwargs_on_filter = ('q', page_kwarg, 'o')
-
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        self.check_permission_required()
-        return super(BaseListView, self).dispatch(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(BaseListView, self).get_context_data(**kwargs)
@@ -199,12 +193,9 @@ class BaseListView(ListView, PermissionRequiredMixin):
         return queryset
 
 
-class BaseTemplateView(TemplateView, PermissionRequiredMixin):
-
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        self.check_permission_required()
-        return super(BaseTemplateView, self).dispatch(*args, **kwargs)
+class BaseTemplateView(LoginPermissionRequiredMixin, TemplateView):
+    login_required = True
+    permission_required = ''
 
     def get_context_data(self, **kwargs):
         context = super(BaseTemplateView, self).get_context_data(**kwargs)
@@ -214,12 +205,9 @@ class BaseTemplateView(TemplateView, PermissionRequiredMixin):
         return context
 
 
-class BaseUpdateView(UpdateView, PermissionRequiredMixin):
-
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        self.check_permission_required()
-        return super(BaseUpdateView, self).dispatch(*args, **kwargs)
+class BaseUpdateView(LoginPermissionRequiredMixin, UpdateView):
+    login_required = True
+    permission_required = ''
 
     def get_context_data(self, **kwargs):
         context = super(BaseUpdateView, self).get_context_data(**kwargs)
@@ -234,11 +222,9 @@ class BaseUpdateView(UpdateView, PermissionRequiredMixin):
         return self.object.get_absolute_url()
 
 
-class BaseDeleteView(DeleteView, PermissionRequiredMixin):
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        self.check_permission_required()
-        return super(BaseDeleteView, self).dispatch(*args, **kwargs)
+class BaseDeleteView(LoginPermissionRequiredMixin, DeleteView):
+    login_required = True
+    permission_required = ''
 
     def get_context_data(self, **kwargs):
         context = super(BaseDeleteView, self).get_context_data(**kwargs)
@@ -253,15 +239,15 @@ class BaseDeleteView(DeleteView, PermissionRequiredMixin):
         return reverse('{}_list'.format(model_name))
 
 
-class BaseRedirectView(RedirectView, PermissionRequiredMixin):
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        self.check_permission_required()
-        return super(BaseRedirectView, self).dispatch(*args, **kwargs)
+class BaseRedirectView(LoginPermissionRequiredMixin, RedirectView):
+    login_required = True
+    permission_required = ''
 
 
-class BaseUpdateRedirectView(
-        PermissionRequiredMixin, SingleObjectMixin, RedirectView):
+class BaseUpdateRedirectView(LoginPermissionRequiredMixin, SingleObjectMixin,
+                             RedirectView):
+    login_required = True
+    permission_required = ''
 
     permanent = False
 
