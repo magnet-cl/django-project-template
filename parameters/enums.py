@@ -28,3 +28,9 @@ class ParameterDefinitionList(object):
     ]
 
     choices = tuple((x.name, x.verbose_name) for x in definitions)
+
+    @classmethod
+    def get_definition(cls, name):
+        for parameter_definition in cls.definitions:
+            if parameter_definition.name == name:
+                return parameter_definition

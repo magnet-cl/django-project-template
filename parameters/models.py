@@ -6,6 +6,7 @@ import datetime
 import time
 
 # django
+from django.core.cache import cache
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.text import slugify
@@ -13,8 +14,9 @@ from django.utils.translation import ugettext_lazy as _
 
 # models
 from base.models import BaseModel
+
+# enums
 from parameters.enums import ParameterDefinitionList
-from django.core.cache import cache
 
 
 class Parameter(BaseModel):
@@ -24,7 +26,6 @@ class Parameter(BaseModel):
     name = models.CharField(
         max_length=50,
         verbose_name=_("name"),
-        choices=ParameterDefinitionList.choices,
         unique=True,
     )
     kind = models.CharField(
@@ -105,17 +106,30 @@ class Parameter(BaseModel):
                 name=name
             )
         except Parameter.DoesNotExist:
-            for parameter_definition in ParameterDefinitionList.definitions:
-                if parameter_definition.name == name:
-                    parameter = Parameter.objects.create(
-                        name=name,
-                        kind=parameter_definition.kind,
-                        raw_value=parameter_definition.default,
-                    )
+            Parameter.create_parameter(name)
 
         parameter.store_in_cache()
 
         return parameter.value
+
+    @classmethod
+    def create_all_parameters(cls):
+        for parameter_definition in ParameterDefinitionList.definitions:
+            cls.objects.get_or_create(
+                name=parameter_definition.name,
+                kind=parameter_definition.kind,
+                raw_value=parameter_definition.default,
+            )
+
+    @classmethod
+    def create_parameter(cls, name):
+        parameter_definition = ParameterDefinitionList.get_definition(name)
+
+        return cls.objects.create(
+            name=name,
+            kind=parameter_definition.kind,
+            raw_value=parameter_definition.default,
+        )
 
     # django methods
     def save(self, *args, **kwargs):
