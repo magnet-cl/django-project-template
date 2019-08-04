@@ -92,14 +92,25 @@ html(lang="es")
     //if lt IE 9
       script(src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js")
 
-    link(
-      href="{% static 'select2/dist/css/select2.min.css' %}",
-      rel="stylesheet"
-    )
-    link(
-      href="{% static 'tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4.min.css' %}",
-      rel="stylesheet"
-    )
+    if debug
+      // use local verions to allow development without internet
+      link(
+        href="{% static 'select2/dist/css/select2.min.css' %}",
+        rel="stylesheet"
+      )
+      link(
+        href="{% static 'tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4.min.css' %}",
+        rel="stylesheet"
+      )
+    else
+      link(
+        href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/css/select2.min.css",
+        rel="stylesheet"
+      )
+      link(
+        href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css",
+        rel="stylesheet"
+      )
     {% render_bundle 'main' 'css' %}
 
     block stylesheets
