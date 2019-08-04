@@ -31,6 +31,8 @@ html(lang="es")
     meta(itemprop='name', content="")
     meta(itemprop='description', content="")
 
+    script(defer, src="https://kit.fontawesome.com/4a7f9bb0b9.js")
+
     // image
     if object.image
       meta(itemprop='image', content='{{ object.image.url }}')
@@ -90,8 +92,6 @@ html(lang="es")
     //if lt IE 9
       script(src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js")
 
-    link(href='https://fonts.googleapis.com/icon?family=Material+Icons', rel='stylesheet')
-
     link(
       href="{% static 'select2/dist/css/select2.min.css' %}",
       rel="stylesheet"
@@ -113,8 +113,9 @@ html(lang="es")
           {% for message in messages %}
           div(class="alert alert-{{ message.tags }}")
             button.close(type="button", data-dismiss="alert", aria-label="Close")
-              span: i.material-icons close
-            {{ message }}
+              span.i.fa.fa-times
+                |
+          {{ message }}
           {% endfor %}
           {% endif %}
 

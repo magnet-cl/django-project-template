@@ -48,23 +48,3 @@
 
   @return map-get($spacers, $spacer);
 }
-
-@function font($level, $for: mobile) {
-
-  @if $for == desktop {
-
-    @return nth(map-get($font-lg-sizes, $level), 1);
-  }
-
-  @return nth(map-get($font-sizes, $level), 1);
-}
-
-@function line-height($level, $for: mobile) {
-
-  @if $for == desktop {
-
-    @return nth(map-get($font-lg-sizes, $level), 2);
-  }
-
-  @return nth(map-get($font-sizes, $level), 2);
-}
