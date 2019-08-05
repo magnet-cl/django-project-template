@@ -54,7 +54,7 @@ def validate_deployment():
 @task
 def update_server():
     """ Updates server repository. """
-    # backup database before updating
+    print(green('backup database before updating'))
     backup_db()
 
     update_helper(env.server_root_dir)
@@ -71,7 +71,8 @@ def update_server():
 
         print(green('collecting static files'))
         run('pipenv run python manage.py collectstatic --noinput')
-        run('cp assets/bundle project/static/')
+        run('mkdir -p project/static/bundles')
+        run('mv assets/bundles/* project/static/bundles/')
 
         print(green('compiling translations'))
         run('pipenv run python manage.py compilemessages')
