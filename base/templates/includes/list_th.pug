@@ -1,19 +1,21 @@
 - load order_by_querystring
 - load i18n
 
-th
-  a(href="?{% get_order_by_querystring ordering=ordering current_order=order_by %}&{{clean_query_string}}")
-    | {% trans verbose_name|capfirst %}
-
+th.text-nowrap
+  .d-flex.flex-row.justify-content-between
+    div 
+      a(href="?{% get_order_by_querystring ordering=ordering current_order=order_by %}&{{clean_query_string}}")
+        {% trans verbose_name|capfirst %}
     for order in ordering
       if order_by == order or order_by == order|slice:"1:"
-        .pull-right
+        div
           if order_by == order
             i.fa.fa-chevron-down
           else
             i.fa.fa-chevron-up
-
-          span.label.label-info
-            | {{forloop.counter}}
-          a(href="?{% get_order_by_querystring ordering=ordering current_order=order_by remove=True %}&{{clean_query_string}}")
-            i.fa.fa-times.text-danger close
+        if ordering|length > 1
+          div.text-right
+            span.badge.badge-info
+              | {{forloop.counter}}
+            a(href="?{% get_order_by_querystring ordering=ordering current_order=order_by remove=True %}&{{clean_query_string}}")
+              i.fa.fa-times.text-danger 
