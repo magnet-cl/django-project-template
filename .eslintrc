@@ -14,10 +14,12 @@
     "lines-between-class-members": "off"
   },
   "globals": {
-    "window": true,
-    "fetch": true,
     "$": true,
+    "moment": true,
+    "Dropzone": true,
+    "document": true,
+    "fetch": true,
     "localStorage": true,
-    "document": true
+    "window": true
   }
 }

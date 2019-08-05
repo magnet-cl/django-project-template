@@ -4,7 +4,7 @@ $(() => {
     $this.data('target', `#${$this.prop('id')}`);
 
     $this.datetimepicker({
-      date: $this.val(),
+      date: moment($this.val(), 'DD/MM/YYYY').format('YYYY-MM-DD'),
       format: $this.data('format'),
       locale: 'es'
     });
