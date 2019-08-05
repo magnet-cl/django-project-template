@@ -66,8 +66,12 @@ def update_server():
         print(green('installing npm packages'))
         run('npm install')
 
+        print(green('compiling webpack packages'))
+        run('npm run build')
+
         print(green('collecting static files'))
         run('pipenv run python manage.py collectstatic --noinput')
+        run('cp assets/bundle project/static/')
 
         print(green('compiling translations'))
         run('pipenv run python manage.py compilemessages')
