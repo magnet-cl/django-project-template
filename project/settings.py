@@ -369,7 +369,7 @@ WEBPACK_LOADER = {
         "BUNDLE_DIR_NAME": "bundles/",
         "STATS_FILE": os.path.join(BASE_DIR, "webpack-stats.json"),
         "POLL_INTERVAL": 0.1,
-        "TIMEOUT": None,
+        "TIMEOUT": 1, # 1 second timeout for webpack compilation
         "IGNORE": [r'.+\.hot-update.js', r'.+\.map']
     }
 }
