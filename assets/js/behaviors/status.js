@@ -23,7 +23,7 @@ $(() => {
       }
     };
 
-    img.src = $('meta[name="og:image"]')[0].content;
+    img.src = ogImage.content;
 
     // in case everything fails
     $('.ogImage-not-ok').removeClass('d-none');
