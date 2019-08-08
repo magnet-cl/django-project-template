@@ -14,11 +14,22 @@ block content
         td
           if settings.GOOGLE_ANALYTICS_CODE
             i.fa.fa-check.text-success
-              |
+              |  
             | Ready ({{settings.GOOGLE_ANALYTICS_CODE}})
           else
             i.fa.fa-times.text-danger
-              |
+              |  
+            | Not set
+      tr
+        th Facebook Pixel
+        td
+          if settings.FACEBOOK_PIXEL_CODE
+            i.fa.fa-check.text-success
+              |  
+            | Ready ({{settings.FACEBOOK_PIXEL_CODE}})
+          else
+            i.fa.fa-times.text-danger
+              |  
             | Not set
 
       tr
@@ -26,12 +37,12 @@ block content
         if settings.RECAPTCHA_PUBLIC_KEY
           td
             i.fa.fa-check.text-success
-              |
+              |  
             | Ready ({{settings.RECAPTCHA_PUBLIC_KEY}})
         else
           td.table-danger
             i.fa.fa-times.text-danger
-              |
+              |  
             | Not set
             a(href="https://www.google.com/recaptcha/admin", target="_blank")
               | Get one
@@ -41,12 +52,12 @@ block content
         td
           .favicon-not-ok.d-none
             i.fa.fa-times.text-danger
-              |
+              |  
             | Favicon missing
           .favicon-ok.d-none
             i.fa.fa-check.text-success
-              |
-            | Ready
+              |  
+            | Ready 
             span.favicon-href
 
       tr
@@ -54,10 +65,10 @@ block content
         if settings.DEBUG
           td
             i.fa.fa-check.text-success
-              |
+              |  
             | False
         else
           td.table-danger
             i.fa.fa-times.text-danger
-              |
+              |  
             | True
