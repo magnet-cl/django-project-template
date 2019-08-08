@@ -61,6 +61,25 @@ block content
             span.favicon-href
 
       tr
+        th Facebook: og:image
+        td
+          .ogImage-not-ok.d-none
+            i.fa.fa-times.text-danger
+              |  
+            | Facebook image missing
+          .ogImage-warning.d-none
+            i.fa.fa-exclamation.text-danger
+              |  
+            | Check Facebook sharing image sizes
+            a(href="https://developers.facebook.com/docs/sharing/best-practices#images")
+              |  Please refer to this link.
+          .ogImage-ok.d-none
+            i.fa.fa-check.text-success
+              |  
+            | Ready 
+            span.ogImage-content
+
+      tr
         th DEBUG
         if settings.DEBUG
           td
