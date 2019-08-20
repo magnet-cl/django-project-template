@@ -31,7 +31,8 @@
         if command -v psql >/dev/null; then
           psql --tuples-only --no-align \
             --command="SELECT 1 FROM pg_database \
-              WHERE datname={{ ((project_name | quote) == project_name) | ternary("'" + project_name + "'", project_name | quote) }}"   # Bobby Tables handling mess
+              WHERE datname={{ ((project_name | quote) == project_name) | ternary("'" + project_name + "'", project_name | quote) }}"
+              # Bobby Tables handling mess...
         fi
       register: db_exists
 
