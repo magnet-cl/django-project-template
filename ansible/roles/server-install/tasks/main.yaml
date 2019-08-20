@@ -16,13 +16,10 @@
     app_path: "{{ server_root_dir }}"
     virtualenv: "{{ venv.stdout }}"
 
-- name: create logs directories
+- name: create logs directory
   file:
-    path: "{{ item }}"
+    path: /home/{{ ansible_user }}/logs
     state: directory
-  loop:
-    - "{{ server_root_dir }}/logs"    # Is this really needed? logs/development/ and logs/production/ are automatically created...
-    - /home/{{ ansible_user }}/logs   # This one is really needed
 
 - name: create gunicorn configuration file
   template:
