@@ -34,7 +34,7 @@ jobs:
 
       - run:
           name: install node packages
-          command: npm install
+          command: npm ci
 
       - run:
           name: generate bundles
