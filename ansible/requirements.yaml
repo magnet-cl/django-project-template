@@ -1,0 +1,18 @@
+# Roles are manually locked with git urls and commit hashes in "version".
+# Automatic locking is present in Mazer but it's currently being deprecated.
+
+- name: geerlingguy.nodejs
+  src: https://github.com/geerlingguy/ansible-role-nodejs
+  version: 405a113ccbde0c99614f6f815fb4285cb742ad25
+
+- name: geerlingguy.postgresql.pr31
+  src: https://github.com/magnet-cl/ansible-role-postgresql
+  version: 6d91620a3c95d3bc3ae8517c78f4a667298139af
+
+- name: geerlingguy.nginx
+  src: https://github.com/geerlingguy/ansible-role-nginx
+  version: 79650c5886e0825b317e81be029d3fecb7a1c0f0
+
+- name: geerlingguy.memcached
+  src: https://github.com/geerlingguy/ansible-role-memcached
+  version: 161a83f1f89893f1184b4ee500d2b5d2d33325f6

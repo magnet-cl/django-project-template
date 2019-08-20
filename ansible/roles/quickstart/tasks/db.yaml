@@ -1,0 +1,41 @@
+- name: set database name in local_settings
+  replace:
+    path: "{{ server_root_dir }}/misuper/local_settings.py"
+    regexp: "        'NAME': 'database-name',"
+    replace: "        'NAME': '{{ project_name }}',"
+    validate: bash -c "cd {{ server_root_dir }} && pipenv run python %s"  # It returns 1 on "invalid syntax"
+
+- name: set variables to install PostgreSQL 11 on CentOS
+  # https://github.com/geerlingguy/ansible-role-postgresql/issues/38#issuecomment-513464935
+  include_vars: centos-postgres.yaml
+  when: ansible_distribution == 'CentOS'
+
+- name: install and setup PostgreSQL for use with Ansible   # because Ansible module also needs psycopg2
+  include_role:
+    name: geerlingguy.postgresql.pr31
+    apply:
+      become: true
+  vars:
+    # Not sure why ansible_user is undefined here (become?). ansible_user_id works.
+    postgresql_databases:
+      - name: "{{ ansible_user_id }}"
+        owner: "{{ ansible_user_id }}"
+        state: present
+    postgresql_users:
+      - name: "{{ ansible_user_id }}"
+        role_attr_flags: SUPERUSER
+        state: present
+    # Workaround for strange failure:
+    postgresql_python_library: "{{ ('python3' in discovered_interpreter_python) | ternary('python3-psycopg2', 'python-psycopg2') }}"
+
+- name: create database
+  postgresql_db:
+    name: "{{ project_name }}"
+    state: present
+    login_user: "{{ ansible_user_id }}"
+
+- name: run migrations
+  django_manage:
+    command: migrate
+    app_path: "{{ server_root_dir }}"
+    virtualenv: "{{ venv.stdout }}"

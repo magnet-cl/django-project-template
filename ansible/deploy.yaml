@@ -1,0 +1,14 @@
+- name: deploy
+  hosts: all
+  pre_tasks:
+    - name: check Ansible version
+      assert:
+        that: ansible_version.full is version('2.8', '>=')
+        fail_msg: This playbook requires Ansible 2.8 or higher (current version is {{ ansible_version.full }})
+        quiet: yes
+      tags: always
+  roles:
+    - update-code
+    - role: quickstart
+      tags: quickstart
+    - server-install

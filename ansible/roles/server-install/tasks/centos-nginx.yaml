@@ -1,0 +1,14 @@
+# https://stackoverflow.com/questions/6795350/nginx-403-forbidden-for-all-files/6796648#6796648
+
+- name: add [nginx user] to {{ ansible_user }} group
+  user:
+    name: nginx
+    groups:
+      - "{{ ansible_user }}"
+    append: yes
+  become: yes
+
+- name: set g+x mode to {{ ansible_user }} home
+  file:
+    path: /home/{{ ansible_user }}
+    mode: g+x
