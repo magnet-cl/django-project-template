@@ -3,6 +3,7 @@
   args:
     chdir: "{{ server_root_dir }}"
   # changed_when: ?
+  # noqa 301
 
 - name: collect static files
   django_manage:

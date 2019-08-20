@@ -26,7 +26,7 @@
     - "'Unable to find any of pip3 to use.' in (pipenv_install.msg | default(''))"
 
 - name: check if Pipenv is available in path
-  shell: command -v pipenv  # "command" is a shell command, not an executable utility
+  shell: command -v pipenv  # noqa 305    "command" is a shell builtin, not an executable utility
   register: pipenv_existence
   changed_when: False
   failed_when: False  # To fail with a custom message, in the next task
