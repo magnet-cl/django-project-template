@@ -71,8 +71,6 @@ def update_server():
 
         print(green('collecting static files'))
         run('pipenv run python manage.py collectstatic --noinput')
-        run('mkdir -p project/static/bundles')
-        run('mv assets/bundles/* project/static/bundles/')
 
         print(green('compiling translations'))
         run('pipenv run python manage.py compilemessages')

@@ -11,7 +11,7 @@ module.exports = {
   entry: './assets/js/index',
 
   output: {
-    path: path.resolve('./assets/bundles/')
+    path: path.resolve('./project/static/bundles/')
   },
 
   plugins: [
