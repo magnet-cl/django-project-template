@@ -50,6 +50,3 @@
         login_user: "{{ ansible_user }}"
       when: db_exists.stdout == '1'
   when: git_result.changed
-
-
-# TODO: also restart service later
