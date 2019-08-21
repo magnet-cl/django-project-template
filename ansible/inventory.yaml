@@ -10,24 +10,26 @@ all:
   children:
     remote:   # Group "remote"
       hosts:
-        development:
-          ansible_host: furia-dev.magnet.cl
-          server_domain: furia-dev.magnet.cl
-          branch: development
+        ### ADD SERVERS HERE ###
 
-        development_super:
-          ansible_host: 30.30.30.33
-          server_domain: 30.30.30.33
-          branch: development
-          ansible_user: admsuper
-          ansible_port: 10022
+        # Examples:
 
-        qa_super:
-          ansible_host: 30.30.30.34
-          server_domain: 30.30.30.34
-          branch: master  # ?
-          ansible_user: admsuper
-          ansible_port: 10022
+        # development:
+        #   ansible_host: dev.magnet.cl
+        #   server_domain: dev.magnet.cl
+        #   branch: development
+
+        # production:
+        #   ansible_host: production.magnet.cl
+        #   server_domain: production.magnet.cl
+        #   branch: master
+
+        # weird_server:
+        #   ansible_host: 30.30.30.33
+        #   server_domain: 30.30.30.33
+        #   branch: development
+        #   ansible_user: admin
+        #   ansible_port: 10022
 
       vars:
         ansible_user: magnet

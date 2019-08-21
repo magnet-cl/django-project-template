@@ -1,5 +1,5 @@
-project_name: minsalud-misuper
-server_git_url: git@bitbucket.org:magnet-cl/minsalud-misuper.git
+project_name: django-project-template-py3   ### CHANGE ME ###
+server_git_url: git@bitbucket.org:magnet-cl/example.git   ### CHANGE ME ###
 server_root_dir: /home/{{ ansible_user }}/{{ project_name }}
 service_name: django-{{ project_name }}.service
 development: no
