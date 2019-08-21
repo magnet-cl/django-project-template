@@ -16,14 +16,7 @@
   until: git_result is succeeded
 
 - name: backup DB
-  vars:
-    dumps_folder: db_dumps
   block:
-    - name: create dumps folder
-      file:
-        path: "{{ dumps_folder }}"
-        state: directory
-
     # Skip dump only if this task says DB doesn't exist and didn't fail,
     # to avoid going on without backup in case DB exists but dump failed.
     - name: check if DB exists
@@ -41,12 +34,9 @@
         msg: Database {{ project_name }} doesn't exist, skipping backup.
       when: db_exists.stdout != '1'
 
-    - name: dump DB
-      postgresql_db:
-        name: "{{ project_name }}"
-        state: dump
-        target: "{{ dumps_folder }}/{{ '%Y-%m-%d-%H-%M-%S' | strftime(ansible_date_time.epoch) }}.dump"
-        target_opts: --format=custom  # same as -Fc
-        login_user: "{{ ansible_user }}"
+    - name: perform backup with role
+      include_role:
+        name: db
+        tasks_from: backup
       when: db_exists.stdout == '1'
   when: git_result.changed

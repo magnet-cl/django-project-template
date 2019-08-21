@@ -1,0 +1,12 @@
+- name: create dumps folder
+  file:
+    path: db_dumps
+    state: directory
+
+- name: dump DB
+  postgresql_db:
+    name: "{{ project_name }}"
+    state: dump
+    target: db_dumps/{{ '%Y-%m-%d-%H-%M-%S' | strftime(ansible_date_time.epoch) }}.dump
+    target_opts: --format=custom  # same as -Fc
+    login_user: "{{ ansible_user }}"
