@@ -34,4 +34,4 @@ else
   echo -e "${green}In ${cyan}BECOME password${green} you have to type your sudo password${default}"
 fi
 
-ansible-playbook -i inventory.yaml -l localhost --tags quickstart $ask_become_pass deploy.yaml
+ansible-playbook --inventory inventory.yaml --limit localhost --tags quickstart $ask_become_pass deploy.yaml
