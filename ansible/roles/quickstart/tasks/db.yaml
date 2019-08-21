@@ -1,6 +1,6 @@
 - name: set database name in local_settings
   replace:
-    path: "{{ server_root_dir }}/misuper/local_settings.py"
+    path: "{{ server_root_dir }}/project/local_settings.py"
     regexp: "        'NAME': 'database-name',"
     replace: "        'NAME': '{{ project_name }}',"
     validate: bash -c "cd {{ server_root_dir }} && pipenv run python %s"  # It returns 1 on "invalid syntax"

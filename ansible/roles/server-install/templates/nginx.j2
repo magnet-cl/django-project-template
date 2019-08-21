@@ -12,11 +12,11 @@ server {
   root {{ server_root_dir }};
 
   location /uploads/ {
-    alias {{ server_root_dir }}/misuper/media/;
+    alias {{ server_root_dir }}/project/media/;
   }
 
   location /static {
-    root {{ server_root_dir }}/misuper;
+    root {{ server_root_dir }}/project;
   }
 
   location / {

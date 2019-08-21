@@ -52,7 +52,7 @@
 - name: create local_settings from default
   command: cp local_settings.py.default local_settings.py
   args:
-    chdir: "{{ server_root_dir }}/misuper"
+    chdir: "{{ server_root_dir }}/project"
     creates: local_settings.py
 
 # Improvement: better secret key handling (the next step is like grep,
@@ -62,7 +62,7 @@
   find:
     contains: SECRET_KEY *= *['"]CHANGE ME['"]
     paths:
-      - "{{ server_root_dir }}/misuper"
+      - "{{ server_root_dir }}/project"
     patterns:
       - local_settings.py
   register: secret_key_unset
