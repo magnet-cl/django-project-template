@@ -1,1 +1,0 @@
-new_backup_name: "{{ '%Y-%m-%d-%H-%M-%S' | strftime(ansible_date_time.epoch) }}.dump"

@@ -8,6 +8,7 @@
       include_role:
         name: db
         tasks_from: backup
+      when: dump_name is not defined
 
     - name: download
       include_role:
