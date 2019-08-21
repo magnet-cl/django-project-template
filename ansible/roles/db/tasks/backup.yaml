@@ -7,7 +7,7 @@
   postgresql_db:
     name: "{{ project_name }}"
     state: dump
-    target: db_dumps/{{ '%Y-%m-%d-%H-%M-%S' | strftime(ansible_date_time.epoch) }}.dump
+    target: db_dumps/{{ new_backup_name }}
     # Note: name will be local time of the controller
     target_opts: --format=custom  # same as -Fc
     login_user: "{{ ansible_user }}"

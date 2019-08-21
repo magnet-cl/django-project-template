@@ -1,0 +1,10 @@
+- name: backup db
+  hosts: all
+  pre_tasks:
+    - name: import check Ansible version task
+      import_tasks: utils/assert-ansible-version.yaml
+  tasks:
+    - name: backup
+      include_role:
+        name: db
+        tasks_from: backup
