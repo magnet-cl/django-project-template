@@ -1,4 +1,4 @@
-- name: download db
+- name: download DB
   hosts: all
   pre_tasks:
     - name: import check Ansible version task
