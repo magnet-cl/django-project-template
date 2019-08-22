@@ -14,7 +14,7 @@
   shell: command -v psql  # noqa 305    "command" is a shell builtin, not an executable utility
   register: dev_psql_existence
   changed_when: False
-  when: development
+  when: is_dev_machine
 
 - name: install and setup PostgreSQL for use with Ansible   # because Ansible module also needs psycopg2
   include_role:
@@ -33,14 +33,14 @@
         state: present
     # Workaround for strange failure:
     postgresql_python_library: "{{ ('python3' in discovered_interpreter_python) | ternary('python3-psycopg2', 'python-psycopg2') }}"
-  when: not development or dev_psql_existence.rc > 0
+  when: not is_dev_machine or dev_psql_existence.rc > 0
 
 # Copy-paste from geerlingguy, Debian families only:
 - name: Ensure PostgreSQL Python libraries are installed.
   apt:
     name: python-psycopg2
     state: present
-  when: development and dev_psql_existence.rc == 0
+  when: is_dev_machine and dev_psql_existence.rc == 0
 
 - name: create database
   postgresql_db:

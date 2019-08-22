@@ -4,7 +4,7 @@ all:
       ansible_host: localhost
       ansible_connection: local
       server_root_dir: "{{ lookup('env', 'PWD') | dirname }}"
-      development: yes
+      is_dev_machine: yes
       interactive_path: "{{ lookup('env', 'PATH') }}"
 
   children:
