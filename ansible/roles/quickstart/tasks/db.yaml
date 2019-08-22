@@ -32,7 +32,7 @@
         role_attr_flags: SUPERUSER
         state: present
     # Workaround for strange failure:
-    postgresql_python_library: "{{ ('python3' in discovered_interpreter_python) | ternary('python3-psycopg2', 'python-psycopg2') }}"
+    postgresql_python_library: "{{ 'python3-psycopg2' if 'python3' in discovered_interpreter_python else 'python-psycopg2' }}"
   when: not is_dev_machine or dev_psql_existence.rc > 0
 
 # Copy-paste from geerlingguy, Debian families only:

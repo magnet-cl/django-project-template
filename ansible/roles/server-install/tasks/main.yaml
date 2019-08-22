@@ -66,7 +66,7 @@
     nginx_vhosts:
       - template: nginx.j2
         # By convention, site files end in .conf on CentOS but not on Ubuntu:
-        filename: "{{ project_name + ((ansible_distribution == 'CentOS') | ternary('.conf', '')) }}"
+        filename: "{{ project_name + ('.conf' if ansible_distribution == 'CentOS' else '') }}"
         server_name: _  # (unused but playbook crashes without it)
     nginx_remove_default_vhost: yes   # Remove "Welcome to nginx!" page
 
