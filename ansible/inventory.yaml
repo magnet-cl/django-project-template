@@ -10,11 +10,7 @@ all:
   children:
     remote:   # Group "remote"
       hosts:
-        ubtest:
-          ansible_host: 10.10.1.48
-          server_domain: 10.10.1.48
-          branch: chore/ansible
-          ansible_user: vagrant
+        ### ADD SERVERS HERE ###
 
         # Examples:
 
