@@ -1,5 +1,7 @@
 # Ansible playbooks
 
+Initial hint: [configure Ansible globally to show human-readable output](https://github.com/ansible/ansible/issues/27078#issuecomment-364560173)
+
 ## Configuration
 
 ### Project setup
@@ -14,6 +16,7 @@ In `inventory.yaml` add each server as an entry in `all.children.remote.hosts`
 
 - [Install Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html). Currently requires Ansible 2.8
 - Run `ansible-galaxy install -r requirements.yaml` to install other requirements.
+
 ## Usage
 
 To setup or update a server, run:
