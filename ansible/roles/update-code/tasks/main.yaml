@@ -28,6 +28,7 @@
               # Bobby Tables handling mess...
         fi
       register: db_exists
+      changed_when: false
 
     - name: non-existent DB message
       debug:
