@@ -9,7 +9,7 @@
     # This gives a shallow repository. To obtain a full one, run:
     #     git remote set-branches origin "*" && git fetch --unshallow
 
-  # Bitbucket is sometimes flaky so:
+  # Remotes are sometimes flaky, so:
   register: git_result
   retries: 2
   delay: 5
