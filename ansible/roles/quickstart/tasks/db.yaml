@@ -10,13 +10,13 @@
   include_vars: centos-postgres.yaml
   when: ansible_distribution == 'CentOS'
 
-- name: check if PostgreSQL is already installed in dev machine
+- name: check if Postgres is already installed in dev machine
   shell: command -v psql  # noqa 305    "command" is a shell builtin, not an executable utility
   register: dev_psql_existence
   changed_when: False
   when: is_dev_machine
 
-- name: install and setup PostgreSQL for use with Ansible   # because Ansible module also needs psycopg2
+- name: install and setup Postgres for use with Ansible   # because Ansible module also needs psycopg2
   include_role:
     name: geerlingguy.postgresql.pr31
     apply:
@@ -34,6 +34,8 @@
     # Workaround for strange failure:
     postgresql_python_library: "{{ 'python3-psycopg2' if 'python3' in discovered_interpreter_python else 'python-psycopg2' }}"
   when: not is_dev_machine or dev_psql_existence.rc > 0
+  # Note: this can (will?) cause problems if another version of Postgres was manually installed.
+  # Quick workaround: set is_dev_machine in inventory.
 
 # Copy-paste from geerlingguy, Debian families only:
 - name: Ensure PostgreSQL Python libraries are installed.
