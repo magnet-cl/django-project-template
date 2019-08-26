@@ -44,7 +44,6 @@
             argv:
               - pg_restore
               - --dbname={{ project_name }}
-              - --username={{ lookup('env', 'USER') }}   # localhost user
               - --clean
               - --if-exists
               - --no-owner
