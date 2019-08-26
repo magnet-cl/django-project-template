@@ -31,6 +31,8 @@ Because the deploy needs to run the quickstart script, it was converted to an An
 
 ### DB
 
+![backup and other operations diagram](backup-diagram.png)
+
 - `backup-db` works as in Fabric.
 - `download-db` always takes a new backup and downloads that (if you want to download a previous one, just use `scp`).
 - `import-db` by default imports a fresh backup. You can specify a local dump file in the `dump_name` variable (example: `ansible-playbook ... import-db.yaml -e dump_name=staging/2019-08-22.dump`).
