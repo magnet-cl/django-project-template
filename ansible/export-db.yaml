@@ -1,5 +1,6 @@
 - name: init
   hosts: all
+  gather_facts: no
   any_errors_fatal: true
   tasks:
     - name: import check Ansible version task
@@ -14,6 +15,7 @@
           You must limit this playbook to two hosts and don't set local_dump,
           or limit to one host and set local_dump.
         quiet: yes
+      run_once: yes
 
     - name: configure for remote dump
       block:
