@@ -44,6 +44,7 @@ Because the deploy needs to run the quickstart script, it was converted to an An
 
 - DB name is assumed to be the same as `project_name` (to avoid parsing `local_settings.py`)
 - Remote DB dumps are assumed to be stored in `~/db_dumps/`
+- Backup/restore Media doesn't support `relative_path`
 
 ## Linting
 
