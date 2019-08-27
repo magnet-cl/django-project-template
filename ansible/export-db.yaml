@@ -1,28 +1,42 @@
 - name: init
   hosts: all
   any_errors_fatal: true
-  pre_tasks:
+  tasks:
     - name: import check Ansible version task
       import_tasks: utils/assert-ansible-version.yaml
 
-    - name: check that this playbook is run against exactly two hosts
+    - name: check that this playbook is run against two hosts, or one together with local_dump
       assert:
-        that: ansible_play_hosts | length == 2
-        fail_msg: You must limit this playbook to two hosts.
+        that: >
+          (ansible_play_hosts | length == 2 and local_dump is not defined)
+            or (ansible_play_hosts | length == 1 and local_dump is defined)
+        fail_msg: >
+          You must limit this playbook to two hosts and don't set local_dump,
+          or limit to one host and set local_dump.
         quiet: yes
 
-    - name: check that ansible_limit contains exactly one comma
-      assert:
-        that: ansible_limit is match('^[^,]+,[^,]+$')
-        fail_msg: Please use the --limit option with one comma.
-        quiet: yes
+    - name: configure for remote dump
+      block:
+        - name: check that ansible_limit contains exactly one comma
+          assert:
+            that: ansible_limit is match('^[^,]+,[^,]+$')
+            fail_msg: Please use the --limit option with one comma.
+            quiet: yes
+
+        - name: set source and destination host name
+          set_fact:
+            src_host: "{{ ansible_limit | regex_replace('(.+),.+', '\\1') }}"
+            dest_host: "{{ ansible_limit | regex_replace('.+,(.+)', '\\1') }}"
+      when: ansible_play_hosts | length == 2
+
+    - name: configure for local dump
+      set_fact:
+        src_host: __local_dump__
+        dest_host: __remote_dump__
+        dump_name: "{{ local_dump }}"
+      when: ansible_play_hosts | length == 1
 
     # TODO: confirmation
-  tasks:
-    - name: set source and destination host name
-      set_fact:
-        src_host: "{{ ansible_limit | regex_replace('(.+),.+', '\\1') }}"
-        dest_host: "{{ ansible_limit | regex_replace('.+,(.+)', '\\1') }}"
 
 - name: download DB
   hosts: all    # Can't use a variable here, so put everything in a block and limit with "when"
@@ -49,6 +63,12 @@
   tasks:
     - name: copy and import the dump on destination host only
       block:
+        - name: set dump_name
+          set_fact:
+            # If the dump was downloaded, dump_name variable is set in src_host only
+            dump_name: "{{ hostvars[src_host].dump_name }}"
+          when: dump_name is not defined
+
         - name: create dump upload tempfile
           tempfile:
             prefix: db_dump.
@@ -56,7 +76,7 @@
 
         - name: upload dump
           copy:
-            src: "{{ hostvars[src_host].dump_name }}"  # dump_name variable is set in src_host only
+            src: "{{ dump_name }}"
             dest: "{{ temp_dump.path }}"
             force: yes    # overwrite empty temp_dump
 
@@ -64,6 +84,7 @@
           include_role:
             name: db
             tasks_from: backup
+          # Note: it's "local_dump" instead of "dump_name" to avoid overriding the variable inside this role.
 
         - name: import the dump
           block:
@@ -83,9 +104,9 @@
             - name: Skip version printing
               fail:
                 msg: Failed (see above)
-                  # when: ... dump_name_initially_blank    TODO
               when: >
-                  'could not open input file' in pg_restore_result.stderr
+                src_host == '__local_dump__'
+                  or 'could not open input file' in pg_restore_result.stderr
 
             - name: get source version
               command: pg_dump -V
@@ -110,4 +131,4 @@
             path: "{{ temp_dump.path }}"
             state: absent
 
-      when: inventory_hostname == dest_host
+      when: inventory_hostname == dest_host or dest_host == '__remote_dump__'
