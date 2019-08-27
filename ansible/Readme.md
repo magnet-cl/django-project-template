@@ -40,7 +40,18 @@ Because the deploy needs to run the quickstart script, it was converted to an An
     - Export local dump to *host_B*: `ansible-playbook ... --limit host_B export-db.yaml -e local_dump=staging/2019-08-22.dump`
     - Export remote dump from *host_A* to *host_B*: `ansible-playbook ... --limit host_A,host_B export-db.yaml`
 
-## Notes
+## Assumptions
 
 - DB name is assumed to be the same as `project_name` (to avoid parsing `local_settings.py`)
 - Remote DB dumps are assumed to be stored in `~/db_dumps/`
+
+## Linting
+
+Install the linter with
+```sh
+pip install ansible-lint
+```
+and run it with
+```sh
+ansible-lint *.yaml
+```
