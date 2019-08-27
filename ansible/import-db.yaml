@@ -11,10 +11,6 @@
         quiet: yes
 
   tasks:
-    - name: set dump_name_initially_blank
-      set_fact:
-        dump_name_initially_blank: "{{ dump_name is not defined }}"
-
     - name: download remote dump
       block:
         - name: backup
@@ -30,9 +26,7 @@
         - name: convert dump_name to path
           set_fact:
             dump_name: "{{ inventory_hostname }}/{{ dump_name }}"
-
-      # when: dump_name is not defined    --> looks like it's evaluated every time
-      when: dump_name_initially_blank
+      when: local_dump is not defined
 
     - name: import the dump
       block:
@@ -49,14 +43,14 @@
               - --no-owner
               - --no-acl
               - --jobs=2
-              - "{{ dump_name }}"
+              - "{{ dump_name | default(local_dump) }}"
           register: pg_restore_result
       rescue:
         - name: Skip version printing
           fail:
             msg: pg_restore failed (see above)
           when: >
-            dump_name_initially_blank
+            local_dump is not defined
               or 'could not open input file' in pg_restore_result.stderr
 
         - name: get remote version
