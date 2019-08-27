@@ -31,10 +31,10 @@
     - name: import the dump
       block:
         - name: run pg_restore
-          local_action:
-            #   module: postgresql_db
-            # Doesn't use pg_restore >:(  (except if "target" is a .tar https://github.com/ansible/ansible/blob/stable-2.8/lib/ansible/modules/database/postgresql/postgresql_db.py#L353)
-            module: command
+          delegate_to: localhost
+          #   postgresql_db:
+          # Doesn't use pg_restore >:(  (except if "target" is a .tar https://github.com/ansible/ansible/blob/stable-2.8/lib/ansible/modules/database/postgresql/postgresql_db.py#L353)
+          command:
             argv:
               - pg_restore
               - --dbname={{ project_name }}
@@ -59,11 +59,8 @@
           register: remote_version
 
         - name: get local version
-          local_action:
-            module: command
-            argv:
-              - pg_restore
-              - -V
+          delegate_to: localhost
+          command: pg_restore -V
           changed_when: false
           register: local_version
 
