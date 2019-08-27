@@ -32,11 +32,30 @@
     - name: configure for local dump
       set_fact:
         src_host: __local_dump__
-        dest_host: __remote_dump__
+        dest_host: "{{ ansible_limit }}"
         dump_name: "{{ local_dump }}"
       when: ansible_play_hosts | length == 1
 
-    # TODO: confirmation
+- name: confirm
+  hosts: all
+  run_once: yes
+  any_errors_fatal: yes
+  gather_facts: no
+  vars_prompt:
+    - name: confirmation
+      #     prompt: ¿Are you sure you want to replace the DB of {{ dest_host }} [y/N]?
+      # Oh crap. "'dest_host' is undefined"
+      prompt: >-
+        ¿Are you sure you want to replace the DB of
+        {{ ansible_limit if (ansible_play_hosts | length == 1) else (ansible_limit | regex_replace('.+,(.+)', '\1')) }}
+        [y/N]?
+      private: no   # Show input (this is made to input passwords)
+  tasks:
+    - name: check confirmation
+      assert:
+        that: confirmation | lower == 'y'
+        fail_msg: Confirmation failed.
+        quiet: yes
 
 - name: download DB
   hosts: all    # Can't use a variable here, so put everything in a block and limit with "when"
@@ -131,4 +150,5 @@
             path: "{{ temp_dump.path }}"
             state: absent
 
-      when: inventory_hostname == dest_host or dest_host == '__remote_dump__'
+      when: inventory_hostname == dest_host or src_host == '__local_dump__'
+        # "or" in case (inventory_hostname != dest_host == ansible_limit) because it contains comma
