@@ -23,7 +23,13 @@ To setup or update a server, run:
 ```sh
 ansible-playbook -i inventory.yaml -l <host_or_group> deploy.yaml
 ```
-with host_or_group from inventory. (It can also be run from another directories, but requires paths for yaml files)
+with host_or_group from inventory.
+
+### Working directory
+
+Please run Ansible from this directory. It can also be run from other ones, but:
+- yaml files require a path
+- some tasks use `dirname $PWD` to get the path to the project in localhost
 
 ### Quickstart
 
