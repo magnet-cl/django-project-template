@@ -30,7 +30,7 @@
 
     - name: set local_media_path variable
       set_fact:
-        local_media_path: "{{ hostvars['localhost'].server_root_dir }}/project/media"
+        local_media_path: "{{ hostvars.localhost.server_root_dir }}/project/media"
 
     - name: set empty media directory
       delegate_to: localhost
