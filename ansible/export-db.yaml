@@ -33,7 +33,7 @@
 
     - name: configure for local dump
       set_fact:
-        src_host: __local_dump__
+        src_host: __local__
         dest_host: "{{ ansible_limit }}"
         dump_name: "{{ local_dump }}"
       when: ansible_play_hosts | length == 1
@@ -126,7 +126,7 @@
               fail:
                 msg: Failed (see above)
               when: >
-                src_host == '__local_dump__'
+                src_host == '__local__'
                   or 'could not open input file' in pg_restore_result.stderr
 
             - name: get source version
@@ -152,5 +152,5 @@
             path: "{{ temp_dump.path }}"
             state: absent
 
-      when: inventory_hostname == dest_host or src_host == '__local_dump__'
+      when: inventory_hostname == dest_host or src_host == '__local__'
         # "or" in case (inventory_hostname != dest_host == ansible_limit) because it contains comma
