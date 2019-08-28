@@ -56,13 +56,15 @@
     creates: local_settings.py    # It's copied only when local_settings don't exist
   register: local_settings_create
 
-- name: set "DEBUG = False" on local_settings creation
+- name: set "DEBUG = False" in remote machine on local_settings creation
   replace:
     path: "{{ server_root_dir }}/project/local_settings.py"
     regexp: ^DEBUG *= *True
     replace: DEBUG = False
     validate: bash -c "cd {{ server_root_dir }} && pipenv run python %s"  # It returns 1 on "invalid syntax"
-  when: local_settings_create.changed
+  when:
+    - not is_dev_machine
+    - local_settings_create.changed
 
 # Improvement: better secret key handling (the next step is like grep,
 # and the Django command replicates "lineinfile" functionality,
