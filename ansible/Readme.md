@@ -61,9 +61,10 @@ Same as DB, but replace `local_dump` with `local_archive`
 
 Install the linter with
 ```sh
-pip install ansible-lint
+pip install "ansible-lint>=4.1.1a0"
 ```
 and run it with
 ```sh
 ansible-lint *.yaml
 ```
+Note: the pre-release version is currently required because of an [issue](https://github.com/ansible/ansible-lint/issues/484).
