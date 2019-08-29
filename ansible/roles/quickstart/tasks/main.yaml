@@ -46,6 +46,16 @@
       - unzip
   when: ansible_distribution == 'CentOS'
 
+- name: dependencies for Mac OS X
+  # Assume Homebrew, Pipenv and its virtualenv, and PostgreSQL are already installed/created/configured.
+  # Only add additional non-standard requirements here.
+  # Improvement: better OSX support.
+  homebrew:
+    name:
+      - gettext
+    state: present
+  when: ansible_distribution == 'MacOSX'
+
 - name: setup Pipenv
   import_tasks: pipenv.yaml
 

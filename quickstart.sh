@@ -3,20 +3,45 @@ set -e
 
 green="\033[0;32m"
 cyan="\033[0;36m"
+yellow="\033[0;33m"
+red="\033[0;31m"
 default="\033[0m"
 
 ### Install Ansible
 if ! command -v ansible >/dev/null; then
   echo -e "${green}Installing Ansible${default}"
+  # https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html
 
-  # Improvement: support for other OS
-  # https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#latest-releases-via-apt-ubuntu
-  sudo apt update
-  sudo apt install -y software-properties-common
-  sudo apt-add-repository -y ppa:ansible/ansible
-  sudo apt install -y ansible
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    if ! command -v brew >/dev/null; then
+      echo -e "${red}Error: Homebrew is not installed (https://brew.sh/#install)${default}"
+      exit 1
+    fi
+
+    # Install with Homebrew instead of pip because:
+    #  - pip could not be installed
+    #  - pip could install Ansible somewhere not in PATH
+    brew install ansible
+  else
+    sudo apt update
+    sudo apt install -y software-properties-common
+    sudo apt-add-repository -y ppa:ansible/ansible
+    sudo apt install -y ansible
+  fi
 fi
 # Improvement: upgrade if version is too old
+
+
+### Mac OS X warning
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  echo
+  echo -e "${yellow}Note: quickstart support on Mac OS X is incomplete, because we don't use it too much, and Python configuration is a mess (https://xkcd.com/1987). So you must manually:"
+  #  - Install Homebrew -- already checked above
+  # shellcheck disable=SC2016
+  echo -e '  - install and configure PostgreSQL. This worked for me: brew install postgresql && brew services start postgresql && createdb $USER'
+  echo -e "  - create the Pipenv virtualenv: pipenv --python 3.6    (suggestion: use pyenv)"
+  echo -e "$default"
+fi
 
 
 ### Install roles and run Ansible
