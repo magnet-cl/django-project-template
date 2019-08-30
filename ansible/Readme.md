@@ -50,6 +50,10 @@ Because the deploy needs to run the quickstart script, it was converted to an An
 
 Same as DB, but replace `local_dump` with `local_archive`
 
+### Project helpers
+
+- `run-django-command`: specify the Django command to be run in the variable `django_command`
+
 ## Notes
 
 - DB is automatically backed up when pulling changes. Also, DB/Media are automatically backed up on target machine when using `export`. If they are too big, comment those tasks, and make sure to delete old backups.
