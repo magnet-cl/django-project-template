@@ -55,6 +55,7 @@ Same as DB, but replace `local_dump` with `local_archive`
 - `run-django-command`: specify the Django command to be run in the variable `django_command`
 - `validate-deployment`: runs tests.
 - `service-logs`: shows systemd Django service log.
+- `migrate-db`: runs Django migrations.
 
 ## Notes
 
