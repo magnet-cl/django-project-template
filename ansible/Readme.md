@@ -54,7 +54,7 @@ Same as DB, but replace `local_dump` with `local_archive`
 
 - DB is automatically backed up when pulling changes. Also, DB/Media are automatically backed up on target machine when using `export`. If they are too big, comment those tasks, and make sure to delete old backups.
 - DB name is assumed to be the same as `project_name` (to avoid parsing `local_settings.py`)
-- Remote DB dumps are assumed to be stored in `~/db_dumps/`
+- Remote DB dumps are assumed to be stored in `~/db_dumps/`, and Media archives in `~`
 - Backup/restore Media doesn't support `relative_path`
 
 ## Linting
