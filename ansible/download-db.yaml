@@ -5,11 +5,11 @@
       import_tasks: utils/assert-ansible-version.yaml
   tasks:
     - name: backup
-      include_role:
+      import_role:
         name: db
         tasks_from: backup
 
     - name: download
-      include_role:
+      import_role:
         name: db
         tasks_from: download

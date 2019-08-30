@@ -5,6 +5,6 @@
       import_tasks: utils/assert-ansible-version.yaml
   tasks:
     - name: backup
-      include_role:
+      import_role:
         name: media
         tasks_from: backup
