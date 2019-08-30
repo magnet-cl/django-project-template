@@ -48,23 +48,20 @@
       changed_when: false
       failed_when:
         - venv.rc > 0
-        - "'No virtualenv has been created for this project yet' not in venv.stderr"
+        - no_venv_message not in venv.stderr
 
     - name: create virtualenv with Pipenv
       command: pipenv --python 3.6
       args:
         chdir: "{{ server_root_dir }}"
-      when: "'No virtualenv has been created for this project yet' in venv.stderr"
+      when: no_venv_message in venv.stderr
 
   when: ansible_distribution != 'MacOSX'
 
 - name: get Pipenv virtualenv again
-  # Could avoid running twice with "when", but would have to register to another variable, and later choose between the two registered...
-  command: pipenv --venv
-  args:
-    chdir: "{{ server_root_dir }}"
-  register: venv
-  changed_when: false
+  include_role:
+    name: get-venv
+  when: no_venv_message in venv.stderr
 
 - name: install Pipenv requirements
   block:

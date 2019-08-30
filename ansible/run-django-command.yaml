@@ -11,11 +11,8 @@
         quiet: yes
 
     - name: get Pipenv virtualenv
-      command: pipenv --venv
-      args:
-        chdir: "{{ server_root_dir }}"
-      register: venv
-      changed_when: false
+      import_role:
+        name: get-venv
 
   tasks:
     - name: run django command
