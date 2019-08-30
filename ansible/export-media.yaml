@@ -6,6 +6,13 @@
     - name: import check Ansible version task
       import_tasks: utils/assert-ansible-version.yaml
 
+    - name: check that ansible_limit is defined
+      assert:
+        that: ansible_limit is defined
+        fail_msg: Please explicitly limit the hosts you want to target with --limit
+        quiet: yes
+      # This prevents "ERROR! 'ansible_limit' is undefined" later.
+
     - name: check that this playbook is run against two hosts, or one together with local_archive
       assert:
         that: >

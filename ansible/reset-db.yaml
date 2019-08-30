@@ -1,0 +1,61 @@
+- name: initial checks
+  hosts: all
+  gather_facts: no
+  pre_tasks:
+    - name: import check Ansible version task
+      import_tasks: utils/assert-ansible-version.yaml
+
+  tasks:
+    - name: check that ansible_limit is defined
+      assert:
+        that: ansible_limit is defined
+        fail_msg: Please explicitly limit the hosts you want to target with --limit
+        quiet: yes
+      # This prevents "ERROR! 'ansible_limit' is undefined" later.
+
+    - name: assert that DEBUG = True
+      find:
+        contains: ^DEBUG *= *True
+        paths:
+          - "{{ server_root_dir }}/project"
+        patterns:
+          - local_settings.py
+      register: debug_enabled
+      failed_when: not debug_enabled.files
+
+- name: confirm
+  hosts: all
+  gather_facts: no
+  vars_prompt:
+    - name: confirmation
+      prompt: ¿Are you sure you want to reset the DB of {{ ansible_limit }} [y/N]?
+      private: no   # Show input (this is made to input passwords)
+  tasks:
+    - name: check confirmation
+      assert:
+        that: confirmation | lower == 'y'
+        fail_msg: Confirmation failed.
+        quiet: yes
+
+- name: backup-drop-create
+  hosts: all
+  tasks:
+    - name: backup DB
+      import_role:
+        name: db
+        tasks_from: backup
+
+    - name: drop DB
+      postgresql_db:
+        name: "{{ project_name }}"
+        state: absent
+        login_user: "{{ ansible_user_id }}"
+
+    - name: create DB
+      postgresql_db:
+        name: "{{ project_name }}"
+        state: present
+        login_user: "{{ ansible_user_id }}"
+
+- name: migrate
+  import_playbook: migrate-db.yaml

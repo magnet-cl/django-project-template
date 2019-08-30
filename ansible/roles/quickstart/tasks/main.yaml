@@ -81,7 +81,7 @@
 # and settings.py could just load a gitignored file...)
 - name: check if secret key is unset
   find:
-    contains: SECRET_KEY *= *['"]CHANGE ME['"]
+    contains: ^SECRET_KEY *= *['"]CHANGE ME['"]
     paths:
       - "{{ server_root_dir }}/project"
     patterns:

@@ -56,6 +56,7 @@ Same as DB, but replace `local_dump` with `local_archive`
 - `validate-deployment`: runs tests.
 - `service-logs`: shows systemd Django service log.
 - `migrate-db`: runs Django migrations.
+- `reset-db`: resets DB to initial state. `local_settings` must have `DEBUG = True`.
 
 ## Notes
 
