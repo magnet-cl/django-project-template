@@ -1,0 +1,4 @@
+- name: validate deployment
+  vars:
+    django_command: test --failfast
+  import_playbook: run-django-command.yaml

@@ -53,6 +53,7 @@ Same as DB, but replace `local_dump` with `local_archive`
 ### Project helpers
 
 - `run-django-command`: specify the Django command to be run in the variable `django_command`
+- `validate-deployment`: runs tests. Requires no arguments.
 
 ## Notes
 
