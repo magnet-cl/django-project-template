@@ -62,7 +62,7 @@ Same as DB, but replace `local_dump` with `local_archive`
 
 Actions are grouped in playbooks and services are tagged. For example, to restart nginx only, run `ansible-playbook ... --tags nginx restart-services.yaml`. There's also a `project` tag that targets both gunicorn and nginx.
 
-Available actions are `install-services`, `start-services`, `restart-services` and `stop-services`.
+Available actions are `install-services`, `start-services`, `restart-services`, `stop-services` and `enable-services`.
 
 ## Notes
 
