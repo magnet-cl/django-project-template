@@ -16,6 +16,7 @@
       become: yes
   tags:
     - gunicorn
+    - project
 
 - name: stop memcached
   hosts: all
@@ -38,3 +39,4 @@
       become: yes
   tags:
     - nginx
+    - project
