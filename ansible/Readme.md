@@ -58,6 +58,12 @@ Same as DB, but replace `local_dump` with `local_archive`
 - `migrate-db`: runs Django migrations.
 - `reset-db`: resets DB to initial state. `local_settings` must have `DEBUG = True`.
 
+#### Services
+
+Actions are grouped in playbooks and services are tagged. For example, to restart nginx only, run `ansible-playbook ... --tags nginx restart-services.yaml`.
+
+Available actions are `install-services`, `start-services`, `restart-services` and `stop-services`.
+
 ## Notes
 
 - DB is automatically backed up when pulling changes. Also, DB/Media are automatically backed up on target machine when using `export`. If they are too big, comment those tasks, and make sure to delete old backups.
