@@ -11,16 +11,6 @@ all:
     remote:   # Group "remote"
       hosts:
         ### ADD SERVERS HERE ###
-        ubtest:
-          ansible_host: ubtest
-          server_domain: ubtest
-          branch: chore/ansible
-          ansible_user: vagrant
-        cetest:
-          ansible_host: 10.10.0.129
-          server_domain: 10.10.0.129
-          branch: chore/ansible
-          ansible_user: vagrant
 
         # Examples:
 
