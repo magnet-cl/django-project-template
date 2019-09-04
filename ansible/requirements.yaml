@@ -9,9 +9,9 @@
   src: https://github.com/magnet-cl/ansible-role-postgresql
   version: 6d91620a3c95d3bc3ae8517c78f4a667298139af
 
-- name: geerlingguy.nginx
-  src: https://github.com/geerlingguy/ansible-role-nginx
-  version: 79650c5886e0825b317e81be029d3fecb7a1c0f0
+- name: geerlingguy.nginx.magnet-fork
+  src: https://github.com/magnet-cl/ansible-role-nginx
+  version: 804e9db8d25e81407fc9b316bf5b29488fe04612
 
 - name: geerlingguy.memcached
   src: https://github.com/geerlingguy/ansible-role-memcached

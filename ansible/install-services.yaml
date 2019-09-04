@@ -33,7 +33,7 @@
   tasks:
     - name: install nginx
       include_role:
-        name: geerlingguy.nginx
+        name: geerlingguy.nginx.magnet-fork
         apply:
           become: true
   tags:

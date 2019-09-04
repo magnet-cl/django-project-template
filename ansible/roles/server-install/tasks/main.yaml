@@ -59,7 +59,7 @@
 
 - name: install and configure nginx
   include_role:
-    name: geerlingguy.nginx
+    name: geerlingguy.nginx.magnet-fork
     apply:
       become: true
   vars:
@@ -67,6 +67,7 @@
       - template: nginx.j2
         # By convention, site files end in .conf on CentOS but not on Ubuntu:
         filename: "{{ project_name + ('.conf' if ansible_distribution == 'CentOS' else '') }}"
+        overwrite: no   # Don't overwrite nginx config that has ssl set up
         server_name: _  # (unused but playbook crashes without it)
     nginx_remove_default_vhost: yes   # Remove "Welcome to nginx!" page
 
