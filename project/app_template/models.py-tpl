@@ -28,7 +28,7 @@ class {{model_name}}(BaseModel):
     name = models.CharField(
         _('name'),
         max_length=30,
-        blank=True,
+        unique=True,
     )
     # optional fields
     
