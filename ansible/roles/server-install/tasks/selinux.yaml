@@ -16,3 +16,4 @@
   loop:
     - httpd_can_network_connect
     - httpd_read_user_content
+    - httpd_enable_homedirs
