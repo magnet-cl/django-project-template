@@ -7,7 +7,7 @@ from fabric.api import task
 
 # local and remote paths
 env.local_root_dir = path.join(path.dirname(__file__), "..")
-env.server_root_dir = '/home/vagrant/django-project-template-py3'
+env.server_root_dir = 'example/path'
 
 # server domain used by nginx
 env.server_domain = 'example.com'
