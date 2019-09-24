@@ -69,7 +69,7 @@ else
   echo -e "${green}In ${cyan}BECOME password${green} you have to type your sudo password${default}"
 fi
 
-if ! [[ -z "$blank_cfg" ]]; then
+if [[ -n "$blank_cfg" ]]; then
   if [[ "$OSTYPE" == "darwin"* ]]; then
     ansible-playbook human-readable-output.yaml
   else
