@@ -8,6 +8,16 @@ red="\033[0;31m"
 default="\033[0m"
 
 ### Install Ansible
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  if ! [[ -f ~/.ansible.cfg ]]; then
+    blank_cfg=1
+  fi
+else
+  if ! [[ -f /etc/ansible/ansible.cfg ]]; then
+    blank_cfg=1
+  fi
+fi
+
 if ! command -v ansible >/dev/null; then
   echo -e "${green}Installing Ansible${default}"
   # https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html
@@ -59,4 +69,11 @@ else
   echo -e "${green}In ${cyan}BECOME password${green} you have to type your sudo password${default}"
 fi
 
+if ! [[ -z "$blank_cfg" ]]; then
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    ansible-playbook human-readable-output.yaml
+  else
+    ansible-playbook $ask_become_pass human-readable-output.yaml
+  fi
+fi
 ansible-playbook --inventory inventory.yaml --limit localhost --tags quickstart $ask_become_pass deploy.yaml

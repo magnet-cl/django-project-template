@@ -1,0 +1,28 @@
+- name: set human readable output in Ansible config
+  # https://github.com/ansible/ansible/issues/27078#issuecomment-364560173
+  hosts: localhost
+  connection: local
+  pre_tasks:
+    - name: import check Ansible version task
+      import_tasks: utils/assert-ansible-version.yaml
+
+  tasks:
+    - name: set config path for Linux
+      set_fact:
+        cfg_path: /etc/ansible/ansible.cfg
+        sudo_cfg: yes
+      when: ansible_distribution != 'MacOSX'
+
+    - name: set config path for Mac OS X
+      set_fact:
+        cfg_path: ~/.ansible.cfg
+        sudo_cfg: no
+      when: ansible_distribution == 'MacOSX'
+
+    - name: set stdout callback
+      ini_file:
+        path: "{{ cfg_path }}"
+        section: defaults
+        option: stdout_callback
+        value: debug
+      become: "{{ sudo_cfg }}"
