@@ -7,11 +7,6 @@
 
 - name: install and configure Postgres and create DB
   block:
-    - name: set variables to install PostgreSQL 11 on CentOS
-      # https://github.com/geerlingguy/ansible-role-postgresql/issues/38#issuecomment-513464935
-      include_vars: centos-postgres.yaml
-      when: ansible_distribution == 'CentOS'
-
     - name: check if Postgres is already installed in dev machine
       shell: command -v psql  # noqa 305    "command" is a shell builtin, not an executable utility
       register: dev_psql_existence
@@ -21,6 +16,11 @@
 
     - name: install and setup Postgres
       block:
+        - name: set variables to install PostgreSQL 11 on CentOS
+          # https://github.com/geerlingguy/ansible-role-postgresql/issues/38#issuecomment-513464935
+          include_vars: centos-postgres.yaml
+          when: ansible_distribution == 'CentOS'
+
         - name: install and setup Postgres with role
           include_role:
             name: geerlingguy.postgresql.pr31
