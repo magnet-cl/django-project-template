@@ -30,7 +30,15 @@ if [ "$debug" != "True" ] ; then
 fi
 
 echo "----------------------drop-database------------------------------"
-dropdb "$dbname"
+set +e
+drop_output=$(dropdb "$dbname" 2>&1)
+drop_code=$?
+set -e
+echo "$drop_output"
+# Fail if dropdb failed, except in case of "does not exist"
+if [[ $drop_code -ne 0 && "$drop_output" != *" does not exist" ]]; then
+  exit $drop_code
+fi
 
 echo "  create-database"
 createdb "$dbname"
