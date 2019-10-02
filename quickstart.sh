@@ -71,9 +71,9 @@ fi
 
 if [[ -n "$blank_cfg" ]]; then
   if [[ "$OSTYPE" == "darwin"* ]]; then
-    ansible-playbook human-readable-output.yaml
+    ansible-playbook playbooks/human-readable-output.yaml
   else
-    ansible-playbook $ask_become_pass human-readable-output.yaml
+    ansible-playbook $ask_become_pass playbooks/human-readable-output.yaml
   fi
 fi
-ansible-playbook --inventory inventory.yaml --limit localhost --tags quickstart $ask_become_pass deploy.yaml
+ansible-playbook --inventory inventory.yaml --limit localhost --tags quickstart $ask_become_pass playbooks/deploy.yaml

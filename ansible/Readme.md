@@ -21,7 +21,7 @@ In `inventory.yaml` add each server as an entry in `all.children.remote.hosts`
 
 To setup or update a server, run:
 ```sh
-ansible-playbook -i inventory.yaml -l <host_or_group> deploy.yaml
+ansible-playbook -i inventory.yaml -l <host_or_group> playbooks/deploy.yaml
 ```
 with host_or_group from inventory.
 
@@ -41,10 +41,12 @@ Because the deploy needs to run the quickstart script, it was converted to an An
 
 - `backup-db` works as in Fabric.
 - `download-db` always takes a new backup and downloads that (if you want to download a previous one, just use `scp`).
-- `import-db` by default imports a fresh backup. You can specify a local dump file in the `local_dump` variable (example: `ansible-playbook ... --limit localhost import-db.yaml -e local_dump=staging/2019-08-22.dump`).
+- `import-db` by default imports a fresh backup. You can specify a local dump file in the `local_dump` variable (example: `ansible-playbook ... --limit localhost playbooks/import-db.yaml -e local_dump=staging/2019-08-22.dump`).
 - `export-db` can be used in two modes:
-    - Export local dump to *host_B*: `ansible-playbook ... --limit host_B export-db.yaml -e local_dump=staging/2019-08-22.dump`
-    - Export remote dump from *host_A* to *host_B*: `ansible-playbook ... --limit host_A,host_B export-db.yaml`
+    - Export local dump to *host_B*: `ansible-playbook ... --limit host_B playbooks/export-db.yaml -e local_dump=staging/2019-08-22.dump`
+    - Export remote dump from *host_A* to *host_B*: `ansible-playbook ... --limit host_A,host_B playbooks/export-db.yaml`
+
+Note that the dumps are inside the `playbooks` folder, but paths are relative to it, not `cwd`.
 
 ### Media
 
@@ -60,7 +62,7 @@ Same as DB, but replace `local_dump` with `local_archive`
 
 #### Services
 
-Actions are grouped in playbooks and services are tagged. For example, to restart nginx only, run `ansible-playbook ... --tags nginx restart-services.yaml`. There's also a `project` tag that targets both gunicorn and nginx.
+Actions are grouped in playbooks and services are tagged. For example, to restart nginx only, run `ansible-playbook ... --tags nginx playbooks/restart-services.yaml`. There's also a `project` tag that targets both gunicorn and nginx.
 
 Available actions are `install-services`, `start-services`, `restart-services`, `stop-services` and `enable-services`.
 
@@ -79,6 +81,6 @@ pip install "ansible-lint>=4.1.1a0"
 ```
 and run it with
 ```sh
-ansible-lint *.yaml
+ansible-lint **/*.yaml
 ```
 Note: the pre-release version is currently required because of an [issue](https://github.com/ansible/ansible-lint/issues/484).
