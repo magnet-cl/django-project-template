@@ -4,8 +4,12 @@
     - name: import check Ansible version task
       import_tasks: utils/assert-ansible-version.yaml
       tags: always
+
   roles:
-    - update-code
+    - role: update-code
+      tags: update
+
     - role: quickstart
       tags: quickstart
-    - server-install
+
+    - role: server-install

@@ -49,6 +49,7 @@
       failed_when:
         - venv.rc > 0
         - no_venv_message not in venv.stderr
+      tags: update
 
     - name: create virtualenv with Pipenv
       command: pipenv --python 3.6
@@ -89,3 +90,4 @@
         path: "{{ requirements.path }}"
         state: absent
       changed_when: false
+  tags: update

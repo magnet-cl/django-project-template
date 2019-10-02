@@ -24,4 +24,5 @@
     production: "{{ not is_dev_machine }}"
   environment:
     PATH: "{{ path_for_node }}"
+  tags: update
   # Unfortunately this task is always reported as "changed" https://github.com/ansible/ansible/issues/58280

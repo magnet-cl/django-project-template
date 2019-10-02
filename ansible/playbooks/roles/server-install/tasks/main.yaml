@@ -4,18 +4,21 @@
     chdir: "{{ server_root_dir }}"
   # changed_when: ?
   # noqa 301
+  tags: update
 
 - name: collect static files
   django_manage:
     command: collectstatic
     app_path: "{{ server_root_dir }}"
     virtualenv: "{{ venv.stdout }}"
+  tags: update
 
 - name: compile translations
   django_manage:
     command: compilemessages
     app_path: "{{ server_root_dir }}"
     virtualenv: "{{ venv.stdout }}"
+  tags: update
 
 - name: create logs directory
   file:
@@ -46,16 +49,19 @@
     # maybe some tasks also need a restart, and changes are not currently detected
     # (for example "npm run build" and collectstatic).
   become: yes
+  tags: update
 
 - name: ensure service started without error
   service_facts:
   register: services_state
   failed_when: services_state.ansible_facts.services[service_name].state != 'running'
+  tags: update
 
 - name: make a test request to Django (bypassing nginx)
   uri:
     url: http://localhost:8000
     force: yes  # ignore cache
+  tags: update
 
 - name: install and configure nginx
   include_role:
@@ -93,3 +99,4 @@
   uri:
     url: http://{{ server_domain }}
     force: yes  # ignore cache
+  tags: update
