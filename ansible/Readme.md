@@ -19,11 +19,16 @@ In `inventory.yaml` add each server as an entry in `all.children.remote.hosts`
 
 ## Usage
 
-To setup or update a server, run:
+To deploy to a server, run:
 ```sh
-ansible-playbook -i inventory.yaml -l <host_or_group> playbooks/deploy.yaml
+./deploy.sh [host-or-group]
 ```
-with host_or_group from inventory.
+with host-or-group from inventory. If not specified, it targets the `remote` group.
+
+To update only:
+```sh
+./update.sh [host-or-group]
+```
 
 ### Working directory
 
