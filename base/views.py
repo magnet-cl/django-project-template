@@ -7,7 +7,8 @@
 from django.conf import settings
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.mixins import AccessMixin
+from django.core.exceptions import ImproperlyConfigured
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.urls import reverse
@@ -54,17 +55,39 @@ def server_error_view(request, template=None):
     return server_error(request, 'exceptions/500.pug')
 
 
-class LoginPermissionRequiredMixin(PermissionRequiredMixin):
+class LoginPermissionRequiredMixin(AccessMixin):
     """
-    Verify that the current user is authenticated and has the required
-    permission
+    Verify that the current user is authenticated (if required)
+    and has the required permission (if authenticated)
     """
-    def dispatch(self, request, *args, **kwargs):
-        if self.login_required and not request.user.is_authenticated:
-            return self.handle_no_permission()
+    permission_required = None
 
-        if not self.has_permission():
-            return self.handle_no_permission()
+    def get_permission_required(self):
+        """
+        Override this method to override the permission_required attribute.
+        Must return an iterable.
+        """
+        if self.permission_required is None:
+            raise ImproperlyConfigured(
+                '{0} is missing the permission_required attribute. '
+                'Define {0}.permission_required, or override '
+                '{0}.get_permission_required().'.format(
+                    self.__class__.__name__
+                )
+            )
+        if isinstance(self.permission_required, str):
+            perms = (self.permission_required,)
+        else:
+            perms = self.permission_required
+        return perms
+
+    def dispatch(self, request, *args, **kwargs):
+        if self.login_required:
+            if not request.user.is_authenticated:
+                return self.handle_no_permission()
+
+            if not self.has_permission():
+                return self.handle_no_permission()
 
         return super().dispatch(request, *args, **kwargs)
 
