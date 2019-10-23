@@ -59,10 +59,10 @@
 
   when: ansible_distribution != 'MacOSX'
 
+# Could avoid running twice with "when", but would have to register to another variable, and later choose between the two registered...
 - name: get Pipenv virtualenv again
   include_role:
     name: get-venv
-  when: no_venv_message in venv.stderr
 
 - name: install Pipenv requirements
   block:
