@@ -24,7 +24,7 @@ jobs:
           name: install python packages
           command: |
             pipenv --python 3.6
-            pipenv install
+            pipenv install --deploy
 
       - save_cache:
           key: cache-{{ checksum "Pipfile.lock" }}
