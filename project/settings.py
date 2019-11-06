@@ -272,7 +272,6 @@ MEDIA_URL = '/uploads/'
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'npm.finders.NpmFinder',
 )
 
 ##################
@@ -286,25 +285,6 @@ LOGOUT_REDIRECT_URL = '/'
 COMPRESS_PRECOMPILERS = (
     ('text/pug', 'base.filters.pug.PugCompilerFilter'),
 )
-
-# NPM
-NPM_FILE_PATTERNS = {
-    'bootstrap': [
-        'dist/js/bootstrap.js',
-        'scss/bootstrap.scss'
-    ],
-    'jquery': ['dist/jquery.js'],
-    'popper.js': ['dist/umd/popper.js'],
-    'moment': ['min/moment-with-locales.js'],
-    'select2': [
-        'dist/js/select2.js',
-        'dist/css/select2.min.css'
-    ],
-    'tempusdominus-bootstrap-4': [
-        'build/js/tempusdominus-bootstrap-4.js',
-        'build/css/tempusdominus-bootstrap-4.min.css',
-    ],
-}
 
 # un comment when we start using only SSL
 # RECAPTCHA_USE_SSL = True
