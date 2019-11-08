@@ -66,48 +66,9 @@
     creates: local_settings.py    # It's copied only when local_settings doesn't exist
   register: local_settings_create
 
-- name: set "DEBUG = False" in remote machine on local_settings creation
-  replace:
-    path: "{{ server_root_dir }}/project/local_settings.py"
-    regexp: ^DEBUG *= *True
-    replace: DEBUG = False
-    validate: bash -c "cd {{ server_root_dir }} && pipenv run python %s"  # It returns 1 on "invalid syntax"
-  when:
-    - not is_dev_machine
-    - local_settings_create.changed
-
-- name: check if server_domain is in LOCALLY_ALLOWED_HOSTS
-  command: >
-    pipenv run python -c
-    "from project.local_settings import LOCALLY_ALLOWED_HOSTS;
-    print('{{ server_domain }}' in LOCALLY_ALLOWED_HOSTS)"
-  args:
-    chdir: "{{ server_root_dir }}"
-  register: allowed_host_added
-  changed_when: false
-  when:
-    - not is_dev_machine
-
-- name: add server_domain to LOCALLY_ALLOWED_HOSTS
-  replace:
-    path: "{{ server_root_dir }}/project/local_settings.py"
-    regexp: ^LOCALLY_ALLOWED_HOSTS *= *\[\n
-    replace: LOCALLY_ALLOWED_HOSTS = [\n    '{{ server_domain }}',\n
-    validate: bash -c "cd {{ server_root_dir }} && pipenv run python %s"  # It returns 1 on "invalid syntax"
-  register: add_allowed_host
-  when:
-    - not is_dev_machine
-    - allowed_host_added.stdout == 'False'
-
-- name: alert if failed to add allowed host
-  fail:
-    msg: |
-      Failed to add allowed host to LOCALLY_ALLOWED_HOSTS in {{ server_root_dir }}/project/local_settings.py
-      Is LOCALLY_ALLOWED_HOSTS a list declared in multiple lines?
-  when:
-    - not is_dev_machine
-    - allowed_host_added.stdout == 'False'
-    - not add_allowed_host.changed
+- name: set production configuration on local_settings.py
+  include_tasks: prod-local-settings.yaml
+  when: not is_dev_machine
 
 # Improvement: better secret key handling (the next step is like grep,
 # and the Django command replicates "lineinfile" functionality,
