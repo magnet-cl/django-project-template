@@ -19,20 +19,37 @@ In `inventory.yaml` add each server as an entry in `all.children.remote.hosts`
 
 ## Usage
 
+### Deploy and update
+
+The two most used tasks have shortcuts.
+
 To deploy to a server, run:
 ```sh
-./deploy.sh [host-or-group]
+ansible/deploy.sh [host-or-group]
 ```
 with host-or-group from inventory. If not specified, it targets the `remote` group.
 
+Example: `ansible/deploy.sh development`
+
 To update only:
 ```sh
-./update.sh [host-or-group]
+ansible/update.sh [host-or-group]
+```
+
+### Other scripts
+
+To avoid having too many files in this folder, they were placed inside `playbooks`. They are executed with the `ansible-playbook` command. In addition to the path to the playbook, two more arguments should be used:
+- An inventory file. Available servers are stored in `inventory.yaml`. Specify it with `-i inventory.yaml`.
+- A subset of the available servers. Use `-l` followed by the name of the server as declared in inventory. (It can also be a list of hosts/groups separated with commas)
+
+For example, to backup the database of the production server, run:
+```sh
+ansible-playbook -i inventory.yaml -l production playbooks/backup-db.yaml
 ```
 
 ### Working directory
 
-Please run Ansible from this directory. It can also be run from other ones, but:
+Except for the shortcut scripts, please run Ansible from this directory. It can also be run from other ones, but:
 - yaml files require a path
 - some tasks use `dirname $PWD` to get the path to the project in localhost
 
