@@ -73,7 +73,7 @@ class BaseModel(models.Model):
 
         self.__class__.objects.filter(pk=self.pk).update(**kwargs)
 
-    def to_dict(instance, fields=None, exclude=None):
+    def to_dict(instance, fields=None, exclude=None, include_m2m=True):
         """
         Returns a dict containing the data in ``instance``
 
@@ -93,16 +93,20 @@ class BaseModel(models.Model):
             if exclude and f.name in exclude:
                 continue
             if isinstance(f, models.fields.related.ManyToManyField):
-                # If the object doesn't have a primary key yet, just use an
-                # emptylist for its m2m fields. Calling f.value_from_object
-                # will raise an exception.
-                if instance.pk is None:
-                    data[f.name] = []
-                else:
-                    # MultipleChoiceWidget needs a list of pks, not objects.
-                    data[f.name] = list(
-                        f.value_from_object(instance).values_list('pk',
-                                                                  flat=True))
+                if include_m2m:
+                    # If the object doesn't have a primary key yet, just use an
+                    # emptylist for its m2m fields. Calling f.value_from_object
+                    # will raise an exception.
+                    if instance.pk is None:
+                        data[f.name] = []
+                    else:
+                        # MultipleChoiceWidget needs a list of pks, not objects
+                        data[f.name] = list(
+                            getattr(instance, f.attname).values_list(
+                                'pk',
+                                flat=True
+                            )
+                        )
             else:
                 data[f.name] = f.value_from_object(instance)
         return data
