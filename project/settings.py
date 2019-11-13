@@ -144,6 +144,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'base.middleware.RequestMiddleware',
 ]
 
 if DEBUG:
@@ -349,7 +350,7 @@ WEBPACK_LOADER = {
         "BUNDLE_DIR_NAME": "bundles/",
         "STATS_FILE": os.path.join(BASE_DIR, "webpack-stats.json"),
         "POLL_INTERVAL": 0.1,
-        "TIMEOUT": 1, # 1 second timeout for webpack compilation
+        "TIMEOUT": 1,  # 1 second timeout for webpack compilation
         "IGNORE": [r'.+\.hot-update.js', r'.+\.map']
     }
 }

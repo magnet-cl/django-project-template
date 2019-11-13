@@ -17,6 +17,7 @@ from django.utils.translation import ugettext_lazy as _
 from base import utils
 from base.managers import BaseManager
 from base.serializers import ModelEncoder
+from base.mixins import AuditMixin
 
 
 # public methods
@@ -38,7 +39,7 @@ def file_path(self, name):
     )
 
 
-class BaseModel(models.Model):
+class BaseModel(AuditMixin, models.Model):
     """ An abstract class that every model should inherit from """
     BOOLEAN_CHOICES = ((False, _('No')), (True, _('Yes')))
 
