@@ -1,4 +1,4 @@
-from audit.middleware import RequestMiddleware
+from base.middleware import RequestMiddleware
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 from base.utils import get_our_models
