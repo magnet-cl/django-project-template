@@ -1,5 +1,5 @@
 # django-project-template-py3
-A project template for Django 1.11 in Python 3
+A project template for Django 2.2 in Python 3
 
 [![CircleCI](https://circleci.com/gh/magnet-cl/django-project-template-py3.svg?style=svg)](https://circleci.com/gh/magnet-cl/django-project-template-py3)
 [![CircleCI](https://circleci.com/gh/magnet-cl/django-project-template-py3/tree/testing.svg?style=svg)](https://circleci.com/gh/magnet-cl/django-project-template-py3/tree/testing)
