@@ -92,7 +92,9 @@ class BaseModel(models.Model):
                 continue
             if exclude and f.name in exclude:
                 continue
-            if isinstance(f, models.fields.related.ManyToManyField):
+            if isinstance(f, models.fields.related.ForeignKey):
+                data[f.name + '_id'] = f.value_from_object(instance)
+            elif isinstance(f, models.fields.related.ManyToManyField):
                 if include_m2m:
                     # If the object doesn't have a primary key yet, just use an
                     # emptylist for its m2m fields. Calling f.value_from_object
@@ -101,7 +103,7 @@ class BaseModel(models.Model):
                         data[f.name] = []
                     else:
                         # MultipleChoiceWidget needs a list of pks, not objects
-                        data[f.name] = list(
+                        data[f.name + '_ids'] = list(
                             getattr(instance, f.attname).values_list(
                                 'pk',
                                 flat=True
