@@ -11,6 +11,10 @@ from django.utils.translation import ugettext_lazy as _
 
 class AuditMixin(object):
     def save_log(self, user, message, ACTION):
+
+        if not user.id:
+            return
+
         log = LogEntry.objects.create(
             user_id=user.id,
             content_type_id=ContentType.objects.get_for_model(self).id,
@@ -20,12 +24,11 @@ class AuditMixin(object):
             change_message=message
         )
 
-    def save_addition(self, user):
-        message = _('Created')
+    def save_addition(self, user, message):
         self.save_log(user, message, ADDITION)
 
-    def save_edition(self, user):
-        self.save_log(user, _('Updated'), CHANGE)
+    def save_edition(self, user, message):
+        self.save_log(user, message, CHANGE)
 
     def save_deletion(self, user):
         self.save_log(user, _('Deleted'), DELETION)

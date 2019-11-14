@@ -44,19 +44,19 @@ Use the custom app template to create your apps:
 
 ## Javascript stuff
 
-on development run on separated console: 
+on development run on separated console:
 
     npm run start
-    
+
 for generate production bundle run:
 
     npm run build
-    
+
 ### webpack
 
-The project use `django-webpack-loader` and `webpack` for js, scss and assets with 
+The project use `django-webpack-loader` and `webpack` for js, scss and assets with
 `babel` for es6+ support and `dart-sass` for new features of scss support.
-    
+
 ### Select2
 
 The project comes with select2 by default for all selects. If you wish to
@@ -94,3 +94,12 @@ on wait
 * App.utils.thousandSeparator(): for a given number in text, returns the text
 with thoushand separators (for spanish)
 on wait
+
+### Logging Database Entries
+
+The project generates a LogEntry object for every action of a user that create, delete
+or updates an apps model's object. If field is updated the log will store the initial
+and final state of the field. The log will not store any modification made to a
+many2many field. If the a model has a sensitive field that you don want to show in the
+log, you can add it to 'sensitive_fields' in base/signals.py.
+The project doesn't log any action made through automatic tasks.

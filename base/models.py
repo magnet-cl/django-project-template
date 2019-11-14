@@ -59,11 +59,9 @@ class BaseModel(AuditMixin, models.Model):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Disclaimer: Saving the many to many relations implies one more query
-        # for each many to many field of the model.
         self.original_dict = self.to_dict(
             exclude=['created_at', 'updated_at', 'original_dict', 'id'],
-            include_m2m=True,
+            include_m2m=False,
         )
 
     # using BaseManager
