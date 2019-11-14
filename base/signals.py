@@ -18,7 +18,7 @@ def audit_log(sender, instance, created, raw, update_fields, **kwargs):
         message = []
         message.append({'Created': instance.to_dict(
                 exclude=['created_at', 'updated_at', 'original_dict', 'id'],
-                include_m2m=True,
+                include_m2m=False,
         )})
         instance.save_addition(user, message)
     elif not raw:
@@ -27,7 +27,7 @@ def audit_log(sender, instance, created, raw, update_fields, **kwargs):
         original_dict = instance.original_dict
         actual_dict = instance.to_dict(
                 exclude=['created_at', 'updated_at', 'original_dict', 'id'],
-                include_m2m=True,
+                include_m2m=False,
         )
 
         for key in original_dict.keys():
