@@ -109,3 +109,4 @@ assets/bundles
 webpack-stats.json
 
 .vscode/
+*.dump
