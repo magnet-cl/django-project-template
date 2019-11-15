@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-
+# standard imports
 import threading
 
 

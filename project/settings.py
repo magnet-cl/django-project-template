@@ -100,7 +100,7 @@ INSTALLED_APPS = [
     'django.contrib.postgres',
 
     # required apps
-    'base',
+    'base.apps.BaseConfig',
     'users',
 
     # external
@@ -373,3 +373,17 @@ if DEBUG:
     REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'].append(
         'rest_framework.renderers.BrowsableAPIRenderer',
     )
+
+# The change's information of this fields will be ignored in the logs
+SENSITIVE_FIELDS = [
+    'password',
+]
+
+# This fields will be ignored in the logs
+IGNORED_FIELDS = [
+    'created_at',
+    'updated_at',
+    'original_dict',
+    'id',
+    'date_joined',
+]

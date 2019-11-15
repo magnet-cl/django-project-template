@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """ Models for the base application.
 
 All apps should use the BaseModel as parent for all models
@@ -12,6 +11,7 @@ from django.contrib.sites.models import Site
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
+from django.conf import settings
 
 # base
 from base import utils
@@ -60,7 +60,7 @@ class BaseModel(AuditMixin, models.Model):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.original_dict = self.to_dict(
-            exclude=['created_at', 'updated_at', 'original_dict', 'id'],
+            exclude=settings.IGNORED_FIELDS,
             include_m2m=False,
         )
 

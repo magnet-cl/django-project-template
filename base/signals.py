@@ -1,23 +1,28 @@
+# base imports
 from base.middleware import RequestMiddleware
+from base.utils import get_our_models
+
+# django imports
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
-from base.utils import get_our_models
+from django.conf import settings
 
 
 @receiver(post_save)
 def audit_log(sender, instance, created, raw, update_fields, **kwargs):
-    # Lista de los modelos que se requienran que escuche
+    # only listening models created in our apps
     if sender not in get_our_models():
         return
 
-    sensitive_fields = ['password', ]
+    sensitive_fields = settings.SENSITIVE_FIELDS
+    ignored_fields = settings.IGNORED_FIELDS
 
     user = get_user()
 
     if created:
         message = []
         message.append({'Created': instance.to_dict(
-                exclude=['created_at', 'updated_at', 'original_dict', 'id'],
+                exclude=ignored_fields + sensitive_fields,
                 include_m2m=True,
         )})
         instance.save_addition(user, message)
@@ -26,7 +31,7 @@ def audit_log(sender, instance, created, raw, update_fields, **kwargs):
         changed_field_labels = {}
         original_dict = instance.original_dict
         actual_dict = instance.to_dict(
-                exclude=['created_at', 'updated_at', 'original_dict', 'id'],
+                exclude=ignored_fields,
                 include_m2m=False,
         )
 
@@ -46,7 +51,7 @@ def audit_log(sender, instance, created, raw, update_fields, **kwargs):
 
 @receiver(post_delete)
 def audit_delete_log(sender, instance, **kwargs):
-    # Lista de los modelos que se requienran que escuche
+    # only listening models created in our apps
     if sender not in get_our_models():
         return
     user = get_user()

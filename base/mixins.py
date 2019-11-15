@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-
+# django imports
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.admin.models import LogEntry
 from django.contrib.admin.models import ADDITION
@@ -9,13 +8,13 @@ from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
 
-class AuditMixin(object):
+class AuditMixin:
     def save_log(self, user, message, ACTION):
 
         if not user.id:
             return
 
-        log = LogEntry.objects.create(
+        LogEntry.objects.create(
             user_id=user.id,
             content_type_id=ContentType.objects.get_for_model(self).id,
             object_id=self.id,
