@@ -269,10 +269,12 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(PROJECT_DIR, 'media/')
 MEDIA_URL = '/uploads/'
 
-STATICFILES_DIRS = [
-    # Webpack bundles
-    ('bundles', os.path.join(BASE_DIR, 'assets/bundles')),
-]
+if not DEBUG:
+    STATICFILES_DIRS = [
+        # Webpack bundles
+        ('bundles', os.path.join(BASE_DIR, 'assets/bundles')),
+    ]
+
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
