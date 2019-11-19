@@ -4,7 +4,7 @@
   "repository": "https://github.com/magnet-cl/django-project-template-py3",
   "author": "Magnet S.P.A.",
   "scripts": {
-    "start": "HOT_RELOAD=1 webpack-dev-server --config webpack.dev.js",
+    "start": "mkdir -p assets/bundles/ && HOT_RELOAD=1 webpack-dev-server --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js"
   },
   "dependencies": {

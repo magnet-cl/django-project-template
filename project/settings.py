@@ -269,6 +269,10 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(PROJECT_DIR, 'media/')
 MEDIA_URL = '/uploads/'
 
+STATICFILES_DIRS = [
+    # Webpack bundles
+    ('bundles', os.path.join(BASE_DIR, 'assets/bundles')),
+]
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
@@ -349,7 +353,7 @@ WEBPACK_LOADER = {
         "BUNDLE_DIR_NAME": "bundles/",
         "STATS_FILE": os.path.join(BASE_DIR, "webpack-stats.json"),
         "POLL_INTERVAL": 0.1,
-        "TIMEOUT": 1, # 1 second timeout for webpack compilation
+        "TIMEOUT": 1,  # 1 second timeout for webpack compilation
         "IGNORE": [r'.+\.hot-update.js', r'.+\.map']
     }
 }
