@@ -64,7 +64,7 @@ def update_server():
         run('pipenv sync')
 
         print(green('installing npm packages'))
-        run('npm install')
+        run('npm ci')
 
         print(green('compiling webpack packages'))
         run('npm run build')
