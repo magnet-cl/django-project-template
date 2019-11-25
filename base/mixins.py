@@ -11,7 +11,7 @@ from django.utils.translation import ugettext_lazy as _
 class AuditMixin:
     def save_log(self, user, message, ACTION):
 
-        if not user:
+        if not user or not user.id:
             return
 
         LogEntry.objects.create(
