@@ -92,25 +92,14 @@ html(lang="es")
     //if lt IE 9
       script(src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js")
 
-    if debug
-      // use local verions to allow development without internet
-      link(
-        href="{% static 'select2/dist/css/select2.min.css' %}",
-        rel="stylesheet"
-      )
-      link(
-        href="{% static 'tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4.min.css' %}",
-        rel="stylesheet"
-      )
-    else
-      link(
-        href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/css/select2.min.css",
-        rel="stylesheet"
-      )
-      link(
-        href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css",
-        rel="stylesheet"
-      )
+    link(
+      href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/css/select2.min.css",
+      rel="stylesheet"
+    )
+    link(
+      href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css",
+      rel="stylesheet"
+    )
     {% render_bundle 'main' 'css' %}
 
     block stylesheets
@@ -151,7 +140,7 @@ html(lang="es")
           .d-flex.justify-content-between.flex-wrap.flex-md-nowrap.align-items-center.pb-2.mb-3.border-bottom
             h1.display-4 {{ title }}
             .btn-toolbar.mb-2.mb-md-0
-              .btn-group.mr-2
+              .btn-group
                 block options
         block content
 
@@ -162,40 +151,36 @@ html(lang="es")
 
     block uncompressible_javascripts
 
-    if debug
-      script(src="{% static 'jquery/dist/jquery.js' %}")
-      script(src="{% static 'popper.js/dist/umd/popper.js' %}")
-      script(src="{% static 'bootstrap/dist/js/bootstrap.js' %}")
-      script(src="{% static 'moment/min/moment-with-locales.js' %}")
-      script(src="{% static 'select2/dist/js/select2.js' %}")
-      script(src="{% static 'tempusdominus-bootstrap-4/build/js/tempusdominus-bootstrap-4.js' %}")
-    else
-      script(src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
-      script(
-        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/popper.min.js",
-        integrity="sha256-1XfFQxRfNvDJW3FdZ+xlo2SbodG2+rFArw6XsVzu3bc=",
-        crossorigin="anonymous"
-      )
-      script(
-        src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js",
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM",
-        crossorigin="anonymous"
-      )
-      script(
-        src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js",
-        integrity="sha256-AdQN98MVZs44Eq2yTwtoKufhnU+uZ7v2kXnD5vqzZVo=",
-        crossorigin="anonymous"
-      )
-      script(
-        src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js",
-        integrity="sha256-GHC3xFbrevQ0aRcWg5JElUOncXYXxTtMOuA74cWAPTw=",
-        crossorigin="anonymous"
-      )
-      script(
-        src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js",
-        integrity="sha256-z0oKYg6xiLq3yJGsp/LsY9XykbweQlHl42jHv2XTBz4=",
-        crossorigin="anonymous"
-      )
+    script(
+      src="https://code.jquery.com/jquery-3.4.1.min.js",
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=",
+      crossorigin="anonymous"
+    )
+    script(
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js",
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1",
+      crossorigin="anonymous"
+    )
+    script(
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js",
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM",
+      crossorigin="anonymous"
+    )
+    script(
+      src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js",
+      integrity="sha256-AdQN98MVZs44Eq2yTwtoKufhnU+uZ7v2kXnD5vqzZVo=",
+      crossorigin="anonymous"
+    )
+    script(
+      src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js",
+      integrity="sha256-GHC3xFbrevQ0aRcWg5JElUOncXYXxTtMOuA74cWAPTw=",
+      crossorigin="anonymous"
+    )
+    script(
+      src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js",
+      integrity="sha256-z0oKYg6xiLq3yJGsp/LsY9XykbweQlHl42jHv2XTBz4=",
+      crossorigin="anonymous"
+    )
 
     // templates TODO: this is an example of pug templates, delete this
     script(type="text/pug", src="{% static 'templates/users/list.pug' %}")

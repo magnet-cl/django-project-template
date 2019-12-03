@@ -73,7 +73,7 @@ class BaseModel(models.Model):
 
         self.__class__.objects.filter(pk=self.pk).update(**kwargs)
 
-    def to_dict(instance, fields=None, exclude=None):
+    def to_dict(instance, fields=None, exclude=None, include_m2m=True):
         """
         Returns a dict containing the data in ``instance``
 
@@ -92,17 +92,23 @@ class BaseModel(models.Model):
                 continue
             if exclude and f.name in exclude:
                 continue
-            if isinstance(f, models.fields.related.ManyToManyField):
-                # If the object doesn't have a primary key yet, just use an
-                # emptylist for its m2m fields. Calling f.value_from_object
-                # will raise an exception.
-                if instance.pk is None:
-                    data[f.name] = []
-                else:
-                    # MultipleChoiceWidget needs a list of pks, not objects.
-                    data[f.name] = list(
-                        f.value_from_object(instance).values_list('pk',
-                                                                  flat=True))
+            if isinstance(f, models.fields.related.ForeignKey):
+                data[f.name + '_id'] = f.value_from_object(instance)
+            elif isinstance(f, models.fields.related.ManyToManyField):
+                if include_m2m:
+                    # If the object doesn't have a primary key yet, just use an
+                    # emptylist for its m2m fields. Calling f.value_from_object
+                    # will raise an exception.
+                    if instance.pk is None:
+                        data[f.name] = []
+                    else:
+                        # MultipleChoiceWidget needs a list of pks, not objects
+                        data[f.name + '_ids'] = list(
+                            getattr(instance, f.attname).values_list(
+                                'pk',
+                                flat=True
+                            )
+                        )
             else:
                 data[f.name] = f.value_from_object(instance)
         return data
@@ -130,3 +136,39 @@ class BaseModel(models.Model):
         absolute_url = self.get_absolute_url()
         site = Site.objects.get_current().domain
         return 'http://{site}{path}'.format(site=site, path=absolute_url)
+
+
+class OrderableModel(BaseModel):
+    display_order = models.PositiveSmallIntegerField(
+        _('display order'),
+        default=0,
+    )
+
+    class Meta:
+        abstract = True
+        ordering = ('display_order',)
+
+    def _set_display_order(self):
+        '''
+        When adding a new object, set display_order field
+        counting all objects plus 1
+        '''
+        obj_count = self.__class__.objects.count()
+        self.display_order = obj_count + 1
+
+    @classmethod
+    def reorder_display_order(cls):
+        '''
+        Take all objects and change order value
+        '''
+        objects = cls.objects.all()
+        order = 0
+        for obj in objects:
+            obj.display_order = order
+            obj.save()
+            order += 1
+
+    def save(self, *args, **kwargs):
+        if self.pk is None:
+            self._set_display_order()
+        super().save(*args, **kwargs)

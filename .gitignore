@@ -107,3 +107,5 @@ propagate.sh
 
 assets/bundles
 webpack-stats.json
+
+*.dump

@@ -1,5 +1,5 @@
 # django-project-template-py3
-A project template for Django 1.11 in Python 3
+A project template for Django 2.2 in Python 3
 
 [![CircleCI](https://circleci.com/gh/magnet-cl/django-project-template-py3.svg?style=svg)](https://circleci.com/gh/magnet-cl/django-project-template-py3)
 [![CircleCI](https://circleci.com/gh/magnet-cl/django-project-template-py3/tree/testing.svg?style=svg)](https://circleci.com/gh/magnet-cl/django-project-template-py3/tree/testing)
@@ -44,28 +44,27 @@ Use the custom app template to create your apps:
 
 ## Javascript stuff
 
-on development run on separated console: 
+on development run on separated console:
 
     npm run start
-    
+
 for generate production bundle run:
 
     npm run build
-    
+
 ### webpack
 
-The project use `django-webpack-loader` and `webpack` for js, scss and assets with 
+The project use `django-webpack-loader` and `webpack` for js, scss and assets with
 `babel` for es6+ support and `dart-sass` for new features of scss support.
-    
+
 ### Select2
 
 The project comes with select2 by default for all selects. If you wish to
 disable this feature add the class .js-not-select2 to the select
 
-### eonasdan-bootstrap-datetimepicker
+### tempusdominus-bootstrap-4
 
-The project comes with eonasdan-bootstrap-datetimepicker by default for all
-inputs that have the .datetime-picker class.
+The project comes with [Tempus Dominus Bootstrap 4](https://tempusdominus.github.io/bootstrap-4/) by default for all inputs that have the `.datetimepicker-input` class.
 
 ### disable on submit
 
