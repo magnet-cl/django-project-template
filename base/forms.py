@@ -21,29 +21,31 @@ class BaseModelForm(BetterModelForm):
         super(BaseModelForm, self).__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
             attrs = field.widget.attrs
+            if 'class' not in attrs:
+                attrs['class'] = ''
 
             if isinstance(field.widget, forms.widgets.DateTimeInput):
-                attrs['class'] = 'datetimepicker-input form-control'
+                attrs['class'] += ' datetimepicker-input form-control'
                 attrs['data-format'] = 'DD/MM/YYYY HH:mm:s'
                 attrs['data-toggle'] = 'datetimepicker'
 
             elif isinstance(field.widget, forms.widgets.DateInput):
-                attrs['class'] = 'datetimepicker-input form-control'
+                attrs['class'] += ' datetimepicker-input form-control'
                 attrs['data-format'] = 'DD/MM/YYYY'
                 attrs['data-toggle'] = 'datetimepicker'
 
             elif isinstance(field.widget, forms.widgets.TimeInput):
-                attrs['class'] = 'datetimepicker-input form-control'
+                attrs['class'] += ' datetimepicker-input form-control'
                 attrs['data-format'] = 'HH:mm:s'
                 attrs['data-toggle'] = 'datetimepicker'
 
             elif isinstance(field.widget, forms.widgets.FileInput):
-                field.widget.attrs['class'] = 'form-control is-invalid'
+                attrs['class'] += ' form-control is-invalid'
 
             elif isinstance(field.widget, forms.widgets.CheckboxInput):
-                field.widget.attrs['class'] = 'form-check-input'
+                attrs['class'] += ' form-check-input'
             else:
-                field.widget.attrs['class'] = 'form-control'
+                attrs['class'] += ' form-control'
 
     def hide_field(self, field_name):
         self.fields[field_name].widget = HiddenInput()
