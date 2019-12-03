@@ -3,26 +3,26 @@
 
 - if field.is_hidden
   div
-    {{field}}
-- else 
+    {{ field }}
+- else
   .row
     .col-sm-6
       div(
         class="{% if field.errors %}has-error{% endif %} {% if field.field.is_checkbox %} form-check {% endif %} {% if not field.field.is_radio_button %} form-group {% endif %}"
       )
         if field.field.is_checkbox or field.field.is_radio_button
-          {{field }}
-          label
-            {{field.label}}
+          {{ field }}
+          label(for="id_{{ field.name }}")
+            {{ field.label }}
         else
-          label(for="id_{{field.name}}")
-            | {{field.label}}
+          label(for="id_{{ field.name }}")
+            | {{ field.label}}
             - if not field.field.required
               | ({% trans 'optional' %})
           {{ field }}
 
         if field.errors
-          span.text-danger.text-right(for="id_{{field.name}}")
+          span.text-danger.text-right(for="id_{{ field.name }}")
             {% for error in field.errors %}
             | {{ error }}
             {% endfor %}
@@ -31,10 +31,9 @@
     if field.help_text
       .col-sm-6
         .form-group
-          div 
+          div
             label &nbsp;
           small.form-text.text-muted(
-            id="{{field.name}}_help"
+            id="{{ field.name }}_help"
           )
               {{ field.help_text|safe }}
-{{ field.help_text|safe }}
