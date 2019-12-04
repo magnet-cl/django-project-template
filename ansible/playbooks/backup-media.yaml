@@ -1,0 +1,10 @@
+- name: backup Media
+  hosts: all
+  pre_tasks:
+    - name: import check Ansible version task
+      import_tasks: utils/assert-ansible-version.yaml
+  tasks:
+    - name: backup
+      import_role:
+        name: media
+        tasks_from: backup

@@ -1,0 +1,97 @@
+- name: add Python 3.6 PPA to Ubuntu <18.04
+  apt_repository:
+    repo: ppa:deadsnakes/ppa
+  when:
+    - ansible_distribution == 'Ubuntu'
+    - ansible_distribution_version is version('18.04', '<')
+  become: yes
+
+- name: install Python and other dependencies for Ubuntu
+  apt:
+    name:
+      - python3.6
+      - python3.6-dev
+      - python3-pip
+      - python-setuptools   # Required for Ansible, not for the project
+      - build-essential
+      - libjpeg-dev
+      - zlib1g-dev
+      - gettext
+      - zip
+      - unzip
+    state: present
+    update_cache: yes
+    cache_valid_time: "{{ 60 * 60 * 12 }}"
+  become: yes
+  when: ansible_distribution == 'Ubuntu'
+
+- name: install Python and other dependencies for CentOS
+  yum:
+    name: "{{ item }}"
+    state: present
+    # update_cache: yes
+    # cache_valid_time: not implemented :(  https://github.com/ansible/ansible/issues/30148
+  become: yes
+  loop:
+    # Install additional repositories first, that provide some of the following packages
+    - - epel-release
+      - https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+    - - python36-pip          # Includes Python 3.6 and Setuptools
+      - python-setuptools     # Required for Ansible, not for the project
+      - "@Development tools"  # build-essential
+      - libjpeg-devel
+      - zlib-devel
+      - gettext
+      - zip
+      - unzip
+  when: ansible_distribution == 'CentOS'
+
+- name: dependencies for Mac OS X
+  # Assume Homebrew, Pipenv and its virtualenv, and PostgreSQL are already installed/created/configured.
+  # Only add additional non-standard requirements here.
+  # Improvement: better OSX support.
+  homebrew:
+    name:
+      - gettext
+    state: present
+  when: ansible_distribution == 'MacOSX'
+
+- name: setup Pipenv
+  import_tasks: pipenv.yaml
+
+- name: create local_settings from default
+  command: cp local_settings.py.default local_settings.py
+  args:
+    chdir: "{{ server_root_dir }}/project"
+    creates: local_settings.py    # It's copied only when local_settings doesn't exist
+  register: local_settings_create
+
+- name: set production configuration on local_settings.py
+  include_tasks: prod-local-settings.yaml
+  when: not is_dev_machine
+
+# Improvement: better secret key handling (the next step is like grep,
+# and the Django command replicates "lineinfile" functionality,
+# and settings.py could just load a gitignored file...)
+- name: check if secret key is unset
+  find:
+    contains: ^SECRET_KEY *= *['"]CHANGE ME['"]
+    paths:
+      - "{{ server_root_dir }}/project"
+    patterns:
+      - local_settings.py
+  register: secret_key_unset
+
+- name: set secret key with Django
+  django_manage:
+    command: generatesecretkey
+    app_path: "{{ server_root_dir }}"
+    virtualenv: "{{ venv.stdout }}"
+  when: secret_key_unset.files
+  changed_when: true
+
+- name: install Node.js and npm dependencies
+  import_tasks: node.yaml
+
+- name: setup database
+  import_tasks: db.yaml

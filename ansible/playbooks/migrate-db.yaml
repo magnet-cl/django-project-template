@@ -1,0 +1,4 @@
+- name: migrate DB
+  vars:
+    django_command: migrate
+  import_playbook: run-django-command.yaml

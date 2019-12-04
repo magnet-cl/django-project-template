@@ -1,0 +1,19 @@
+- name: install Ansible requirements for seboolean
+  package:
+    name:
+      - libselinux-python
+      - libsemanage-python
+    state: present
+  become: yes
+
+- name: set required SELinux booleans for nginx and user content
+  # https://stackoverflow.com/questions/23948527/13-permission-denied-while-connecting-to-upstreamnginx
+  seboolean:
+    name: "{{ item }}"
+    state: yes
+    persistent: yes
+  become: yes
+  loop:
+    - httpd_can_network_connect
+    - httpd_read_user_content
+    - httpd_enable_homedirs

@@ -1,189 +1,79 @@
 #!/bin/bash
+set -e
 
-function print_green(){
-    echo -e "\033[32m$1\033[39m"
-}
+green="\033[0;32m"
+cyan="\033[0;36m"
+yellow="\033[0;33m"
+red="\033[0;31m"
+default="\033[0m"
 
-function replace(){
-    echo $1 $2
-    if [ "$OS" == "Darwin" ] ; then
-        echo $i|sed -i '' $1 $2
-    else
-        echo $i|sed -i $1 $2
-    fi
-}
-
-INSTALL_SYSTEM_DEPENDENCIES=true
-PIPENV_INSTALL=true
-INSTALL_NPM=true
-TRANSLATE=true
-BUILD_JAVASCRIPT=true
-
-#!/bin/sh
-
-case "$(uname -s)" in
-
-   Darwin)
-     OS='Darwin'
-     ;;
-
-   Linux)
-     OS='Linux'
-     ;;
-
-   *)
-    echo "OS not supported"
-    exit
-    ;;
-esac
-
-
-while getopts “yapbj” OPTION
-do
-    case $OPTION in
-        a)
-             print_green "only install aptitude"
-             INSTALL_SYSTEM_DEPENDENCIES=true
-             PIPENV_INSTALL=false
-             INSTALL_NPM=false
-             TRANSLATE=false
-             BUILD_JAVASCRIPT=false
-             ;;
-        p)
-             print_green "only pip install"
-             INSTALL_SYSTEM_DEPENDENCIES=false
-             PIPENV_INSTALL=true
-             INSTALL_NPM=false
-             TRANSLATE=false
-             BUILD_JAVASCRIPT=false
-             ;;
-        b)
-             print_green "only bower install"
-             INSTALL_SYSTEM_DEPENDENCIES=false
-             PIPENV_INSTALL=false
-             INSTALL_NPM=false
-             TRANSLATE=false
-             BUILD_JAVASCRIPT=false
-             ;;
-        y)
-             print_green "only npm install"
-             INSTALL_SYSTEM_DEPENDENCIES=false
-             PIPENV_INSTALL=false
-             INSTALL_NPM=true
-             TRANSLATE=false
-             BUILD_JAVASCRIPT=false
-             ;;
-        j)
-             print_green "only npm run build"
-             INSTALL_SYSTEM_DEPENDENCIES=false
-             PIPENV_INSTALL=false
-             INSTALL_NPM=false
-             TRANSLATE=false
-             BUILD_JAVASCRIPT=true
-             ;;
-        ?)
-             print_green "fail"
-             exit
-             ;;
-     esac
-done
-
-if  $INSTALL_SYSTEM_DEPENDENCIES ; then
-    if [ "$OS" == "Darwin" ] ; then
-        print_green "Installing pyenv"
-        brew install pyenv
-
-        print_green "Installing pipenv"
-        brew install pipenv
-
-        print_green "Installing gettext"
-        brew install gettext
-    else
-        print_green "Installing python 3.6"
-        if [[ ! $(lsb_release -a) =~ .*Ubuntu.18.04.* ]]
-        then
-            sudo add-apt-repository ppa:deadsnakes/ppa
-            sudo apt-get update
-        fi
-        sudo apt-get -y install python3.6 python3.6-dev
-
-        print_green "Installing aptitude dependencies"
-        sudo apt-get -y install python3-pip build-essential
-
-        print_green "Installing image libraries"
-        # Install image libs
-        sudo apt-get -y install libjpeg-dev zlib1g-dev
-
-        print_green "Installing translation libraries"
-        sudo apt-get -y install gettext
-
-        print_green "Installing pipenv"
-        sudo -H pip install pipenv
-    fi
-
-    print_green "Are you going to use postgre for your database? [Y/n]"
-    read INSTALL_POSTGRE
-
-    if [[ "$INSTALL_POSTGRE" == "Y" ||  "$INSTALL_POSTGRE" == "y" ||  "$INSTALL_POSTGRE" == "" ]]
-    then
-        INSTALL_POSTGRE=true
-        if [ "$OS" == "Darwin" ] ; then
-            if brew ls --versions postgresql > /dev/null ; then
-                echo 'postgresql is already installed'
-            else
-                brew install postgresql
-            fi
-        else
-            ./install/postgres.sh
-        fi
-    fi
-
-    viertual_env_directory=`pipenv --venv`
-    if [ ! -d "$viertual_env_directory" ]; then
-        print_green "set a new python 3.6 project with pipenv"
-        pipenv --python 3.6
-    fi
+### Install Ansible
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  if ! [[ -f ~/.ansible.cfg ]]; then
+    blank_cfg=1
+  fi
+else
+  if ! [[ -f /etc/ansible/ansible.cfg ]]; then
+    blank_cfg=1
+  fi
 fi
 
-if  $PIPENV_INSTALL ; then
-    print_green "Installing python requirements with pipenv defined on Pipfile"
+if ! command -v ansible >/dev/null; then
+  echo -e "${green}Installing Ansible${default}"
+  # https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html
 
-    # install python requirements
-    pipenv sync
-fi
-
-# create the local_settings file if it does not exist
-if [ ! -f ./project/settings/local_settings.py ] ; then
-    print_green "Generating local settings"
-
-    cp project/local_settings.py.default project/local_settings.py
-
-    if [ INSTALL_POSTGRE ] ; then
-        replace "s/database-name/${PWD##*/}/g" project/local_settings.py
-
-        print_green "remember to configure in project/local_setings.py your database"
-    else
-        replace "s/postgresql_psycopg2/sqlite3/g" project/local_settings.py
-
-        replace "s/database-name/\/tmp/${PWD##*/}.sql/g" project/local_settings.py
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    if ! command -v brew >/dev/null; then
+      echo -e "${red}Error: Homebrew is not installed (https://brew.sh/#install)${default}"
+      exit 1
     fi
+
+    # Install with Homebrew instead of pip because:
+    #  - pip could not be installed
+    #  - pip could install Ansible somewhere not in PATH
+    brew install ansible
+  else
+    sudo apt update
+    sudo apt install -y software-properties-common
+    sudo apt-add-repository -y ppa:ansible/ansible
+    sudo apt install -y ansible
+  fi
 fi
+# Improvement: upgrade if version is too old
 
-# Change the project/settings.py file if it contains the CHANGE ME string
-if grep -q "CHANGE ME" "project/local_settings.py"; then
-    print_green "Generate secret key"
 
-    # change the SECRET_KEY value on project settings
-    pipenv run python manage.py generatesecretkey
+### Mac OS X warning
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  echo
+  echo -e "${yellow}Note: quickstart support on Mac OS X is incomplete, because we don't use it too much, and Python configuration is a mess (https://xkcd.com/1987). So you must manually:"
+  #  - Install Homebrew -- already checked above
+  # shellcheck disable=SC2016
+  echo -e '  - install and configure PostgreSQL. This worked for me: brew install postgresql && brew services start postgresql && createdb $USER'
+  echo -e "  - create the Pipenv virtualenv: pipenv --python 3.6    (suggestion: use pyenv)"
+  echo -e "$default"
 fi
 
 
-if  $INSTALL_NPM ; then
-    print_green "Installing npm dependencies"
+### Install roles and run Ansible
+cd "$(dirname "$0")/ansible"
 
-    # package.json modification
-    replace "s/NAME/${PWD##*/}/g" package.json
-    replace "s/HOMEPAGE/https:\/\/bitbucket.org\/magnet-cl\/${PWD##*/}/g" package.json
+# Without --force it never updates (just warns), but with --force it downloads every time...
+ansible-galaxy install -r requirements.yaml
 
-    npm install
+if sudo --non-interactive true 2>/dev/null; then
+  # sudo worked without password!
+  # Let's hope it will last until Ansible finishes, so don't show the hint.
+  : # noop
+else
+  ask_become_pass="--ask-become-pass"
+  echo -e "${green}In ${cyan}BECOME password${green} you have to type your sudo password${default}"
 fi
+
+if [[ -n "$blank_cfg" ]]; then
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    ansible-playbook playbooks/human-readable-output.yaml
+  else
+    ansible-playbook $ask_become_pass playbooks/human-readable-output.yaml
+  fi
+fi
+ansible-playbook --inventory inventory.yaml --limit localhost --tags quickstart $ask_become_pass playbooks/deploy.yaml

@@ -1,0 +1,102 @@
+- name: build assets for production with npm
+  command: npm run build
+  args:
+    chdir: "{{ server_root_dir }}"
+  # changed_when: ?
+  # noqa 301
+  tags: update
+
+- name: collect static files
+  django_manage:
+    command: collectstatic
+    app_path: "{{ server_root_dir }}"
+    virtualenv: "{{ venv.stdout }}"
+  tags: update
+
+- name: compile translations
+  django_manage:
+    command: compilemessages
+    app_path: "{{ server_root_dir }}"
+    virtualenv: "{{ venv.stdout }}"
+  tags: update
+
+- name: create logs directory
+  file:
+    path: /home/{{ ansible_user }}/logs
+    state: directory
+
+- name: create gunicorn configuration file
+  template:
+    src: gunicorn_conf.py.j2
+    dest: "{{ server_root_dir }}/gunicorn_conf.py"
+    validate: bash -c "cd {{ server_root_dir }} && pipenv run python %s"
+
+- name: create systemd service file
+  template:
+    src: django.service.j2
+    dest: /lib/systemd/system/{{ service_name }}
+    # validate: systemd-analyze verify %s
+    # validate broken in (at least) Ubuntu 18.04 :(  https://bugs.launchpad.net/ubuntu-manpage-repository/+bug/1817627
+  become: yes
+
+- name: enable and restart systemd service
+  systemd:
+    name: "{{ service_name }}"
+    enabled: yes
+    state: restarted
+    # First I thought of restarting only on git_result.changed,
+    # but if the playbook is interrupted after Git and before this task,
+    # maybe some tasks also need a restart, and changes are not currently detected
+    # (for example "npm run build" and collectstatic).
+  become: yes
+  tags: update
+
+- name: ensure service started without error
+  service_facts:
+  register: services_state
+  failed_when: services_state.ansible_facts.services[service_name].state != 'running'
+  tags: update
+
+- name: make a test request to Django (bypassing nginx)
+  uri:
+    url: http://localhost:8000
+    force: yes  # ignore cache
+  tags: update
+
+- name: install and configure nginx
+  include_role:
+    name: geerlingguy.nginx.magnet-fork
+    apply:
+      become: true
+  vars:
+    nginx_vhosts:
+      - template: nginx.j2
+        # By convention, site files end in .conf on CentOS but not on Ubuntu:
+        filename: "{{ project_name + ('.conf' if ansible_distribution == 'CentOS' else '') }}"
+        overwrite: no   # Don't overwrite nginx config that has ssl set up
+        server_name: _  # (unused but playbook crashes without it)
+    nginx_remove_default_vhost: yes   # Remove "Welcome to nginx!" page
+
+- name: install memcached
+  include_role:
+    name: geerlingguy.memcached
+    apply:
+      become: true
+  # vars: none, use default configuration.
+
+- name: configure SELinux
+  include_tasks: selinux.yaml
+  when: ansible_selinux.mode | default('permissive') == 'enforcing'
+
+- name: solve CentOS-nginx-home restriction
+  include_tasks: centos-nginx.yaml
+  when: ansible_distribution == 'CentOS'
+
+- name: flush_handlers to reload nginx
+  meta: flush_handlers
+
+- name: make a test request through nginx
+  uri:
+    url: http://{{ server_domain }}
+    force: yes  # ignore cache
+  tags: update

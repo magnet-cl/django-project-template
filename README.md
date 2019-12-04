@@ -16,6 +16,9 @@ Add the django-project-template-py3 github repo as a remote repository:
 Pull the code from the project template:
 * `git pull template master`
 
+Configure `project_name` and `server_git_url`:
+* `vim ansible/group_vars/all.yaml`
+
 Push to your own repo
 * `git push origin master`
 
@@ -32,8 +35,8 @@ This project works with:
 * PostgreSQL >= 9.6
 
 ## Quickstart
-If you are using Ubuntu 16.04 or OS X, the script quickstart.sh installs all
-dependencies of the project. It assumes you have npm installed.
+If you are using Ubuntu 16.04/18.04 or OS X, the script `quickstart.sh` installs all
+dependencies of the project. It assumes you have Node and npm installed.
 
 * `./quickstart.sh`
 
@@ -93,3 +96,13 @@ on wait
 * App.utils.thousandSeparator(): for a given number in text, returns the text
 with thoushand separators (for spanish)
 on wait
+
+## Deployment
+
+Deployment is automated with Ansible, which is installed by quickstart. Add your servers to `ansible/inventory.yaml` and deploy with:
+* `ansible/deploy.sh <host_name>`
+
+After a successful deployment, you can update with:
+* `ansible/update.sh <host_name>`
+
+For more information and additional tasks, see `ansible/Readme.md`.

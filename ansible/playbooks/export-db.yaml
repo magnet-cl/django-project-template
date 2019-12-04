@@ -1,0 +1,163 @@
+- name: init
+  hosts: all
+  gather_facts: no
+  any_errors_fatal: true
+  tasks:
+    - name: import check Ansible version task
+      import_tasks: utils/assert-ansible-version.yaml
+
+    - name: check that ansible_limit is defined
+      assert:
+        that: ansible_limit is defined
+        fail_msg: Please explicitly limit the hosts you want to target with --limit
+        quiet: yes
+      # This prevents "ERROR! 'ansible_limit' is undefined" later.
+
+    - name: check that this playbook is run against two hosts, or one together with local_dump
+      assert:
+        that: >
+          (ansible_play_hosts | length == 2 and local_dump is not defined)
+            or (ansible_play_hosts | length == 1 and local_dump is defined)
+        fail_msg: >
+          You must limit this playbook to two hosts and don't set local_dump,
+          or limit to one host and set local_dump.
+        quiet: yes
+      run_once: yes
+
+    - name: configure for remote dump
+      block:
+        - name: check that ansible_limit contains exactly one comma
+          assert:
+            that: ansible_limit is match('^[^,]+,[^,]+$')
+            fail_msg: Please use the --limit option with one comma.
+            quiet: yes
+
+        - name: set source and destination host name
+          set_fact:
+            src_host: "{{ ansible_limit | regex_replace('(.+),.+', '\\1') }}"
+            dest_host: "{{ ansible_limit | regex_replace('.+,(.+)', '\\1') }}"
+      when: ansible_play_hosts | length == 2
+
+    - name: configure for local dump
+      set_fact:
+        src_host: __local__
+        dest_host: "{{ ansible_limit }}"
+        dump_name: "{{ local_dump }}"
+      when: ansible_play_hosts | length == 1
+
+- name: confirm
+  hosts: all
+  run_once: yes
+  any_errors_fatal: yes
+  gather_facts: no
+  vars_prompt:
+    - name: confirmation
+      #     prompt: ¿Are you sure you want to replace the DB of {{ dest_host }} [y/N]?
+      # Oh crap. "'dest_host' is undefined"
+      prompt: >-
+        ¿Are you sure you want to replace the DB of
+        {{ ansible_limit if (ansible_play_hosts | length == 1) else (ansible_limit | regex_replace('.+,(.+)', '\1')) }}
+        [y/N]?
+      private: no   # Show input (this is made to input passwords)
+  tasks:
+    - name: check confirmation
+      assert:
+        that: confirmation | lower == 'y'
+        fail_msg: Confirmation failed.
+        quiet: yes
+
+- name: download DB
+  hosts: all    # Can't use a variable here, so put everything in a block and limit with "when"
+  tasks:
+    - name: download DB on source host only
+      block:
+        - name: backup
+          include_role:
+            name: db
+            tasks_from: backup
+
+        - name: download
+          include_role:
+            name: db
+            tasks_from: download
+
+        - name: convert dump_name to path
+          set_fact:
+            dump_name: "{{ inventory_hostname }}/{{ dump_name }}"
+      when: inventory_hostname == src_host
+
+- name: copy and import the dump
+  hosts: all
+  tasks:
+    - name: copy and import the dump on destination host only
+      block:
+        - name: set dump_name
+          set_fact:
+            # If the dump was downloaded, dump_name variable is set in src_host only
+            dump_name: "{{ hostvars[src_host].dump_name }}"
+          when: dump_name is not defined
+
+        - name: create dump upload tempfile
+          tempfile:
+            prefix: db_dump.
+          register: temp_dump
+
+        - name: upload dump
+          copy:
+            src: "{{ dump_name }}"
+            dest: "{{ temp_dump.path }}"
+            force: yes    # overwrite empty temp_dump
+
+        - name: create a backup before importing
+          include_role:
+            name: db
+            tasks_from: backup
+          # Note: it's "local_dump" instead of "dump_name" to avoid overriding the variable inside this role.
+
+        - name: import the dump
+          block:
+            - name: run pg_restore
+              command:
+                argv:
+                  - pg_restore
+                  - --dbname={{ project_name }}
+                  - --clean
+                  - --if-exists
+                  - --no-owner
+                  - --no-acl
+                  - --jobs=2
+                  - "{{ temp_dump.path }}"
+              register: pg_restore_result
+          rescue:
+            - name: Skip version printing
+              fail:
+                msg: Failed (see above)
+              when: >
+                src_host == '__local__'
+                  or 'could not open input file' in pg_restore_result.stderr
+
+            - name: get source version
+              command: pg_dump -V
+              delegate_to: "{{ src_host }}"
+              changed_when: false
+              register: src_version
+
+            - name: get destination version
+              command: pg_restore -V
+              changed_when: false
+              register: dest_version
+
+            - name: fail, printing versions
+              fail:
+                msg: |
+                  pg_restore failed (see above)
+                  FYI, source has "{{ src_version.stdout }}" and destination has "{{ dest_version.stdout }}"
+
+      always:
+        - name: remove dump tempfile
+          file:
+            path: "{{ temp_dump.path }}"
+            state: absent
+
+      when: inventory_hostname == dest_host or src_host == '__local__'
+        # "or" in case (inventory_hostname != dest_host == ansible_limit) because it contains comma

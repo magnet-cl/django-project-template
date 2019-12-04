@@ -1,0 +1,119 @@
+- name: init
+  hosts: all
+  gather_facts: no
+  any_errors_fatal: true
+  tasks:
+    - name: import check Ansible version task
+      import_tasks: utils/assert-ansible-version.yaml
+
+    - name: check that ansible_limit is defined
+      assert:
+        that: ansible_limit is defined
+        fail_msg: Please explicitly limit the hosts you want to target with --limit
+        quiet: yes
+      # This prevents "ERROR! 'ansible_limit' is undefined" later.
+
+    - name: check that this playbook is run against two hosts, or one together with local_archive
+      assert:
+        that: >
+          (ansible_play_hosts | length == 2 and local_archive is not defined)
+            or (ansible_play_hosts | length == 1 and local_archive is defined)
+        fail_msg: >
+          You must limit this playbook to two hosts and don't set local_archive,
+          or limit to one host and set local_archive.
+        quiet: yes
+      run_once: yes
+
+    - name: configure for remote archive
+      block:
+        - name: check that ansible_limit contains exactly one comma
+          assert:
+            that: ansible_limit is match('^[^,]+,[^,]+$')
+            fail_msg: Please use the --limit option with one comma.
+            quiet: yes
+
+        - name: set source and destination host name
+          set_fact:
+            src_host: "{{ ansible_limit | regex_replace('(.+),.+', '\\1') }}"
+            dest_host: "{{ ansible_limit | regex_replace('.+,(.+)', '\\1') }}"
+      when: ansible_play_hosts | length == 2
+
+    - name: configure for local archive
+      set_fact:
+        src_host: __local__
+        dest_host: "{{ ansible_limit }}"
+        archive_name: "{{ local_archive }}"
+      when: ansible_play_hosts | length == 1
+
+- name: confirm
+  hosts: all
+  run_once: yes
+  any_errors_fatal: yes
+  gather_facts: no
+  vars_prompt:
+    - name: confirmation
+      #     prompt: ¿Are you sure you want to replace the Media of {{ dest_host }} [y/N]?
+      # Oh crap. "'dest_host' is undefined"
+      prompt: >-
+        ¿Are you sure you want to replace the Media of
+        {{ ansible_limit if (ansible_play_hosts | length == 1) else (ansible_limit | regex_replace('.+,(.+)', '\1')) }}
+        [y/N]?
+      private: no   # Show input (this is made to input passwords)
+  tasks:
+    - name: check confirmation
+      assert:
+        that: confirmation | lower == 'y'
+        fail_msg: Confirmation failed.
+        quiet: yes
+
+- name: download archive
+  hosts: all
+  tasks:
+    - name: download archive on source host only
+      block:
+        - name: backup
+          include_role:
+            name: media
+            tasks_from: backup
+
+        - name: download
+          include_role:
+            name: media
+            tasks_from: download
+
+        - name: convert archive_name to path
+          set_fact:
+            archive_name: "{{ inventory_hostname }}/{{ archive_name }}"
+      when: inventory_hostname == src_host
+
+- name: copy and import the archive
+  hosts: all
+  tasks:
+    - name: copy and import the archive on destination host only
+      block:
+        - name: set archive_name
+          set_fact:
+            archive_name: "{{ hostvars[src_host].archive_name }}"
+          when: archive_name is not defined
+
+        - name: set media_path variable
+          set_fact:
+            media_path: "{{ server_root_dir }}/project/media"
+
+        - name: set empty media directory
+          file:
+            path: "{{ media_path }}"
+            state: "{{ item }}"
+          loop:   # https://github.com/ansible/ansible/issues/18910
+            - absent
+            - directory
+
+        - name: unpack the archive
+          unarchive:
+            src: "{{ archive_name }}"
+            dest: "{{ media_path }}"
+            remote_src: no
+            extra_opts:
+              - --strip-components=1
+
+      when: inventory_hostname == dest_host or src_host == '__local__'

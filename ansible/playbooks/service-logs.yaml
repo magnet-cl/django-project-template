@@ -1,0 +1,19 @@
+- name: show systemd Django service log
+  hosts: all
+  pre_tasks:
+    - name: import check Ansible version task
+      import_tasks: utils/assert-ansible-version.yaml
+
+  tasks:
+    - name: get logs
+      command: journalctl -u {{ service_name }}
+      become: yes
+      changed_when: False
+      register: journalctl_result
+
+    - name: show logs
+      debug:
+        var: journalctl_result.stdout_lines
+
+    # Note: realtime logs are not possible with Ansible (https://github.com/ansible/ansible/issues/3887#issuecomment-54672569)
+    # Use this instead: ssh user@host "sudo journalctl -u service_name -f"

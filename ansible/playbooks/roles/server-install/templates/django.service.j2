@@ -1,0 +1,15 @@
+[Unit]
+Description=Django instance for {{ project_name }}
+After=network.target
+
+[Service]
+User={{ ansible_user }}
+Group={{ ansible_user }}
+WorkingDirectory={{ server_root_dir }}
+ExecStart=/usr/local/bin/pipenv run gunicorn project.wsgi:application -c gunicorn_conf.py
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s TERM $MAINPID
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

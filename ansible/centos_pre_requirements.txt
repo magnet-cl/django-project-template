@@ -1,0 +1,6 @@
+TODO: delete this file when we have Magnetizer for CentOS
+
+- "LC_ALL=en_US.utf-8" in /etc/environment
+- ssh-keygen (and public key in Bitbucket)
+- ssh-keyscan -t rsa bitbucket.org >>.ssh/known_hosts
+- sudo yum install -y git

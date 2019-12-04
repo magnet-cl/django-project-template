@@ -1,0 +1,5 @@
+- name: fetch dump file
+  fetch:
+    src: db_dumps/{{ dump_name }}
+    dest: "{{ inventory_hostname }}/{{ dump_name }}"
+    flat: yes

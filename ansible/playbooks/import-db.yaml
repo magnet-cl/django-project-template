@@ -1,0 +1,71 @@
+- name: import DB
+  hosts: all
+  pre_tasks:
+    - name: import check Ansible version task
+      import_tasks: utils/assert-ansible-version.yaml
+
+    - name: check that this playbook is run against a single host
+      assert:
+        that: ansible_play_hosts | length == 1
+        fail_msg: You are trying to import the DB of several hosts at the same time.
+        quiet: yes
+
+  tasks:
+    - name: download remote dump
+      block:
+        - name: backup
+          include_role:
+            name: db
+            tasks_from: backup
+
+        - name: download
+          include_role:
+            name: db
+            tasks_from: download
+
+        - name: convert dump_name to path
+          set_fact:
+            dump_name: "{{ inventory_hostname }}/{{ dump_name }}"
+      when: local_dump is not defined
+
+    - name: import the dump
+      block:
+        - name: run pg_restore
+          delegate_to: localhost
+          #   postgresql_db:
+          # Doesn't use pg_restore >:(  (except if "target" is a .tar https://github.com/ansible/ansible/blob/stable-2.8/lib/ansible/modules/database/postgresql/postgresql_db.py#L353)
+          command:
+            argv:
+              - pg_restore
+              - --dbname={{ project_name }}
+              - --clean
+              - --if-exists
+              - --no-owner
+              - --no-acl
+              - --jobs=2
+              - "{{ dump_name | default(local_dump) }}"
+          register: pg_restore_result
+      rescue:
+        - name: Skip version printing
+          fail:
+            msg: pg_restore failed (see above)
+          when: >
+            local_dump is not defined
+              or 'could not open input file' in pg_restore_result.stderr
+
+        - name: get remote version
+          command: pg_dump -V
+          changed_when: false
+          register: remote_version
+
+        - name: get local version
+          delegate_to: localhost
+          command: pg_restore -V
+          changed_when: false
+          register: local_version
+
+        - name: fail, printing versions
+          fail:
+            msg: |
+              pg_restore failed (see above)
+              FYI, remote has "{{ remote_version.stdout }}" and local has "{{ local_version.stdout }}"

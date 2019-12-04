@@ -1,0 +1,10 @@
+import multiprocessing
+
+bind = "127.0.0.1:{{ django_port }}"
+workers = multiprocessing.cpu_count() * 2 + 1
+user = "{{ ansible_user }}"
+group = "{{ ansible_user }}"
+accesslog = "/home/{{ ansible_user }}/logs/gunicorn-{{ django_port }}-access.log"
+errorlog = "/home/{{ ansible_user }}/logs/gunicorn-{{ django_port }}-error.log"
+loglevel = "info"  # debug, info, warning, error, critical
+timeout = 90

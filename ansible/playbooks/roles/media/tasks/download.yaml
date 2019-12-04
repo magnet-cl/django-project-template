@@ -1,0 +1,5 @@
+- name: fetch archive file
+  fetch:
+    src: "{{ archive_name }}"
+    dest: "{{ inventory_hostname }}/{{ archive_name }}"
+    flat: yes
