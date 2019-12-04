@@ -9,10 +9,10 @@
     # This gives a shallow repository. To obtain a full one, run:
     #     git remote set-branches origin "*" && git fetch --unshallow
 
-  # Remotes are sometimes flaky, so:
+  # Remotes sometimes fail once, so:
   register: git_result
-  retries: 2
-  delay: 5
+  retries: 1
+  delay: 3
   until: git_result is succeeded
 
 - name: backup DB
