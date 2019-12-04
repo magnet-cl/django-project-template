@@ -22,11 +22,19 @@ class AuthenticationForm(forms.Form):
     """ Custom class for authenticating users. Takes the basic
     AuthenticationForm and adds email as an alternative for login
     """
-    email = forms.EmailField(label=_("Email"), required=True)
+    email = forms.EmailField(
+        label=_("Email"),
+        required=True,
+        widget=forms.EmailInput(
+            attrs={'class': 'form-control', 'placeholder': _("Email")}
+        )
+    )
     password = forms.CharField(
         label=_("Password"),
         strip=False,
-        widget=forms.PasswordInput,
+        widget=forms.PasswordInput(
+            attrs={'class': 'form-control', 'placeholder': _("Password")}
+        )
     )
 
     error_messages = {
@@ -72,6 +80,19 @@ class AuthenticationForm(forms.Form):
                     code='inactive',
                 )
         return self.cleaned_data
+
+    def full_clean(self):
+        super().full_clean()
+        for field_name in self._errors.keys():
+            try:
+                attrs = self.fields[field_name].widget.attrs
+            except KeyError:
+                continue
+
+            if 'class' not in attrs:
+                attrs['class'] = 'is-invalid'
+            else:
+                attrs['class'] += ' is-invalid'
 
     def get_user_id(self):
         if self.user_cache:
