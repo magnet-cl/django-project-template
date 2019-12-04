@@ -60,7 +60,7 @@ class BaseModel(AuditMixin, models.Model):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.original_dict = self.to_dict(
-            exclude=settings.IGNORED_FIELDS,
+            exclude=settings.LOG_IGNORE_FIELDS,
             include_m2m=False,
         )
 

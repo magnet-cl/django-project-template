@@ -375,12 +375,12 @@ if DEBUG:
     )
 
 # The change's information of this fields will be ignored in the logs
-SENSITIVE_FIELDS = [
+LOG_SENSITIVE_FIELDS = [
     'password',
 ]
 
 # This fields will be ignored in the logs
-IGNORED_FIELDS = [
+LOG_IGNORE_FIELDS = [
     'created_at',
     'updated_at',
     'original_dict',

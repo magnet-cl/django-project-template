@@ -2,7 +2,7 @@
 import threading
 
 
-class RequestMiddleware(object):
+class RequestMiddleware():
     thread_local = threading.local()
 
     def __init__(self, get_response):

@@ -14,8 +14,8 @@ def audit_log(sender, instance, created, raw, update_fields, **kwargs):
     if sender not in get_our_models():
         return
 
-    sensitive_fields = settings.SENSITIVE_FIELDS
-    ignored_fields = settings.IGNORED_FIELDS
+    sensitive_fields = settings.LOG_SENSITIVE_FIELDS
+    ignored_fields = settings.LOG_IGNORE_FIELDS
 
     user = get_user()
 
