@@ -6,6 +6,7 @@ from django.contrib.admin.models import DELETION
 from django.contrib.admin.models import CHANGE
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
+from django.core.serializers.json import DjangoJSONEncoder
 import json
 
 
@@ -21,7 +22,7 @@ class AuditMixin:
             object_id=self.id,
             object_repr=force_text(self),
             action_flag=ACTION,
-            change_message=json.dumps(message)
+            change_message=json.dumps(message), cls=DjangoJSONEncoder
         )
 
     def save_addition(self, user, message):
