@@ -23,11 +23,10 @@ def audit_log(sender, instance, created, raw, update_fields, **kwargs):
     user = get_user()
 
     if created:
-        message = []
-        message.append({'Created': instance.to_dict(
-            exclude=ignored_fields + sensitive_fields,
-            include_m2m=False,
-        )})
+        message = {'Created': instance.to_dict(
+                exclude=ignored_fields + sensitive_fields,
+                include_m2m=False,
+        )}
         instance.save_addition(user, message)
     elif not raw:
         change_message = []

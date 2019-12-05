@@ -6,6 +6,7 @@ from django.contrib.admin.models import DELETION
 from django.contrib.admin.models import CHANGE
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
+import json
 
 
 class AuditMixin:
@@ -20,7 +21,7 @@ class AuditMixin:
             object_id=self.id,
             object_repr=force_text(self),
             action_flag=ACTION,
-            change_message=message
+            change_message=json.dumps(message)
         )
 
     def save_addition(self, user, message):
@@ -30,4 +31,4 @@ class AuditMixin:
         self.save_log(user, message, CHANGE)
 
     def save_deletion(self, user):
-        self.save_log(user, _('Deleted'), DELETION)
+        self.save_log(user, {'Deleted': None}, DELETION)
