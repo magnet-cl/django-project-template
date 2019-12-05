@@ -42,7 +42,7 @@ class ActionFilter(FilterBase):
 @admin.register(LogEntry)
 class LogEntryAdmin(admin.ModelAdmin):
     """
-    Class added to show logEntrys object in the admin view.
+    Class added to show logEntries objects in the admin view.
     """
     date_hierarchy = 'action_time'
     list_filter = [

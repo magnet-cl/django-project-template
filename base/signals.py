@@ -11,8 +11,8 @@ from django.conf import settings
 @receiver(post_save)
 def audit_log(sender, instance, created, raw, update_fields, **kwargs):
     """
-    Post save signal that creates the change and create logs for the
-    objects from a models in our apps.
+    Post save signal that creates a log when an object from a models from
+    our apps is created or updated.
     """
     # only listening models created in our apps
     if sender not in get_our_models():
@@ -54,6 +54,10 @@ def audit_log(sender, instance, created, raw, update_fields, **kwargs):
 
 @receiver(post_delete)
 def audit_delete_log(sender, instance, **kwargs):
+    """
+    Post delete signal that creates a log when an object from a models from
+    our apps is deleted.
+    """
     # only listening models created in our apps
     if sender not in get_our_models():
         return

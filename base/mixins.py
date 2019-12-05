@@ -5,12 +5,15 @@ from django.contrib.admin.models import ADDITION
 from django.contrib.admin.models import DELETION
 from django.contrib.admin.models import CHANGE
 from django.utils.encoding import force_text
-from django.utils.translation import ugettext_lazy as _
 from django.core.serializers.json import DjangoJSONEncoder
 import json
 
 
 class AuditMixin:
+    """
+    Mixin that gives to BaseModel the function needed to create
+    the EntryLogs.
+    """
     def save_log(self, user, message, ACTION):
 
         if not user or not user.id:
@@ -22,7 +25,7 @@ class AuditMixin:
             object_id=self.id,
             object_repr=force_text(self),
             action_flag=ACTION,
-            change_message=json.dumps(message), cls=DjangoJSONEncoder
+            change_message=json.dumps(message, cls=DjangoJSONEncoder)
         )
 
     def save_addition(self, user, message):
