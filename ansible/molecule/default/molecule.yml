@@ -41,3 +41,41 @@ verifier:
   name: testinfra
   lint:
     name: flake8
+
+scenario:
+  create_sequence:
+    # - dependency    speedup
+    - create
+    - prepare
+  check_sequence:
+    # - dependency    speedup
+    # - cleanup       not configured
+    - destroy
+    - create
+    - prepare
+    - converge
+    - check
+    - destroy
+  converge_sequence:
+    # - dependency    speedup
+    - create
+    - prepare
+    - converge
+  destroy_sequence:
+    # - dependency    speedup
+    # - cleanup       not configured
+    - destroy
+  test_sequence:
+    - lint
+    - dependency
+    # - cleanup       not configured
+    - destroy
+    - syntax
+    - create
+    - prepare
+    - converge
+    - idempotence
+    # - side_effect   not configured
+    - verify
+    # - cleanup       not configured
+    - destroy
