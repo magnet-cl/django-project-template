@@ -1,0 +1,22 @@
+- name: run django command
+  hosts: all
+  pre_tasks:
+    - name: import check Ansible version task
+      import_tasks: utils/assert-ansible-version.yaml
+
+    - name: check that the command is provided
+      assert:
+        that: django_command is defined
+        fail_msg: Please specify "django_command".
+        quiet: yes
+
+    - name: get Pipenv virtualenv
+      import_role:
+        name: get-venv
+
+  tasks:
+    - name: run django command
+      django_manage:
+        command: "{{ django_command }}"
+        app_path: "{{ server_root_dir }}"
+        virtualenv: "{{ venv.stdout }}"

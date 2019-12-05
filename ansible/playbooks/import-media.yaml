@@ -1,0 +1,50 @@
+- name: import Media
+  hosts: all
+  pre_tasks:
+    - name: import check Ansible version task
+      import_tasks: utils/assert-ansible-version.yaml
+
+    - name: check that this playbook is run against a single host
+      assert:
+        that: ansible_play_hosts | length == 1
+        fail_msg: You are trying to import the Media of several hosts at the same time.
+        quiet: yes
+
+  tasks:
+    - name: download remote archive
+      block:
+        - name: backup
+          include_role:
+            name: media
+            tasks_from: backup
+
+        - name: download
+          include_role:
+            name: media
+            tasks_from: download
+
+        - name: convert archive_name to path
+          set_fact:
+            archive_name: "{{ inventory_hostname }}/{{ archive_name }}"
+      when: local_archive is not defined
+
+    - name: set local_media_path variable
+      set_fact:
+        local_media_path: "{{ hostvars.localhost.server_root_dir }}/project/media"
+
+    - name: set empty media directory
+      delegate_to: localhost
+      file:
+        path: "{{ local_media_path }}"
+        state: "{{ item }}"
+      loop:   # https://github.com/ansible/ansible/issues/18910
+        - absent
+        - directory
+
+    - name: unpack the archive
+      delegate_to: localhost
+      unarchive:
+        src: "{{ archive_name | default(local_archive) }}"
+        dest: "{{ local_media_path }}"
+        extra_opts:
+          - --strip-components=1

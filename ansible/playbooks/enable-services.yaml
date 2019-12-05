@@ -1,0 +1,42 @@
+- name: init
+  hosts: all
+  pre_tasks:
+    - name: import check Ansible version task
+      import_tasks: utils/assert-ansible-version.yaml
+  tags:
+    - always
+
+- name: enable gunicorn
+  hosts: all
+  tasks:
+    - name: enable Django service
+      systemd:
+        name: "{{ service_name }}"
+        enabled: yes
+      become: yes
+  tags:
+    - gunicorn
+    - project
+
+- name: enable memcached
+  hosts: all
+  tasks:
+    - name: enable memcached
+      systemd:
+        name: memcached
+        enabled: yes
+      become: yes
+  tags:
+    - memcached
+
+- name: enable nginx
+  hosts: all
+  tasks:
+    - name: enable nginx
+      systemd:
+        name: nginx
+        enabled: yes
+      become: yes
+  tags:
+    - nginx
+    - project

@@ -64,15 +64,13 @@ def update_server():
         run('pipenv sync')
 
         print(green('installing npm packages'))
-        run('npm install')
+        run('npm ci')
 
         print(green('compiling webpack packages'))
         run('npm run build')
 
         print(green('collecting static files'))
         run('pipenv run python manage.py collectstatic --noinput')
-        run('mkdir -p project/static/bundles')
-        run('mv assets/bundles/* project/static/bundles/')
 
         print(green('compiling translations'))
         run('pipenv run python manage.py compilemessages')

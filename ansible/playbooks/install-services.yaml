@@ -1,0 +1,40 @@
+- name: init
+  hosts: all
+  pre_tasks:
+    - name: import check Ansible version task
+      import_tasks: utils/assert-ansible-version.yaml
+  tags:
+    - always
+
+- name: install gunicorn
+  hosts: all
+  tasks:
+    # As "gunicorn included on Pipfile", Fabric task only did this:
+    - name: create gunicorn logs directory
+      file:
+        path: /home/{{ ansible_user }}/logs
+        state: directory
+  tags:
+    - gunicorn
+
+- name: install memcached
+  hosts: all
+  tasks:
+    - name: install memcached
+      include_role:
+        name: geerlingguy.memcached
+        apply:
+          become: true
+  tags:
+    - memcached
+
+- name: install nginx
+  hosts: all
+  tasks:
+    - name: install nginx
+      include_role:
+        name: geerlingguy.nginx.magnet-fork
+        apply:
+          become: true
+  tags:
+    - nginx

@@ -10,20 +10,23 @@ from django.conf import settings
 
 @receiver(post_save)
 def audit_log(sender, instance, created, raw, update_fields, **kwargs):
+    """
+    Post save signal that creates the change and create logs for the
+    objects from a models in our apps.
+    """
     # only listening models created in our apps
     if sender not in get_our_models():
         return
 
     sensitive_fields = settings.LOG_SENSITIVE_FIELDS
     ignored_fields = settings.LOG_IGNORE_FIELDS
-
     user = get_user()
 
     if created:
         message = []
         message.append({'Created': instance.to_dict(
-                exclude=ignored_fields + sensitive_fields,
-                include_m2m=True,
+            exclude=ignored_fields + sensitive_fields,
+            include_m2m=False,
         )})
         instance.save_addition(user, message)
     elif not raw:
@@ -31,12 +34,13 @@ def audit_log(sender, instance, created, raw, update_fields, **kwargs):
         changed_field_labels = {}
         original_dict = instance.original_dict
         actual_dict = instance.to_dict(
-                exclude=ignored_fields,
-                include_m2m=False,
+            exclude=ignored_fields,
+            include_m2m=False,
         )
-
+        change = False
         for key in original_dict.keys():
             if original_dict[key] != actual_dict[key]:
+                change = True
                 if key == sensitive_fields:
                     changed_field_labels[key] = {'change': 'field updated'}
                 else:
@@ -44,9 +48,9 @@ def audit_log(sender, instance, created, raw, update_fields, **kwargs):
                         'from': original_dict[key],
                         'to': actual_dict[key],
                     }
-
-        change_message.append({'changed': {'fields': changed_field_labels}})
-        instance.save_edition(user, change_message)
+        if change:
+            change_message = {'changed': {'fields': changed_field_labels}}
+            instance.save_edition(user, change_message)
 
 
 @receiver(post_delete)

@@ -1,0 +1,26 @@
+- name: check Media directory existence
+  stat:
+    path: "{{ server_root_dir }}/project/media"
+    follow: no    # Symlinks are currently untested and unsupported (would require tar --dereference)
+    # All of this is not required and defaults to yes:
+    get_attributes: no
+    get_checksum: no
+    get_mime: no
+  register: media_dir
+
+- name: fail if no Media directory
+  assert:
+    that: media_dir.stat.isdir is defined and media_dir.stat.isdir  # https://github.com/ansible/ansible/blob/stable-2.8/lib/ansible/modules/files/stat.py#L119
+    fail_msg: "{{ server_root_dir }}/project/media doesn't exist!"
+    quiet: yes
+  # This produces a more readable error message than letting it fail later.
+
+- name: set archive variable with current time
+  set_fact:
+    archive_name: "media-{{ '%Y-%m-%d-%H-%M-%S' | strftime(ansible_date_time.epoch) }}.tgz"
+
+- name: archive Media
+  archive:
+    path: "{{ server_root_dir }}/project/media"
+    dest: "{{ archive_name }}"
+    # Note: name will have local time of the controller

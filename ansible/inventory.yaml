@@ -1,0 +1,35 @@
+all:
+  hosts:
+    localhost:
+      ansible_host: localhost
+      ansible_connection: local
+      server_root_dir: "{{ lookup('env', 'PWD') | dirname }}"
+      is_dev_machine: yes
+      interactive_path: "{{ lookup('env', 'PATH') }}"
+
+  children:
+    remote:   # Group "remote"
+      hosts:
+        ### ADD SERVERS HERE ###
+
+        # Examples:
+
+        # development:
+        #   ansible_host: dev.magnet.cl
+        #   server_domain: dev.magnet.cl
+        #   branch: development
+
+        # production:
+        #   ansible_host: production.magnet.cl
+        #   server_domain: production.magnet.cl
+        #   branch: master
+
+        # weird_server:
+        #   ansible_host: 30.30.30.33
+        #   server_domain: 30.30.30.33
+        #   branch: development
+        #   ansible_user: admin
+        #   ansible_port: 10022
+
+      vars:
+        ansible_user: magnet

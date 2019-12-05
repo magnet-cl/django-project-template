@@ -73,8 +73,8 @@ $(() => {
       // check DV
       switch (sum % 11) {
         case 1: return dv === 'K';
-        case 0: return dv === 0;
-        default: return (11 - (sum % 11)) === dv;
+        case 0: return dv === '0';
+        default: return `${11 - (sum % 11)}` === dv;
       }
     }
 
@@ -100,9 +100,9 @@ $(() => {
      * Show error messagge if input value is not a correct rut
      */
     validateRut() {
-      this.hideRutError();
-
-      if (!this.checkRut()) {
+      if (this.checkRut()) {
+        this.hideRutError();
+      } else {
         this.showRutError();
       }
     }

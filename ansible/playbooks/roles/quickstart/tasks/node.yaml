@@ -1,0 +1,28 @@
+- name: check if Node.js is installed
+  shell: command -v node >/dev/null && command -v npm >/dev/null
+  environment:
+    PATH: "{{ path_for_node }}"
+  register: node_installed_check
+  failed_when:
+    - node_installed_check.rc > 0
+    - is_dev_machine   # install nvm in that case
+  changed_when: false
+
+- name: install Node.js
+  include_role:
+    name: geerlingguy.nodejs
+    apply:
+      become: true
+  vars:
+    nodejs_version: 10.x
+  when: node_installed_check.rc > 0
+
+- name: install npm dependencies
+  npm:
+    path: "{{ server_root_dir }}"
+    ci: yes
+    production: "{{ not is_dev_machine }}"
+  environment:
+    PATH: "{{ path_for_node }}"
+  tags: update
+  # Unfortunately this task is always reported as "changed" https://github.com/ansible/ansible/issues/58280

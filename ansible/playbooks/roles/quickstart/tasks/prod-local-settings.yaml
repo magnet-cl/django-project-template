@@ -1,0 +1,40 @@
+# DEBUG
+- name: set "DEBUG = False" in remote machine on local_settings creation
+  replace:
+    path: "{{ server_root_dir }}/project/local_settings.py"
+    regexp: ^DEBUG *= *True
+    replace: DEBUG = False
+    validate: bash -c "cd {{ server_root_dir }} && pipenv run python %s"  # It returns 1 on "invalid syntax"
+  when:
+    - local_settings_create.changed
+
+
+# LOCALLY_ALLOWED_HOSTS
+- name: check if server_domain is in LOCALLY_ALLOWED_HOSTS
+  command: >
+    pipenv run python -c
+    "from project.local_settings import LOCALLY_ALLOWED_HOSTS;
+    print('{{ server_domain }}' in LOCALLY_ALLOWED_HOSTS)"
+  args:
+    chdir: "{{ server_root_dir }}"
+  register: allowed_host_added
+  changed_when: false
+
+- name: add server_domain to LOCALLY_ALLOWED_HOSTS
+  replace:
+    path: "{{ server_root_dir }}/project/local_settings.py"
+    regexp: ^LOCALLY_ALLOWED_HOSTS *= *\[\n
+    replace: LOCALLY_ALLOWED_HOSTS = [\n    '{{ server_domain }}',\n
+    validate: bash -c "cd {{ server_root_dir }} && pipenv run python %s"  # It returns 1 on "invalid syntax"
+  register: add_allowed_host
+  when:
+    - allowed_host_added.stdout == 'False'
+
+- name: alert if failed to add allowed host
+  fail:
+    msg: |
+      Failed to add allowed host to LOCALLY_ALLOWED_HOSTS in {{ server_root_dir }}/project/local_settings.py
+      Is LOCALLY_ALLOWED_HOSTS a list declared in multiple lines?
+  when:
+    - allowed_host_added.stdout == 'False'
+    - not add_allowed_host.changed

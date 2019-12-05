@@ -16,6 +16,9 @@ Add the django-project-template-py3 github repo as a remote repository:
 Pull the code from the project template:
 * `git pull template master`
 
+Configure `project_name` and `server_git_url`:
+* `vim ansible/group_vars/all.yaml`
+
 Push to your own repo
 * `git push origin master`
 
@@ -32,8 +35,8 @@ This project works with:
 * PostgreSQL >= 9.6
 
 ## Quickstart
-If you are using Ubuntu 16.04 or OS X, the script quickstart.sh installs all
-dependencies of the project. It assumes you have npm installed.
+If you are using Ubuntu 16.04/18.04 or OS X, the script `quickstart.sh` installs all
+dependencies of the project. It assumes you have Node and npm installed.
 
 * `./quickstart.sh`
 
@@ -62,10 +65,9 @@ The project use `django-webpack-loader` and `webpack` for js, scss and assets wi
 The project comes with select2 by default for all selects. If you wish to
 disable this feature add the class .js-not-select2 to the select
 
-### eonasdan-bootstrap-datetimepicker
+### tempusdominus-bootstrap-4
 
-The project comes with eonasdan-bootstrap-datetimepicker by default for all
-inputs that have the .datetime-picker class.
+The project comes with [Tempus Dominus Bootstrap 4](https://tempusdominus.github.io/bootstrap-4/) by default for all inputs that have the `.datetimepicker-input` class.
 
 ### disable on submit
 
@@ -105,3 +107,12 @@ the update information, you have to add it to LOG_SENSITIVE_FIELDS in settings. 
 want to ignore a field, you can add it to LOG_IGNORE_FIELDS in settings.
 
 The project doesn't log any action made through automatic tasks.
+## Deployment
+
+Deployment is automated with Ansible, which is installed by quickstart. Add your servers to `ansible/inventory.yaml` and deploy with:
+* `ansible/deploy.sh <host_name>`
+
+After a successful deployment, you can update with:
+* `ansible/update.sh <host_name>`
+
+For more information and additional tasks, see `ansible/Readme.md`.

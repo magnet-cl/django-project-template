@@ -6,58 +6,40 @@ block javascripts
   script(src="{% static 'js/login.js' %}")
 
 block content
-  .row
-    .col-sm-12
-      form.form-signin.form-horizontal(action='', method='post')
-        {% csrf_token %}
+  form.form-signin.form-horizontal.mt-4(action='', method='post')
+    {% csrf_token %}
 
-        .form-signin-inner
-          - if form.non_field_errors
-            - for error in form.non_field_errors
-              .alert.alert-danger {{ error }}
+    .form-signin-inner
+      if form.non_field_errors
+        for error in form.non_field_errors
+          .alert.alert-danger {{ error }}
 
-          .form-group(class="{% if form.email.errors %}has-error{% endif %}")
-            label.control-label.col-sm-2.required(for='id_email')
-              | {% trans 'E-mail:' %}
+      for field in form.hidden_fields
+        | {{field}}
 
-            .col-sm-10
-              input#id_email.form-control(
-                name='email',
-                type='email',
-                value="{{request.POST.email}}",
-                placeholder="{% trans 'E-mail' %}"
-              )
-              span.help-inline.help-block {{ form.email.errors|striptags }}
+      for field in form.visible_fields
 
-          .form-group(class="{% if form.password.errors %}has-error{% endif %}")
-            label.control-label.col-sm-2.required(for='id_password')
-              | {% trans 'Password' %}
+        .form-row
+          .form-group.col-6
+            label(for="id_{{ field.name }}")
+              | {{field.label}}
 
-            .col-sm-10
-              input#id_password.form-control(name='password', type='password',
-                placeholder="{% trans 'Password' %}")
-              span.help-inline.help-block {{ form.password.errors|striptags }}
+            {{field}}
 
-            input(type='hidden', name='this_is_the_login_form', value='1')
-            input(type='hidden', name='next', value='{{ next }}')
+            if field.errors
+              .invalid-feedback {{ field.errors|striptags }}
 
-          - if form.captcha
-            .form-group(class="{% if form.captcha.errors %}has-error{% endif %}")
-              label.control-label.col-sm-2.required(for='id_captcha')
-                | {{ form.captcha.label }}
-              .col-sm-10
-                {{ form.captcha }}
-                span.help-inline.help-block {{ form.captcha.errors|striptags }}
+            if field.help_text
+              small.form-text.text-muted(id="{{field.name}}Help") {{ field.help_text }}
 
-          .form-group
-            .col-md-offset-2.col-sm-10
-              a(href="{% url 'password_reset' %}")
-                | {% trans 'Forgotten your password?' %}
-          .form-group
-            .col-md-offset-2.col-sm-10
-              a(href="{% url 'register' %}")
-                | {% trans 'New? Register here.' %}
-        .form-group
-          .col-sm-12.text-right
-            button.btn.btn-primary(type='submit', value="")
-              | {% trans 'Log in' %}
+    .form-row
+      .form-group.col-sm-6.text-right
+        button.btn.btn-primary(type='submit', value="")
+          | {% trans 'Log in' %}
+
+    div
+      a(href="{% url 'password_reset' %}")
+        | {% trans 'Forgotten your password?' %}
+    div
+      a(href="{% url 'register' %}")
+        | {% trans 'New? Register here.' %}

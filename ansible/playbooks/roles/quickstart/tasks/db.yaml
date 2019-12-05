@@ -1,0 +1,90 @@
+- name: set database name in local_settings
+  replace:
+    path: "{{ server_root_dir }}/project/local_settings.py"
+    regexp: "        'NAME': 'database-name',"
+    replace: "        'NAME': '{{ project_name }}',"
+    validate: bash -c "cd {{ server_root_dir }} && pipenv run python %s"  # It returns 1 on "invalid syntax"
+
+- name: install and configure Postgres and create DB
+  block:
+    - name: check if Postgres is already installed in dev machine
+      shell: command -v psql  # noqa 305    "command" is a shell builtin, not an executable utility
+      register: dev_psql_existence
+      failed_when: False
+      changed_when: False
+      when: is_dev_machine
+
+    - name: install and setup Postgres
+      block:
+        - name: set variables to install PostgreSQL 11 on CentOS
+          # https://github.com/geerlingguy/ansible-role-postgresql/issues/38#issuecomment-513464935
+          include_vars: centos-postgres.yaml
+          when: ansible_distribution == 'CentOS'
+
+        - name: install and setup Postgres with role
+          include_role:
+            name: geerlingguy.postgresql.pr31
+            apply:
+              become: true
+          vars:
+            # Not sure why ansible_user is undefined here (become?). ansible_user_id works.
+            postgresql_databases:
+              - name: "{{ ansible_user_id }}"
+                owner: "{{ ansible_user_id }}"
+                state: present
+            postgresql_users:
+              - name: "{{ ansible_user_id }}"
+                role_attr_flags: SUPERUSER
+                state: present
+            # Workaround for strange failure:
+            postgresql_python_library: "{{ 'python3-psycopg2' if 'python3' in discovered_interpreter_python else 'python-psycopg2' }}"
+
+      rescue:
+        - name: Fail
+          fail:
+            msg: Failed (see above)
+          when: not is_dev_machine
+
+        - name: Fail with custom message
+          fail:
+            msg: Failed to install Postgres using role. Please install Postgres manually.
+
+      when: not is_dev_machine or dev_psql_existence.rc > 0
+        # Note: this can (will?) cause problems if another version of Postgres was manually installed.
+        # Quick workaround: set is_dev_machine in inventory.
+
+    - name: Ensure PostgreSQL Python libraries are installed. (Ubuntu)
+      # Copy-paste from geerlingguy
+      apt:
+        name: python-psycopg2
+        state: present
+      become: yes
+      when:
+        - is_dev_machine
+        - dev_psql_existence.rc == 0
+        - ansible_distribution == 'Ubuntu'
+
+    - name: create database
+      postgresql_db:
+        name: "{{ project_name }}"
+        state: present
+        login_user: "{{ ansible_user_id }}"
+
+  when: ansible_distribution != 'MacOSX'
+
+- name: create database with a hack on OSX
+  # postgresql_db:    HAH! Try making Ansible's discovered_interpreter_python import psycopg2  https://xkcd.com/1987
+  command: createdb {{ project_name }}
+  register: osx_createdb
+  failed_when:
+    - osx_createdb is failed
+    - "' already exists' not in (osx_createdb.stderr | default(''))"
+  changed_when: "' already exists' not in (osx_createdb.stderr | default(''))"
+  when: ansible_distribution == 'MacOSX'
+
+- name: run migrations
+  django_manage:
+    command: migrate
+    app_path: "{{ server_root_dir }}"
+    virtualenv: "{{ venv.stdout }}"
+  tags: update

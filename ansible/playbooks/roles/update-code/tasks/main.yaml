@@ -1,0 +1,43 @@
+- name: clone/pull repository
+  git:
+    repo: "{{ server_git_url }}"
+    version: "{{ branch }}"
+    dest: "{{ server_root_dir }}"
+
+    # If the repository is too big, you could uncomment the next line:
+    # depth: 1    # Download last commit only.
+    # This gives a shallow repository. To obtain a full one, run:
+    #     git remote set-branches origin "*" && git fetch --unshallow
+
+  # Remotes are sometimes flaky, so:
+  register: git_result
+  retries: 2
+  delay: 5
+  until: git_result is succeeded
+
+- name: backup DB
+  block:
+    # Skip dump only if this task says DB doesn't exist and didn't fail,
+    # to avoid going on without backup in case DB exists but dump failed.
+    - name: check if DB exists
+      shell: |
+        if command -v psql >/dev/null; then
+          psql --tuples-only --no-align \
+            --command="SELECT 1 FROM pg_database \
+              WHERE datname={{ ("'" + project_name + "'") if ((project_name | quote) == project_name) else (project_name | quote) }}"
+              # Bobby Tables handling mess...
+        fi
+      register: db_exists
+      changed_when: false
+
+    - name: non-existent DB message
+      debug:
+        msg: Database {{ project_name }} doesn't exist, skipping backup.
+      when: db_exists.stdout != '1'
+
+    - name: perform backup with role
+      include_role:
+        name: db
+        tasks_from: backup
+      when: db_exists.stdout == '1'
+  when: git_result.changed

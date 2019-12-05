@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-Django = "==2.2.5"
+Django = "~=2.2.8"
 "Fabric3" = "==1.13.1.post1"
 django-cron = "==0.5.1"
 django-debug-toolbar = "==2.0"
