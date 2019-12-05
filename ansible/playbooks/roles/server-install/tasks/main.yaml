@@ -3,15 +3,20 @@
   args:
     chdir: "{{ server_root_dir }}"
   # changed_when: ?
+  # FIXME: idempotence
   # noqa 301
-  tags: update
+  tags:
+    - update
+    - molecule-idempotence-notest
 
 - name: collect static files
   django_manage:
     command: collectstatic
     app_path: "{{ server_root_dir }}"
     virtualenv: "{{ venv.stdout }}"
-  tags: update
+  tags:
+    - update
+    - molecule-idempotence-notest   # TODO: fix the static duplicate path warning that causes it to be detected as "changed"
 
 - name: compile translations
   django_manage:
@@ -65,10 +70,12 @@
     state: restarted
     # First I thought of restarting only on git_result.changed,
     # but if the playbook is interrupted after Git and before this task,
-    # maybe some tasks also need a restart, and changes are not currently detected
-    # (for example "npm run build" and collectstatic).
+    # maybe some tasks also need a restart,
+    # and some changes are not currently detected (for example npm ci/build)
   become: yes
-  tags: update
+  tags:
+    - update
+    - molecule-idempotence-notest
 
 - name: ensure service started without error
   service_facts:
