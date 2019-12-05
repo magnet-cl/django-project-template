@@ -14,7 +14,6 @@
         regexp: ^LC_ALL=
         line: LC_ALL=en_US.UTF-8
       become: yes
-      register: eng_env
 
     # However, as Ansible reuses the SSH connection,
     # the converge playbook still uses the old environment.
@@ -26,3 +25,4 @@
       shell: sleep 1; pkill -u {{ ansible_ssh_user }} sshd
       async: 3
       poll: 2
+      # `when` is unnecessary because instances are prepared only once.
