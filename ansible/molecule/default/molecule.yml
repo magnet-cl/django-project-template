@@ -1,0 +1,43 @@
+dependency:
+  name: galaxy
+  options:
+    role-file: requirements.yaml    # relative to base https://github.com/ansible/molecule/issues/1509
+
+driver:
+  name: vagrant
+  provider:
+    name: virtualbox
+
+lint:
+  name: yamllint  # TODO: configure
+
+platforms:
+  - name: instance
+    box: ubuntu/bionic64
+
+provisioner:
+  name: ansible
+
+  config_options:
+    defaults:
+      stdout_callback: debug    # human-readable output
+
+  playbooks:
+    converge: ../../playbooks/deploy.yaml
+
+  inventory:
+    #   host_vars:
+    #     instance:
+    # doesn't work together with `links`
+    links:
+      group_vars: ../../group_vars/
+      host_vars: host_vars/
+
+  lint:
+    name: ansible-lint  # TODO: configure
+    enabled: no   # TODO
+
+verifier:
+  name: testinfra
+  lint:
+    name: flake8

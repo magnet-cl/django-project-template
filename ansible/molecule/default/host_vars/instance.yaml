@@ -1,0 +1,4 @@
+ansible_user: vagrant
+server_domain: localhost
+# branch: master
+branch: chore/ansible   # TODO
