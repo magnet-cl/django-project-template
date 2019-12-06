@@ -10,13 +10,19 @@
     - molecule-idempotence-notest
 
 - name: collect static files
-  django_manage:
-    command: collectstatic
-    app_path: "{{ server_root_dir }}"
-    virtualenv: "{{ venv.stdout }}"
-  tags:
-    - update
-    - molecule-idempotence-notest   # TODO: fix the static duplicate path warning that causes it to be detected as "changed"
+  #     django_manage:
+  #       command: collectstatic
+  #       app_path: "{{ server_root_dir }}"
+  #       virtualenv: "{{ venv.stdout }}"
+  # This task is reported as "changed" if collectstatic prints warnings like
+  # "Found another file with the destination path '...'"
+  # So run and detect it manually:
+  command: pipenv run ./manage.py collectstatic --no-input
+  args:
+    chdir: "{{ server_root_dir }}"
+  register: collectstatic_result
+  changed_when: "'0 static files' not in collectstatic_result.stdout"
+  tags: update
 
 - name: compile translations
   django_manage:
