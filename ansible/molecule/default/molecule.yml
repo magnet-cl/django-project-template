@@ -44,11 +44,11 @@ verifier:
 
 scenario:
   create_sequence:
-    # - dependency    speedup
+    - dependency
     - create
     - prepare
   check_sequence:
-    # - dependency    speedup
+    - dependency
     # - cleanup       not configured
     - destroy
     - create
@@ -57,12 +57,12 @@ scenario:
     - check
     - destroy
   converge_sequence:
-    # - dependency    speedup
+    - dependency
     - create
     - prepare
     - converge
   destroy_sequence:
-    # - dependency    speedup
+    - dependency
     # - cleanup       not configured
     - destroy
   test_sequence:
