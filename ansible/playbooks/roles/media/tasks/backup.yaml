@@ -10,7 +10,8 @@
 
 - name: fail if no Media directory
   assert:
-    that: media_dir.stat.isdir is defined and media_dir.stat.isdir  # https://github.com/ansible/ansible/blob/stable-2.8/lib/ansible/modules/files/stat.py#L119
+    # Double test: https://github.com/ansible/ansible/blob/stable-2.8/lib/ansible/modules/files/stat.py#L119
+    that: media_dir.stat.isdir is defined and media_dir.stat.isdir
     fail_msg: "{{ server_root_dir }}/project/media doesn't exist!"
     quiet: yes
   # This produces a more readable error message than letting it fail later.

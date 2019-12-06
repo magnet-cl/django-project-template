@@ -33,7 +33,8 @@
         - name: run pg_restore
           delegate_to: localhost
           #   postgresql_db:
-          # Doesn't use pg_restore >:(  (except if "target" is a .tar https://github.com/ansible/ansible/blob/stable-2.8/lib/ansible/modules/database/postgresql/postgresql_db.py#L353)
+          # Doesn't use pg_restore >:(  (except if "target" is a .tar)
+          # https://github.com/ansible/ansible/blob/stable-2.8/lib/ansible/modules/database/postgresql/postgresql_db.py#L353
           command:
             argv:
               - pg_restore

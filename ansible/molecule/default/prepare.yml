@@ -20,7 +20,8 @@
 
     # - meta: reset_connection    -- didn't work
     # Setting some variations of ssh_args with ControlMaster also didn't work.
-    # This is very _cuma_ but works!: https://stackoverflow.com/questions/26677064/create-and-use-group-without-restart/37337848#37337848
+    # This is very _cuma_ but works!:
+    # https://stackoverflow.com/questions/26677064/create-and-use-group-without-restart/37337848#37337848
     - name: Reconnect SSH
       shell: sleep 1; pkill -u {{ ansible_ssh_user }} sshd
       async: 3
