@@ -95,7 +95,7 @@ Available actions are `install-services`, `start-services`, `restart-services`, 
 - Remote DB dumps are assumed to be stored in `~/db_dumps/`, and Media archives in `~`
 - Backup/restore Media doesn't support `relative_path`
 
-## Linting
+## Linting (TODO: merge with Testing)
 
 Install the linter with
 ```sh
@@ -105,4 +105,25 @@ and run it with
 ```sh
 ansible-lint **/*.yaml
 ```
-Note: the pre-release version is currently required because of an [issue](https://github.com/ansible/ansible-lint/issues/484).
+Note: the pre-release version is currently required because of an [issue](https://github.com/ansible/ansible-lint/issues/484). (TODO: update to v4.2.0)
+
+## Testing
+
+Tests of deployment with Ansible are made with [Molecule](https://molecule.readthedocs.io). It creates a Vagrant VM with Ubuntu 18.04 (TODO and another one with CentOS), deploys the app in there, and TODO tests that the page loads its resources without errors.
+
+Tests use Vagrant instead of Docker because the second one is not very well suited to using `systemctl` and having a non-root user.
+
+### Setup
+
+- Install [Vagrant](https://www.vagrantup.com/downloads.html) and [VirtualBox](https://www.virtualbox.org/wiki/Linux_Downloads#Debian-basedLinuxdistributions)
+- `pip install molecule molecule[vagrant]`
+
+### Running
+
+From this directory, run `molecule test`
+
+### Debugging
+
+VMs are deleted after a failed `molecule test`. Use `molecule converge` to avoid that. You can then examine the VM with `molecule login`
+
+TODO: test quickstart.sh
