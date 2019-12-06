@@ -37,7 +37,8 @@
                 role_attr_flags: SUPERUSER
                 state: present
             # Workaround for strange failure:
-            postgresql_python_library: "{{ 'python3-psycopg2' if 'python3' in discovered_interpreter_python else 'python-psycopg2' }}"  # yamllint disable-line rule:line-length
+            # yamllint disable-line rule:line-length
+            postgresql_python_library: "{{ 'python3-psycopg2' if 'python3' in discovered_interpreter_python else 'python-psycopg2' }}"
 
       rescue:
         - name: Fail
