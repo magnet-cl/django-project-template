@@ -124,6 +124,6 @@ From this directory, run `molecule test`
 
 ### Debugging
 
-VMs are deleted after a failed `molecule test`. Use `molecule converge` to avoid that. You can then examine the VM with `molecule login`
+VMs are deleted after a failed `molecule test`. Use `molecule converge` to avoid that (you can also use `molecule test --destroy=never` but it runs more steps). You can then examine the VM with `molecule login`
 
 TODO: test quickstart.sh
