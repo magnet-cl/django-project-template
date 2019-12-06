@@ -20,6 +20,7 @@
     # Skip dump only if this task says DB doesn't exist and didn't fail,
     # to avoid going on without backup in case DB exists but dump failed.
     - name: check if DB exists
+      # yamllint disable rule:line-length
       shell: |
         if command -v psql >/dev/null; then
           psql --tuples-only --no-align \
@@ -27,6 +28,7 @@
               WHERE datname={{ ("'" + project_name + "'") if ((project_name | quote) == project_name) else (project_name | quote) }}"
               # Bobby Tables handling mess...
         fi
+      # yamllint enable rule:line-length
       register: db_exists
       changed_when: false
 

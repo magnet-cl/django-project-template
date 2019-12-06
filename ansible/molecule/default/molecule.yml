@@ -9,7 +9,7 @@ driver:
     name: virtualbox
 
 lint:
-  name: yamllint  # TODO: configure
+  name: yamllint
 
 platforms:
   - name: instance
