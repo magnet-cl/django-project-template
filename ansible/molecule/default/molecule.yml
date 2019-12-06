@@ -35,8 +35,7 @@ provisioner:
       host_vars: host_vars/
 
   lint:
-    name: ansible-lint  # TODO: configure
-    enabled: no   # TODO
+    name: ansible-lint
 
 verifier:
   name: testinfra
