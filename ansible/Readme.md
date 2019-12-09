@@ -97,14 +97,25 @@ Available actions are `install-services`, `start-services`, `restart-services`, 
 
 ## Testing
 
-Tests of deployment with Ansible are made with [Molecule](https://molecule.readthedocs.io). It creates a Vagrant VM with Ubuntu 18.04 (TODO and another one with CentOS), deploys the app in there, and tests that the home page has no broken links.
+Tests of deployment with Ansible are made with [Molecule](https://molecule.readthedocs.io). It creates a Vagrant VM (with Ubuntu 18.04 by default), deploys the app in there, and tests that the home page has no broken links.
 
 Tests use Vagrant instead of Docker because the second one is not very well suited to using `systemctl` and having a non-root user.
+
+Multiple distro handling method is taken from [here](https://www.jeffgeerling.com/blog/2018/testing-your-ansible-roles-molecule).
 
 ### Setup
 
 - Install [Vagrant](https://www.vagrantup.com/downloads.html) and [VirtualBox](https://www.virtualbox.org/wiki/Linux_Downloads#Debian-basedLinuxdistributions)
 - `pip install "molecule[vagrant]>=2.22" "ansible-lint>=4.2.0"`
+
+### Choosing distro to test
+
+Set it in the `MOLECULE_DISTRO` variable when calling `molecule`. By default it is `ubuntu/bionic64` (as specified in `platforms` in `molecule.yml`). To use another Vagrant box, for example CentOS 7, run:
+```sh
+MOLECULE_DISTRO=centos/7 molecule test
+```
+
+To change distro when the instance is already created, run `molecule destroy`
 
 ### Running
 
