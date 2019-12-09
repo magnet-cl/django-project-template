@@ -37,11 +37,6 @@ provisioner:
   lint:
     name: ansible-lint
 
-verifier:
-  name: testinfra
-  lint:
-    name: flake8
-
 scenario:
   create_sequence:
     # - dependency    speedup, not required for this sequence
@@ -76,6 +71,6 @@ scenario:
     - converge
     - idempotence
     # - side_effect   not configured
-    - verify
+    # - verify        not configured
     # - cleanup       not configured
     - destroy
