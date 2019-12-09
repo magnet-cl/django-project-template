@@ -108,6 +108,10 @@ Multiple distro handling method is taken from [here](https://www.jeffgeerling.co
 - Install [Vagrant](https://www.vagrantup.com/downloads.html) and [VirtualBox](https://www.virtualbox.org/wiki/Linux_Downloads#Debian-basedLinuxdistributions)
 - `pip install "molecule[vagrant]>=2.22" "ansible-lint>=4.2.0"`
 
+### Running
+
+From this directory, run `molecule test`
+
 ### Choosing distro to test
 
 Set it in the `MOLECULE_DISTRO` variable when calling `molecule`. By default it is `ubuntu/bionic64` (as specified in `platforms` in `molecule.yml`). To use another Vagrant box, for example CentOS 7, run:
@@ -116,10 +120,6 @@ MOLECULE_DISTRO=centos/7 molecule test
 ```
 
 To change distro when the instance is already created, run `molecule destroy`
-
-### Running
-
-From this directory, run `molecule test`
 
 ### Debugging
 
