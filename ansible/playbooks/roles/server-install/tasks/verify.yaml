@@ -1,0 +1,5 @@
+- name: make a test request through nginx
+  uri:
+    url: http://{{ server_domain }}
+    force: yes  # ignore cache
+  tags: update
