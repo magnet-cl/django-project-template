@@ -127,8 +127,5 @@
 - name: flush_handlers to reload nginx
   meta: flush_handlers
 
-- name: make a test request through nginx
-  uri:
-    url: http://{{ server_domain }}
-    force: yes  # ignore cache
-  tags: update
+- name: verify deployed site
+  import_tasks: verify.yaml
