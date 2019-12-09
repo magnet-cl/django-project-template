@@ -3,3 +3,29 @@
     url: http://{{ server_domain }}
     force: yes  # ignore cache
   tags: update
+
+# TODO: skip if wget is not installed
+- name: check home page for broken links
+  command: wget --spider --recursive --no-directories --no-verbose --page-requisites --span-hosts {{ server_domain }}
+  args:
+    warn: no  # Silence suggestion to use `uri` module
+  register: wget_spider_result
+  changed_when: false
+  failed_when: false
+  tags: update
+
+- name: warn if broken links present
+  debug:
+    msg: |
+      WARNING: broken links found in home page
+      ---
+      {{ wget_spider_result.stderr }}
+  when: wget_spider_result.rc > 0
+  tags: update
+
+- name: fail if broken links present and testing with Molecule
+  fail:
+    msg: broken links found in home page
+  when:
+    - wget_spider_result.rc > 0
+    - "'molecule-notest' in ansible_skip_tags"  # super detection

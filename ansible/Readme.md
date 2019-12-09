@@ -97,7 +97,7 @@ Available actions are `install-services`, `start-services`, `restart-services`, 
 
 ## Testing
 
-Tests of deployment with Ansible are made with [Molecule](https://molecule.readthedocs.io). It creates a Vagrant VM with Ubuntu 18.04 (TODO and another one with CentOS), deploys the app in there, and TODO tests that the page loads its resources without errors.
+Tests of deployment with Ansible are made with [Molecule](https://molecule.readthedocs.io). It creates a Vagrant VM with Ubuntu 18.04 (TODO and another one with CentOS), deploys the app in there, and tests that the home page has no broken links.
 
 Tests use Vagrant instead of Docker because the second one is not very well suited to using `systemctl` and having a non-root user.
 
