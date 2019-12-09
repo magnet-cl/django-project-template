@@ -28,3 +28,9 @@
       poll: 2
       # `when` is unnecessary because instances are prepared only once.
       changed_when: true  # Silence linter
+
+    - name: Install Git
+      package:
+        name: git
+        state: present
+      become: yes
