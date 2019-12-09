@@ -29,8 +29,10 @@
       # `when` is unnecessary because instances are prepared only once.
       changed_when: true  # Silence linter
 
-    - name: Install Git
+    - name: Install Git and wget
       package:
-        name: git
+        name:
+          - git
+          - wget
         state: present
       become: yes
