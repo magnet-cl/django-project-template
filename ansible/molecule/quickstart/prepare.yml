@@ -5,6 +5,13 @@
     - name: set english environment locale
       import_tasks: ../utils/set-locale.yaml
 
+    # TODO: remove when removing the next task
+    - name: Install Git
+      package:
+        name: git
+        state: present
+      become: yes
+
     - name: "TODO: dont use git, copy files instead"
       git:
         repo: "{{ lookup('pipe','git config remote.origin.url') }}"

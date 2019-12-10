@@ -13,7 +13,7 @@ lint:
 
 platforms:
   - name: instance
-    box: ubuntu/bionic64  # TODO: centos
+    box: ${MOLECULE_DISTRO:-ubuntu/bionic64}
     memory: 1024 # MB
 
 provisioner:
