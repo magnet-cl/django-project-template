@@ -23,6 +23,7 @@ if ! command -v ansible >/dev/null; then
   # https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html
 
   if [[ "$OSTYPE" == "darwin"* ]]; then
+    # Mac OS X
     if ! command -v brew >/dev/null; then
       echo -e "${red}Error: Homebrew is not installed (https://brew.sh/#install)${default}"
       exit 1
@@ -32,7 +33,21 @@ if ! command -v ansible >/dev/null; then
     #  - pip could not be installed
     #  - pip could install Ansible somewhere not in PATH
     brew install ansible
-  else
+
+  elif grep --quiet -P '^ID="(centos|rhel)"$' /etc/os-release 2>/dev/null; then
+    # CentOS / Red Hat
+    if grep --quiet -P '^VERSION_ID="7[\D]' /etc/os-release; then
+      # CentOS/RHEL version 7
+      sudo yum install -y https://releases.ansible.com/ansible/rpm/release/epel-7-x86_64/ansible-2.9.2-1.el7.ans.noarch.rpm   # hardcoded version :(
+    else
+      echo -e "${red}Automatic Ansible installation available only for CentOS/RHEL 7."
+      echo -e "${cyan}Please install Ansible manually:"
+      echo -e "https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#latest-release-via-dnf-or-yum"
+      echo -e "$default"
+      exit 1
+    fi
+
+  else    # Assume Ubuntu
     sudo apt update
     sudo apt install -y software-properties-common
     sudo apt-add-repository -y ppa:ansible/ansible
