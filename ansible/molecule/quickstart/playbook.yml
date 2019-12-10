@@ -1,0 +1,9 @@
+- name: Test quickstart
+  hosts: all
+
+  tasks:
+    - name: run quickstart.sh
+      command: ./quickstart.sh
+      args:
+        chdir: "{{ project_dir }}"
+      changed_when: true  # Silence linter
