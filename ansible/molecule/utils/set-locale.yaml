@@ -4,17 +4,18 @@
     regexp: ^LC_ALL=
     line: LC_ALL=en_US.UTF-8
   become: yes
+  register: set_lcall_result
 
-# However, as Ansible reuses the SSH connection,
+# However, as Ansible reuses the ssh connection,
 # the converge playbook still uses the old environment.
 
 # - meta: reset_connection    -- didn't work
 # Setting some variations of ssh_args with ControlMaster also didn't work.
 # This is very _cuma_ but works!:
 # https://stackoverflow.com/questions/26677064/create-and-use-group-without-restart/37337848#37337848
-- name: Reconnect SSH
+- name: Reconnect ssh
   shell: sleep 1; pkill -u {{ ansible_ssh_user }} sshd
   async: 3
   poll: 2
-  # `when` is unnecessary because instances are prepared only once.
+  when: set_lcall_result.changed
   changed_when: true  # Silence linter
