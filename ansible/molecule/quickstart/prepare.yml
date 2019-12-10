@@ -1,0 +1,25 @@
+- name: Prepare
+  hosts: all
+
+  tasks:
+    - name: set english environment locale
+      import_tasks: ../utils/set-locale.yaml
+
+    - name: "TODO: dont use git, copy files instead"
+      git:
+        repo: "{{ lookup('pipe','git config remote.origin.url') }}"
+        version: chore/ansible
+        dest: "{{ project_dir }}"
+        depth: 1
+      register: git_result
+      retries: 1
+      delay: 3
+      until: git_result is succeeded
+
+    - name: install Node.js
+      include_role:
+        name: geerlingguy.nodejs
+        apply:
+          become: true
+      vars:
+        nodejs_version: 10.x
