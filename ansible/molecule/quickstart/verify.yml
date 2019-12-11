@@ -1,46 +1,38 @@
 - name: Prepare
   hosts: all
   gather_facts: false
-  vars:
-    async_timeout: 3600
 
   # Note that these tasks could also be in playbook.yml after the quickstart task.
   # But having them here allows to run `molecule verify -s quickstart` without having to wait for quickstart.sh
   tasks:
     - name: stop Django server
       include_role:
-        name: free-port
-      vars:
-        port: 8000
+        name: app-server
+        tasks_from: free-port
+        vars_from: django
 
-    - name: start Django server
-      command: pipenv run ./manage.py runserver
-      args:
-        chdir: "{{ project_dir }}"
-      async: "{{ async_timeout }}"
-      poll: 0   # Run asynchronously
-      changed_when: true  # Silence linter
-      register: django_start
+    - include_role:
+        name: app-server
+        tasks_from: start-server
+        vars_from: django
 
     - name: stop Webpack server
       include_role:
-        name: free-port
-      vars:
-        port: 3000
+        name: app-server
+        tasks_from: free-port
+        vars_from: webpack
 
-    - name: start Webpack server
-      command: npm start
-      args:
-        chdir: "{{ project_dir }}"
-      async: "{{ async_timeout }}"
-      poll: 0   # Run asynchronously
-      changed_when: true  # Silence linter
-      register: webpack_start
+    - include_role:
+        name: app-server
+        tasks_from: start-server
+        vars_from: webpack
 
-    - name: check that Django hasn't crashed
-      async_status:
-        jid: "{{ django_start.ansible_job_id }}"
+    - include_role:
+        name: app-server
+        tasks_from: check-crashed
+        vars_from: django
 
-    - name: check that Webpack hasn't crashed
-      async_status:
-        jid: "{{ webpack_start.ansible_job_id }}"
+    - include_role:
+        name: app-server
+        tasks_from: check-crashed
+        vars_from: webpack
