@@ -1,0 +1,10 @@
+- name: check that {{ app_name }} returns 200
+  uri:
+    url: http://localhost:{{ app_port }}
+    force: yes  # ignore cache
+    timeout: 1
+
+  register: _200_result
+  until: _200_result is succeeded
+  retries: "{{ timeout_200 | int }}"
+  delay: 1

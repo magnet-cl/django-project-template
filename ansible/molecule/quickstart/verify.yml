@@ -35,8 +35,20 @@
         tasks_from: check-crashed
         vars_from: django
 
+    # check that Django returns 200
+    - include_role:
+        name: app-server
+        tasks_from: check-200
+        vars_from: django
+
     # check if Webpack crashed
     - include_role:
         name: app-server
         tasks_from: check-crashed
+        vars_from: webpack
+
+    # check that Webpack returns 200
+    - include_role:
+        name: app-server
+        tasks_from: check-200
         vars_from: webpack

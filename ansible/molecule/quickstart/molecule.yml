@@ -74,6 +74,6 @@ scenario:
     - converge
     # - idempotence   The playbook just runs a script. Idempotence of tasks is checked in the `deploy` scenario.
     # - side_effect   not configured
-    # - verify        not configured (TODO)
+    - verify
     # - cleanup       not configured
     - destroy
