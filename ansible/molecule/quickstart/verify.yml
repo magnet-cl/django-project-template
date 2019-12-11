@@ -13,12 +13,6 @@
       vars:
         port: 8000
 
-    - name: stop Webpack server
-      include_role:
-        name: free-port
-      vars:
-        port: 3000
-
     - name: start Django server
       command: pipenv run ./manage.py runserver
       args:
@@ -26,11 +20,27 @@
       async: "{{ async_timeout }}"
       poll: 0   # Run asynchronously
       changed_when: true  # Silence linter
+      register: django_start
 
-    - name: start webpack-dev-server
+    - name: stop Webpack server
+      include_role:
+        name: free-port
+      vars:
+        port: 3000
+
+    - name: start Webpack server
       command: npm start
       args:
         chdir: "{{ project_dir }}"
       async: "{{ async_timeout }}"
       poll: 0   # Run asynchronously
       changed_when: true  # Silence linter
+      register: webpack_start
+
+    - name: check that Django hasn't crashed
+      async_status:
+        jid: "{{ django_start.ansible_job_id }}"
+
+    - name: check that Webpack hasn't crashed
+      async_status:
+        jid: "{{ webpack_start.ansible_job_id }}"
