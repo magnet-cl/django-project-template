@@ -1,0 +1,18 @@
+
+- name: start {{ app_name }} server
+  command: "{{ start_command }}"
+  args:
+    chdir: "{{ project_dir }}"
+  async: 3600
+  poll: 0   # Run asynchronously
+  changed_when: true  # Silence linter
+
+  #     register: "{{ app_name }}_start"
+  # "register" is not templatable :(
+  # Also it's not enough to use two tasks with "when" because the variable is still registered.
+  register: __tmp_start
+
+
+- name: set {{ app_name }}_start variable
+  set_fact:
+    "{{ app_name }}_start": "{{ __tmp_start }}"

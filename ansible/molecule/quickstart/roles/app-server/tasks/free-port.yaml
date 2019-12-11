@@ -1,7 +1,7 @@
-# Frees the port {{ port }}, checking if it's in use, sending SIGTERM and waiting.
+# Frees the port {{ app_port }}, checking if it's in use, sending SIGTERM and waiting.
 
-- name: get PID using port {{ port }}
-  command: lsof -t -i:{{ port }}
+- name: get PID using port {{ app_port }}
+  command: lsof -t -i:{{ app_port }}
   changed_when: false
   failed_when: false
   register: port_pid
