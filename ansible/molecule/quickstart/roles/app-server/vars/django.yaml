@@ -1,4 +1,4 @@
 app_name: Django
 app_port: 8000
 start_command: pipenv run ./manage.py runserver
-timeout_200: "{{ 2 * 1.5 }}"   # The time that a 5 USD droplet takes from running the server, to a 200, x1.5
+timeout_200: 1    # There's enough wait time in Webpack
