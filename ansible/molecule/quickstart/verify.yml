@@ -11,6 +11,7 @@
         tasks_from: free-port
         vars_from: django
 
+    # start Django server
     - include_role:
         name: app-server
         tasks_from: start-server
@@ -22,16 +23,19 @@
         tasks_from: free-port
         vars_from: webpack
 
+    # start Webpack server
     - include_role:
         name: app-server
         tasks_from: start-server
         vars_from: webpack
 
+    # check if Django crashed
     - include_role:
         name: app-server
         tasks_from: check-crashed
         vars_from: django
 
+    # check if Webpack crashed
     - include_role:
         name: app-server
         tasks_from: check-crashed
