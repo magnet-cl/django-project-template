@@ -6,7 +6,7 @@ block javascripts
   script(src="{% static 'js/login.js' %}")
 
 block content
-  form.form-signin.form-horizontal.mt-4(action='', method='post')
+  form#login-form.form-signin.form-horizontal.mt-4(action='', method='post', data-username-field-id="id_{{form.email_field.name}}")
     {% csrf_token %}
 
     .form-signin-inner
