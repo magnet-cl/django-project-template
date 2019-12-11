@@ -30,14 +30,15 @@ provisioner:
     host_vars:
       instance:
         project_dir: django-project-template-py3    # (could be any other name)
+        ansible_python_interpreter: auto
 
   lint:
     name: ansible-lint
 
 verifier:
-  name: testinfra
+  name: ansible
   lint:
-    name: flake8
+    name: ansible-lint
 
 scenario:
   create_sequence:
