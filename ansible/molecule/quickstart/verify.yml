@@ -1,0 +1,36 @@
+- name: Prepare
+  hosts: all
+  gather_facts: false
+  vars:
+    async_timeout: 3600
+
+  # Note that these tasks could also be in playbook.yml after the quickstart task.
+  # But having them here allows to run `molecule verify -s quickstart` without having to wait for quickstart.sh
+  tasks:
+    - name: stop Django server
+      include_role:
+        name: free-port
+      vars:
+        port: 8000
+
+    - name: stop Webpack server
+      include_role:
+        name: free-port
+      vars:
+        port: 3000
+
+    - name: start Django server
+      command: pipenv run ./manage.py runserver
+      args:
+        chdir: "{{ project_dir }}"
+      async: "{{ async_timeout }}"
+      poll: 0   # Run asynchronously
+      changed_when: true  # Silence linter
+
+    - name: start webpack-dev-server
+      command: npm start
+      args:
+        chdir: "{{ project_dir }}"
+      async: "{{ async_timeout }}"
+      poll: 0   # Run asynchronously
+      changed_when: true  # Silence linter
