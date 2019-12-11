@@ -5,18 +5,6 @@
   # Note that these tasks could also be in playbook.yml after the quickstart task.
   # But having them here allows to run `molecule verify -s quickstart` without having to wait for quickstart.sh
   tasks:
-    - name: stop Django server
-      include_role:
-        name: app-server
-        tasks_from: free-port
-        vars_from: django
-
-    # start Django server
-    - include_role:
-        name: app-server
-        tasks_from: start-server
-        vars_from: django
-
     - name: stop Webpack server
       include_role:
         name: app-server
@@ -29,16 +17,16 @@
         tasks_from: start-server
         vars_from: webpack
 
-    # check if Django crashed
-    - include_role:
+    - name: stop Django server
+      include_role:
         name: app-server
-        tasks_from: check-crashed
+        tasks_from: free-port
         vars_from: django
 
-    # check that Django returns 200
+    # start Django server
     - include_role:
         name: app-server
-        tasks_from: check-200
+        tasks_from: start-server
         vars_from: django
 
     # check if Webpack crashed
@@ -52,3 +40,15 @@
         name: app-server
         tasks_from: check-200
         vars_from: webpack
+
+    # check if Django crashed
+    - include_role:
+        name: app-server
+        tasks_from: check-crashed
+        vars_from: django
+
+    # check that Django returns 200
+    - include_role:
+        name: app-server
+        tasks_from: check-200
+        vars_from: django
