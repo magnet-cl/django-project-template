@@ -100,7 +100,7 @@ INSTALLED_APPS = [
     'django.contrib.postgres',
 
     # required apps
-    'base',
+    'base.apps.BaseConfig',
     'users',
 
     # external
@@ -144,6 +144,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'base.middleware.RequestMiddleware',
 ]
 
 if DEBUG:
@@ -378,3 +379,17 @@ if DEBUG:
     REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'].append(
         'rest_framework.renderers.BrowsableAPIRenderer',
     )
+
+# The change's information of this fields will be ignored in the logs
+LOG_SENSITIVE_FIELDS = [
+    'password',
+]
+
+# This fields will be ignored in the logs
+LOG_IGNORE_FIELDS = [
+    'created_at',
+    'updated_at',
+    'original_dict',
+    'id',
+    'date_joined',
+]

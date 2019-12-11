@@ -97,6 +97,16 @@ on wait
 with thoushand separators (for spanish)
 on wait
 
+### Logging Database Entries
+
+The project automatically generates logs for every user action that create, delete or
+updates an apps models object. If a field of the object is updated, the log will store
+the initial and the final state of the field. The log will ignore the update of the
+many2many fields. If a model has a sensitive field for wich you don't want to display
+the update information, you have to add it to LOG_SENSITIVE_FIELDS in settings. If you
+want to ignore a field, you can add it to LOG_IGNORE_FIELDS in settings.
+
+The project doesn't log any action made through automatic tasks.
 ## Deployment
 
 Deployment is automated with Ansible, which is installed by quickstart. Add your servers to `ansible/inventory.yaml` and deploy with:
