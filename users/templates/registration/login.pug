@@ -16,6 +16,7 @@ block content
 
       for field in form.hidden_fields
         | {{field}}
+      input#id_next(type='hidden', name='next', value='{{ next }}')
 
       for field in form.visible_fields
 

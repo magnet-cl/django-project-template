@@ -22,6 +22,14 @@ window.onload = () => {
   const interval = setInterval(() => {
     if (cookie !== getCookie('csrftoken')) {
       clearInterval(interval);
+
+      const next = document.getElementById('id_next');
+
+      if (next) {
+        window.location.href = next.value;
+        return;
+      }
+
       window.location.reload();
     }
   }, 1000);
