@@ -1,5 +1,6 @@
 - name: Test quickstart
   hosts: all
+  gather_facts: false
 
   tasks:
     - name: run quickstart.sh
