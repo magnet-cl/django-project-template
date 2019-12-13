@@ -100,7 +100,7 @@ Available actions are `install-services`, `start-services`, `restart-services`, 
 Tests of Ansible scripts are made with [Molecule](https://molecule.readthedocs.io), which creates a Vagrant VM (with Ubuntu 18.04 by default). There are two test scenarios:
 
 - `deploy`: deploys the app in the VM, and tests that the home page has no broken links.
-- `quickstart`: runs quickstart in the VM, and tests that Django and Webpack (in development mode) return 200.
+- `quickstart`: runs quickstart in the VM, and tests that Django and Webpack (in development mode) return 200. (Note: this tests with files you currently have in your repository folder)
 
 ### Setup
 

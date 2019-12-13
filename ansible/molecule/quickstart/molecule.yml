@@ -29,7 +29,7 @@ provisioner:
   inventory:
     host_vars:
       instance:
-        project_dir: django-project-template-py3    # (could be any other name)
+        project_dir: ~/django-project-template-py3
         ansible_python_interpreter: auto
 
   lint:
