@@ -122,7 +122,9 @@ Set it in the `MOLECULE_DISTRO` variable when calling `molecule`. By default it 
 MOLECULE_DISTRO=centos/7 molecule test -s <scenario>
 ```
 
-To change distro when the instance is already created, run `molecule destroy -s <scenario>`
+To change distro when the instance is already created, run `MOLECULE_DISTRO=<distro> molecule destroy -s <scenario>`
+
+> Note: if you run `destroy` with the wrong `MOLECULE_DISTRO` set, the VM won't be deleted but its metadata stored by Molecule will, so it can't be deleted by Molecule anymore. To delete it manually: open the VirtualBox GUI (Oracle VM VirtualBox Manager), right click it in the list, "Close", "Power Off", right click, "Remove...", "Delete all files".
 
 #### Debugging
 
