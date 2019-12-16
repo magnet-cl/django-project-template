@@ -20,7 +20,7 @@
 - name: install npm dependencies
   npm:
     path: "{{ server_root_dir }}"
-    ci: yes
+    ci: "{{ not is_dev_machine }}"
     production: "{{ not is_dev_machine }}"
   environment:
     PATH: "{{ path_for_node }}"
