@@ -52,12 +52,12 @@
   gather_facts: no
   vars_prompt:
     - name: confirmation
-      #     prompt: ¿Are you sure you want to replace the DB of {{ dest_host }} [y/N]?
+      #     prompt: Are you sure you want to replace the DB of  "{{ dest_host }}" ...
       # Oh crap. "'dest_host' is undefined"
       prompt: >-
-        ¿Are you sure you want to replace the DB of
-        {{ ansible_limit if (ansible_play_hosts | length == 1) else (ansible_limit | regex_replace('.+,(.+)', '\1')) }}
-        [y/N]?
+        Are you sure you want to replace the DB of
+        "{{ ansible_limit if (ansible_play_hosts | length == 1) else (ansible_limit | regex_replace('.+,(.+)', '\1')) }}"
+        ({{ lookup('env', 'PWD') | dirname | basename }}) [y/N]?
       private: no   # Show input (this is made to input passwords)
   tasks:
     - name: check confirmation

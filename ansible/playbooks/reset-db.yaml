@@ -28,7 +28,9 @@
   gather_facts: no
   vars_prompt:
     - name: confirmation
-      prompt: ¿Are you sure you want to reset the DB of {{ ansible_limit }} [y/N]?
+      prompt: >-
+        Are you sure you want to reset the DB of "{{ ansible_limit }}"
+        ({{ lookup('env', 'PWD') | dirname | basename }}) [y/N]?
       private: no   # Show input (this is made to input passwords)
   tasks:
     - name: check confirmation
