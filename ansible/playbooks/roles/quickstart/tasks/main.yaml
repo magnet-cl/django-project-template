@@ -90,8 +90,8 @@
   when: secret_key_unset.files
   changed_when: true
 
-- name: install Node.js and npm dependencies
-  import_tasks: node.yaml
-
 - name: setup database
   import_tasks: db.yaml
+
+- name: install Node.js and npm dependencies
+  import_tasks: node.yaml

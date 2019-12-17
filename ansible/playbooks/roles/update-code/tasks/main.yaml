@@ -17,24 +17,25 @@
 
 - name: backup DB
   block:
+    - name: get DB configuration
+      include_role:
+        name: get-db-config
+
     # Skip dump only if this task says DB doesn't exist and didn't fail,
     # to avoid going on without backup in case DB exists but dump failed.
     - name: check if DB exists
-      # yamllint disable rule:line-length
+      # Note: get-db-config already verified that db_name requires no quoting (Bobby Tables)
       shell: |
         if command -v psql >/dev/null; then
           psql --tuples-only --no-align \
-            --command="SELECT 1 FROM pg_database \
-              WHERE datname={{ ("'" + project_name + "'") if ((project_name | quote) == project_name) else (project_name | quote) }}"
-              # Bobby Tables handling mess...
+            --command="SELECT 1 FROM pg_database WHERE datname='{{ db_name }}'"
         fi
-      # yamllint enable rule:line-length
       register: db_exists
       changed_when: false
 
     - name: non-existent DB message
       debug:
-        msg: Database {{ project_name }} doesn't exist, skipping backup.
+        msg: Database {{ db_name }} doesn't exist, skipping backup.
       when: db_exists.stdout != '1'
 
     - name: perform backup with role
@@ -42,4 +43,44 @@
         name: db
         tasks_from: backup
       when: db_exists.stdout == '1'
-  when: git_result.changed
+
+  rescue:
+    - name: include task_name var from another role   # (failed_get_db_config_task_name)
+      include_vars: ../get-db-config/vars/main.yaml
+
+    - name: set messages
+      # Sorry for the mess, '\n' didn't work as a newline
+      set_fact:
+        top_msg: >-
+          Git {{ 'clone' if (git_result.before is none) else 'pull' }}
+          succeeded and changed but
+          {{ 'failed to get DB config. Refusing to continue without a backup.'
+            if ansible_failed_task.name == failed_get_db_config_task_name
+            else 'DB backup failed.' }}
+        bottom_msg: |
+          Warning: running this again won't trigger a backup, because the repository is already up-to-date.
+          To backup manually, run:
+            ansible-playbook -i inventory.yaml -l {{ inventory_hostname }} playbooks/backup-db.yaml
+
+    - name: print the consequences of the failure (update)
+      fail:
+        msg: |
+          {{ top_msg }}
+
+          {{ bottom_msg }}
+      when: "'update' in ansible_run_tags"
+
+    - name: print the consequences of the failure (deploy)
+      fail:
+        msg: |
+          {{ top_msg }}
+
+          Hint: if you are in the middle of a failed deploy, and this failed because the project is not set up yet, delete:
+            {{ server_root_dir }}
+
+          {{ bottom_msg }}
+      when: "'update' not in ansible_run_tags"
+
+  when:                               # Skip backup on:
+    - git_result.changed              #   - no changes, or
+    - git_result.before is not none   #   - first clone.

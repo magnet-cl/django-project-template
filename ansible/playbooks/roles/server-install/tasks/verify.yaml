@@ -9,6 +9,7 @@
   register: wget_existence
   failed_when: False
   changed_when: False
+  tags: update
 
 - name: check site using wget
   block:

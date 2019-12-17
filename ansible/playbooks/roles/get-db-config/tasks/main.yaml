@@ -1,0 +1,36 @@
+- name: check if database configuration is already obtained
+  set_fact:
+    skip_get_db_config: yes
+  when: db_name is defined
+  # This extra task is required (to skip the following tasks that take longer),
+  # because using "when: db_name is not defined" in the block applies "when" to all tasks,
+  # so only the first one runs (db_name is not defined)
+  # and the next ones are skipped (db_name IS defined).
+
+- name: get DB configuration
+  block:
+    - name: get DB parameters
+      include_tasks: get-parameter.yaml   # It's not possible to loop over block
+      loop:
+        - db_name
+        - db_user
+        - db_password
+        - db_host
+        - db_port
+      # Improvement: parallelize.
+
+    - name: verify database name
+      assert:
+        that: (db_name | quote) == db_name
+        fail_msg: |
+          db_name has characters that require quoting!
+            {{ db_name }}
+            {{ db_name | quote }}
+        quiet: yes
+
+  rescue:
+    - name: "{{ failed_get_db_config_task_name }}"
+      fail:
+        msg: Failed to obtain database configuration. Make sure the project is set up correctly.
+
+  when: skip_get_db_config is not defined
