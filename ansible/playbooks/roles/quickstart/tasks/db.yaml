@@ -1,9 +1,14 @@
-- name: set database name in local_settings
+- name: set database name on local_settings creation
   replace:
     path: "{{ server_root_dir }}/project/local_settings.py"
     regexp: "        'NAME': 'database-name',"
     replace: "        'NAME': '{{ project_name }}',"
     validate: bash -c "cd {{ server_root_dir }} && pipenv run python %s"  # It returns 1 on "invalid syntax"
+  when: local_settings_create.changed
+
+- name: get DB configuration
+  include_role:
+    name: get-db-config
 
 - name: install and configure Postgres and create DB
   block:
@@ -67,15 +72,18 @@
 
     - name: create database
       postgresql_db:
-        name: "{{ project_name }}"
+        name: "{{ db_name }}"
+        login_user: "{{ db_user | default(ansible_user, true) }}"
+        login_password: "{{ db_password }}"
+        login_host: "{{ db_host }}"
+        login_port: "{{ (db_port | int) if db_port else omit }}"
         state: present
-        login_user: "{{ ansible_user_id }}"
 
   when: ansible_distribution != 'MacOSX'
 
 - name: create database with a hack on OSX
   # postgresql_db:    HAH! Try making Ansible's discovered_interpreter_python import psycopg2  https://xkcd.com/1987
-  command: createdb {{ project_name }}
+  command: createdb {{ db_name }}
   register: osx_createdb
   failed_when:
     - osx_createdb is failed

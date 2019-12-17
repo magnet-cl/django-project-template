@@ -1,0 +1,14 @@
+# "item" variable is "db_name", "db_user", etc.
+# Names are chosen to extract NAME, USER, etc. from local_settings.
+
+- name: get {{ item }}
+  command: pipenv run ./manage.py printdatabasedata {{ item | regex_replace('^db_', '') | upper }}
+  args:
+    chdir: "{{ server_root_dir }}"
+  register: __tmp_db_print
+  changed_when: false
+
+- name: set {{ item }}
+  # Note: "register" is not templatable, so this extra task is required
+  set_fact:
+    "{{ item }}": "{{ __tmp_db_print.stdout }}"
