@@ -1,0 +1,8 @@
+# TODO: add a variable to force reload
+- name: clear DB configuration variables
+  set_fact:
+    db_name:
+    db_user:
+    db_password:
+    db_host:
+    db_port:

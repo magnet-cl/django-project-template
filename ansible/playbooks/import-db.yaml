@@ -10,6 +10,9 @@
         fail_msg: You are trying to import the DB of several hosts at the same time.
         quiet: yes
 
+  roles:
+    - get-db-config
+
   tasks:
     - name: download remote dump
       block:
@@ -28,6 +31,14 @@
             dump_name: "{{ inventory_hostname }}/{{ dump_name }}"
       when: local_dump is not defined
 
+    - name: get local DB configuration
+      include_role:
+        name: get-db-config
+        apply:
+          delegate_to: localhost
+      vars:
+        on_localhost: yes
+
     - name: import the dump
       block:
         - name: run pg_restore
@@ -38,13 +49,18 @@
           command:
             argv:
               - pg_restore
-              - --dbname={{ project_name }}
+              - --dbname={{ db_name }}
+              - --username={{ db_user }}
+              - --host={{ db_host }}
+              - --port={{ db_port }}
               - --clean
               - --if-exists
               - --no-owner
               - --no-acl
               - --jobs=2
               - "{{ dump_name | default(local_dump) }}"
+          environment:
+            PGPASSWORD: "{{ db_password }}"
           register: pg_restore_result
       rescue:
         - name: Skip version printing

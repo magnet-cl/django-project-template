@@ -1,8 +1,13 @@
 - name: download DB
   hosts: all
+
   pre_tasks:
     - name: import check Ansible version task
       import_tasks: utils/assert-ansible-version.yaml
+
+  roles:
+    - get-db-config
+
   tasks:
     - name: backup
       import_role:

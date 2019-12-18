@@ -1,7 +1,6 @@
-- name: check if database configuration is already obtained
+- name: check if get-db-config should be skipped
   set_fact:
-    skip_get_db_config: yes
-  when: db_name is defined
+    skip_get_db_config: "{{ (skip_if_set | default(False)) and db_name is defined }}"
   # This extra task is required (to skip the following tasks that take longer),
   # because using "when: db_name is not defined" in the block applies "when" to all tasks,
   # so only the first one runs (db_name is not defined)
@@ -33,4 +32,4 @@
       fail:
         msg: Failed to obtain database configuration. Make sure the project is set up correctly.
 
-  when: skip_get_db_config is not defined
+  when: not skip_get_db_config

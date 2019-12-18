@@ -41,23 +41,26 @@
 
 - name: backup-drop-create
   hosts: all
+  roles:
+    - get-db-config
   tasks:
     - name: backup DB
       import_role:
         name: db
         tasks_from: backup
 
-    - name: drop DB
+    - name: drop and create DB
       postgresql_db:
-        name: "{{ project_name }}"
-        state: absent
-        login_user: "{{ ansible_user_id }}"
+        name: "{{ db_name }}"
+        login_user: "{{ db_user | default(ansible_user, true) }}"
+        login_password: "{{ db_password }}"
+        login_host: "{{ db_host }}"
+        login_port: "{{ (db_port | int) if db_port else omit }}"
 
-    - name: create DB
-      postgresql_db:
-        name: "{{ project_name }}"
-        state: present
-        login_user: "{{ ansible_user_id }}"
+        state: "{{ item }}"
+      loop:
+        - absent
+        - present
 
 - name: migrate
   import_playbook: migrate-db.yaml

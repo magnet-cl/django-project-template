@@ -4,7 +4,10 @@
 - name: get {{ item }}
   command: pipenv run ./manage.py printdatabasedata {{ item | regex_replace('^db_', '') | upper }}
   args:
-    chdir: "{{ server_root_dir }}"
+    #   chdir: "{{ server_root_dir }}"
+    # This doesn't work on localhost unless it's included in --limit :(
+    # So:
+    chdir: "{{ (lookup('env', 'PWD') | dirname) if (on_localhost | default(False)) else server_root_dir }}"
   register: __tmp_db_print
   changed_when: false
 
