@@ -71,6 +71,10 @@
   tasks:
     - name: download DB on source host only
       block:
+        - name: get source DB configuration
+          include_role:
+            name: get-db-config
+
         - name: backup
           include_role:
             name: db
@@ -91,6 +95,10 @@
   tasks:
     - name: copy and import the dump on destination host only
       block:
+        - name: get destination DB configuration
+          include_role:
+            name: get-db-config
+
         - name: set dump_name
           set_fact:
             # If the dump was downloaded, dump_name variable is set in src_host only
@@ -120,13 +128,18 @@
               command:
                 argv:
                   - pg_restore
-                  - --dbname={{ project_name }}
+                  - --dbname={{ db_name }}
+                  - --username={{ db_user }}
+                  - --host={{ db_host }}
+                  - --port={{ db_port }}
                   - --clean
                   - --if-exists
                   - --no-owner
                   - --no-acl
                   - --jobs=2
                   - "{{ temp_dump.path }}"
+              environment:
+                PGPASSWORD: "{{ db_password }}"
               register: pg_restore_result
           rescue:
             - name: Skip version printing
