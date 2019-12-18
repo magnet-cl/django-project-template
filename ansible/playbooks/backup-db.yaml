@@ -7,7 +7,6 @@
 
   roles:
     - get-db-config
-    # TODO: get-db-config on all other DB playbooks
 
   tasks:
     - name: backup
