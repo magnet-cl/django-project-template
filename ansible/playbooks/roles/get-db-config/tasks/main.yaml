@@ -9,7 +9,10 @@
 - name: get DB configuration
   block:
     - name: get DB parameters
-      include_tasks: get-parameter.yaml   # It's not possible to loop over block
+      include_tasks:    # It's not possible to loop over block
+        file: get-parameter.yaml
+        apply:
+          no_log: "{{ item == 'db_password' }}"
       loop:
         - db_name
         - db_user
