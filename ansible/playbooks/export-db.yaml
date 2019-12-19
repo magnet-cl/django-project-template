@@ -116,11 +116,27 @@
             dest: "{{ temp_dump.path }}"
             force: yes    # overwrite empty temp_dump
 
+        - name: check if DB exists
+          include_role:
+            name: db
+            tasks_from: check-existence
+
         - name: create a backup before importing
           include_role:
             name: db
             tasks_from: backup
+          when: db_exists.stdout == '1'
           # Note: it's "local_dump" instead of "dump_name" to avoid overriding the variable inside this role.
+
+        - name: create database
+          postgresql_db:
+            name: "{{ db_name }}"
+            login_user: "{{ db_user | default(ansible_user, true) }}"
+            login_password: "{{ db_password }}"
+            login_host: "{{ db_host }}"
+            login_port: "{{ (db_port | int) if db_port else omit }}"
+            state: present
+          when: db_exists.stdout != '1'
 
         - name: import the dump
           block:
@@ -171,6 +187,8 @@
           file:
             path: "{{ temp_dump.path }}"
             state: absent
+          # Note: the dump could be kept in ~/db_dumps/ instead of deleting it,
+          # though it should have src_host in the file name to avoid confusion.
 
       when: inventory_hostname == dest_host or src_host == '__local__'
         # "or" in case (inventory_hostname != dest_host == ansible_limit) because it contains comma

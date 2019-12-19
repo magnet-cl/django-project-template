@@ -44,10 +44,16 @@
   roles:
     - get-db-config
   tasks:
+    - name: check if DB exists
+      include_role:
+        name: db
+        tasks_from: check-existence
+
     - name: backup DB
       import_role:
         name: db
         tasks_from: backup
+      when: db_exists.stdout == '1'
 
     - name: drop and create DB
       postgresql_db:
