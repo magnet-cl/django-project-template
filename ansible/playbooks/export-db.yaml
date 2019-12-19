@@ -163,7 +163,7 @@
                 msg: Failed (see above)
               when: >
                 src_host == '__local__'
-                  or 'could not open input file' in pg_restore_result.stderr
+                  or 'could not open input file' in (pg_restore_result.stderr | default(''))
 
             - name: get source version
               command: pg_dump -V
@@ -179,7 +179,8 @@
             - name: fail, printing versions
               fail:
                 msg: |
-                  pg_restore failed (see above)
+                  pg_restore failed {{ '(or maybe it just finished with warnings) ' if ('WARNING:' in (pg_restore_result.stderr | default(''))) else ''}}(see above)
+
                   FYI, source has "{{ src_version.stdout }}" and destination has "{{ dest_version.stdout }}"
 
       always:
