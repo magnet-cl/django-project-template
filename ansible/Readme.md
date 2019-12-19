@@ -94,6 +94,13 @@ Available actions are `install-services`, `start-services`, `restart-services`, 
 - Remote DB dumps are assumed to be stored in `~/db_dumps/`, and Media archives in `~`
 - Backup/restore Media doesn't support `relative_path`
 
+## External databases
+
+There's support for external databases not running in the server (like RDS) but some manual setup is required. For example, a DigitalOcean managed database comes only with a `defaultdb` database. You must:
+
+- Create a database called `postgres` (the default of the [`maintenance_db` parameter](https://docs.ansible.com/ansible/latest/modules/postgresql_db_module.html#parameters), and also to be able to use `psql`).
+- Set DB connection parameters in `local_settings.py`. Either clone the repository and create local_settings from the default file before running deploy (note: remember to manually set DEBUG to False), or let the deploy succeed with a local DB, and then edit local_settings and run deploy again.
+
 ## Testing
 
 Tests of Ansible scripts are made with [Molecule](https://molecule.readthedocs.io), which creates a Vagrant VM (with Ubuntu 18.04 by default). There are two test scenarios:
