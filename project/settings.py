@@ -263,17 +263,36 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATIC_ROOT = os.path.join(PROJECT_DIR, 'static/')
-STATIC_URL = '/static/'
-
-MEDIA_ROOT = os.path.join(PROJECT_DIR, 'media/')
-MEDIA_URL = '/uploads/'
-
 if not DEBUG:
     STATICFILES_DIRS = [
         # Webpack bundles
         ('bundles', os.path.join(BASE_DIR, 'assets/bundles')),
     ]
+
+if get_local_value('USE_S3', False):
+    AWS_ACCESS_KEY_ID = local_settings.AWS_ACCESS_KEY_ID
+    AWS_SECRET_ACCESS_KEY = local_settings.AWS_SECRET_ACCESS_KEY
+    AWS_STORAGE_BUCKET_NAME = local_settings.AWS_STORAGE_BUCKET_NAME
+    AWS_S3_ENDPOINT_URL = local_settings.AWS_S3_ENDPOINT_URL
+    AWS_S3_CUSTOM_DOMAIN = local_settings.AWS_S3_CUSTOM_DOMAIN
+    AWS_S3_OBJECT_PARAMETERS = local_settings.AWS_S3_OBJECT_PARAMETERS
+    AWS_S3_SIGNATURE_VERSION = local_settings.AWS_S3_SIGNATURE_VERSION
+    AWS_DEFAULT_ACL = None  # Silence warning
+
+    # static
+    STATICFILES_STORAGE = 'project.storage_backends.StaticStorage'
+    STATIC_URL = f'{AWS_S3_CUSTOM_DOMAIN}/static/'
+    STATIC_ROOT = 'static/'
+    # media
+    MEDIA_URL = f'{AWS_S3_CUSTOM_DOMAIN}/uploads/'
+    DEFAULT_FILE_STORAGE = 'project.storage_backends.PublicMediaStorage'
+else:
+    # static
+    STATIC_ROOT = os.path.join(PROJECT_DIR, 'static/')
+    STATIC_URL = '/static/'
+    # media
+    MEDIA_ROOT = os.path.join(PROJECT_DIR, 'media/')
+    MEDIA_URL = '/uploads/'
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
