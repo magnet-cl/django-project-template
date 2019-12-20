@@ -30,7 +30,7 @@
 
     - name: non-existent DB message
       debug:
-        msg: Database {{ db_name }} doesn't exist, skipping backup.
+        msg: Database {{ db_conf.NAME }} doesn't exist, skipping backup.
       when: db_exists.stdout != '1'
 
     - name: perform backup with role

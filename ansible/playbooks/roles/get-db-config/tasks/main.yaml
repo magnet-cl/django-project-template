@@ -1,33 +1,42 @@
 - name: check if get-db-config should be skipped
   set_fact:
-    skip_get_db_config: "{{ (skip_if_set | default(False)) and db_name is defined }}"
+    skip_get_db_config: "{{ (skip_if_set | default(False)) and db_conf is defined }}"
   # This extra task is required (to skip the following tasks that take longer),
-  # because using "when: db_name is not defined" in the block applies "when" to all tasks,
-  # so only the first one runs (db_name is not defined)
-  # and the next ones are skipped (db_name IS defined).
+  # because using "when: db_conf is not defined" in the block applies "when" to all tasks,
+  # so only the first one runs (db_conf is not defined)
+  # and the next ones are skipped (db_conf IS defined).
 
 - name: get DB configuration
   block:
     - name: get DB parameters
-      include_tasks:    # It's not possible to loop over block
-        file: get-parameter.yaml
-        apply:
-          no_log: "{{ item == 'db_password' }}"
-      loop:
-        - db_name
-        - db_user
-        - db_password
-        - db_host
-        - db_port
-      # Improvement: parallelize.
+      command: >
+        pipenv run python -c
+        "import json;
+        from project.settings import LOCAL_DATABASES;
+        print(json.dumps(LOCAL_DATABASES['default']))"
+
+      args:
+        #   chdir: "{{ server_root_dir }}"
+        # This doesn't work on localhost unless it's included in --limit :(
+        # So:
+        chdir: "{{ (lookup('env', 'PWD') | dirname) if (on_localhost | default(False)) else server_root_dir }}"
+
+      no_log: yes   # Prevents printing password. Comment this line to debug this task.
+      changed_when: false
+      register: db_conf
+
+    - name: set DB configuration
+      set_fact:
+        db_conf: "{{ db_conf.stdout | from_json }}"
+      no_log: yes
 
     - name: verify database name
       assert:
-        that: (db_name | quote) == db_name
+        that: (db_conf.NAME | quote) == db_conf.NAME
         fail_msg: |
-          db_name has characters that require quoting!
-            {{ db_name }}
-            {{ db_name | quote }}
+          db_conf.NAME has characters that require quoting!
+            {{ db_conf.NAME }}
+            {{ db_conf.NAME | quote }}
         quiet: yes
 
   rescue:
