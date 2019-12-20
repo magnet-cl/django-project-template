@@ -2,7 +2,16 @@
 # Names are chosen to extract NAME, USER, etc. from local_settings.
 
 - name: get {{ item }}
-  command: pipenv run ./manage.py printdatabasedata {{ item | regex_replace('^db_', '') | upper }}
+
+  #     command: pipenv run ./manage.py printdatabasedata {{ item | regex_replace('^db_', '') | upper }}
+  # Can cause "SystemCheckError" because code was updated (git pull),
+  # but pip packages have not been installed yet.
+
+  command: >
+    pipenv run python -c
+    "from project.settings import LOCAL_DATABASES;
+    print(LOCAL_DATABASES['default']['{{ item | regex_replace('^db_', '') | upper }}'])"
+
   args:
     #   chdir: "{{ server_root_dir }}"
     # This doesn't work on localhost unless it's included in --limit :(
