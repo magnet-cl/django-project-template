@@ -9,11 +9,11 @@
 
 - name: dump DB
   postgresql_db:
-    name: "{{ db_name }}"
-    login_user: "{{ db_user | default(ansible_user, true) }}"
-    login_password: "{{ db_password }}"
-    login_host: "{{ db_host }}"
-    login_port: "{{ (db_port | int) if db_port else omit }}"
+    name: "{{ db_conf.NAME }}"
+    login_user: "{{ db_conf.USER | default(ansible_user, true) }}"
+    login_password: "{{ db_conf.PASSWORD }}"
+    login_host: "{{ db_conf.HOST }}"
+    login_port: "{{ (db_conf.PORT | int) if db_conf.PORT else omit }}"
 
     state: dump
     target: db_dumps/{{ dump_name }}

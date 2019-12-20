@@ -74,18 +74,18 @@
 
     - name: create database
       postgresql_db:
-        name: "{{ db_name }}"
-        login_user: "{{ db_user | default(ansible_user, true) }}"
-        login_password: "{{ db_password }}"
-        login_host: "{{ db_host }}"
-        login_port: "{{ (db_port | int) if db_port else omit }}"
+        name: "{{ db_conf.NAME }}"
+        login_user: "{{ db_conf.USER | default(ansible_user, true) }}"
+        login_password: "{{ db_conf.PASSWORD }}"
+        login_host: "{{ db_conf.HOST }}"
+        login_port: "{{ (db_conf.PORT | int) if db_conf.PORT else omit }}"
         state: present
 
   when: ansible_distribution != 'MacOSX'
 
 - name: create database with a hack on OSX
   # postgresql_db:    HAH! Try making Ansible's discovered_interpreter_python import psycopg2  https://xkcd.com/1987
-  command: createdb {{ db_name }}
+  command: createdb {{ db_conf.NAME }}
   register: osx_createdb
   failed_when:
     - osx_createdb is failed

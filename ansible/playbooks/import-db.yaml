@@ -49,10 +49,10 @@
           command:
             argv:
               - pg_restore
-              - --dbname={{ db_name }}
-              - --username={{ db_user }}
-              - --host={{ db_host }}
-              - --port={{ db_port }}
+              - --dbname={{ db_conf.NAME }}
+              - --username={{ db_conf.USER }}
+              - --host={{ db_conf.HOST }}
+              - --port={{ db_conf.PORT }}
               - --clean
               - --if-exists
               - --no-owner
@@ -60,7 +60,7 @@
               - --jobs=2
               - "{{ dump_name | default(local_dump) }}"
           environment:
-            PGPASSWORD: "{{ db_password }}"
+            PGPASSWORD: "{{ db_conf.PASSWORD }}"
           register: pg_restore_result
       rescue:
         - name: Skip version printing
