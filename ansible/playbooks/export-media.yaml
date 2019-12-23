@@ -107,6 +107,7 @@
           loop:   # https://github.com/ansible/ansible/issues/18910
             - absent
             - directory
+          when: (delete_previous | default('no')) == 'yes'
 
         - name: unpack the archive
           unarchive:
