@@ -93,6 +93,7 @@ Available actions are `install-services`, `start-services`, `restart-services`, 
 - DB is automatically backed up when pulling changes. Also, DB/Media are automatically backed up on target machine when using `export`. If they are too big, comment those tasks, and make sure to delete old backups.
 - Remote DB dumps are assumed to be stored in `~/db_dumps/`, and Media archives in `~`
 - Backup/restore Media doesn't support `relative_path`
+- Media backed up from S3 in a `.tar` loses its metadata.
 
 ## External databases
 
