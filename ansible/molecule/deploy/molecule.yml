@@ -71,6 +71,9 @@ scenario:
     - converge
     - idempotence
     # - side_effect   not configured
-    # - verify        TODO: grhh HEAD~, run update and check db_dump
+
+    # - verify      # TODO: grhh HEAD~, run update and check db_dump
+                    # TODO: check that SECRET_KEY was changed
+
     # - cleanup       not configured
     - destroy

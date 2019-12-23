@@ -70,16 +70,14 @@
   include_tasks: prod-local-settings.yaml
   when: not is_dev_machine
 
-# Improvement: better secret key handling (the next step is like grep,
-# and the Django command replicates "lineinfile" functionality,
-# and settings.py could just load a gitignored file...)
 - name: check if secret key is unset
-  find:
-    contains: ^SECRET_KEY *= *['"]CHANGE ME['"]
-    paths:
-      - "{{ server_root_dir }}/project"
-    patterns:
-      - local_settings.py
+  command: >
+    pipenv run python -c
+    "from project.local_settings import SECRET_KEY;
+    print(SECRET_KEY == 'CHANGE ME')"
+  args:
+    chdir: "{{ server_root_dir }}"
+  changed_when: false
   register: secret_key_unset
 
 - name: set secret key with Django
@@ -87,7 +85,7 @@
     command: generatesecretkey
     app_path: "{{ server_root_dir }}"
     virtualenv: "{{ venv.stdout }}"
-  when: secret_key_unset.files
+  when: secret_key_unset.stdout == 'True'
   changed_when: true
 
 - name: setup database

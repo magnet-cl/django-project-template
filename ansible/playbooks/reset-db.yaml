@@ -14,14 +14,15 @@
       # This prevents "ERROR! 'ansible_limit' is undefined" later.
 
     - name: assert that DEBUG = True
-      find:
-        contains: ^DEBUG *= *True
-        paths:
-          - "{{ server_root_dir }}/project"
-        patterns:
-          - local_settings.py
+      command: >
+        pipenv run python -c
+        "from project.local_settings import DEBUG;
+        print(DEBUG)"
+      args:
+        chdir: "{{ server_root_dir }}"
+      changed_when: false
       register: debug_enabled
-      failed_when: not debug_enabled.files
+      failed_when: debug_enabled.stdout != 'True'
 
 - name: confirm
   hosts: all
