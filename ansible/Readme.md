@@ -74,6 +74,8 @@ Note that the dumps are inside the `playbooks` folder, but paths are relative to
 
 Same as DB, but replace `local_dump` with `local_archive`
 
+By default previous media files are preserved (like in Fabric). Add `-e delete_previous=yes` to delete them.
+
 ### Project helpers
 
 - `run-django-command`: specify the Django command to be run in the variable `django_command`
