@@ -8,5 +8,3 @@
       import_role:
         name: media
         tasks_from: backup
-
-# TODO: handle backup from S3

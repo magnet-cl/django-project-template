@@ -285,7 +285,9 @@ if get_local_value('USE_S3', False):
     STATIC_URL = f'{AWS_S3_CUSTOM_DOMAIN}/static/'
     STATIC_ROOT = 'static/'
     # media
-    MEDIA_URL = f'{AWS_S3_CUSTOM_DOMAIN}/uploads/'
+    # S3_MEDIA_DIR is for use with Ansible, it doesn't do anything else.
+    S3_MEDIA_DIR = 'uploads'
+    MEDIA_URL = f'{AWS_S3_CUSTOM_DOMAIN}/{S3_MEDIA_DIR}/'
     DEFAULT_FILE_STORAGE = 'project.storage_backends.PublicMediaStorage'
 else:
     # static
