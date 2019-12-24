@@ -96,25 +96,37 @@
             archive_name: "{{ hostvars[src_host].archive_name }}"
           when: archive_name is not defined
 
-        - name: set media_path variable
-          set_fact:
-            media_path: "{{ server_root_dir }}/project/media"
+        - include_role:
+            name: media
+            tasks_from: get-use-s3
 
-        - name: set empty media directory
-          file:
-            path: "{{ media_path }}"
-            state: "{{ item }}"
-          loop:   # https://github.com/ansible/ansible/issues/18910
-            - absent
-            - directory
-          when: (delete_previous | default('no')) == 'yes'
+        - name: restore local Media
+          block:
+            - name: set media_path variable
+              set_fact:
+                media_path: "{{ server_root_dir }}/project/media"
 
-        - name: unpack the archive
-          unarchive:
-            src: "{{ archive_name }}"
-            dest: "{{ media_path }}"
-            remote_src: no
-            extra_opts:
-              - --strip-components=1
+            - name: set empty media directory
+              file:
+                path: "{{ media_path }}"
+                state: "{{ item }}"
+              loop:   # https://github.com/ansible/ansible/issues/18910
+                - absent
+                - directory
+              when: (delete_previous | default('no')) == 'yes'
+
+            - name: unpack the archive
+              unarchive:
+                src: "{{ archive_name }}"
+                dest: "{{ media_path }}"
+                remote_src: no
+                extra_opts:
+                  - --strip-components=1
+          when: use_s3.stdout == 'False'
+
+        - include_role:
+            name: media
+            tasks_from: s3-unarchive
+          when: use_s3.stdout == 'True'
 
       when: inventory_hostname == dest_host or src_host == '__local__'

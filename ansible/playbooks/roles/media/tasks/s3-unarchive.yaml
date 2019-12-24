@@ -1,0 +1,61 @@
+- name: get Media ACL
+  command: >
+    pipenv run ./manage.py shell -c
+    "from django.utils.module_loading import import_string;
+    from django.conf import settings;
+    print(import_string(settings.DEFAULT_FILE_STORAGE).default_acl)"
+  args:
+    chdir: "{{ server_root_dir }}"
+  changed_when: false
+  register: s3_acl
+
+- import_tasks: s3-setup.yaml
+
+- name: unarchive Media to S3
+  block:
+    # There was another confirmation before... but this one has more information.
+    - name: confirm
+      pause:
+        prompt: |-
+          About to restore media into bucket "{{ s3_conf.bucket }}" with ACL "{{ s3_acl.stdout }}".
+          Previous media {{ 'WILL' if (delete_previous | default('no')) == 'yes' else 'will NOT' }} be deleted.
+
+          Press ctrl+c to abort, or Enter to continue
+
+    - name: mount bucket
+      command:
+        argv:
+          - goofys
+          - --endpoint={{ s3_conf.endpoint }}
+          - --acl={{ s3_acl.stdout }}
+          - "{{ s3_conf.bucket }}:{{ s3_conf.media_dir }}"
+          - "{{ s3_mountpoint.path }}"
+      environment:
+        AWS_ACCESS_KEY_ID: "{{ s3_conf.key_id }}"
+        AWS_SECRET_ACCESS_KEY: "{{ s3_conf.key_secret }}"
+
+    - name: clear previous Media
+      # Delete everything but the mountpoint
+      file:
+        path: "{{ s3_mountpoint.path }}"
+        state: absent
+      failed_when: false    # The mountpoint fails to be removed
+      changed_when: true    # "failed_when: false" shows this task as unchanged?
+      when: (delete_previous | default('no')) == 'yes'
+
+    - name: unpack the archive
+      unarchive:
+        src: "{{ archive_name }}"
+        dest: "{{ s3_mountpoint.path }}"
+        remote_src: no
+        extra_opts:
+          - --strip-components=1
+
+  always:
+    - import_tasks: s3-cleanup.yaml
+
+- name: metadata reminder
+  debug:
+    msg: >
+      Media restored. Remember that files have been restored with no metadata
+      (for example Content-Type and Cache-Control headers).
