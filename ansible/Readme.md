@@ -147,6 +147,8 @@ Multiple distro handling method is taken from [here](https://www.jeffgeerling.co
 
 Using molecule for the quickstart scenario is slightly overkill, but it was already used to test deploy, and it's an easy way to create and destroy Vagrant boxes. The converge playbook is run with Ansible, which runs quickstart, which installs another Ansible, and runs the deploy playbook inside Vagrant.
 
+When searching for Molecule on the Web, keep in mind that Molecule v2 was released on September 2017, which is different from Molecule v1.
+
 TODO: test quickstart in OSX
 
 ### Linting everything (TODO)
