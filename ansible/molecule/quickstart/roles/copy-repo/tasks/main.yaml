@@ -1,11 +1,11 @@
+- name: create temporary tar file
+  delegate_to: localhost
+  tempfile:
+    suffix: quickstart_tar_copy.tar
+  register: quickstart_tar_copy
+
 - name: copy repository to VM
   block:
-    - name: create temporary tar file path
-      delegate_to: localhost
-      tempfile:
-        suffix: quickstart_tar_copy.tar
-      register: quickstart_tar_copy
-
     - name: tar repository contents
       delegate_to: localhost
       shell: >
@@ -32,4 +32,3 @@
       file:
         path: "{{ quickstart_tar_copy.path }}"
         state: absent
-      when: quickstart_tar_copy.path is defined
