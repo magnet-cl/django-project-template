@@ -1,15 +1,4 @@
-- name: check if Media is being stored in S3
-  command: >
-    pipenv run python -c
-    "try:
-      from project.local_settings import USE_S3
-    except ImportError:
-      USE_S3 = False
-    print(USE_S3)"
-  args:
-    chdir: "{{ server_root_dir }}"
-  changed_when: false
-  register: use_s3
+- import_tasks: get-use-s3.yaml
 
 - name: check Media directory existence
   stat:
