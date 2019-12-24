@@ -54,10 +54,12 @@
     - name: confirmation
       #     prompt: Are you sure you want to replace the Media of  "{{ dest_host }}" ...
       # Oh crap. "'dest_host' is undefined"
+      # yamllint disable rule:line-length
       prompt: >-
         Are you sure you want to replace the Media of
         "{{ ansible_limit if (ansible_play_hosts | length == 1) else (ansible_limit | regex_replace('.+,(.+)', '\1')) }}"
         ({{ lookup('env', 'PWD') | dirname | basename }}) [y/N]?
+      # yamllint enable rule:line-length
       private: no   # Show input (this is made to input passwords)
   tasks:
     - name: check confirmation

@@ -1,7 +1,8 @@
 # The idea is NOT to download everything to a temporary folder and then tar it,
 # because it could needlessly require too much free space.
 
-# One option is to download everything (s5cmd seems the fastest https://medium.com/@joshua_robinson/s5cmd-for-high-performance-object-storage-7071352cc09d)
+# One option is to download everything (s5cmd seems the fastest
+# https://medium.com/@joshua_robinson/s5cmd-for-high-performance-object-storage-7071352cc09d)
 # and use `tar --remove-files`, as it deletes files after adding then to the archive.
 
 # The option used here is: mount the bucket with goofys (https://github.com/kahing/goofys#readme)
