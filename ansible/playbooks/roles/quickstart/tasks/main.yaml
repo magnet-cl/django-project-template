@@ -74,13 +74,20 @@
   command: >
     pipenv run python -c
     "from project.local_settings import SECRET_KEY;
-    print(SECRET_KEY == 'CHANGE ME')"
+    print(SECRET_KEY == '')"
   args:
     chdir: "{{ server_root_dir }}"
   changed_when: false
   register: secret_key_unset
 
-- name: set secret key with Django
+- name: set temporal secret key   # So Django doesn't crash trying to set its own key because it's unset
+  replace:
+    path: "{{ server_root_dir }}/project/local_settings.py"
+    regexp: ^SECRET_KEY *= *(''|"")
+    replace: SECRET_KEY = 'CHANGE ME'
+  when: secret_key_unset.stdout == 'True'
+
+- name: set secure secret key with Django
   django_manage:
     command: generatesecretkey
     app_path: "{{ server_root_dir }}"
