@@ -67,6 +67,7 @@
         that: confirmation | lower == 'y'
         fail_msg: Confirmation failed.
         quiet: yes
+  tags: molecule-notest
 
 - name: download DB
   hosts: all    # Can't use a variable here, so put everything in a block and limit with "when"

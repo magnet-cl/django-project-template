@@ -1,0 +1,29 @@
+- name: prepare for deploy
+  hosts: all
+
+  tasks:
+    - name: set english environment locale
+      import_tasks: ../utils/set-locale.yaml
+
+    - name: Install Git   # required by geerlingguy.nodejs
+      package:
+        name: git
+        state: present
+      become: yes
+
+    - name: install Node.js
+      include_role:
+        name: geerlingguy.nodejs
+        apply:
+          become: true
+      vars:
+        nodejs_version: 10.x
+
+# TODO: change DB names
+
+- name: deploy
+  import_playbook: ../../playbooks/deploy.yaml
+
+# TODO: set random user name on source
+# TODO: set random user name on target
+# TODO: create random media file on source
