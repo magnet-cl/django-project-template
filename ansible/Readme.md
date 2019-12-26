@@ -106,10 +106,13 @@ There's support for external databases not running in the server (like RDS) but 
 
 ## Testing
 
-Tests of Ansible scripts are made with [Molecule](https://molecule.readthedocs.io), which creates a Vagrant VM (with Ubuntu 18.04 by default). There are two test scenarios:
+Tests of Ansible scripts are made with [Molecule](https://molecule.readthedocs.io), which creates a Vagrant VM (with Ubuntu 18.04 by default). The following test scenarios are available:
 
 - `deploy`: deploys the app in the VM, and tests that the home page has no broken links. Then simulates an update to a newer commit, and checks that a DB backup was created.
+
 - `quickstart`: runs quickstart in the VM, and tests that Django and Webpack (in development mode) return 200. (Note: this tests with files you currently have in your repository folder, not like the other scenarios that use the Git repository)
+
+- `export`: deploys the app in two virtual machines, makes some changes to the DB and Media of the `source` instance, exports them to the `target` instance, and verifies them. Also checks the automatic DB backup of `target` before restoring the new dump.
 
 ### Setup
 
@@ -122,7 +125,7 @@ From this directory, run:
 ```sh
 molecule test -s <scenario>
 ```
-where `<scenario>` is either `deploy` or `quickstart`
+where `<scenario>` is `deploy`, `quickstart`, etc.
 
 #### Choosing distro to test
 
@@ -135,13 +138,15 @@ To change distro when the instance is already created, run `MOLECULE_DISTRO=<dis
 
 > Note: if you run `destroy` with the wrong `MOLECULE_DISTRO` set, the VM won't be deleted but its metadata stored by Molecule will, so it can't be deleted by Molecule anymore. To delete it manually: open the VirtualBox GUI (Oracle VM VirtualBox Manager), right click it in the list, "Close", "Power Off", right click, "Remove...", "Delete all files".
 
+As the `export` scenario uses two instances, its distributions are controlled with `MOLECULE_SOURCE_DISTRO` and `MOLECULE_TARGET_DISTRO`
+
 #### Debugging
 
 VMs are deleted after a failed `molecule test`. Use `molecule converge` to avoid that (you can also use `molecule test --destroy=never` but it runs more steps). You can then examine the VM with `molecule login`
 
 ### Notes
 
-Tests use Vagrant instead of Docker (which is more common) because the second one is not very well suited to using `systemctl` and having a non-root user.
+Tests use Vagrant instead of Docker (which is more common) because the second one is not very well suited to using `systemctl` and having a non-root user. It's also more similar to the target environments of these scripts.
 
 Multiple distro handling method is taken from [here](https://www.jeffgeerling.com/blog/2018/testing-your-ansible-roles-molecule).
 
