@@ -19,7 +19,35 @@
       vars:
         nodejs_version: 10.x
 
-# TODO: change DB names
+- name: set custom DB names   # to check that DB configuration is being obtained on source and target
+  hosts: all
+  tasks:
+    - name: clone repository
+      git:
+        repo: "{{ server_git_url }}"
+        version: "{{ branch }}"
+        dest: "{{ server_root_dir }}"
+        depth: 1    # Download last commit only.
+
+    - name: create local_settings from default
+      command: cp local_settings.py.default local_settings.py
+      args:
+        chdir: "{{ server_root_dir }}/project"
+        creates: local_settings.py
+
+    - name: set DEBUG = False
+      replace:
+        path: "{{ server_root_dir }}/project/local_settings.py"
+        regexp: ^DEBUG *= *True
+        replace: DEBUG = False
+
+    - name: set database name
+      replace:
+        path: "{{ server_root_dir }}/project/local_settings.py"
+        regexp: "        'NAME': 'database-name',"
+        replace: "        'NAME': 'the_{{ inventory_hostname }}_db',"
+
+    # No validate on this tasks because there's no pipenv yet.
 
 - name: deploy
   import_playbook: ../../playbooks/deploy.yaml
