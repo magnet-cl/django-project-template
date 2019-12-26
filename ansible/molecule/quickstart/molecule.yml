@@ -23,9 +23,6 @@ provisioner:
     defaults:
       stdout_callback: debug    # human-readable output
 
-  playbooks:
-    converge: playbook.yml
-
   inventory:
     host_vars:
       instance:
