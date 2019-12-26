@@ -76,9 +76,6 @@ scenario:
     - converge
     - idempotence
     # - side_effect   not configured
-
     - verify
-                    # TODO: check that SECRET_KEY was changed
-
     # - cleanup       not configured
     - destroy
