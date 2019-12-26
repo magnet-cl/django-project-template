@@ -3,11 +3,6 @@
   gather_facts: false
 
   tasks:
-    - name: Install python for Ansible
-      raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
-      become: true
-      changed_when: false
-
     - name: set english environment locale
       import_tasks: ../utils/set-locale.yaml
 

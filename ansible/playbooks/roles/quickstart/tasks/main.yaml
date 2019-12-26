@@ -74,7 +74,8 @@
   command: >
     pipenv run python -c
     "from project.local_settings import SECRET_KEY;
-    print(SECRET_KEY == '')"
+    print(SECRET_KEY == '')"  # noqa 602
+  #                            "Don't compare to empty string"... But [ == '' ] is Python code, not Ansible
   args:
     chdir: "{{ server_root_dir }}"
   changed_when: false
