@@ -85,6 +85,7 @@
     path: "{{ server_root_dir }}/project/local_settings.py"
     regexp: ^SECRET_KEY *= *(''|"")
     replace: SECRET_KEY = 'CHANGE ME'
+    validate: bash -c "cd {{ server_root_dir }} && pipenv run python %s"  # It returns 1 on "invalid syntax"
   when: secret_key_unset.stdout == 'True'
 
 - name: set secure secret key with Django
