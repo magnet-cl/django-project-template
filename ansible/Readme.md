@@ -108,8 +108,8 @@ There's support for external databases not running in the server (like RDS) but 
 
 Tests of Ansible scripts are made with [Molecule](https://molecule.readthedocs.io), which creates a Vagrant VM (with Ubuntu 18.04 by default). There are two test scenarios:
 
-- `deploy`: deploys the app in the VM, and tests that the home page has no broken links.
-- `quickstart`: runs quickstart in the VM, and tests that Django and Webpack (in development mode) return 200. (Note: this tests with files you currently have in your repository folder)
+- `deploy`: deploys the app in the VM, and tests that the home page has no broken links. Then simulates an update to a newer commit, and checks that a DB backup was created.
+- `quickstart`: runs quickstart in the VM, and tests that Django and Webpack (in development mode) return 200. (Note: this tests with files you currently have in your repository folder, not like the other scenarios that use the Git repository)
 
 ### Setup
 
