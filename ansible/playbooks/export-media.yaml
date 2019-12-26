@@ -67,6 +67,7 @@
         that: confirmation | lower == 'y'
         fail_msg: Confirmation failed.
         quiet: yes
+  tags: molecule-notest
 
 - name: download archive
   hosts: all
