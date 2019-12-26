@@ -1,4 +1,5 @@
 - hosts: all
+  gather_facts: no
   tasks:
     - name: simulate available update
       command: git reset --hard HEAD~
@@ -13,6 +14,7 @@
   # There's no way to add the "update" tag just to the verify playbook :(
 
 - hosts: all
+  gather_facts: no
   tasks:
     - name: check that DB backup was created on code update
       find:
