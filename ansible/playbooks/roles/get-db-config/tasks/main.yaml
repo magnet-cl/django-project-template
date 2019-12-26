@@ -1,11 +1,3 @@
-- name: check if get-db-config should be skipped
-  set_fact:
-    skip_get_db_config: "{{ (skip_if_set | default(False)) and db_conf is defined }}"
-  # This extra task is required (to skip the following tasks that take longer),
-  # because using "when: db_conf is not defined" in the block applies "when" to all tasks,
-  # so only the first one runs (db_conf is not defined)
-  # and the next ones are skipped (db_conf IS defined).
-
 - name: get DB configuration
   block:
     - name: get DB parameters
@@ -25,23 +17,21 @@
       changed_when: false
       register: db_conf
 
-    - name: set DB configuration
-      set_fact:
-        db_conf: "{{ db_conf.stdout | from_json }}"
-      no_log: yes
-
-    - name: verify database name
-      assert:
-        that: (db_conf.NAME | quote) == db_conf.NAME
-        fail_msg: |
-          db_conf.NAME has characters that require quoting!
-            {{ db_conf.NAME }}
-            {{ db_conf.NAME | quote }}
-        quiet: yes
-
   rescue:
     - name: "{{ failed_get_db_config_task_name }}"
       fail:
         msg: Failed to obtain database configuration. Make sure the project is set up correctly.
 
-  when: not skip_get_db_config
+- name: set DB configuration
+  set_fact:
+    db_conf: "{{ db_conf.stdout | from_json }}"
+  no_log: yes
+
+- name: verify database name
+  assert:
+    that: (db_conf.NAME | quote) == db_conf.NAME
+    fail_msg: |
+      db_conf.NAME has characters that require quoting!
+        {{ db_conf.NAME }}
+        {{ db_conf.NAME | quote }}
+    quiet: yes

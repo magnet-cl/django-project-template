@@ -9,8 +9,7 @@
 - name: get DB configuration
   include_role:
     name: get-db-config
-  vars:
-    skip_if_set: yes
+  when: db_conf is not defined    # Speedup, it could have been set with DB backup
 
 - name: install and configure Postgres and create DB
   block:
