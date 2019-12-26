@@ -1,1 +1,8 @@
-../../deploy/host_vars/instance.yaml
+ansible_user: vagrant
+server_domain: localhost
+# branch: master
+branch: chore/ansible   # TODO
+
+source_user_name: cndl5xzt2pr4d5dt
+target_user_name: fuusvk6p5kuzjco5
+source_media_name: bdgvfxrcq4lxinhr

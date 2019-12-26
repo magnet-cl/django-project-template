@@ -19,8 +19,9 @@
       vars:
         nodejs_version: 10.x
 
-- name: set custom DB names   # to check that DB configuration is being obtained on source and target
+- name: set custom DB name    # to check that DB configuration is being obtained on source and target
   hosts: all
+  gather_facts: no
   tasks:
     - name: clone repository
       git:
@@ -52,6 +53,18 @@
 - name: deploy
   import_playbook: ../../playbooks/deploy.yaml
 
-# TODO: set random user name on source
-# TODO: set random user name on target
+- name: set testing user name
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: set testing user name
+      command: >
+        pipenv run ./manage.py shell -c
+        "from users.models import User;
+        alex = User.objects.first();
+        alex.first_name = '{{ lookup('vars', inventory_hostname + '_user_name') }}';
+        alex.save()"
+      args:
+        chdir: "{{ server_root_dir }}"
+
 # TODO: create random media file on source

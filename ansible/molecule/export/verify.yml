@@ -1,3 +1,31 @@
-# TODO: check random user name on target
-# TODO: check random media file on target
-# TODO: check previous random user name in backup of target's DB
+- name: verify
+  hosts: target
+  gather_facts: no
+  tasks:
+
+    - name: check random user name on target
+      command: >
+        pipenv run ./manage.py shell -c
+        "import sys;
+        from users.models import User;
+        alex = User.objects.first();
+        ok = (alex.first_name == '{{ source_user_name }}');
+        sys.exit(0 if ok else 1)"
+      args:
+        chdir: "{{ server_root_dir }}"
+
+    # TODO: check random media file on target
+
+    - name: check previous random user name in backup of target's DB
+      # Alternative 1: pg_restore and manage.py shell first_name == ...
+      # Also needs a separate task to get the filename of a dump
+
+      # Alternative 2: just search for the magic string in SQL instructions.
+      # Also lazily use a bash trick to get a single dump filename.
+      shell:
+        cmd: |
+          set -o pipefail
+          dump=(~/db_dumps/*.dump)
+          pg_restore "$dump" | grep {{ target_user_name }}
+        executable: /bin/bash
+      changed_when: false

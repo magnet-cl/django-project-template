@@ -33,7 +33,7 @@ provisioner:
     # doesn't work together with `links`
     links:
       group_vars: ../../group_vars/
-      host_vars: host_vars/   # Contains symlinks to the host_vars used in deploy scenario
+      host_vars: host_vars/   # source and target have the same variables (symlink)
 
   ansible_args:
     - --limit=source,target   # Specify hosts for export playbooks
