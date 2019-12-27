@@ -66,6 +66,7 @@
         alex.save()"
       args:
         chdir: "{{ server_root_dir }}"
+      changed_when: true  # Silence linter
 
     - name: create Media directory
       file:
