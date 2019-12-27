@@ -127,6 +127,26 @@ molecule test -s <scenario>
 ```
 where `<scenario>` is `deploy`, `quickstart`, etc.
 
+Note that the scenario is always required (as there's no `default` scenario), even if the examples shown later don't specify it.
+
+> Note 1: creation and deletion of instances doesn't work well. Sometimes virtual machines are left over, which eat your RAM and disk space.
+>
+> Preferably run the tests with the VirtualBox GUI open (called "Oracle VM VirtualBox Manager"), and if you see that the VMs called like `<scenario>_<instance>_<timestamp>_...` are not deleted when they should, delete them manually:
+> 1. Right click the VM in the list, point to "Close", click "Power Off"
+> 2. Right click the VM in the list, click "Remove...", click "Delete all files"
+>
+> Deletion seems to fail with:
+> - `molecule destroy` after `molecule test --destroy=never`
+> - ?
+>
+> Deletion seems to work with:
+> - `molecule test`
+> - `molecule destroy -s <the correct scenario>`
+>
+> On the other hand, if instances are not being created ("Skipping, instances already created") and then Ansible fails to connect via ssh, run `molecule destroy` even if the VMs are already destroyed, and try again.
+
+> Note 2: the `export` scenario leaves garbage dumps and media backups in `playbooks/source/`, because its deletion cannot be easily automated (the variables with the paths are lost after the converge playbook, and deleting the whole folder is risky in a development environment).
+
 #### Choosing distro to test
 
 Set it in the `MOLECULE_DISTRO` variable when calling `molecule`. By default it is `ubuntu/bionic64` (as specified in `platforms` in `molecule.yml`). To use another Vagrant box, for example CentOS 7, run:
@@ -134,17 +154,13 @@ Set it in the `MOLECULE_DISTRO` variable when calling `molecule`. By default it 
 MOLECULE_DISTRO=centos/7 molecule test -s <scenario>
 ```
 
-To change distro when the instance is already created, run `MOLECULE_DISTRO=<distro> molecule destroy -s <scenario>`
-
-> Note: if you run `destroy` with the wrong `MOLECULE_DISTRO` set, the VM won't be deleted but its metadata stored by Molecule will, so it can't be deleted by Molecule anymore. To delete it manually: open the VirtualBox GUI (Oracle VM VirtualBox Manager), right click it in the list, "Close", "Power Off", right click, "Remove...", "Delete all files".
+To change distro when the instance is already created, run `molecule destroy -s <scenario>`.
 
 As the `export` scenario uses two instances, its distributions are controlled with `MOLECULE_SOURCE_DISTRO` and `MOLECULE_TARGET_DISTRO`
 
 #### Debugging
 
-VMs are deleted after a failed `molecule test`. Use `molecule converge` to avoid that (you can also use `molecule test --destroy=never` but it runs more steps). You can then examine the VM with `molecule login`
-
-> Note: looks like you must manually delete VMs after running `molecule test --destroy=never` (a bug?). See the note in [Choosing distro to test](#choosing-distro-to-test).
+VMs are deleted after a failed `molecule test`. Use `molecule converge` to avoid that (you can also use `molecule test --destroy=never` , but it runs more steps, and you must manually delete the VM afterwards). You can then examine the VM with `molecule login`
 
 ### Notes
 
