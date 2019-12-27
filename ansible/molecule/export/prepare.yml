@@ -53,7 +53,7 @@
 - name: deploy
   import_playbook: ../../playbooks/deploy.yaml
 
-- name: set testing user name
+- name: set testing data
   hosts: all
   gather_facts: no
   tasks:
@@ -67,4 +67,12 @@
       args:
         chdir: "{{ server_root_dir }}"
 
-# TODO: create random media file on source
+    - name: create Media directory
+      file:
+        path: "{{ server_root_dir }}/project/media"
+        state: directory
+
+    - name: create testing Media file
+      copy:
+        dest: "{{ server_root_dir }}/project/media/{{ lookup('vars', inventory_hostname + '_media_name') }}"
+        content: "."

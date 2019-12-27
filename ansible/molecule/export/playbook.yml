@@ -1,4 +1,5 @@
 - name: export DB
   import_playbook: ../../playbooks/export-db.yaml
 
-# TODO: export-media
+- name: export Media
+  import_playbook: ../../playbooks/export-media.yaml
