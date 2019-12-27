@@ -158,6 +158,8 @@ When searching for Molecule on the Web, keep in mind that Molecule v2 was releas
 
 TODO: test quickstart in OSX
 
-### Linting everything (TODO)
+### Linting everything
 
-`ansible-lint` has an [undocumented feature](https://github.com/ansible/ansible-lint/pull/615): running it without supplying playbooks lints all playbooks in the git repository. But `molecule lint` always supplies the `converge` playbook, so that feature cannot be triggered without modifications. TODO: scenarios that test and lint backup/restore playbooks.
+`ansible-lint` has an [undocumented feature](https://github.com/ansible/ansible-lint/pull/615): running it without supplying playbooks lints all playbooks in the git repository. But `molecule lint` always supplies the `converge` playbook, so that feature cannot be triggered without modifications.
+
+The available test scenarios lint most of the files, but to lint them all, run `ansible-lint` from this directory.
