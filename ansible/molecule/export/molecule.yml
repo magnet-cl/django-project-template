@@ -78,7 +78,7 @@ scenario:
     - create
     - prepare
     - converge
-    - idempotence
+    # - idempotence   It's not idempotent. A new backup is made every time.
     # - side_effect   not configured
     - verify
     # - cleanup       not configured

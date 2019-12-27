@@ -1,8 +1,11 @@
 - name: unmount bucket
   command: fusermount -u {{ s3_mountpoint.path }}
   failed_when: false    # ignore and continue with next task
+  register: fusermount_unmount_result
+  changed_when: fusermount_unmount_result.rc | default(1) == 0
 
 - name: remove mountpoint
   command: rmdir {{ s3_mountpoint.path }}
   args:
-    warn: no    # Suggests to use "file"  https://github.com/ansible/ansible/issues/22248
+    warn: no          # Suggests to use "file"  https://github.com/ansible/ansible/issues/22248
+  changed_when: true  # Silence linter
