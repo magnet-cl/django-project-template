@@ -144,6 +144,8 @@ As the `export` scenario uses two instances, its distributions are controlled wi
 
 VMs are deleted after a failed `molecule test`. Use `molecule converge` to avoid that (you can also use `molecule test --destroy=never` but it runs more steps). You can then examine the VM with `molecule login`
 
+> Note: looks like you must manually delete VMs after running `molecule test --destroy=never` (a bug?). See the note in [Choosing distro to test](#choosing-distro-to-test).
+
 ### Notes
 
 Tests use Vagrant instead of Docker (which is more common) because the second one is not very well suited to using `systemctl` and having a non-root user. It's also more similar to the target environments of these scripts.
