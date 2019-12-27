@@ -1,3 +1,11 @@
+- name: install FUSE
+  # Already installed in Ubuntu but required for CentOS
+  package:
+    name: fuse
+    state: present
+  become: yes
+  # It works without having to add the user to the fuse group.
+
 - name: download and install goofys
   get_url:
     dest: /usr/local/bin/goofys
@@ -5,7 +13,6 @@
     mode: 0755
     checksum: sha256:c47c6d2038ad62663c493d35e97b98826b30f23037013b64567c334c6ce82a34
   become: true
-  # Improvement: also install some FUSE stuff that is already included in Ubuntu.
 
 - name: get S3 configuration from local_settings
   command: >
