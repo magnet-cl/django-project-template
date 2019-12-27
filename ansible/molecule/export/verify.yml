@@ -3,7 +3,7 @@
   gather_facts: no
   tasks:
 
-    - name: check random user name on target
+    - name: check testing user name on target
       command: >
         pipenv run ./manage.py shell -c
         "import sys;
@@ -13,10 +13,9 @@
         sys.exit(0 if ok else 1)"
       args:
         chdir: "{{ server_root_dir }}"
+      changed_when: false
 
-    # TODO: check random media file on target
-
-    - name: check previous random user name in backup of target's DB
+    - name: check previous testing user name in backup of target's DB
       # Alternative 1: pg_restore and manage.py shell first_name == ...
       # Also needs a separate task to get the filename of a dump
 
@@ -29,3 +28,20 @@
           pg_restore "$dump" | grep {{ target_user_name }}
         executable: /bin/bash
       changed_when: false
+
+    - name: stat Media files on target
+      stat:
+        path: "{{ server_root_dir }}/project/media/{{ lookup('vars', item) }}"
+        get_attributes: no
+        get_checksum: no
+        get_mime: no
+      loop:
+        - source_media_name
+        - target_media_name
+      register: media_files
+
+    - name: assert Media files
+      assert:
+        that: item.stat.exists
+        quiet: yes
+      loop: "{{ media_files.results }}"
