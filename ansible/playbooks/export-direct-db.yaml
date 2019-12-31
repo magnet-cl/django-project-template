@@ -13,37 +13,23 @@
         quiet: yes
       # This prevents "ERROR! 'ansible_limit' is undefined" later.
 
-    - name: check that this playbook is run against two hosts, or one together with local_dump
+    - name: check that this playbook is run against two hosts
       assert:
-        that: >
-          (ansible_play_hosts | length == 2 and local_dump is not defined)
-            or (ansible_play_hosts | length == 1 and local_dump is defined)
-        fail_msg: >
-          You must limit this playbook to two hosts and don't set local_dump,
-          or limit to one host and set local_dump.
+        that: ansible_play_hosts | length == 2
+        fail_msg: You must limit this playbook to two hosts.
         quiet: yes
       run_once: yes
 
-    - name: configure for remote dump
-      block:
-        - name: check that ansible_limit contains exactly one comma
-          assert:
-            that: ansible_limit is match('^[^,]+,[^,]+$')
-            fail_msg: Please use the --limit option with one comma.
-            quiet: yes
+    - name: check that ansible_limit contains exactly one comma
+      assert:
+        that: ansible_limit is match('^[^,]+,[^,]+$')
+        fail_msg: Please use the --limit option with one comma.
+        quiet: yes
 
-        - name: set source and destination host name
-          set_fact:
-            src_host: "{{ ansible_limit | regex_replace('(.+),.+', '\\1') }}"
-            dest_host: "{{ ansible_limit | regex_replace('.+,(.+)', '\\1') }}"
-      when: ansible_play_hosts | length == 2
-
-    - name: configure for local dump
+    - name: set source and destination host name
       set_fact:
-        src_host: __local__
-        dest_host: "{{ ansible_limit }}"
-        dump_name: "{{ local_dump }}"
-      when: ansible_play_hosts | length == 1
+        src_host: "{{ ansible_limit | regex_replace('(.+),.+', '\\1') }}"
+        dest_host: "{{ ansible_limit | regex_replace('.+,(.+)', '\\1') }}"
 
 - name: confirm
   hosts: all
@@ -54,12 +40,10 @@
     - name: confirmation
       #     prompt: Are you sure you want to replace the DB of  "{{ dest_host }}" ...
       # Oh crap. "'dest_host' is undefined"
-      # yamllint disable rule:line-length
       prompt: >-
         Are you sure you want to replace the DB of
-        "{{ ansible_limit if (ansible_play_hosts | length == 1) else (ansible_limit | regex_replace('.+,(.+)', '\1')) }}"
+        "{{ ansible_limit | regex_replace('.+,(.+)', '\1') }}"
         ({{ lookup('env', 'PWD') | dirname | basename }}) [y/N]?
-      # yamllint enable rule:line-length
       private: no   # Show input (this is made to input passwords)
   tasks:
     - name: check confirmation
@@ -69,10 +53,12 @@
         quiet: yes
   tags: molecule-notest
 
-- name: download DB
-  hosts: all    # Can't use a variable here, so put everything in a block and limit with "when"
+
+- name: export direct DB
+  hosts: all
+  any_errors_fatal: yes   # Doesn't do what I wanted with two hosts though...
   tasks:
-    - name: download DB on source host only
+    - name: backup DB on source host only
       block:
         - name: get source DB configuration
           include_role:
@@ -83,41 +69,20 @@
             name: db
             tasks_from: backup
 
-        - name: download
-          include_role:
-            name: db
-            tasks_from: download
-
-        - name: convert dump_name to path
-          set_fact:
-            dump_name: "{{ inventory_hostname }}/{{ dump_name }}"
       when: inventory_hostname == src_host
 
-- name: copy and import the dump
-  hosts: all
-  tasks:
-    - name: copy and import the dump on destination host only
+    - name: transfer the dump
+      include_role:
+        name: transfer-file
+      vars:
+        src_transfer_path: ~/db_dumps/{{ dump_name }}
+
+    - name: import the dump on destination host only
       block:
+        # FIXME: refactor to a role
         - name: get destination DB configuration
           include_role:
             name: get-db-config
-
-        - name: set dump_name
-          set_fact:
-            # If the dump was downloaded, dump_name variable is set in src_host only
-            dump_name: "{{ hostvars[src_host].dump_name }}"
-          when: dump_name is not defined
-
-        - name: create dump upload tempfile
-          tempfile:
-            prefix: db_dump.
-          register: temp_dump
-
-        - name: upload dump
-          copy:
-            src: "{{ dump_name }}"
-            dest: "{{ temp_dump.path }}"
-            force: yes    # overwrite empty temp_dump
 
         - name: check if DB exists
           include_role:
@@ -156,7 +121,7 @@
                   - --no-owner
                   - --no-acl
                   - --jobs=2
-                  - "{{ temp_dump.path }}"
+                  - "{{ dest_transfer_path }}"
               environment:
                 PGPASSWORD: "{{ db_conf.PASSWORD }}"
               register: pg_restore_result
@@ -189,12 +154,9 @@
                 # yamllint enable rule:line-length
 
       always:
-        - name: remove dump tempfile
+        - name: remove temporary dump
           file:
-            path: "{{ temp_dump.path }}"
+            path: "{{ dest_transfer_path }}"
             state: absent
-          # Note: the dump could be kept in ~/db_dumps/ instead of deleting it,
-          # though it should have src_host in the file name to avoid confusion.
 
-      when: inventory_hostname == dest_host or src_host == '__local__'
-        # "or" in case (inventory_hostname != dest_host == ansible_limit) because it contains comma
+      when: inventory_hostname == dest_host
