@@ -1,7 +1,7 @@
 - name: init
   hosts: all
   gather_facts: no
-  any_errors_fatal: true
+  any_errors_fatal: yes
   tasks:
     - name: import check Ansible version task
       import_tasks: utils/assert-ansible-version.yaml
