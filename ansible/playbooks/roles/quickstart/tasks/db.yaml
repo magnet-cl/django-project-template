@@ -70,6 +70,9 @@
         - is_dev_machine
         - dev_psql_existence.rc == 0
         - ansible_distribution == 'Ubuntu'
+      # FIXME: even with this task, in a computer that already had Postgres installed,
+      # it crashed at the next task because Ansible failed to import psycopg2.
+      # It was worked around with `pip3 install --user psycopg2-binary`
 
     - name: create database
       postgresql_db:
