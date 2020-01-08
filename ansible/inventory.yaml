@@ -15,12 +15,12 @@ all:
         # Examples:
 
         # development:
-        #   ansible_host: dev.magnet.cl
+        #   ansible_host: 123.210.11.22
         #   server_domain: dev.magnet.cl
         #   branch: development
 
         # production:
-        #   ansible_host: production.magnet.cl
+        #   ansible_host: 123.210.11.23
         #   server_domain: production.magnet.cl
         #   branch: master
 
