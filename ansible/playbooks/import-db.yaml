@@ -39,6 +39,7 @@
       vars:
         on_localhost: yes
 
+    # FIXME: refactor
     - name: import the dump
       block:
         - name: run pg_restore
