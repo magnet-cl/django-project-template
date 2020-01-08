@@ -131,15 +131,21 @@
           when: db_exists.stdout == '1'
           # Note: it's "local_dump" instead of "dump_name" to avoid overriding the variable inside this role.
 
-        - name: create database
+        - name: delete and create database
+        # This is required because --clean "(drops) database objects before recreating them",
+        # so it leaves association tables that conflict with migrations.
+        # Also, --create has problems with the DB name.
           postgresql_db:
             name: "{{ db_conf.NAME }}"
             login_user: "{{ db_conf.USER | default(ansible_user, true) }}"
             login_password: "{{ db_conf.PASSWORD }}"
             login_host: "{{ db_conf.HOST }}"
             login_port: "{{ (db_conf.PORT | int) if db_conf.PORT else omit }}"
-            state: present
-          when: db_exists.stdout != '1'
+
+            state: "{{ item }}"
+          loop:
+            - absent
+            - present
 
         - name: import the dump
           block:
