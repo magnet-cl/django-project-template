@@ -48,7 +48,7 @@ verifier:
 
 scenario:
   create_sequence:
-    # - dependency    speedup, not required for this sequence
+    - dependency
     - create
     - prepare
   check_sequence:
