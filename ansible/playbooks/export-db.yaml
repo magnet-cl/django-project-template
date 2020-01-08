@@ -181,12 +181,17 @@
 
             - name: fail, printing versions
               fail:
-                # yamllint disable rule:line-length
                 msg: |
-                  pg_restore failed {{ '(or maybe it just finished with warnings) ' if ('WARNING:' in (pg_restore_result.stderr | default(''))) else ''}}(see above)
+                  pg_restore failed {{ warning_hint }}(see above)
 
                   FYI, source has "{{ src_version.stdout }}" and destination has "{{ dest_version.stdout }}"
-                # yamllint enable rule:line-length
+              vars:
+                warning_hint: >-
+                  {{
+                    '(or maybe it just finished with warnings) '
+                    if ('WARNING:' in (pg_restore_result.stderr | default('')))
+                    else ''
+                  }}
 
       always:
         - name: remove dump tempfile

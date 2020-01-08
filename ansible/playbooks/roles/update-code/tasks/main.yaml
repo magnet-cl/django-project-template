@@ -43,40 +43,28 @@
     - name: include task_name var from another role   # (failed_get_db_config_task_name)
       include_vars: ../get-db-config/vars/main.yaml
 
-    - name: set messages
-      # Sorry for the mess, '\n' didn't work as a newline
-      set_fact:
-        top_msg: >-
-          Git {{ 'clone' if (git_result.before is none) else 'pull' }}
-          succeeded and changed but
-          {{ 'failed to get DB config. Refusing to continue without a backup.'
-            if ansible_failed_task.name == failed_get_db_config_task_name
-            else 'DB backup failed.' }}
-        bottom_msg: |
+    - name: print the consequences of the failure
+      fail:
+        msg: |
+          {{ git_action }} succeeded and changed but {{ failure }}
+
+          {{ hint if 'update' not in ansible_run_tags else '' }}
           Warning: running this again won't trigger a backup, because the repository is already up-to-date.
           To backup manually, run:
             ansible-playbook -i inventory.yaml -l {{ inventory_hostname }} playbooks/backup-db.yaml
+      vars:
+        git_action: Git {{ 'clone' if (git_result.before is none) else 'pull' }}
 
-    - name: print the consequences of the failure (update)
-      fail:
-        msg: |
-          {{ top_msg }}
+        failure: >-
+          {{
+            'failed to get DB config. Refusing to continue without a backup.'
+            if ansible_failed_task.name == failed_get_db_config_task_name
+            else 'DB backup failed.'
+          }}
 
-          {{ bottom_msg }}
-      when: "'update' in ansible_run_tags"
-
-    - name: print the consequences of the failure (deploy)
-      fail:
-        # yamllint disable rule:line-length
-        msg: |
-          {{ top_msg }}
-
+        hint: |
           Hint: if you are in the middle of a failed deploy, and this failed because the project is not set up yet, delete:
             {{ server_root_dir }}
-
-          {{ bottom_msg }}
-        # yamllint enable rule:line-length
-      when: "'update' not in ansible_run_tags"
 
   when:                               # Skip backup on:
     - git_result.changed              #   - no changes, or
