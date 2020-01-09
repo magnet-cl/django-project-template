@@ -1,17 +1,17 @@
-# django-project-template-py3
+# django-project-template
 A project template for Django 2.2 in Python 3
 
-[![CircleCI](https://circleci.com/gh/magnet-cl/django-project-template-py3.svg?style=svg)](https://circleci.com/gh/magnet-cl/django-project-template-py3)
-[![CircleCI](https://circleci.com/gh/magnet-cl/django-project-template-py3/tree/testing.svg?style=svg)](https://circleci.com/gh/magnet-cl/django-project-template-py3/tree/testing)
-[![CircleCI](https://circleci.com/gh/magnet-cl/django-project-template-py3/tree/development.svg?style=svg)](https://circleci.com/gh/magnet-cl/django-project-template-py3/tree/development)
+[![CircleCI](https://circleci.com/gh/magnet-cl/django-project-template.svg?style=svg)](https://circleci.com/gh/magnet-cl/django-project-template)
+[![CircleCI](https://circleci.com/gh/magnet-cl/django-project-template/tree/testing.svg?style=svg)](https://circleci.com/gh/magnet-cl/django-project-template/tree/testing)
+[![CircleCI](https://circleci.com/gh/magnet-cl/django-project-template/tree/development.svg?style=svg)](https://circleci.com/gh/magnet-cl/django-project-template/tree/development)
 
 ## Get the code
 Create a new repository for your django project and clone your repository into
 your computer.
 
-Add the django-project-template-py3 github repo as a remote repository:
+Add the django-project-template github repo as a remote repository:
 * `git remote add template
-  git@github.com:magnet-cl/django-project-template-py3.git`
+  git@github.com:magnet-cl/django-project-template.git`
 
 Pull the code from the project template:
 * `git pull template master`
