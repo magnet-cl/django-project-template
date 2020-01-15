@@ -98,106 +98,47 @@
   tasks:
     - name: copy and import the dump on destination host only
       block:
-        - name: get destination DB configuration
-          include_role:
-            name: get-db-config
 
+        # Upload dump
         - name: set dump_name
           set_fact:
             # If the dump was downloaded, dump_name variable is set in src_host only
             dump_name: "{{ hostvars[src_host].dump_name }}"
           when: dump_name is not defined
-
         - name: create dump upload tempfile
           tempfile:
             prefix: db_dump.
           register: temp_dump
-
         - name: upload dump
           copy:
             src: "{{ dump_name }}"
             dest: "{{ temp_dump.path }}"
             force: yes    # overwrite empty temp_dump
 
+        - name: get destination DB configuration
+          include_role:
+            name: get-db-config
+
+        # Backup
         - name: check if DB exists
           include_role:
             name: db
             tasks_from: check-existence
-
-        - name: create a backup before importing
+        - name: create a backup before restoring
           include_role:
             name: db
             tasks_from: backup
           when: db_exists.stdout == '1'
           # Note: it's "local_dump" instead of "dump_name" to avoid overriding the variable inside this role.
 
-        - name: delete and create database
-        # This is required because --clean "(drops) database objects before recreating them",
-        # so it leaves association tables that conflict with migrations.
-        # Also, --create has problems with the DB name.
-          postgresql_db:
-            name: "{{ db_conf.NAME }}"
-            login_user: "{{ db_conf.USER | default(ansible_user, true) }}"
-            login_password: "{{ db_conf.PASSWORD }}"
-            login_host: "{{ db_conf.HOST }}"
-            login_port: "{{ (db_conf.PORT | int) if db_conf.PORT else omit }}"
-
-            state: "{{ item }}"
-          loop:
-            - absent
-            - present
-
-        - name: import the dump
-          block:
-            - name: run pg_restore
-              command:
-                argv:
-                  - pg_restore
-                  - --dbname={{ db_conf.NAME }}
-                  - --username={{ db_conf.USER }}
-                  - --host={{ db_conf.HOST }}
-                  - --port={{ db_conf.PORT }}
-                  - --clean
-                  - --if-exists
-                  - --no-owner
-                  - --no-acl
-                  - --jobs=2
-                  - "{{ temp_dump.path }}"
-              environment:
-                PGPASSWORD: "{{ db_conf.PASSWORD }}"
-              register: pg_restore_result
-          rescue:
-            - name: Skip version printing
-              fail:
-                msg: Failed (see above)
-              when: >
-                src_host == '__local__'
-                  or 'could not open input file' in (pg_restore_result.stderr | default(''))
-
-            - name: get source version
-              command: pg_dump -V
-              delegate_to: "{{ src_host }}"
-              changed_when: false
-              register: src_version
-
-            - name: get destination version
-              command: pg_restore -V
-              changed_when: false
-              register: dest_version
-
-            - name: fail, printing versions
-              fail:
-                msg: |
-                  pg_restore failed {{ warning_hint }}(see above)
-
-                  FYI, source has "{{ src_version.stdout }}" and destination has "{{ dest_version.stdout }}"
-              vars:
-                warning_hint: >-
-                  {{
-                    '(or maybe it just finished with warnings) '
-                    if ('WARNING:' in (pg_restore_result.stderr | default('')))
-                    else ''
-                  }}
+        - name: restore dump
+          include_role:
+            name: db
+            tasks_from: restore
+          vars:
+            - dump_path: "{{ temp_dump.path }}"
+            - is_local_dump_file: "{{ src_host == '__local__' }}"
+            - src_delegate: "{{ src_host }}"
 
       always:
         - name: remove dump tempfile

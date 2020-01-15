@@ -1,0 +1,90 @@
+# Runs pg_restore.
+
+# Required variables:
+# - db_conf (from get-db-config)
+# - dump_path
+# - is_local_dump_file: True if the dump comes from the computer where Ansible was called
+# Optional variables:
+# - src_delegate:  "delegate_to" for commands to be run on source
+# - dest_delegate: "delegate_to" for commands to be run on destination
+
+
+- name: delete and create database
+  # This is required because --clean "(drops) database objects before recreating them",
+  # so it leaves association tables that conflict with migrations.
+  # Also, --create has problems with the DB name.
+  postgresql_db:
+    name: "{{ db_conf.NAME }}"
+    login_user: "{{ db_conf.USER }}"
+    login_password: "{{ db_conf.PASSWORD }}"
+    login_host: "{{ db_conf.HOST }}"
+    login_port: "{{ (db_conf.PORT | int) if db_conf.PORT else omit }}"
+
+    state: "{{ item }}"
+  loop:
+    - absent
+    - present
+  delegate_to: "{{ dest_delegate | default(inventory_hostname) }}"
+
+- name: import the dump
+  block:
+    - name: run pg_restore
+
+      #   postgresql_db:
+      # Doesn't use pg_restore (except if "target" is a .tar)
+      # https://github.com/ansible/ansible/blob/stable-2.8/lib/ansible/modules/database/postgresql/postgresql_db.py#L353
+
+      command:
+        argv:
+          - pg_restore
+          - --dbname={{ db_conf.NAME }}
+          - --username={{ db_conf.USER }}
+          - --host={{ db_conf.HOST }}
+          - --port={{ db_conf.PORT }}
+          - --clean
+          - --if-exists
+          - --no-owner
+          - --no-acl
+          - --jobs=2
+          - "{{ dump_path }}"
+      environment:
+        PGPASSWORD: "{{ db_conf.PASSWORD }}"
+      delegate_to: "{{ dest_delegate | default(inventory_hostname) }}"
+      register: pg_restore_result
+  rescue:
+    - name: check for warnings in output
+      set_fact:
+        warning_hint: >-
+          {{
+            '(or maybe it just finished with warnings) '
+            if ('WARNING:' in (pg_restore_result.stderr | default('')))
+            else ''
+          }}
+
+    - name: Skip version printing
+      fail:
+        msg: pg_restore failed {{ warning_hint }}(see above)
+      when: is_local_dump_file or 'could not open input file' in (pg_restore_result.stderr | default(''))
+
+    - name: get source version
+      command: pg_dump -V
+      delegate_to: "{{ src_delegate | default(inventory_hostname) }}"
+      changed_when: false
+      register: src_version
+
+    - name: get destination version
+      command: pg_restore -V
+      delegate_to: "{{ dest_delegate | default(inventory_hostname) }}"
+      changed_when: false
+      register: dest_version
+
+    - name: fail, printing versions
+      fail:
+        msg: |
+          pg_restore failed {{ warning_hint }}(see above)
+
+          FYI, source has "{{ src_version.stdout }}" and destination has "{{ dest_version.stdout }}"
+
+
+# Note: "default(inventory_hostname)" is used instead of "default(omit)" because of:
+# https://github.com/ansible/ansible/issues/26009
