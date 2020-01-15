@@ -57,6 +57,35 @@ Except for the shortcut scripts, please run Ansible from this directory. It can 
 
 Because the deploy needs to run the quickstart script, it was converted to an Ansible role. So `quickstart.sh` now installs the requirements and runs only the quickstart role. Some variables are set in `inventory.yaml` to make it work.
 
+### List of playbooks
+
+Here is a summary of the available playbooks (like `fab -l`). There are more details about them in the following sections.
+
+Group | Playbook | Purpose
+--- | --- | ---
+DB | backup-db | Backs up the DB of a server, to a file in the server.
+DB | download-db | Backs up the DB of a server, to a file in your computer.
+DB | export-db | Clones the DB from one server to another.
+DB | export-direct-db | TODO
+DB | import-db | Clones the DB of a server to your computer.
+DB | reset-db | Resets the DB to an empty one.
+Media | backup-media | Backs up the Media of a server, to a file in the server.
+Media | download-media | Backs up the Media of a server, to a file in your computer.
+Media | export-direct-media | TODO
+Media | export-media | Clones the Media from one server to another.
+Media | import-media | Clones the Media of a server to your computer.
+Deploy | deploy | Deploys or updates the application to a server.
+Helper | human-readable-output | Configures Ansible to show human-readable output.
+Helper | migrate-db | Runs Django migrations.
+Helper | run-django-command | Runs a Django (manage.py) command.
+Helper | validate-deployment | Runs Django tests.
+Services | enable-services | Enables systemd services of the project.
+Services | install-services | Installs systemd services of the project.
+Services | restart-services | Restarts systemd services of the project.
+Services | service-logs | Shows gunicorn service logs.
+Services | start-services | Starts systemd services of the project.
+Services | stop-services | Stops systemd services of the project.
+
 ### DB
 
 ![backup and other operations diagram](backup-diagram.png)
@@ -70,11 +99,15 @@ Because the deploy needs to run the quickstart script, it was converted to an An
 
 Note that the dumps are inside the `playbooks` folder, but paths are relative to it, not `cwd`.
 
+TODO: export-direct-db
+
 ### Media
 
 Same as DB, but replace `local_dump` with `local_archive`
 
 By default previous media files are preserved (like in Fabric). Add `-e delete_previous=yes` to delete them.
+
+TODO: export-direct-media
 
 ### Project helpers
 
