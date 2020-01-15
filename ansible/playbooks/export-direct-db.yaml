@@ -94,16 +94,6 @@
             tasks_from: backup
           when: db_exists.stdout == '1'
 
-        - name: create database
-          postgresql_db:
-            name: "{{ db_conf.NAME }}"
-            login_user: "{{ db_conf.USER | default(ansible_user, true) }}"
-            login_password: "{{ db_conf.PASSWORD }}"
-            login_host: "{{ db_conf.HOST }}"
-            login_port: "{{ (db_conf.PORT | int) if db_conf.PORT else omit }}"
-            state: present
-          when: db_exists.stdout != '1'
-
         - name: restore dump
           include_role:
             name: db
