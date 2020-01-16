@@ -109,4 +109,5 @@ propagate.sh
 /assets/bundles/
 webpack-stats.json
 
+.vscode/
 *.dump

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """ Models for the base application.
 
 All apps should use the BaseModel as parent for all models
@@ -12,11 +11,13 @@ from django.contrib.sites.models import Site
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
+from django.conf import settings
 
 # base
 from base import utils
 from base.managers import BaseManager
 from base.serializers import ModelEncoder
+from base.mixins import AuditMixin
 
 
 # public methods
@@ -38,7 +39,7 @@ def file_path(self, name):
     )
 
 
-class BaseModel(models.Model):
+class BaseModel(AuditMixin, models.Model):
     """ An abstract class that every model should inherit from """
     BOOLEAN_CHOICES = ((False, _('No')), (True, _('Yes')))
 
@@ -52,6 +53,16 @@ class BaseModel(models.Model):
         help_text=_("edition date"),
         verbose_name=_('updated at'),
     )
+
+    # field used to store a dictionary with the instance original fields
+    original_dict = None
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.original_dict = self.to_dict(
+            exclude=settings.LOG_IGNORE_FIELDS,
+            include_m2m=False,
+        )
 
     # using BaseManager
     objects = BaseManager()

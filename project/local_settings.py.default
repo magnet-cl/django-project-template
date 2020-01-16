@@ -29,6 +29,7 @@ EMAIL_EMAIL_USE_TLS = True
 
 LOCALLY_ALLOWED_HOSTS = [
     'localhost',
+    '127.0.0.1',
 ]
 
 ADMINS = ()
