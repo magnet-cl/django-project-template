@@ -11,7 +11,6 @@ Replace this with more appropriate tests for your application.
 from django.conf import settings
 from django.contrib import admin
 from django.urls import NoReverseMatch
-from django.urls import resolve
 from django.urls import reverse
 from django.test import TestCase
 
@@ -25,8 +24,6 @@ from project.urls import urlpatterns
 from inflection import underscore
 from base.utils import get_our_models
 from base.utils import random_string
-
-# utils
 from base.mockups import Mockup
 
 
@@ -76,40 +73,87 @@ class UrlsTest(BaseTestCase):
         self.user.save()
         self.login()
 
+        # store default values for urls. E.g. user_id
         self.default_params = {}
+
+        # store default objects to get foreign key parameters
+        self.default_objects = {}
 
         for model in get_our_models():
             model_name = underscore(model.__name__)
             method_name = 'create_{}'.format(model_name)
-            param_name = '{}_id'.format(model_name)
 
+            # store the created object
             obj = getattr(self, method_name)()
+            self.default_objects[model_name] = obj
 
             self.assertIsNotNone(obj, '{} returns None'.format(method_name))
 
+            # store the object id with the expected name a url should use
+            # when using object ids:
+            param_name = '{}_id'.format(model_name)
             self.default_params[param_name] = obj.id
 
-    def reverse_pattern(self, pattern, namespace):
-        url = reverse_pattern(pattern, namespace)
+    def get_url_using_param_names(self, url_pattern, namespace):
+        """
+        Using the dictionary of parameters defined on self.default_params and the
+        list of objects defined on self.default_objects, construct urls with valid
+        parameters.
 
-        if url is None:
-            url = reverse_pattern(pattern, namespace, args=(1,))
+        This method assumes that nested urls name their parents ids as {model}_id
 
-            if url is None:
-                url = reverse_pattern(pattern, namespace, args=(1, 1))
+        Thus something like the comments a user should be in the format of
 
-        if url is None:
-            return None
+        '/users/{user_id}/comments/'
+        """
+        param_names = url_pattern.pattern.regex.groupindex.keys()
 
-        view_params = resolve(url).kwargs
+        params = {}
+        if not param_names:
+            return
 
-        for param in view_params:
+        callback = url_pattern.callback
+
+        obj = None
+
+        for param_name in param_names:
+            if param_name == 'pk' and hasattr(callback, 'view_class'):
+                model_name = underscore(
+                    url_pattern.callback.view_class.model.__name__
+                )
+                params['pk'] = self.default_params['{}_id'.format(model_name)]
+                obj = self.default_objects[model_name]
+            else:
+                try:
+                    params[param_name] = self.default_params[param_name]
+                except KeyError:
+                    return None
+
+        if obj:
+            # if the object has an attribute named as the parameter
+            # assume it should be used on the url, since many views
+            # filter nested objects
+            for param in params:
+                if hasattr(obj, param):
+                    params[param] = getattr(obj, param)
+
+        return reverse_pattern(url_pattern, namespace, kwargs=params)
+
+    def reverse_pattern(self, url_pattern, namespace):
+        url = self.get_url_using_param_names(url_pattern, namespace)
+        if url:
+            return url
+
+        param_names = url_pattern.pattern.regex.groupindex.keys()
+        url_params = {}
+
+        for param in param_names:
             try:
-                view_params[param] = self.default_params[param]
+                url_params[param] = self.default_params[param]
             except KeyError:
-                pass
+                url_params[param] = 1
 
-        return reverse_pattern(pattern, namespace, kwargs=view_params)
+        return reverse_pattern(url_pattern, namespace, kwargs=url_params)
 
     def test_responses(self):
 
@@ -137,8 +181,8 @@ class UrlsTest(BaseTestCase):
                         print("Url {} failed: ".format(url))
                         raise
 
-                    msg = 'url "{}" returned {}'.format(
-                        url, response.status_code
+                    msg = 'url "{}" ({})returned {}'.format(
+                        url, pattern.name, response.status_code
                     )
                     self.assertIn(
                         response.status_code,
