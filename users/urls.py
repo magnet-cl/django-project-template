@@ -21,7 +21,7 @@ urlpatterns = [
         name='password_change'
     ),
     url(
-        r'^password_change/done/$',
+        r'^password-change/done/$',
         users_views.PasswordChangeDoneView.as_view(),
         name='password_change_done'
     ),
