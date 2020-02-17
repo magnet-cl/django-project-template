@@ -66,7 +66,7 @@ Group | Playbook | Purpose
 DB | backup-db | Backs up the DB of a server, to a file in the server.
 DB | download-db | Backs up the DB of a server, to a file in your computer.
 DB | export-db | Clones the DB from one server to another.
-DB | export-direct-db | TODO
+DB | export-direct-db | Clones the DB from one server to another,-------------------------------------
 DB | import-db | Clones the DB of a server to your computer.
 DB | reset-db | Resets the DB to an empty one.
 Media | backup-media | Backs up the Media of a server, to a file in the server.
@@ -88,26 +88,27 @@ Services | stop-services | Stops systemd services of the project.
 
 ### DB
 
-![backup and other operations diagram](backup-diagram.png)
+![backup and other operations diagram](img/backup-diagram.png)
 
 - `backup-db` works as in Fabric.
+
 - `download-db` always takes a new backup and downloads that (if you want to download a previous one, just use `scp`).
+
 - `import-db` by default imports a fresh backup. You can specify a local dump file in the `local_dump` variable (example: `ansible-playbook ... --limit localhost playbooks/import-db.yaml -e local_dump=staging/2019-08-22.dump`).
+
 - `export-db` can be used in two modes:
     - Export local dump to *host_B*: `ansible-playbook ... --limit host_B playbooks/export-db.yaml -e local_dump=staging/2019-08-22.dump`
     - Export remote dump from *host_A* to *host_B*: `ansible-playbook ... --limit host_A,host_B playbooks/export-db.yaml`
 
-Note that the dumps are inside the `playbooks` folder, but paths are relative to it, not `cwd`.
+- `export-direct-db` is like `export-db` from remote to remote, but it directly transfers the file between servers, so very high speeds can be reached if they are in the same datacenter (100 MB/s). `host_B` downloads from `host_A` through HTTP, so it will try to reach `host_A` at `https://{{ server_domain }}:55555`
 
-TODO: export-direct-db
+Note that the dumps are inside the `playbooks` folder, but paths are relative to it, not `cwd`.
 
 ### Media
 
 Same as DB, but replace `local_dump` with `local_archive`
 
 By default previous media files are preserved (like in Fabric). Add `-e delete_previous=yes` to delete them.
-
-TODO: export-direct-media
 
 ### Project helpers
 
