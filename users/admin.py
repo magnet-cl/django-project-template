@@ -4,6 +4,7 @@
 from django.contrib import admin
 from django.contrib import messages
 from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
+from django.utils.html import format_html
 from django.utils.translation import ugettext_lazy as _
 
 # models
@@ -58,8 +59,9 @@ class UserAdmin(DjangoUserAdmin):
     ordering = ('email',)
 
     def change_password_link(self, obj):
-        return u"<a href=\"%d/password/\">%s</a>" % (obj.id,
-                                                     _("change password"))
+        return format_html(
+            f'<a href="{obj.id}/password/">{_("change password")}</a>'
+        )
     change_password_link.allow_tags = True
     change_password_link.short_description = _("change password")
 
