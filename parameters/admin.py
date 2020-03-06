@@ -12,6 +12,7 @@ from parameters.enums import ParameterDefinitionList
 
 @admin.register(Parameter)
 class ParameterAdmin(admin.ModelAdmin):
+    list_display = ('name', 'raw_value', 'cache_seconds')
 
     def get_changelist_instance(self, request):
         """
