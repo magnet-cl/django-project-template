@@ -106,7 +106,7 @@ class Parameter(BaseModel):
                 name=name
             )
         except Parameter.DoesNotExist:
-            Parameter.create_parameter(name)
+            parameter = Parameter.create_parameter(name)
 
         parameter.store_in_cache()
 
