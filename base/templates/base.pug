@@ -4,117 +4,111 @@ doctype 5
 - load staticfiles
 - load i18n static
 
-html(lang="es")
+html(lang='{{ request.LANGUAGE_CODE }}')
   head
     if google_analytics_code
       // Global site tag (gtag.js) - Google Analytics
       script(
         async,
-        src="https://www.googletagmanager.com/gtag/js?id={{google_analytics_code}}"
+        src='https://www.googletagmanager.com/gtag/js?id={{ google_analytics_code }}'
       )
       script.
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-        gtag('config', '{{google_analytics_code}}');
+        gtag('config', '{{ google_analytics_code }}');
 
-
-    meta(charset="utf-8")
+    meta(charset='utf-8')
     title
-      | {% block title %}{% if title%}{{title}} - {% endif %}{%endblock%} Project
-    meta(name="viewport", content="width=device-width, initial-scale=1.0")
-    meta(name="description", content="")
-    meta(name="author", content="https://magnet.cl")
-    meta(name='keywords', content="")
+      | {% block title %}{% if title %}{{ title }} - {% endif %}{% endblock %} Project
+    meta(name='viewport', content='width=device-width', initial-scale='1.0')
+    meta(name='description', content='')
+    meta(name='author', content='https://magnet.cl')
+    meta(name='keywords', content='')
 
     // Schema.org for Google
-    meta(itemprop='name', content="")
-    meta(itemprop='description', content="")
-
-    script(defer, src="https://kit.fontawesome.com/4a7f9bb0b9.js")
+    meta(itemprop='name', content='')
+    meta(itemprop='description', content='')
 
     // image
     if object.image
       meta(itemprop='image', content='{{ object.image.url }}')
       meta(name='image', content='{{ object.image.url }}')
       meta(name='twitter:image', content='{{ object.image.url }}')
-      meta(property='og:image', content="{{ object.image.url }}")
-      meta(property='og:image:width', content="{{ object.image.width }}")
-      meta(property='og:image:height', content="{{ object.image.height }}")
+      meta(property='og:image', content='{{ object.image.url }}')
+      meta(property='og:image:width', content='{{ object.image.width }}')
+      meta(property='og:image:height', content='{{ object.image.height }}')
     else
       meta(
-        name="og:image",
-        content="{{request.scheme}}://{{request.META.HTTP_HOST}}/static/img/logo-1000x1000.png"
+        name='og:image',
+        content='{{ request.scheme }}://{{ request.META.HTTP_HOST }}/static/img/logo-1000x1000.png'
       )
       meta(
         itemprop='image',
-        content='{{request.scheme}}://{{request.META.HTTP_HOST}}/static/img/logo-1000x1000.png'
+        content='{{ request.scheme }}://{{ request.META.HTTP_HOST }}/static/img/logo-1000x1000.png'
       )
       meta(
         name='image',
-        content='{{request.scheme}}://{{request.META.HTTP_HOST}}/static/img/logo-1000x1000.png'
+        content='{{ request.scheme }}://{{ request.META.HTTP_HOST }}/static/img/logo-1000x1000.png'
       )
       meta(
         name='twitter:image',
-        content='{{request.scheme}}://{{request.META.HTTP_HOST}}/static/img/logo-1000x1000.png'
+        content='{{ request.scheme }}://{{ request.META.HTTP_HOST }}/static/img/logo-1000x1000.png'
       )
       meta(
         property='og:image',
-        content="{{request.scheme}}://{{request.META.HTTP_HOST}}/static/img/logo-1000x1000.png"
+        content='{{ request.scheme }}://{{ request.META.HTTP_HOST }}/static/img/logo-1000x1000.png'
       )
-      meta(property='og:image:width', content="1000")
-      meta(property='og:image:height', content="1000")
+      meta(property='og:image:width', content='1000')
+      meta(property='og:image:height', content='1000')
 
     // Twitter
-    meta(name='twitter:card', content="summary_large_image")
-    meta(name='twitter:title', content='{{title}}')
-    meta(name='twitter:site', content="@")
+    meta(name='twitter:card', content='summary_large_image')
+    meta(name='twitter:title', content='{{ title }}')
+    meta(name='twitter:site', content='@')
     meta(name='twitter:description', content='')
     meta(name='twitter:site', content='@')
     meta(name='twitter:creator', content='@')
 
-    meta(name='og:site_name', content="Project")
-    meta(name='og:type', content='website')
 
     // Open Graph general (Facebook, Pinterest & Google+)
-    meta(property='og:title', content='{{title}}')
+    meta(name='og:site_name', content='Project')
+    meta(name='og:type', content='website')
+    meta(property='og:title', content='{{ title }}')
     meta(property='og:description', content='')
-
     meta(
       property='og:url',
-      content='{{ request.scheme }}://{{ request.get_host }}{{request.path}}'
-      )
-    meta(property='og:locale', content='{{request.LANGUAGE_CODE}}')
+      content='{{ request.scheme }}://{{ request.get_host }}{{ request.path }}'
+    )
+    meta(property='og:locale', content='{{ request.LANGUAGE_CODE }}')
 
-    //if lte IE 7
-      script(src="http://html5shim.googlecode.com/svn/trunk/html5.js")
+    // Fonts
+    script(defer, src='https://kit.fontawesome.com/4a7f9bb0b9.js')
 
-    //if lt IE 9
-      script(src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js")
-
+    // External js libraries styles
     link(
-      href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/css/select2.min.css",
-      rel="stylesheet"
+      href='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/css/select2.min.css',
+      rel='stylesheet'
     )
     link(
-      href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css",
-      rel="stylesheet"
+      href='https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css',
+      rel='stylesheet'
     )
+
+    // Own styles
     {% render_bundle 'main' 'css' %}
-
     block stylesheets
 
-  body(class='{{body_class|default:""}}')
-    {% include 'includes/navbar.pug' %}
-    main(role="main")
+  body(class=body_class)
+    include includes/navbar.pug
+    main
       .container
         div.main-alert.fixed-notification
           {% if messages %}
           {% for message in messages %}
-          div(class="alert alert-{{ message.tags }}")
-            button.close(type="button", data-dismiss="alert", aria-label="Close")
+          div(class='alert alert-{{ message.tags }}')
+            button.close(type='button', data-dismiss='alert', aria-label='Close')
               span.i.fa.fa-times
-                |
           {{ message }}
           {% endfor %}
           {% endif %}
@@ -124,17 +118,17 @@ html(lang="es")
           ol.breadcrumb
             if request.path == '/'
               li.breadcrumb-item.active(aria-current='page')
-                a(href="{% url 'home' %}")
+                a(href='{% url "home" %}')
                   {% trans 'Home' %}
             else
               li.breadcrumb-item
-                a(href="{% url 'home' %}")
+                a(href='{% url "home" %}')
                   {% trans 'Home' %}
 
             block breadcrumbs
 
             if title
-              li.breadcrumb-item.active(aria-current='page') {{title}}
+              li.breadcrumb-item.active(aria-current='page') {{ title }}
       .container
         block content_title
           .d-flex.justify-content-between.flex-wrap.flex-md-nowrap.align-items-center.pb-2.mb-3.border-bottom
@@ -144,49 +138,50 @@ html(lang="es")
                 block options
         block content
 
-    {% include 'includes/footer.pug' %}
+    include includes/footer.pug
 
-    // Javascript Placed at the end of the document so the pages load faster
-    // uncompressible javascripts
+    // Javascript placed at the end of the document so the pages load faster
 
+    // Uncompressible javascripts
     block uncompressible_javascripts
 
+    // External js libraries
     script(
-      src="https://code.jquery.com/jquery-3.4.1.min.js",
-      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=",
-      crossorigin="anonymous"
+      src='https://code.jquery.com/jquery-3.4.1.min.js',
+      integrity='sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=',
+      crossorigin='anonymous'
     )
     script(
-      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js",
-      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1",
-      crossorigin="anonymous"
+      src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js',
+      integrity='sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1',
+      crossorigin='anonymous'
     )
     script(
-      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js",
-      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM",
-      crossorigin="anonymous"
+      src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js',
+      integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM',
+      crossorigin='anonymous'
     )
     script(
-      src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js",
-      integrity="sha256-AdQN98MVZs44Eq2yTwtoKufhnU+uZ7v2kXnD5vqzZVo=",
-      crossorigin="anonymous"
+      src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js',
+      integrity='sha256-AdQN98MVZs44Eq2yTwtoKufhnU+uZ7v2kXnD5vqzZVo=',
+      crossorigin='anonymous'
     )
     script(
-      src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js",
-      integrity="sha256-GHC3xFbrevQ0aRcWg5JElUOncXYXxTtMOuA74cWAPTw=",
-      crossorigin="anonymous"
+      src='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js',
+      integrity='sha256-GHC3xFbrevQ0aRcWg5JElUOncXYXxTtMOuA74cWAPTw=',
+      crossorigin='anonymous'
     )
     script(
-      src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js",
-      integrity="sha256-z0oKYg6xiLq3yJGsp/LsY9XykbweQlHl42jHv2XTBz4=",
-      crossorigin="anonymous"
+      src='https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js',
+      integrity='sha256-z0oKYg6xiLq3yJGsp/LsY9XykbweQlHl42jHv2XTBz4=',
+      crossorigin='anonymous'
     )
 
-    // templates TODO: this is an example of pug templates, delete this
-    script(type="text/pug", src="{% static 'templates/users/list.pug' %}")
-    script(type="text/pug", src="{% static 'templates/users/detail.pug' %}")
-    // end templates
+    //- Templates TODO: this is an example of pug templates, delete this
+    script(type='text/pug', src='{% static "templates/users/list.pug" %}')
+    script(type='text/pug', src='{% static "templates/users/detail.pug" %}')
+    //- end templates
 
-    block javascripts
-
+    // Own scripts
     {% render_bundle 'main' 'js' %}
+    block javascripts
