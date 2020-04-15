@@ -385,7 +385,7 @@ LOG_SENSITIVE_FIELDS = [
     'password',
 ]
 
-# This fields will be ignored in the logs
+# These fields will be ignored in the logs
 LOG_IGNORE_FIELDS = [
     'created_at',
     'updated_at',
