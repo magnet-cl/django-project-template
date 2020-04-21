@@ -5,7 +5,6 @@ name = "pypi"
 
 [packages]
 Django = "~=2.2.10"
-"Fabric3" = "==1.13.1.post1"
 django-cron = "==0.5.1"
 django-debug-toolbar = "==2.0"
 django-form-utils = "==1.0.3"
@@ -13,7 +12,6 @@ django-loginas = "==0.3.6"
 django-recaptcha = "==2.0.4"
 djangocms-admin-style = "==1.4.0"
 inflection = "==0.3.1"
-ipdb = "==0.12"
 ipython = "==7.6.1"
 pypugjs = "==5.8.1"
 pytz = ">=2018.4"
@@ -23,6 +21,7 @@ gunicorn = "==19.9.0"
 djangorestframework = "==3.9.1"
 djangorestframework-camel-case = "*"
 django-webpack-loader = "*"
+ipdb = "~=0.13.2"
 
 [dev-packages]
 flake8 = "*"
