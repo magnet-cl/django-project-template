@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from django.conf.urls import url
+from django.urls import path
 
 from . import views
 
 urlpatterns = [
-    url(
-        r'^communes/search/$',
+    path(
+        'communes/search/',
         views.search_communes,
         name='search_communes'
     ),
