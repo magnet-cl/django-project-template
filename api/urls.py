@@ -1,6 +1,6 @@
 # django
-from django.conf.urls import include
-from django.conf.urls import url
+from django.urls import include
+from django.urls import path
 
 # rest framework
 from rest_framework.routers import DefaultRouter
@@ -18,5 +18,5 @@ router.register(r'communes', regions_views.CommuneViewSet)
 
 app_name = 'api'
 urlpatterns = [
-    url(r'^', include(router.urls)),
+    path('', include(router.urls)),
 ]
