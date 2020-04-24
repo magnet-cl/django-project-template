@@ -1,5 +1,5 @@
 project_name: django-project-template   ### CHANGE ME ###
-server_git_url: https://github.com/magnet-cl/django-project-template.git   ### CHANGE ME ###
+server_git_url: git@github.com:magnet-cl/django-project-template.git   ### CHANGE ME ###
 server_root_dir: /home/{{ ansible_user }}/{{ project_name }}
 service_name: django-{{ project_name }}.service
 is_dev_machine: no
