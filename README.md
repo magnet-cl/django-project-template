@@ -255,7 +255,7 @@ To import values from `local_settings` to `settings`, the method get_local_value
 
 ### Scripts
 
-The script quickstart.sh is used to install all project dependencies and generate the local settings file. If there are dependancies that cannot be installed with pip or npm, then quickkstart.sh is the place to install them.
+The script quickstart.sh is used to install all project dependencies and generate the local settings file. If there are dependancies that cannot be installed with pip or npm, then quickstart.sh is the place to install them.
 
 The script reset.sh is used to delete the local database on your computer and create a new one using the django migrations. It's useful to delete trash data when developing or testing your migrations.
 
@@ -268,7 +268,7 @@ If you need to place methods that are useful to the entire application, place th
 
 ## Assets
 
-###  Webpack
+### Webpack
 
 The project uses `django-webpack-loader` and `webpack` for js, scss and assets with `babel` for es6+ support and `dart-sass` for new features of scss support.
 To compile and serve the assets on development, run on separated console:
