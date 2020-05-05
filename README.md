@@ -148,7 +148,7 @@ View to updadte an object and a list of child objects with a form and a
 [formset](https://docs.djangoproject.com/en/2.2/topics/forms/formsets/).
 
 
-## Aplicaciones básicas
+## Custom apps
 
 
 ### Regions
@@ -160,6 +160,13 @@ App with the list for regions and communes of Chile. Both models are populated b
 
 App to set application wide parameters in the admin. 
 
+The parameters are stored in the `Parameter` model and can be retrieved with
+`Parameter.value_for(param_name)`. Using this method is recommended since it
+uses CACHE (since it is assumed that parameters rarely change).
+
+To set a list Parameters that the app needs with their default values, place
+them in `parameters/enums.py`. There is an example with a parameter called
+`DEFAULT_URL_PROTOCOL`.
 
 ### Users
 
