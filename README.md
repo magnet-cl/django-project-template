@@ -76,6 +76,8 @@ customizable ordering. Change the __display_order_  method to change the logic o
 
 Every Form has to inherit from this class. It enables fieldset support and changes the style of inputs. For example, date fields will contain a class that is picked up by the datepicker javascript library and render a datepicker input.
 
+If you are handling Chilean RUTs, install [Django Local Flavor](https://github.com/django/django-localflavor).
+
 ## Views
 
 Contains classes that inherit from Django generic class based views. This is
