@@ -24,6 +24,8 @@ Push to your own repo
 
 Now you have your own django project in your repository.
 
+Remove the `LICENSE` if your new project does not have an MIT license.
+
 ## Dependencies
 This project works with:
 
@@ -65,7 +67,8 @@ Every model has to inherit from the class BaseModel. This allows that every mode
 
 ### OrderableModel
 
-This model inherits from BaseModel. It adds the _display_order_ field to allow customizable ordering. Change de __display_order_  method to change the logic of how a new object is arranged.
+This model inherits from BaseModel. It adds the _display_order_ field to allow
+customizable ordering. Change the __display_order_  method to change the logic of how a new object is arranged.
 
 ## Forms
 
