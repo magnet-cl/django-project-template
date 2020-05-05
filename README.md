@@ -78,7 +78,9 @@ Every Form has to inherit from this class. It enables fieldset support and chang
 
 ## Views
 
-Contains Clases that inherit from Django generic class based views. This is done to add new features to this classes, for example [formset](https://docs.djangoproject.com/en/dev/topics/forms/formsets/) support.
+Contains classes that inherit from Django generic class based views. This is
+done to add new features to this classes, for example
+[formset](https://docs.djangoproject.com/en/2.2/topics/forms/formsets/) support.
 
 ### 	LoginPermissionRequiredMixin
 
@@ -88,17 +90,20 @@ This clasas inhertis from django's AccessMixin. Verifies that the current user i
 
 ### BaseTemplateView
 
-Renders a given template. Inherits from [TemplateView](https://docs.djangoproject.com/en/dev/ref/class-based-views/base/#templateview).
+Renders a given template. Inherits from
+[TemplateView](https://docs.djangoproject.com/en/2.2/ref/class-based-views/base/#templateview).
 
 
 ### BaseDetailView
 
-Renders a given object. Inherits from [DetailView](https://docs.djangoproject.com/en/dev/ref/class-based-views/generic-display/#detailview).
+Renders a given object. Inherits from
+[DetailView](https://docs.djangoproject.com/en/2.2/ref/class-based-views/generic-display/#detailview).
 
 
 ### BaseListView
 
-Renders a list of objects. Inherits from [ListView](https://docs.djangoproject.com/en/dev/ref/class-based-views/generic-display/#listview).
+Renders a list of objects. Inherits from
+[ListView](https://docs.djangoproject.com/en/2.2/ref/class-based-views/generic-display/#listview).
 
 
 ### BaseCreateView
@@ -118,7 +123,8 @@ Renders a form to delete a single object of a given model. Inherits from [Delete
 
 ### 	BaseRedirectView
 
-Redirects to a given url. Inherits from [RedirectView](https://docs.djangoproject.com/en/dev/ref/class-based-views/base/#redirectview).
+Redirects to a given url. Inherits from
+[RedirectView](https://docs.djangoproject.com/en/2.2/ref/class-based-views/base/#redirectview).
 
 
 ### BaseUpdateRedirectView
@@ -132,12 +138,14 @@ View that shows internal data of the site, for example if the CAPTCHA is activat
 
 ### FormsetCreateView
 
-View to create an object and a list of child objects with a form and a [formset](https://docs.djangoproject.com/en/dev/topics/forms/formsets/).
+View to create an object and a list of child objects with a form and a
+[formset](https://docs.djangoproject.com/en/2.2/topics/forms/formsets/).
 
 
 ### FormsetUpdateView
 
-View to updadte an object and a list of child objects with a form and a [formset](https://docs.djangoproject.com/en/dev/topics/forms/formsets/).
+View to updadte an object and a list of child objects with a form and a
+[formset](https://docs.djangoproject.com/en/2.2/topics/forms/formsets/).
 
 
 ## Aplicaciones básicas
