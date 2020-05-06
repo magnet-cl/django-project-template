@@ -1,9 +1,9 @@
-# django-project-template
-A project template for Django 2.2 in Python 3
+# Django Project Template (DPT)
 
-[![CircleCI](https://circleci.com/gh/magnet-cl/django-project-template.svg?style=svg)](https://circleci.com/gh/magnet-cl/django-project-template)
-[![CircleCI](https://circleci.com/gh/magnet-cl/django-project-template/tree/testing.svg?style=svg)](https://circleci.com/gh/magnet-cl/django-project-template/tree/testing)
-[![CircleCI](https://circleci.com/gh/magnet-cl/django-project-template/tree/development.svg?style=svg)](https://circleci.com/gh/magnet-cl/django-project-template/tree/development)
+A project template for Django 2.2 in Python 3. This project tries to solve problems or features that commonly appear on Magnet projects. The idea is that you start your project using this code as the base. 
+
+Master: [![CircleCI](https://circleci.com/gh/magnet-cl/django-project-template.svg?style=svg)](https://circleci.com/gh/magnet-cl/django-project-template)
+Development: [![CircleCI](https://circleci.com/gh/magnet-cl/django-project-template/tree/development.svg?style=svg)](https://circleci.com/gh/magnet-cl/django-project-template/tree/development)
 
 ## Get the code
 Create a new repository for your django project and clone your repository into
@@ -24,6 +24,8 @@ Push to your own repo
 
 Now you have your own django project in your repository.
 
+Remove the `LICENSE` if your new project does not have an MIT license.
+
 ## Dependencies
 This project works with:
 
@@ -35,30 +37,257 @@ This project works with:
 * PostgreSQL >= 9.6
 
 ## Quickstart
-If you are using Ubuntu 16.04/18.04 or OS X, the script `quickstart.sh` installs all
+If you are using Ubuntu 16.04/18.04 `quickstart.sh` installs all
 dependencies of the project. It assumes you have Node and npm installed.
 
 * `./quickstart.sh`
 
+There is no problem if you run this command more than one time.
+
 ## Start new app
 Use the custom app template to create your apps:
 
-    python manage.py startapp --template=project/app_template answers
+    python manage.py startapp --template=project/app_template {app_name} [model_name]
 
-## Javascript stuff
+The app template assumes your app name is a plural, the model_name parameter is optional. The template contains the following:
 
-on development run on separated console:
+ - A model that is named the same as your app, but in singular. The model name can be changed by passing the model_name parameter to the startapp command.
+ - A views.py file with all CRUD views for the model.
+ - A urls.py file mapping all CRUD views.
+ - A managers.py file with a single QuerySet for the model
+ - A forms.py file with a single Form for the model
+ - An admin.py file with a single Admin for the model
+ - A templates folder with templates in .pug format for all CRUD views.
+
+## Models
+
+### BaseModel
+
+Every model has to inherit from the class BaseModel. This allows that every
+model has the fields `created_at` and `updated_at` and methods like `to_json`
+and `to_dict`.
+
+### OrderableModel
+
+This model inherits from BaseModel. It adds the `display_order` field to allow
+customizable ordering. Change the `set_display_order_` method to change the logic of how a new object is arranged.
+
+## Forms
+
+### BaseModelForm
+
+Every Form has to inherit from this class. It enables fieldset support and changes the style of inputs. For example, date fields will contain a class that is picked up by the datepicker javascript library and render a datepicker input.
+
+If you are handling Chilean RUTs, install [Django Local Flavor](https://github.com/django/django-localflavor).
+
+## Views
+
+Contains classes that inherit from Django generic class based views. This is
+done to add new features to this classes, for example
+[formset](https://docs.djangoproject.com/en/2.2/topics/forms/formsets/) support.
+
+### 	LoginPermissionRequiredMixin
+
+This clasas inhertis from django's AccessMixin. Verifies that the current user is authenticated (if the attribute login_required is True) and has the required permission (if permission_required is set)
+
+### Clases
+
+### BaseTemplateView
+
+Renders a given template. Inherits from
+[TemplateView](https://docs.djangoproject.com/en/2.2/ref/class-based-views/base/#templateview).
+
+
+### BaseDetailView
+
+Renders a given object. Inherits from
+[DetailView](https://docs.djangoproject.com/en/2.2/ref/class-based-views/generic-display/#detailview).
+
+
+### BaseListView
+
+Renders a list of objects. Inherits from
+[ListView](https://docs.djangoproject.com/en/2.2/ref/class-based-views/generic-display/#listview).
+
+
+### BaseCreateView
+
+Renders a form to create a single object for a given model. Inherits from [CreateView](https://docs.djangoproject.com/en/3.0/ref/class-based-views/generic-editing/#createview).
+
+
+### BaseUpdateView
+
+Renders a form to update a single object of a given model. Inherits from  [UpdateView](https://docs.djangoproject.com/en/3.0/ref/class-based-views/generic-editing/#updateview). 
+
+
+### BaseDeleteView
+
+Renders a form to delete a single object of a given model. Inherits from [DeleteView](https://docs.djangoproject.com/en/3.0/ref/class-based-views/generic-editing/#deleteview).
+
+
+### 	BaseRedirectView
+
+Redirects to a given url. Inherits from
+[RedirectView](https://docs.djangoproject.com/en/2.2/ref/class-based-views/base/#redirectview).
+
+
+### BaseUpdateRedirectView
+
+Redirects to a given url after calling the method `do_action`. Useful when processing something and then redirecting to show the result. Inherits from BaseRedirectView
+
+
+### StatusView
+
+View that shows internal data of the site, for example if the CAPTCHA is activated or if the site has google analytics.
+
+### FormsetCreateView
+
+View to create an object and a list of child objects with a form and a
+[formset](https://docs.djangoproject.com/en/2.2/topics/forms/formsets/).
+
+
+### FormsetUpdateView
+
+View to updadte an object and a list of child objects with a form and a
+[formset](https://docs.djangoproject.com/en/2.2/topics/forms/formsets/).
+
+
+## Custom apps
+
+
+### Regions
+
+App with the list for regions and communes of Chile. Both models are populated by migrations.
+
+
+### Parameters
+
+App to set application wide parameters in the admin. 
+
+The parameters are stored in the `Parameter` model and can be retrieved with
+`Parameter.value_for(param_name)`. Using this method is recommended since it
+uses CACHE (since it is assumed that parameters rarely change).
+
+To set a list Parameters that the app needs with their default values, place
+them in `parameters/enums.py`. There is an example with a parameter called
+`DEFAULT_URL_PROTOCOL`.
+
+### Users
+
+App that overrides the Django User with the class `User` that is easily modifiable.
+
+### 	API
+
+App that contains the base files to create a REST API with [Django Rest Framework]([https://www.django-rest-framework.org/](https://www.django-rest-framework.org/))
+
+## Pug
+
+The template engine used is pypugjs, a python implementation of the [pugjs](https://pugjs.org/api/getting-started.html) template engine. This converts the pug files into the default templates used in DJango, so you can use both systems on the same template. For example, [variable interpolation in pug](https://pugjs.org/language/interpolation.html) with `#{}`, or using django method with `{{ }}`
+
+Comments are done with  `//-`. If you require HTML comments (visible to final users on the page's source code) use`//`.
+
+
+### Base template: base.pug
+All view templates should extend base.pug, this renders the layout with a navbar and the footer. This templates has the following blocks: 
+
+ 1. title: Set the content of the title meta tag. By default is set to the `title` variable.
+ 2. stylesheets: A place to put stylesheets for the given template. By default is empty. Be careful to use this block, it should only be used when the webpack-compiled styles are not enough for some reason.
+ 3. breadcrumbs: A place to put breadcrumb elements after the `home` element and befor the element that contains the `title`.
+ 4. content_title: The place to put the `h1` tag. By default contains a `h1` tag with the `title` and a place to put buttons
+ 5. options: A place to put buttons beside the `h1` tag.
+ 6. content: The main content of the page. **This should always be defined in the template**
+ 7. javascripts: A place to put javascripts for the given template. By default is empty. Be careful to use this block, it should only be used when the webpack-compiled javascripts are not enough for some reason.
+
+All these blocks are optional **except content** since they have default implementations.
+
+The navbar template is included base.pug and it can be found in `base/templates/includes/navbar.pug`
+
+The footer template is included base.pug and it can be found in `base/templates/includes/footer.pug`
+
+### Forms
+
+Forms should extend from form.pug (which in turns extends base.pug). 
+
+This templates has the following blocks: 
+
+ - content_header: A place to put content before the form.
+ - top_fields: A place content before the first field defined in the `form` variable. 
+ - form_fields:  The place that renders the content of the `form` variable. 
+ - bottom_fields: A place content after the last field defined in the `form` variable.
+ - buttons: The place to put the form buttons. 
+ - submit_button_value: The value of the submit button.
+ - submit_button_text: The text of the submit button.
+ - cancel_button_url: The url to send the user if the button cancel is pressed. By default is {{cancel_url}}
+ - cancel_button_text: Te text of the cancel button.
+ - content_footer: The content to be placed after the form.
+
+**All this blocks are optional** since they have default implementations.
+
+If you have chilean RUT input, use the `rut` class too enable javascript validation.
+
+## Test
+
+### Mockups
+
+On `base/mockups.py` there is a class called Mockups, it's a class to create objects for our clases to be used on testing. Every model defined by us requires a method in this class called create_<model_name> if you don't define this method, a test will fail.
+
+### 	BaseTestCase
+
+Base class that all tests clases should inherit from. This class inherits from Django's `TestCase` class and also from the Mockups class. This allow tests that can create their own objects to work with.
+
+## Settings - Local Settings
+
+Since this is a project template, the project folder created by django-admin can't be named after the project itself, that is why it has the generic name `project`. 
+Within this folder, we can find the `settings.py` file, a typical settings file from Django that also include the following settings>
+
+* Configuration for  Google Analytics y reCAPTCHA
+* Santiago/Chile Timezone
+* AWS s3 support (deactivated by default)
+* Cache with Memcached
+* Frontend with Webpack
+* Django REST framework in camel case configuration
+* Only add debug_toolbar to the INSTALLED_APPS list when debug is True
+* Only enable  BrowsableAPIRenderer when debug is True
+
+There are some settings that are not versioned, to that effect we use a not-versioned file (`project/local_settings.py`)  that you have to create. The database configuration, third party service passwords, credentials, etc are placed in this file. 
+
+This file is created by `quickstart.sh` if it does not exist by copying  `project/local_settings.py.default`.
+
+To import values from `local_settings` to `settings`, the method get_local_value is used, this allows the existence of optional settings. 
+
+## Utils
+
+### Scripts
+
+The script quickstart.sh is used to install all project dependencies and generate the local settings file. If there are dependancies that cannot be installed with pip or npm, then quickstart.sh is the place to install them.
+
+The script reset.sh is used to delete the local database on your computer and create a new one using the django migrations. It's useful to delete trash data when developing or testing your migrations.
+
+
+### Code
+
+If you need to place methods that are useful to the entire application, place them in `base/utils.py` Some methods that are already included:
+
+ - today: A method that returns the current date in local time (`datetime.date.today` and `timezone.now.date` return the UTC date).
+
+## Assets
+
+### Webpack
+
+The project uses `django-webpack-loader` and `webpack` for js, scss and assets with `babel` for es6+ support and `dart-sass` for new features of scss support.
+To compile and serve the assets on development, run on separated console:
 
     npm run start
 
-for generate production bundle run:
+To generate production bundle run:
 
     npm run build
 
-### webpack
+### Libraries
 
-The project use `django-webpack-loader` and `webpack` for js, scss and assets with
-`babel` for es6+ support and `dart-sass` for new features of scss support.
+Currently there are libraries included "the old fashioned way" on `base/templates/base.pug` using the &lt;script> tag pointint to a CDN. This is done to optimize page load time since the users might have already a copy from the CDN. 
+
+The second way to include a library is to use Webpack and NPM. First, install the library with `npm install` and import it with `import` in the assets file. The entry point is assets/js/index.js. Note that the same javascript is executed on all pages, since it's a single bundle. So, to implement different behaviors, use "components" like if it was React: for example every input that validate rut, requires the class "rut" that is searched with jQuery. If there is a behavior unique to a page, use a unique id.
 
 ### Select2
 
@@ -107,6 +336,7 @@ the update information, you have to add it to LOG_SENSITIVE_FIELDS in settings. 
 want to ignore a field, you can add it to LOG_IGNORE_FIELDS in settings.
 
 The project doesn't log any action made through automatic tasks.
+
 ## Deployment
 
 Deployment is automated with Ansible, which is installed by quickstart. Add your servers to `ansible/inventory.yaml` and deploy with:

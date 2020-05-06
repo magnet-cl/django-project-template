@@ -3,8 +3,6 @@ extends base
 
 block javascripts
 
-block uncompressible_javascripts
-
 block stylesheets
 
 block title
@@ -46,10 +44,15 @@ block content
             .col-sm-6.text-right
               .btn-group
                 block buttons
-                  button.btn.btn-primary.js-submit-button(type="submit")
-                    | {% block submit_button_value%}Guardar{% endblock%}
+                  input.btn.btn-primary.js-submit-button(
+                    name='submit',
+                    type="button",
+                    value="{% block submit_button_value%}1{% endblock%}"
+                  )
+                    | {% block submit_button_text%} {% trans 'Save' %}{% endblock%}
                   a.btn.btn-danger.js-cancel-btn(
-                    href="{% block cancel_button_url %}{{cancel_url}}{% endblock %}")
-                    | {% block cancel_button_value%}Cancelar{% endblock%}
+                    href="{% block cancel_button_url %}{{cancel_url}}{% endblock %}"
+                  )
+                    | {% block cancel_button_text%}{% trans 'Cancel' %}{% endblock%}
 
   block content_footer
