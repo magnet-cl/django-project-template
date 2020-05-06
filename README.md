@@ -63,12 +63,14 @@ The app template assumes your app name is a plural, the model_name parameter is 
 
 ### BaseModel
 
-Every model has to inherit from the class BaseModel. This allows that every model has the fields _created_at_ and _updated_at_ and methods like _to_json_ and _to_dict_.
+Every model has to inherit from the class BaseModel. This allows that every
+model has the fields `created_at` and `updated_at` and methods like `to_json`
+and `to_dict`.
 
 ### OrderableModel
 
-This model inherits from BaseModel. It adds the _display_order_ field to allow
-customizable ordering. Change the __display_order_  method to change the logic of how a new object is arranged.
+This model inherits from BaseModel. It adds the `display_order` field to allow
+customizable ordering. Change the `set_display_order_` method to change the logic of how a new object is arranged.
 
 ## Forms
 
@@ -131,7 +133,7 @@ Redirects to a given url. Inherits from
 
 ### BaseUpdateRedirectView
 
-Redirects to a given url after calling the method _do_action_. Useful when processing something and then redirecting to show the result. Inherits from BaseRedirectView
+Redirects to a given url after calling the method `do_action`. Useful when processing something and then redirecting to show the result. Inherits from BaseRedirectView
 
 
 ### StatusView
