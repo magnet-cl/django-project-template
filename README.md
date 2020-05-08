@@ -1,6 +1,6 @@
 # Django Project Template (DPT)
 
-A project template for Django 2.2 in Python 3. This project tries to solve problems or features that commonly appear on Magnet projects. The idea is that you start your project using this code as the base. 
+A project template for Django 2.2 in Python 3. This project tries to solve problems or features that commonly appear on Magnet projects. The idea is that you start your project using this code as the base.
 
 Master: [![CircleCI](https://circleci.com/gh/magnet-cl/django-project-template.svg?style=svg)](https://circleci.com/gh/magnet-cl/django-project-template)
 Development: [![CircleCI](https://circleci.com/gh/magnet-cl/django-project-template/tree/development.svg?style=svg)](https://circleci.com/gh/magnet-cl/django-project-template/tree/development)
@@ -117,7 +117,7 @@ Renders a form to create a single object for a given model. Inherits from [Creat
 
 ### BaseUpdateView
 
-Renders a form to update a single object of a given model. Inherits from  [UpdateView](https://docs.djangoproject.com/en/3.0/ref/class-based-views/generic-editing/#updateview). 
+Renders a form to update a single object of a given model. Inherits from  [UpdateView](https://docs.djangoproject.com/en/3.0/ref/class-based-views/generic-editing/#updateview).
 
 
 ### BaseDeleteView
@@ -162,7 +162,7 @@ App with the list for regions and communes of Chile. Both models are populated b
 
 ### Parameters
 
-App to set application wide parameters in the admin. 
+App to set application wide parameters in the admin.
 
 The parameters are stored in the `Parameter` model and can be retrieved with
 `Parameter.value_for(param_name)`. Using this method is recommended since it
@@ -188,7 +188,7 @@ Comments are done with  `//-`. If you require HTML comments (visible to final us
 
 
 ### Base template: base.pug
-All view templates should extend base.pug, this renders the layout with a navbar and the footer. This templates has the following blocks: 
+All view templates should extend base.pug, this renders the layout with a navbar and the footer. This templates has the following blocks:
 
  1. title: Set the content of the title meta tag. By default is set to the `title` variable.
  2. stylesheets: A place to put stylesheets for the given template. By default is empty. Be careful to use this block, it should only be used when the webpack-compiled styles are not enough for some reason.
@@ -206,15 +206,15 @@ The footer template is included base.pug and it can be found in `base/templates/
 
 ### Forms
 
-Forms should extend from form.pug (which in turns extends base.pug). 
+Forms should extend from form.pug (which in turns extends base.pug).
 
-This templates has the following blocks: 
+This templates has the following blocks:
 
  - content_header: A place to put content before the form.
- - top_fields: A place content before the first field defined in the `form` variable. 
- - form_fields:  The place that renders the content of the `form` variable. 
+ - top_fields: A place content before the first field defined in the `form` variable.
+ - form_fields:  The place that renders the content of the `form` variable.
  - bottom_fields: A place content after the last field defined in the `form` variable.
- - buttons: The place to put the form buttons. 
+ - buttons: The place to put the form buttons.
  - submit_button_value: The value of the submit button.
  - submit_button_text: The text of the submit button.
  - cancel_button_url: The url to send the user if the button cancel is pressed. By default is {{cancel_url}}
@@ -237,7 +237,7 @@ Base class that all tests clases should inherit from. This class inherits from D
 
 ## Settings - Local Settings
 
-Since this is a project template, the project folder created by django-admin can't be named after the project itself, that is why it has the generic name `project`. 
+Since this is a project template, the project folder created by django-admin can't be named after the project itself, that is why it has the generic name `project`.
 Within this folder, we can find the `settings.py` file, a typical settings file from Django that also include the following settings>
 
 * Configuration for  Google Analytics y reCAPTCHA
@@ -249,13 +249,21 @@ Within this folder, we can find the `settings.py` file, a typical settings file 
 * Only add debug_toolbar to the INSTALLED_APPS list when debug is True
 * Only enable  BrowsableAPIRenderer when debug is True
 
-There are some settings that are not versioned, to that effect we use a not-versioned file (`project/local_settings.py`)  that you have to create. The database configuration, third party service passwords, credentials, etc are placed in this file. 
+There are some settings that are not versioned, to that effect we use a not-versioned file (`project/local_settings.py`)  that you have to create. The database configuration, third party service passwords, credentials, etc are placed in this file.
 
 This file is created by `quickstart.sh` if it does not exist by copying  `project/local_settings.py.default`.
 
-To import values from `local_settings` to `settings`, the method get_local_value is used, this allows the existence of optional settings. 
+To import values from `local_settings` to `settings`, the method get_local_value is used, this allows the existence of optional settings.
 
 ## Utils
+
+### Pipenv
+
+We use [Pipenv](https://github.com/pypa/pipenv) to manage Python dependencies.
+
+Instead of running (for example) `pip install localflavor`, use `pipenv install localflavor==1.8`, locking to the version you want (usually the latest, which you can check on [PyPI](https://pypi.org/project/localflavor/#history)).
+
+We set versions to avoid "bugfix" releases breaking our apps. One exception is Django, whose version is specified with `~=` instead of `==`, because its security releases are critical and tend to be done with care.
 
 ### Scripts
 
@@ -285,7 +293,7 @@ To generate production bundle run:
 
 ### Libraries
 
-Currently there are libraries included "the old fashioned way" on `base/templates/base.pug` using the &lt;script> tag pointint to a CDN. This is done to optimize page load time since the users might have already a copy from the CDN. 
+Currently there are libraries included "the old fashioned way" on `base/templates/base.pug` using the &lt;script> tag pointint to a CDN. This is done to optimize page load time since the users might have already a copy from the CDN.
 
 The second way to include a library is to use Webpack and NPM. First, install the library with `npm install` and import it with `import` in the assets file. The entry point is assets/js/index.js. Note that the same javascript is executed on all pages, since it's a single bundle. So, to implement different behaviors, use "components" like if it was React: for example every input that validate rut, requires the class "rut" that is searched with jQuery. If there is a behavior unique to a page, use a unique id.
 
