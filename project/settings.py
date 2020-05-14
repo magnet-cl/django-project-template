@@ -101,17 +101,18 @@ INSTALLED_APPS = [
 
     # required apps
     'base.apps.BaseConfig',
-    'users',
+    'users.apps.UsersConfig',
 
     # external
     'captcha',
     'loginas',
     'rest_framework',
     'webpack_loader',
+    'django_db_logger',
 
     # internal
-    'regions',
-    'parameters',
+    'regions.apps.RegionsConfig',
+    'parameters.apps.ParametersConfig',
 ]
 
 # Email settings, uncomment if your project sends emails
@@ -325,10 +326,14 @@ LOGGING = {
             'formatter': 'standard',
             'level': 'ERROR',
         },
+        'db_log': {
+            'level': 'DEBUG',
+            'class': 'django_db_logger.db_log_handler.DatabaseLogHandler'
+        },
     },
     'loggers': {
         'django.request': {
-            'handlers': ['mail_admins', 'file'],
+            'handlers': ['mail_admins', 'file', 'db_log'],
             'level': 'ERROR',
             'propagate': True,
         },
