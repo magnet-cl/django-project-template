@@ -25,6 +25,25 @@
     path: /home/{{ ansible_user }}/logs
     state: directory
 
+- name: check if app uses django-cron
+  django_manage:
+    command: shell -c "from django.conf import settings; print('django_cron' in settings.INSTALLED_APPS)"
+    app_path: "{{ server_root_dir }}"
+    virtualenv: "{{ venv.stdout }}"
+  register: django_cron_installed
+
+- name: setup django-cron
+  cron:
+    name: "{{ project_name }}-cron"
+    minute: "*"
+    hour: "*"
+    day: "*"
+    month: "*"
+    weekday: "*"
+    user: "{{ ansible_user }}"
+    job: cd ~/{{ project_name }} && /usr/local/bin/pipenv run ./manage.py runcrons >> ~/cronjob.log
+    state: "{{ 'present' if django_cron_installed.out == 'True\n' else 'absent' }}"
+
 - name: create gunicorn configuration file
   template:
     src: gunicorn_conf.py.j2
