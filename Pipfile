@@ -17,14 +17,14 @@ pypugjs = "==5.8.1"
 pytz = "==2020.1"
 python-memcached = "==1.59"
 gunicorn = "==19.9.0"
-"psycopg2-binary" = "==2.8.3"
 djangorestframework = "==3.9.1"
 djangorestframework-camel-case = "==1.1.2"
 django-webpack-loader = "==0.7.0"
 ipdb = "==0.13.2"
+psycopg2-binary = "==2.8.5"
 
 [dev-packages]
 flake8 = "*"
 
 [requires]
-python_version = "3.6"
+python_version = "3.8"

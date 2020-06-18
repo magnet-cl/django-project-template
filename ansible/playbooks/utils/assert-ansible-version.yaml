@@ -1,6 +1,6 @@
 - name: check Ansible version
   assert:
-    that: ansible_version.full is version('2.8', '>=')
-    fail_msg: This playbook requires Ansible 2.8 or higher (current version is {{ ansible_version.full }})
+    that: ansible_version.full is version('2.9.9', '>=')
+    fail_msg: This playbook requires Ansible 2.9.9 or higher (current version is {{ ansible_version.full }})
     quiet: yes
   run_once: yes

@@ -23,7 +23,7 @@
 
         - name: install and setup Postgres with role
           include_role:
-            name: geerlingguy.postgresql.pr31
+            name: geerlingguy.postgresql
             apply:
               become: true
           vars:

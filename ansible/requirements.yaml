@@ -5,9 +5,9 @@
   src: https://github.com/geerlingguy/ansible-role-nodejs
   version: 405a113ccbde0c99614f6f815fb4285cb742ad25
 
-- name: geerlingguy.postgresql.pr31
-  src: https://github.com/magnet-cl/ansible-role-postgresql
-  version: 6d91620a3c95d3bc3ae8517c78f4a667298139af
+- name: geerlingguy.postgresql
+  src: https://github.com/geerlingguy/ansible-role-postgresql
+  version: 15bf1109187fbd6f6f3ab37220ceeeba9a86b72c
 
 - name: geerlingguy.nginx.magnet-fork
   src: https://github.com/magnet-cl/ansible-role-nginx

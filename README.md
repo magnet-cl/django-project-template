@@ -29,7 +29,7 @@ Remove the `LICENSE` if your new project does not have an MIT license.
 ## Dependencies
 This project works with:
 
-* Python >= 3.6
+* Python >= 3.8
 * pipenv >= 11.9.0
 * Python libraries defined in Pipfile
 * Node >= 8.5
@@ -37,7 +37,7 @@ This project works with:
 * PostgreSQL >= 9.6
 
 ## Quickstart
-If you are using Ubuntu 16.04/18.04 `quickstart.sh` installs all
+If you are using Ubuntu 16.04/18.04/20.04 `quickstart.sh` installs all
 dependencies of the project. It assumes you have Node and npm installed.
 
 * `./quickstart.sh`

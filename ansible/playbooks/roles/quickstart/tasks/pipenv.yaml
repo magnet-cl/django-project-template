@@ -52,7 +52,7 @@
       tags: update
 
     - name: create virtualenv with Pipenv
-      command: pipenv --python 3.6
+      command: pipenv --python 3.8
       args:
         chdir: "{{ server_root_dir }}"
       when: no_venv_message in venv.stderr
