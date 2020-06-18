@@ -23,9 +23,11 @@ jobs:
 
       - run:
           name: install python packages
-          command: |
-            pipenv --python 3.8
-            pipenv install --deploy
+          command: pipenv sync
+
+      - run:
+          name: check if Pipfile.lock is outdated
+          command: pipenv update --outdated
 
       - save_cache:
           key: cache-{{ checksum "Pipfile.lock" }}
