@@ -49,7 +49,10 @@ jobs:
           name: Wait for db
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
 
-      # run tests!
+      - run:
+          name: check if model changes are missing migrations
+          command: pipenv run python manage.py makemigrations --check --dry-run
+
       - run:
           name: run tests
           command: pipenv run python manage.py test
