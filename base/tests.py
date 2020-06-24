@@ -84,7 +84,7 @@ class UrlsTest(BaseTestCase):
             method_name = 'create_{}'.format(model_name)
 
             # store the created object
-            obj = getattr(self, method_name)(self.get_obj_kwargs(model))
+            obj = getattr(self, method_name)(**self.get_obj_kwargs(model))
             self.default_objects[model_name] = obj
 
             self.assertIsNotNone(obj, '{} returns None'.format(method_name))
