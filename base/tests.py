@@ -84,7 +84,7 @@ class UrlsTest(BaseTestCase):
             method_name = 'create_{}'.format(model_name)
 
             # store the created object
-            obj = getattr(self, method_name)()
+            obj = getattr(self, method_name)(**self.get_obj_kwargs(model))
             self.default_objects[model_name] = obj
 
             self.assertIsNotNone(obj, '{} returns None'.format(method_name))
@@ -94,15 +94,33 @@ class UrlsTest(BaseTestCase):
             param_name = '{}_id'.format(model_name)
             self.default_params[param_name] = obj.id
 
+    def get_obj_kwargs(self, model):
+        """
+        When testing all urls, there are business logic that require certain
+        values on the objects we are creating. This method returns a kwrags
+        diciontary to be passed to the create_X method that creaates an
+        instance of model.
+
+        For example, imagine that APP has the url /message/1/
+        It is reasonable that the view will return 404 if the logged in user
+        has no nothing to do with.
+        This method will be called when creating the test objects to be used
+        on the UrlsTest, in our example a solution would be to return a
+        dictionary where the user is the logged in user
+        return {"user": self.user}
+        """
+        return {}
+
     def get_url_using_param_names(self, url_pattern, namespace):
         """
-        Using the dictionary of parameters defined on self.default_params and the
-        list of objects defined on self.default_objects, construct urls with valid
-        parameters.
+        Using the dictionary of parameters defined on self.default_params and
+        the list of objects defined on self.default_objects, construct urls
+        with valid parameters.
 
-        This method assumes that nested urls name their parents ids as {model}_id
+        This method assumes that nested urls name their parents ids as
+        {model}_id
 
-        Thus something like the comments a user should be in the format of
+        Thus something like the comments of a user should be in the format of
 
         '/users/{user_id}/comments/'
         """
