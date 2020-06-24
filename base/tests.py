@@ -120,7 +120,7 @@ class UrlsTest(BaseTestCase):
         This method assumes that nested urls name their parents ids as
         {model}_id
 
-        Thus something like the comments a user should be in the format of
+        Thus something like the comments of a user should be in the format of
 
         '/users/{user_id}/comments/'
         """
