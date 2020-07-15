@@ -144,6 +144,8 @@ Tests of Ansible scripts are made with [Molecule](https://molecule.readthedocs.i
 
 - `deploy`: deploys the app in the VM, and tests that the home page has no broken links. Then simulates an update to a newer commit, and checks that a DB backup was created.
 
+  If the repository is not public, copy a private SSH key that can clone it to `molecule/deploy/id_rsa`. It will be copied to the VM and must have no passphrase, so don't use your personal key. You can create a key exclusively for this purpose, or temporally use the key from a staging server.
+
 - `quickstart`: runs quickstart in the VM, and tests that Django and Webpack (in development mode) return 200. (Note: this tests with files you currently have in your repository folder, not like the other scenarios that use the Git repository)
 
 - `export`: deploys the app in two virtual machines, makes some changes to the DB and Media of the `source` instance, exports them to the `target` instance, and verifies them. Also checks the automatic DB backup of `target` before restoring the new dump.
