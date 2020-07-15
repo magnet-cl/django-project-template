@@ -62,9 +62,11 @@
             else 'DB backup failed.'
           }}
 
+        # yamllint disable rule:line-length
         hint: |
           Hint: if you are in the middle of a failed deploy, and this failed because the project is not set up yet, delete:
             {{ server_root_dir }}
+        # yamllint enable rule:line-length
 
   when:                               # Skip backup on:
     - git_result.changed              #   - no changes, or
