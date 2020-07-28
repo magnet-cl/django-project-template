@@ -1,30 +1,30 @@
-from django.urls import url
+from django.urls import path
 
 from . import views
 
 
 urlpatterns = [
-    url(
+    path(
         '',
         views.{{model_name}}ListView.as_view(),
         name='{{snake_case_model_name}}_list'
     ),
-    url(
+    path(
         'create/',
         views.{{model_name}}CreateView.as_view(),
         name='{{snake_case_model_name}}_create'
     ),
-    url(
+    path(
         '<int:pk>/',
         views.{{model_name}}DetailView.as_view(),
         name='{{snake_case_model_name}}_detail'
     ),
-    url(
+    path(
         '<int:pk>/update/',
         views.{{model_name}}UpdateView.as_view(),
         name='{{snake_case_model_name}}_update'
     ),
-    url(
+    path(
         '<int:pk>/delete/',
         views.{{model_name}}DeleteView.as_view(),
         name='{{snake_case_model_name}}_delete',
