@@ -44,9 +44,9 @@ block content
             .col-sm-6.text-right
               .btn-group
                 block buttons
-                  input.btn.btn-primary.js-submit-button(
+                  button.btn.btn-primary.js-submit-button(
                     name='submit',
-                    type="button",
+                    type="submit",
                     value="{% block submit_button_value%}1{% endblock%}"
                   )
                     | {% block submit_button_text%} {% trans 'Save' %}{% endblock%}
