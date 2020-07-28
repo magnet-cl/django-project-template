@@ -18,7 +18,7 @@ jobs:
 
       - restore_cache:
           keys:
-            - cache-{{ checksum "Pipfile.lock" }}
+            - cache-v1-{{ checksum "Pipfile.lock" }}
             - cache-
 
       - run:
@@ -30,7 +30,7 @@ jobs:
           command: pipenv update --outdated
 
       - save_cache:
-          key: cache-{{ checksum "Pipfile.lock" }}
+          key: cache-v1-{{ checksum "Pipfile.lock" }}
           paths:
             - ~/.local
             - ~/.cache
