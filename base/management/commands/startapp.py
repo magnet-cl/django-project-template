@@ -68,6 +68,7 @@ class Command(AppTemplateCommand):
 
         options['model_name'] = model_name
         options['snake_case_model_name'] = snake_case_model_name
+        options['lower_case_model_name'] = model_name.lower()
         options['model_verbose_name'] = snake_case_model_name.replace('_', ' ')
         options['plural_model_verbose_name'] = pluralize(
             options['model_verbose_name']

@@ -7,26 +7,26 @@ urlpatterns = [
     path(
         '',
         views.{{model_name}}ListView.as_view(),
-        name='{{snake_case_model_name}}_list'
+        name='{{lower_case_model_name}}_list'
     ),
     path(
         'create/',
         views.{{model_name}}CreateView.as_view(),
-        name='{{snake_case_model_name}}_create'
+        name='{{lower_case_model_name}}_create'
     ),
     path(
         '<int:pk>/',
         views.{{model_name}}DetailView.as_view(),
-        name='{{snake_case_model_name}}_detail'
+        name='{{lower_case_model_name}}_detail'
     ),
     path(
         '<int:pk>/update/',
         views.{{model_name}}UpdateView.as_view(),
-        name='{{snake_case_model_name}}_update'
+        name='{{lower_case_model_name}}_update'
     ),
     path(
         '<int:pk>/delete/',
         views.{{model_name}}DeleteView.as_view(),
-        name='{{snake_case_model_name}}_delete',
+        name='{{lower_case_model_name}}_delete',
     ),
 ]

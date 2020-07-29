@@ -4,7 +4,7 @@ extends base.pug
 
 block breadcrumbs
   li.breadcrumb-item
-    a(href="{% templatetag openblock %} url '{{snake_case_model_name}}_list' {% templatetag closeblock %}")
+    a(href="{% templatetag openblock %} url '{{lower_case_model_name}}_list' {% templatetag closeblock %}")
       | {% templatetag openvariable %}opts.verbose_name_plural|capfirst{% templatetag closevariable %}
   li.breadcrumb-item
     a(href="{% templatetag openvariable %}object.get_absolute_url{% templatetag closevariable %}")
@@ -18,6 +18,6 @@ block content
       {% templatetag openblock %} blocktrans {% templatetag closeblock %}Are you sure you want to delete "{% templatetag openvariable %} object {% templatetag closevariable %}"?{% templatetag openblock %} endblocktrans {% templatetag closeblock %}
     .text-right
       .btn-group
-        input.btn.btn-outline-secondary(type="submit" value="{% templatetag openblock %} trans 'Confirm' {% templatetag closeblock %}")
-        a.btn.btn-default(href="{% templatetag openvariable %}object.get_absolute_url{% templatetag closevariable %}")
+        input.btn.btn-danger(type="submit" value="{% templatetag openblock %} trans 'Confirm' {% templatetag closeblock %}")
+        a.btn.btn-outline-secondary(href="{% templatetag openvariable %}object.get_absolute_url{% templatetag closevariable %}")
           | {% templatetag openblock %} trans 'Cancel' {% templatetag closeblock %}

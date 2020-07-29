@@ -3,18 +3,18 @@ extends base.pug
 - load i18n
 
 block options
-  if perms.{{app_name}}.change_{{snake_case_model_name}}
-    a.btn.btn-sm.btn-outline-secondary(href="{% templatetag openblock %} url '{{snake_case_model_name}}_update' {{snake_case_model_name}}.id {% templatetag closeblock %}")
+  if perms.{{app_name}}.change_{{lower_case_model_name}}
+    a.btn.btn-sm.btn-outline-secondary(href="{% templatetag openblock %} url '{{lower_case_model_name}}_update' {{lower_case_model_name}}.id {% templatetag closeblock %}")
       {% templatetag openblock %} trans 'Update {{model_verbose_name}}' {% templatetag closeblock %}
       i.fa.fa-edit
-  if perms.{{app_name}}.delete_{{snake_case_model_name}}
-    a.btn.btn-sm.btn-danger(href="{% templatetag openblock %} url '{{snake_case_model_name}}_delete' {{snake_case_model_name}}.id {% templatetag closeblock %}")
+  if perms.{{app_name}}.delete_{{lower_case_model_name}}
+    a.btn.btn-sm.btn-danger(href="{% templatetag openblock %} url '{{lower_case_model_name}}_delete' {{lower_case_model_name}}.id {% templatetag closeblock %}")
       {% templatetag openblock %} trans 'Delete {{model_verbose_name}}' {% templatetag closeblock %}
       i.fa.fa-times
 
 block breadcrumbs
   li.breadcrumb-item
-    a(href="{% templatetag openblock %} url '{{snake_case_model_name}}_list' {% templatetag closeblock %}")
+    a(href="{% templatetag openblock %} url '{{lower_case_model_name}}_list' {% templatetag closeblock %}")
       | {% templatetag openvariable %}opts.verbose_name_plural|capfirst{% templatetag closevariable %}
 
 block content
@@ -22,4 +22,4 @@ block content
     tbody
       tr
         th Id
-        td {% templatetag openvariable %}{{snake_case_model_name}}.id{% templatetag closevariable %}
+        td {% templatetag openvariable %}{{lower_case_model_name}}.id{% templatetag closevariable %}
