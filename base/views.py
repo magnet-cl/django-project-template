@@ -101,7 +101,7 @@ class LoginPermissionRequiredMixin(AccessMixin):
 
 class BaseDetailView(LoginPermissionRequiredMixin, DetailView):
     login_required = True
-    permission_required = ''
+    permission_required = ()
 
     def get_title(self):
         verbose_name = self.model._meta.verbose_name
@@ -118,10 +118,16 @@ class BaseDetailView(LoginPermissionRequiredMixin, DetailView):
 
 class BaseCreateView(LoginPermissionRequiredMixin, CreateView):
     login_required = True
-    permission_required = ''
+    permission_required = ()
+
+    next_url = None
 
     def get_context_data(self, **kwargs):
         context = super(BaseCreateView, self).get_context_data(**kwargs)
+
+        self.next_url = self.request.GET.get('next')
+
+        context['next'] = self.next_url
 
         verbose_name = self.model._meta.verbose_name
         context['opts'] = self.model._meta
@@ -131,8 +137,18 @@ class BaseCreateView(LoginPermissionRequiredMixin, CreateView):
         return context
 
     def get_cancel_url(self):
+        if self.next_url:
+            return self.next_url
+
         model_name = self.model.__name__.lower()
         return reverse('{}_list'.format(model_name))
+
+    def get_success_url(self):
+        next_url = self.request.POST.get('next')
+        if next_url:
+            return next_url
+
+        return super().get_success_url()
 
 
 class BaseSubModelCreateView(LoginPermissionRequiredMixin, CreateView):
@@ -140,7 +156,7 @@ class BaseSubModelCreateView(LoginPermissionRequiredMixin, CreateView):
     Create view when the object is nested within a parent object
     """
     login_required = True
-    permission_required = ''
+    permission_required = ()
 
     def get_form_kwargs(self):
         model_underscore_name = underscore(self.parent_model.__name__)
@@ -174,7 +190,7 @@ class BaseSubModelCreateView(LoginPermissionRequiredMixin, CreateView):
 
 class BaseListView(LoginPermissionRequiredMixin, ListView):
     login_required = True
-    permission_required = ''
+    permission_required = ()
     paginate_by = 25
     page_kwarg = 'p'
     ignore_kwargs_on_filter = ('q', page_kwarg, 'o')
@@ -225,7 +241,7 @@ class BaseListView(LoginPermissionRequiredMixin, ListView):
 
 class BaseTemplateView(LoginPermissionRequiredMixin, TemplateView):
     login_required = True
-    permission_required = ''
+    permission_required = ()
 
     def get_context_data(self, **kwargs):
         context = super(BaseTemplateView, self).get_context_data(**kwargs)
@@ -237,10 +253,15 @@ class BaseTemplateView(LoginPermissionRequiredMixin, TemplateView):
 
 class BaseUpdateView(LoginPermissionRequiredMixin, UpdateView):
     login_required = True
-    permission_required = ''
+    permission_required = ()
+    next_url = None
 
     def get_context_data(self, **kwargs):
         context = super(BaseUpdateView, self).get_context_data(**kwargs)
+
+        self.next_url = self.request.GET.get('next')
+
+        context['next'] = self.next_url
 
         context['opts'] = self.model._meta
         context['cancel_url'] = self.get_cancel_url()
@@ -249,15 +270,30 @@ class BaseUpdateView(LoginPermissionRequiredMixin, UpdateView):
         return context
 
     def get_cancel_url(self):
+        if self.next_url:
+            return self.next_url
+
         return self.object.get_absolute_url()
+
+    def get_success_url(self):
+        next_url = self.request.POST.get('next')
+        if next_url:
+            return self.next_url
+
+        return super().get_success_url()
 
 
 class BaseDeleteView(LoginPermissionRequiredMixin, DeleteView):
     login_required = True
-    permission_required = ''
+    permission_required = ()
+    next_url = None
 
     def get_context_data(self, **kwargs):
         context = super(BaseDeleteView, self).get_context_data(**kwargs)
+
+        self.next_url = self.request.GET.get('next')
+
+        context['next'] = self.next_url
 
         context['opts'] = self.model._meta
         context['title'] = _('Delete %s') % str(self.object)
@@ -265,19 +301,23 @@ class BaseDeleteView(LoginPermissionRequiredMixin, DeleteView):
         return context
 
     def get_success_url(self):
+        next_url = self.request.POST.get('next')
+        if next_url:
+            return next_url
+
         model_name = self.model.__name__.lower()
         return reverse('{}_list'.format(model_name))
 
 
 class BaseRedirectView(LoginPermissionRequiredMixin, RedirectView):
     login_required = True
-    permission_required = ''
+    permission_required = ()
 
 
 class BaseUpdateRedirectView(LoginPermissionRequiredMixin, SingleObjectMixin,
                              RedirectView):
     login_required = True
-    permission_required = ''
+    permission_required = ()
 
     permanent = False
 
