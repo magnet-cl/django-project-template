@@ -49,7 +49,7 @@ def reverse_pattern(pattern, namespace, args=None, kwargs=None):
     try:
         if namespace:
             return reverse('{}:{}'.format(
-                namespace, pattern.name, args=args, kwargs=kwargs)
+                namespace, pattern.name)
             )
         else:
             return reverse(pattern.name, args=args, kwargs=kwargs)
@@ -152,7 +152,7 @@ class UrlsTest(BaseTestCase):
             # assume it should be used on the url, since many views
             # filter nested objects
             for param in params:
-                if hasattr(obj, param):
+                if hasattr(obj, param) and getattr(obj, param):
                     params[param] = getattr(obj, param)
 
         return reverse_pattern(url_pattern, namespace, kwargs=params)
