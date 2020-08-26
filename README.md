@@ -295,7 +295,13 @@ To generate production bundle run:
 
 Currently there are libraries included "the old fashioned way" on `base/templates/base.pug` using the &lt;script> tag pointint to a CDN. This is done to optimize page load time since the users might have already a copy from the CDN.
 
-The second way to include a library is to use Webpack and NPM. First, install the library with `npm install` and import it with `import` in the assets file. The entry point is assets/js/index.js. Note that the same javascript is executed on all pages, since it's a single bundle. So, to implement different behaviors, use "components" like if it was React: for example every input that validate rut, requires the class "rut" that is searched with jQuery. If there is a behavior unique to a page, use a unique id.
+The second way to include a library is to use Webpack and NPM. First, install
+the library with `npm install` and import it with `import` in the assets file.
+The entry point is assets/js/index.js. Note that the same javascript is 
+executed on all pages, since it's a single bundle. So, to implement different 
+behaviors, use "components" like if it was React: for example every input that 
+validate rut, requires the class "rut" that is searched with jQuery.
+If there is a behavior unique to a page, use a unique id.
 
 ### Select2
 
@@ -333,6 +339,9 @@ on wait
 * App.utils.thousandSeparator(): for a given number in text, returns the text
 with thoushand separators (for spanish)
 on wait
+
+### font-awesome
+By default the site has a free font awesome 5 kit that uses web fonts.
 
 ### Logging Database Entries
 
