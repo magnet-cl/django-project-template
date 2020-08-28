@@ -278,7 +278,7 @@ class BaseUpdateView(LoginPermissionRequiredMixin, UpdateView):
     def get_success_url(self):
         next_url = self.request.POST.get('next')
         if next_url:
-            return self.next_url
+            return next_url
 
         return super().get_success_url()
 
