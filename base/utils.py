@@ -8,6 +8,8 @@ import random
 import re
 import string
 import unicodedata
+import datetime
+import pytz
 
 # django
 from django.apps import apps
@@ -107,3 +109,34 @@ def get_our_models():
 def can_loginas(request, target_user):
     """ This will only allow admins to log in as other users """
     return request.user.is_superuser and not target_user.is_superuser
+
+
+def date_to_datetime(date):
+    tz = timezone.get_default_timezone()
+
+    try:
+        r_datetime = timezone.make_aware(
+            datetime.datetime.combine(
+                date,
+                datetime.datetime.min.time()),
+            tz
+        )
+    except pytz.NonExistentTimeError:
+        r_datetime = timezone.make_aware(
+            datetime.datetime.combine(
+                date,
+                datetime.datetime.min.time()
+            ) + datetime.timedelta(hours=1),
+            tz
+        )
+
+    except pytz.AmbiguousTimeError:
+        r_datetime = timezone.make_aware(
+            datetime.datetime.combine(
+                date,
+                datetime.datetime.min.time()
+            ) - datetime.timedelta(hours=1),
+            tz
+        )
+
+    return r_datetime
