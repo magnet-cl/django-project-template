@@ -1,3 +1,5 @@
+if not form.next
+  input(type='hidden', name='next', value='{{ next|default:'' }}')
 {% csrf_token %}
 - if form.fieldsets
   - for fieldset in form.fieldsets
