@@ -257,6 +257,10 @@ To import values from `local_settings` to `settings`, the method get_local_value
 
 ## Utils
 
+### date_to_datetime
+
+method that transforms a date into datetime taking into consideration ambiguous or non-existent datetimes due to time changes
+
 ### Pipenv
 
 We use [Pipenv](https://github.com/pypa/pipenv) to manage Python dependencies.
@@ -297,9 +301,9 @@ Currently there are libraries included "the old fashioned way" on `base/template
 
 The second way to include a library is to use Webpack and NPM. First, install
 the library with `npm install` and import it with `import` in the assets file.
-The entry point is assets/js/index.js. Note that the same javascript is 
-executed on all pages, since it's a single bundle. So, to implement different 
-behaviors, use "components" like if it was React: for example every input that 
+The entry point is assets/js/index.js. Note that the same javascript is
+executed on all pages, since it's a single bundle. So, to implement different
+behaviors, use "components" like if it was React: for example every input that
 validate rut, requires the class "rut" that is searched with jQuery.
 If there is a behavior unique to a page, use a unique id.
 
