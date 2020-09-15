@@ -257,10 +257,6 @@ To import values from `local_settings` to `settings`, the method get_local_value
 
 ## Utils
 
-### date_to_datetime
-
-method that transforms a date into datetime taking into consideration ambiguous or non-existent datetimes due to time changes
-
 ### Pipenv
 
 We use [Pipenv](https://github.com/pypa/pipenv) to manage Python dependencies.
@@ -281,6 +277,8 @@ The script reset.sh is used to delete the local database on your computer and cr
 If you need to place methods that are useful to the entire application, place them in `base/utils.py` Some methods that are already included:
 
  - today: A method that returns the current date in local time (`datetime.date.today` and `timezone.now.date` return the UTC date).
+ - date_to_datetime: method that transforms a date into datetime taking into consideration ambiguous or non-existent datetimes due to time changes
+
 
 ## Assets
 
