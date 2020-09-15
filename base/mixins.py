@@ -23,7 +23,7 @@ class AuditMixin:
             user_id=user.id,
             content_type_id=ContentType.objects.get_for_model(self).id,
             object_id=self.id,
-            object_repr=force_text(self),
+            object_repr=force_text(self)[:200],
             action_flag=ACTION,
             change_message=json.dumps(message, cls=ModelEncoder)
         )
