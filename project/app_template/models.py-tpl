@@ -31,7 +31,7 @@ class {{model_name}}(BaseModel):
         unique=True,
     )
     # optional fields
-    
+
     # Manager
     objects = {{model_name}}QuerySet.as_manager()
 
