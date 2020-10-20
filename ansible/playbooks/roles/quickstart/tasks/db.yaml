@@ -1,8 +1,11 @@
-- name: set database name in local_settings
+- name: set databases name in local_settings
+  loop:
+  - { placeholder: 'database-name', database: "{{ project_name }}" }
+  - { placeholder: 'logs-database-name', database: "{{ database_for_logs }}" }
   replace:
     path: "{{ server_root_dir }}/project/local_settings.py"
-    regexp: "        'NAME': 'database-name',"
-    replace: "        'NAME': '{{ project_name }}',"
+    regexp: "        'NAME': '{{ item.placeholder }}',"
+    replace: "        'NAME': '{{ item.database }}',"
     validate: bash -c "cd {{ server_root_dir }} && pipenv run python %s"  # It returns 1 on "invalid syntax"
 
 - name: install and configure Postgres and create DB
@@ -64,9 +67,12 @@
         - dev_psql_existence.rc == 0
         - ansible_distribution == 'Ubuntu'
 
-    - name: create database
+    - name: create databases
+      loop:
+        - "{{ project_name }}"
+        - "{{ database_for_logs }}"
       postgresql_db:
-        name: "{{ project_name }}"
+        name: "{{ item }}"
         state: present
         login_user: "{{ ansible_user_id }}"
 
@@ -82,9 +88,26 @@
   changed_when: "' already exists' not in (osx_createdb.stderr | default(''))"
   when: ansible_distribution == 'MacOSX'
 
+  name: create logs database with a hack on OSX
+  command: createdb {{ database_for_logs }}
+  register: osx_createdb
+  failed_when:
+    - osx_createdb is failed
+    - "' already exists' not in (osx_createdb.stderr | default(''))"
+  changed_when: "' already exists' not in (osx_createdb.stderr | default(''))"
+  when: ansible_distribution == 'MacOSX'
+
 - name: run migrations
   django_manage:
     command: migrate
+    app_path: "{{ server_root_dir }}"
+    virtualenv: "{{ venv.stdout }}"
+  tags: update
+
+- name: run logs migrations
+  django_manage:
+    command: migrate
+    database: logs
     app_path: "{{ server_root_dir }}"
     virtualenv: "{{ venv.stdout }}"
   tags: update

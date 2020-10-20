@@ -242,6 +242,7 @@ class DatabaseByAppRouterTest(BaseTestCase):
     def test_validate_database_by_app_router(self):
         database_by_app = DatabaseByAppRouter()
 
+        # custom methods
         self.assertEqual(
             database_by_app.get_database_name(
                 app_label=self.user._meta.app_label,

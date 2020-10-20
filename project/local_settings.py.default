@@ -13,6 +13,14 @@ LOCAL_DATABASES = {
         'PASSWORD': '',
         'HOST': '',
         'PORT': '',
+    },
+    'logs': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'logs-database-name',
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT': '',
     }
 }
 
