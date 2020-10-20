@@ -11,13 +11,13 @@ LOCAL_DATABASES = {
         'HOST': 'localhost',
         'PORT': '5432',
     },
-    'logs': {
+     'logs': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'logs-database-name',
-        'USER': '',
+        'NAME': 'circle_test_logs',
+        'USER': 'circleci',
         'PASSWORD': '',
-        'HOST': '',
-        'PORT': '',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
