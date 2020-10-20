@@ -277,6 +277,8 @@ The script reset.sh is used to delete the local database on your computer and cr
 If you need to place methods that are useful to the entire application, place them in `base/utils.py` Some methods that are already included:
 
  - today: A method that returns the current date in local time (`datetime.date.today` and `timezone.now.date` return the UTC date).
+ - date_to_datetime: method that transforms a date into datetime taking into consideration ambiguous or non-existent datetimes due to time changes
+
 
 ## Assets
 
@@ -297,9 +299,9 @@ Currently there are libraries included "the old fashioned way" on `base/template
 
 The second way to include a library is to use Webpack and NPM. First, install
 the library with `npm install` and import it with `import` in the assets file.
-The entry point is assets/js/index.js. Note that the same javascript is 
-executed on all pages, since it's a single bundle. So, to implement different 
-behaviors, use "components" like if it was React: for example every input that 
+The entry point is assets/js/index.js. Note that the same javascript is
+executed on all pages, since it's a single bundle. So, to implement different
+behaviors, use "components" like if it was React: for example every input that
 validate rut, requires the class "rut" that is searched with jQuery.
 If there is a behavior unique to a page, use a unique id.
 
