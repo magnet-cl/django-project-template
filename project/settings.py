@@ -206,6 +206,14 @@ WSGI_APPLICATION = 'project.wsgi.application'
 DATABASES = {}
 DATABASES.update(LOCAL_DATABASES)
 
+DATABASE_ROUTERS = ('project.routers.DatabaseByAppRouter',)
+
+DATABASE_BY_APPS = {
+    'logs': [
+        'django_db_logger',
+    ],
+}
+
 # The email backend to use. For possible shortcuts see django.core.mail.
 # The default is to use the SMTP backend.
 # Third-party backends can be specified by providing a Python path

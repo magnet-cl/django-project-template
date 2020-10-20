@@ -26,8 +26,11 @@ from base.utils import get_our_models
 from base.utils import random_string
 from base.mockups import Mockup
 
+from project.routers import DatabaseByAppRouter
+
 
 class BaseTestCase(TestCase, Mockup):
+    multi_db = True
 
     def setUp(self):
         super(BaseTestCase, self).setUp()
@@ -232,3 +235,57 @@ class CronTests(BaseTestCase):
         cron_class_names = getattr(settings, 'CRON_CLASSES', [])
         for cron_class_name in cron_class_names:
             assert get_class(cron_class_name)
+
+
+class DatabaseByAppRouterTest(BaseTestCase):
+
+    def test_validate_database_by_app_router(self):
+        database_by_app = DatabaseByAppRouter()
+
+        self.assertEqual(
+            database_by_app.get_database_name(
+                app_label=self.user._meta.app_label,
+                model_name=self.user._meta.model_name
+            ),
+            database_by_app.DEFAULT_DATABASE
+        )
+        self.assertEqual(
+            database_by_app.get_database_name_from_model(
+                model=self.user._meta.model
+            ),
+            database_by_app.DEFAULT_DATABASE
+        )
+
+        # django methods
+        self.assertEqual(
+            database_by_app.db_for_read(
+                model=self.user._meta.model
+            ),
+            database_by_app.DEFAULT_DATABASE
+        )
+        self.assertEqual(
+            database_by_app.db_for_write(
+                model=self.user._meta.model
+            ),
+            database_by_app.DEFAULT_DATABASE
+        )
+        self.assertTrue(
+            database_by_app.allow_relation(
+                obj1=self.user,
+                obj2=self.user,
+            )
+        )
+        self.assertTrue(
+            database_by_app.allow_migrate(
+                db=database_by_app.DEFAULT_DATABASE,
+                app_label=self.user._meta.app_label,
+                model_name=self.user._meta.model_name
+            )
+        )
+        self.assertFalse(
+            database_by_app.allow_migrate(
+                db='logs',
+                app_label=self.user._meta.app_label,
+                model_name=self.user._meta.model_name
+            )
+        )
