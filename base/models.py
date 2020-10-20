@@ -72,17 +72,25 @@ class BaseModel(AuditMixin, models.Model):
         abstract = True
 
     # public methods
-    def update(self, **kwargs):
-        """ proxy method for the QuerySet: update method
+    def update(self, skip_save=False, **kwargs):
+        """
+        Set the attributes passed on kwargs on the object and store them
+        in the database
         highly recommended when you need to save just one field
 
+        if skip_save=True is passed, then the save method will be skipped
+        (this can be useful when you want to avoid signals sent on save)
         """
         kwargs['updated_at'] = timezone.now()
 
         for kw in kwargs:
             self.__setattr__(kw, kwargs[kw])
 
-        self.__class__.objects.filter(pk=self.pk).update(**kwargs)
+        if skip_save:
+            self.__class__.objects.filter(pk=self.pk).update(**kwargs)
+        else:
+            self.save(update_fields=kwargs.keys())
+
 
     def to_dict(instance, fields=None, exclude=None, include_m2m=True):
         """
