@@ -74,12 +74,14 @@ class BaseModel(AuditMixin, models.Model):
     # public methods
     def update(self, skip_save=False, **kwargs):
         """
-        Set the attributes passed on kwargs on the object and store them
-        in the database
-        highly recommended when you need to save just one field
+        This is a shortcut method, it basically sets all keyword arguments as
+        attributes on the calling object, then it stores ontly those values
+        into the database.
 
-        if skip_save=True is passed, then the save method will be skipped
-        (this can be useful when you want to avoid signals sent on save)
+        To store values into the database, this method uses the `save` method
+        with the `update_fields` parameter, but if you want to skip the save
+        method, you can pass the parameter `skip_save=True` when calling update
+        (useful when you want to avoid calling save signals).
         """
         kwargs['updated_at'] = timezone.now()
 
@@ -90,7 +92,6 @@ class BaseModel(AuditMixin, models.Model):
             self.__class__.objects.filter(pk=self.pk).update(**kwargs)
         else:
             self.save(update_fields=kwargs.keys())
-
 
     def to_dict(instance, fields=None, exclude=None, include_m2m=True):
         """

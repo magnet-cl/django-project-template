@@ -67,6 +67,17 @@ Every model has to inherit from the class BaseModel. This allows that every
 model has the fields `created_at` and `updated_at` and methods like `to_json`
 and `to_dict`.
 
+#### update
+
+  This is a shortcut method, it basically sets all keyword arguments as
+  attributes on the calling object, then it stores ontly those values into 
+  the database. 
+
+  To store values into the database, this method uses the `save` method with
+  the `update_fields` parameter, but if you want to skip the save method, you
+  can pass the parameter `skip_save=True` when calling update (useful when 
+  you want to avoid calling save signals).
+
 ### OrderableModel
 
 This model inherits from BaseModel. It adds the `display_order` field to allow
