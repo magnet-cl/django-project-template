@@ -16,7 +16,7 @@ $(() => {
   $('.model-form input:text').addClass('form-control');
 
   $('select').not('.js-not-select2').select2({
-    width: '100%'
+    theme: 'bootstrap4'
   });
 
   $('form').submit((e) => {
