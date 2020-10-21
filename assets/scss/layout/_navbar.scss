@@ -16,3 +16,7 @@ nav.navbar {
 main {
   margin-top: $navbar-min-height;
 }
+
+main.popup {
+  margin-top: 0;
+}

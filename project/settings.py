@@ -89,6 +89,7 @@ SITE_ID = 1
 # Application definition
 
 INSTALLED_APPS = [
+    # django
     'djangocms_admin_style',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -196,6 +197,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'project.wsgi.application'
 
@@ -342,7 +344,14 @@ LOGOUT_URL = reverse_lazy('loginas-logout')
 LOGINAS_LOGOUT_REDIRECT_URL = reverse_lazy('admin:index')
 
 # CACHE
-if not DEBUG:
+if DEBUG:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+            'LOCATION': '{}{}'.format(BASE_DIR, '/tmp/django_cache'),
+        }
+    }
+else:
     CACHES = {
         'default': {
             'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',

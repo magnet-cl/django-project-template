@@ -1,0 +1,16 @@
+<div class="input-group related-field">
+  <select name="{{ widget.name }}"{% include "django/forms/widgets/attrs.html" %}>{% for group_name, group_choices, group_index in widget.optgroups %}{% if group_name %}
+    <optgroup label="{{ group_name }}">{% endif %}{% for option in group_choices %}
+    {% include option.template_name with widget=option %}{% endfor %}{% if group_name %}
+    </optgroup>{% endif %}{% endfor %}
+  </select>
+  <div class="input-group-append" id="button-addon4">
+    <button class="btn btn-outline-secondary open-related-field-update-form" type="button" data-url="{{update_url}}">
+      <i class="fas fa-edit">
+    </i>
+    </button>
+    <button class="btn btn-outline-secondary open-related-field-create-form" type="button" data-url="{{create_url}}">
+      <i class="fas fa-plus"></i>
+    </button>
+  </div>
+</div>

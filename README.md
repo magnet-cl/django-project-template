@@ -80,6 +80,33 @@ Every Form has to inherit from this class. It enables fieldset support and chang
 
 If you are handling Chilean RUTs, install [Django Local Flavor](https://github.com/django/django-localflavor).
 
+
+### RelatedFieldSelect
+
+This widget can be used to render a select with edit and create related object
+buttons. To be used, it requires that the method get_related_field_select is
+called with the url names of the create and update views for the object
+
+```python
+from base.forms import BaseModelForm
+from base.forms import get_related_field_select
+
+class SiteForm(BaseModelForm):
+    """
+    An example of a form for a "Site" model that has a "user" foreign key
+    """
+
+    class Meta:
+        model = Site
+        exclude = ()
+        widgets = {
+            'user': get_related_field_select(
+                create_url_name='user_create',
+                update_url_name='user_update',
+            ),
+        }
+```
+
 ## Views
 
 Contains classes that inherit from Django generic class based views. This is

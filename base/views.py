@@ -9,6 +9,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import AccessMixin
 from django.core.exceptions import ImproperlyConfigured
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.urls import reverse
@@ -439,3 +440,15 @@ class FormsetUpdateView(FormsetViewMixin, BaseUpdateView):
         if hasattr(self, 'object'):
             kwargs.update({'instance': self.object})
         return kwargs
+
+
+class ModelFormPopupMixin:
+    def form_valid(self, form):
+        """
+        If the form is valid, save the associated model.
+        """
+        self.object = form.save()
+        return HttpResponse(
+            f'<script>opener.closeWindow({self.object.id},'
+            f'"{str(self.object)}")</script>'
+        )

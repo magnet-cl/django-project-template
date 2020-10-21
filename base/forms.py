@@ -3,6 +3,7 @@ from django import forms
 from django.forms import HiddenInput
 
 from form_utils.forms import BetterModelForm
+from django.urls import reverse
 
 setattr(
     forms.fields.Field, 'is_checkbox',
@@ -13,6 +14,25 @@ setattr(
     forms.fields.Field, 'is_file_input',
     lambda self: isinstance(self.widget, forms.FileInput)
 )
+
+
+class RelatedFieldSelect(forms.Select):
+    template_name = 'forms/widgets/related_field_select.html'
+
+    def get_context(self, name, value, attrs):
+        context = super().get_context(name, value, attrs)
+        context['create_url'] = reverse(self.create_url_name)
+        context['update_url'] = reverse(self.update_url_name, args=('__fk__',))
+        return context
+
+
+def get_related_field_select(create_url_name, update_url_name):
+    # creating class dynamically
+    return type("RelatedFieldSelect", (RelatedFieldSelect, ), {
+        # data members
+        "create_url_name": create_url_name,
+        "update_url_name": update_url_name,
+    })
 
 
 class BaseModelForm(BetterModelForm):

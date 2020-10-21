@@ -4,6 +4,7 @@ import App from './app';
 import './behaviors/status';
 import './behaviors/input-time-picker';
 import './behaviors/input-rut';
+import './behaviors/related-field';
 
 $(() => {
   $('.alert').each((i, item) => {

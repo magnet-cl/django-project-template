@@ -40,16 +40,21 @@ block content
 
       - if not hide_buttons
         div.form-group
-          div.row
-            .col-sm-6.text-right
-              .btn-group
-                block buttons
-                  button.btn.btn-primary.js-submit-button(
-                    name='submit',
-                    type="submit",
-                    value="{% block submit_button_value%}1{% endblock%}"
+          .text-right
+            .btn-group
+              block buttons
+                button.btn.btn-primary.js-submit-button(
+                  name='submit',
+                  type="submit",
+                  value="{% block submit_button_value%}1{% endblock%}"
+                )
+                  | {% block submit_button_text%} {% trans 'Save' %}{% endblock%}
+                if request.GET.popup
+                  button.btn.btn-danger.js-cancel-btn(
+                    onclick="opener.closeWindow()"
                   )
-                    | {% block submit_button_text%} {% trans 'Save' %}{% endblock%}
+                    | {% trans 'Cancel' %}
+                else
                   a.btn.btn-danger.js-cancel-btn(
                     href="{% block cancel_button_url %}{{cancel_url}}{% endblock %}"
                   )
