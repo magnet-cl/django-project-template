@@ -4,7 +4,7 @@ doctype 5
 - load staticfiles
 - load i18n static
 
-html(lang='{{ request.LANGUAGE_CODE }}')
+html(lang='{{ request.LANGUAGE_CODE|default:"es" }}')
   head
     if google_analytics_code
       // Global site tag (gtag.js) - Google Analytics
