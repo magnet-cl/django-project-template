@@ -15,6 +15,8 @@ import pytz
 from django.apps import apps
 from django.utils import timezone
 
+# base
+import base.signals
 
 def today():
     """
@@ -140,3 +142,11 @@ def date_to_datetime(date):
         )
 
     return r_datetime
+
+def get_request_user():
+    from users.models import User
+    user = base.signals.get_user()
+    if not user or not isinstance(user, User):
+        user = None
+
+    return user
