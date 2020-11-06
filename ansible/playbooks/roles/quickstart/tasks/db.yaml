@@ -56,25 +56,13 @@
     - name: Ensure PostgreSQL Python libraries are installed. (Ubuntu)
       # Copy-paste from geerlingguy
       apt:
-        name: python-psycopg2
+        name: "{{ postgresql_python_library | default('python3-psycopg2') }}"
         state: present
       become: yes
       when:
         - is_dev_machine
         - dev_psql_existence.rc == 0
         - ansible_distribution == 'Ubuntu'
-        - ansible_distribution_version != '20.04'
-
-    - name: Ensure PostgreSQL Python libraries are installed. (Ubuntu 20.04)
-      apt:
-        name: python3-psycopg2
-        state: present
-      become: yes
-      when:
-        - is_dev_machine
-        - dev_psql_existence.rc == 0
-        - ansible_distribution == 'Ubuntu'
-        - ansible_distribution_version == '20.04'
 
     - name: create database
       postgresql_db:
