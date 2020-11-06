@@ -118,7 +118,9 @@ class Parameter(BaseModel):
             cls.objects.get_or_create(
                 name=parameter_definition.name,
                 kind=parameter_definition.kind,
-                raw_value=parameter_definition.default,
+                defaults={
+                    'raw_value': parameter_definition.default,
+                }
             )
 
     @classmethod
