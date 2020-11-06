@@ -27,6 +27,10 @@ from base.utils import random_string
 from base.mockups import Mockup
 
 
+# base
+from base.middleware import RequestMiddleware
+
+
 class BaseTestCase(TestCase, Mockup):
 
     def setUp(self):
@@ -36,6 +40,11 @@ class BaseTestCase(TestCase, Mockup):
         self.user = self.create_user(self.password)
 
         self.login()
+
+    def tearDown(self, *args, **kwargs):
+        super().tearDown(*args, **kwargs)
+        thread_local = RequestMiddleware.thread_local
+        thread_local.user = None
 
     def login(self, user=None, password=None):
         if user is None:
