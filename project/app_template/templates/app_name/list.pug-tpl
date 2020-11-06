@@ -17,9 +17,7 @@ block content
       tr
         th Id
         th {% templatetag openblock %} trans 'name'|capfirst {% templatetag closeblock %}
-        if perms.{{app_name}}.change_{{model_name.lower}}
-          th
-        if perms.{{app_name}}.delete_{{model_name.lower}}
+        if perms.{{app_name}}.change_{{model_name.lower}} or perms.{{app_name}}.delete_{{model_name.lower}}
           th
     tbody
       for {{snake_case_model_name}} in object_list
@@ -30,15 +28,15 @@ block content
           td
             a(href="{% templatetag openvariable %} {{snake_case_model_name}}.get_absolute_url {% templatetag closevariable %}")
               | {% templatetag openvariable %}{{snake_case_model_name}}{% templatetag closevariable %}
-          if perms.{{app_name}}.change_{{model_name.lower}}
+          if perms.{{app_name}}.change_{{model_name.lower}} or perms.{{app_name}}.delete_{{model_name.lower}}
             td.text-right
-              a.btn.btn-outline-secondary(href="{% templatetag openblock %} url '{{lower_case_model_name}}_update' {{snake_case_model_name}}.id {% templatetag closeblock %}")
-                {% templatetag openblock %} trans 'Update {{model_verbose_name}}' {% templatetag closeblock %}
-                i.fa.fa-edit
-          if perms.{{app_name}}.delete_{{model_name.lower}}
-            td.text-right
-              a.btn.btn-danger(href="{% templatetag openblock %} url '{{lower_case_model_name}}_delete' {{snake_case_model_name}}.id {% templatetag closeblock %}")
-                {% templatetag openblock %} trans 'Delete {{model_verbose_name}}' {% templatetag closeblock %}
-                i.fa.fa-times
+              if perms.{{app_name}}.change_{{model_name.lower}}
+                a.btn.btn-sm.btn-outline-secondary(href="{% templatetag openblock %} url '{{lower_case_model_name}}_update' {{snake_case_model_name}}.id {% templatetag closeblock %}")
+                  {% templatetag openblock %} trans 'Update {{model_verbose_name}}' {% templatetag closeblock %}
+                  i.fa.fa-edit
+              if perms.{{app_name}}.delete_{{model_name.lower}}
+                a.btn.btn-sm.btn-danger(href="{% templatetag openblock %} url '{{lower_case_model_name}}_delete' {{snake_case_model_name}}.id {% templatetag closeblock %}")
+                  {% templatetag openblock %} trans 'Delete {{model_verbose_name}}' {% templatetag closeblock %}
+                  i.fa.fa-times
 
   {% templatetag openblock %} include 'includes/pagination.pug' {% templatetag closeblock %}
