@@ -368,7 +368,7 @@ inherit from BaseCronJob in base/cron.py, and should be registered under
 
 There is a class already registered: base.cron.ClearSessionsCronJob. This is a
 job that clears expired sessions from the database, everyday at 3:00 am. See the documentation [here](
-https://docs.djangoproject.com/en/3.1/topics/http/sessions/#clearing-the-session-store)).
+https://docs.djangoproject.com/en/2.2/topics/http/sessions/#clearing-the-session-store)).
 
 
 ## Deployment
