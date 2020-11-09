@@ -356,6 +356,21 @@ want to ignore a field, you can add it to LOG_IGNORE_FIELDS in settings.
 
 The project doesn't log any action made through automatic tasks.
 
+## Crons
+
+The project has a dependency installed called
+[django-cron](https://github.com/tivix/django-cron) that allows to program
+classes that can later be called using the system cron (this means that when
+app is deployed, a cron must call django-cron so your classes can be
+executed). Every cron job class that you create for your project should
+inherit from BaseCronJob in base/cron.py, and should be registered under 
+"CRON_CLASSES" in project/settings.py.
+
+There is a class already registered: base.cron.ClearSessionsCronJob. This is a
+job that clears expired sessions from the database, everyday at 3:00 am. See the documentation [here](
+https://docs.djangoproject.com/en/3.1/topics/http/sessions/#clearing-the-session-store)).
+
+
 ## Deployment
 
 Deployment is automated with Ansible, which is installed by quickstart. Add your servers to `ansible/inventory.yaml` and deploy with:
