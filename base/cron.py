@@ -17,13 +17,13 @@ class BaseCronJob(CronJobBase):
             lock.release()
 
 
-class ClearSessionsCronJoab(CronJobBase):
+class ClearSessionsCronJob(CronJobBase):
     RUN_AT_TIMES = ('03:00',)
 
     schedule = Schedule(
         run_at_times=RUN_AT_TIMES,
     )
-    code = 'base.ClearSessionsCronJoab'
+    code = 'base.ClearSessionsCronJob'
 
     def do(self):
         clearsessions.Command().handle()

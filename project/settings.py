@@ -396,5 +396,5 @@ LOG_IGNORE_FIELDS = [
 
 # django-cron
 CRON_CLASSES = [
-    'base.cron.ClearSessionsCronJoab',
+    'base.cron.ClearSessionsCronJob',
 ]
