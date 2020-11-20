@@ -42,6 +42,9 @@ def format_rut(rut):
         return ''
 
     verifier = rut[-1]
+    if type(verifier) == str:
+        verifier = verifier.lower()
+
     code = rut[0:-1][::-1]
 
     code = re.sub("(.{3})", "\\1.", code, 0, re.DOTALL)
