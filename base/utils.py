@@ -43,7 +43,7 @@ def format_rut(rut):
 
     verifier = rut[-1]
     if type(verifier) == str:
-        verifier = verifier.lower()
+        verifier = verifier.upper()
 
     code = rut[0:-1][::-1]
 
