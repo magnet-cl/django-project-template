@@ -48,10 +48,7 @@ if ! command -v ansible >/dev/null; then
     fi
 
   else    # Assume Ubuntu
-    sudo apt update
-    sudo apt install -y software-properties-common
-    sudo apt-add-repository -y ppa:ansible/ansible
-    sudo apt install -y ansible
+    sudo -H pip3 install ansible
   fi
 fi
 # Improvement: upgrade if version is too old
