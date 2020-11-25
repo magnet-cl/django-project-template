@@ -19,11 +19,11 @@ ipython = "==7.6.1"
 pypugjs = "==5.8.1"
 pytz = "==2020.1"
 python-memcached = "==1.59"
-gunicorn = "==19.9.0"
+gunicorn = "==20.0.4"
 djangorestframework = "==3.9.1"
 djangorestframework-camel-case = "==1.1.2"
 django-webpack-loader = "==0.7.0"
-psycopg2-binary = "==2.8.5"
+psycopg2-binary = "==2.8.6"
 ipdb = "==0.13.3"
 
 [dev-packages]
