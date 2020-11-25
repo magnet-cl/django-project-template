@@ -63,7 +63,9 @@
     - name: Ensure PostgreSQL Python libraries are installed. (Ubuntu)
       # Copy-paste from geerlingguy
       apt:
-        name: "{{ postgresql_python_library | default('python3-psycopg2') }}"
+        name:
+          - "{{ postgresql_python_library | default('python3-psycopg2') }}"
+          - libpq-dev
         state: present
       become: yes
       when:
