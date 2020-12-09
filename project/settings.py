@@ -116,11 +116,11 @@ INSTALLED_APPS = [
 
 # Email settings, uncomment if your project sends emails
 # You must set this values in local_settings
-# EMAIL_HOST = get_local_value('EMAIL_HOST', '')
-# EMAIL_HOST_USER = get_local_value('EMAIL_HOST_USER', '')
-# EMAIL_HOST_PASSWORD = get_local_value('EMAIL_HOST_PASSWORD', '')
-# EMAIL_PORT = get_local_value('EMAIL_PORT', 587)
-# EMAIL_EMAIL_USE_TLS = get_local_value('EMAIL_USE_TLS', True)
+EMAIL_HOST = get_local_value('EMAIL_HOST', '')
+EMAIL_HOST_USER = get_local_value('EMAIL_HOST_USER', '')
+EMAIL_HOST_PASSWORD = get_local_value('EMAIL_HOST_PASSWORD', '')
+EMAIL_PORT = get_local_value('EMAIL_PORT', 587)
+EMAIL_USE_TLS = get_local_value('EMAIL_USE_TLS', True)
 
 # Default email address to use for various automated correspondence from
 # the site managers.
