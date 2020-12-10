@@ -13,6 +13,7 @@ from django.contrib import admin
 from django.urls import NoReverseMatch
 from django.urls import reverse
 from django.test import TestCase
+from django.urls.converters import SlugConverter
 
 # django-cron
 from django_cron import get_class
@@ -25,7 +26,7 @@ from inflection import underscore
 from base.utils import get_our_models
 from base.utils import random_string
 from base.mockups import Mockup
-
+from base.utils import get_slug_fields
 
 # base
 from base.middleware import RequestMiddleware
@@ -102,6 +103,10 @@ class UrlsTest(BaseTestCase):
             # when using object ids:
             param_name = '{}_id'.format(model_name)
             self.default_params[param_name] = obj.id
+            for slug_field in get_slug_fields(model):
+                value = getattr(obj, slug_field.name)
+                param_name = '{}_{}_slug'.format(model_name, slug_field.name)
+                self.default_params[param_name] = value
 
     def get_obj_kwargs(self, model):
         """
@@ -133,22 +138,30 @@ class UrlsTest(BaseTestCase):
 
         '/users/{user_id}/comments/'
         """
-        param_names = url_pattern.pattern.regex.groupindex.keys()
+        param_converters_names = url_pattern.pattern.converters.items()
 
         params = {}
-        if not param_names:
+        if not param_converters_names:
             return
 
         callback = url_pattern.callback
 
         obj = None
 
-        for param_name in param_names:
+        for param_name, converter in param_converters_names:
             if param_name == 'pk' and hasattr(callback, 'view_class'):
                 model_name = underscore(
                     url_pattern.callback.view_class.model.__name__
                 )
                 params['pk'] = self.default_params['{}_id'.format(model_name)]
+                obj = self.default_objects[model_name]
+            elif isinstance(converter, SlugConverter) and hasattr(callback, 'view_class'):
+                model_name = underscore(
+                    url_pattern.callback.view_class.model.__name__
+                )
+                params[param_name] = self.default_params[
+                    '{}_{}_slug'.format(model_name, param_name)
+                ]
                 obj = self.default_objects[model_name]
             else:
                 try:

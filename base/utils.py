@@ -14,6 +14,7 @@ import pytz
 # django
 from django.apps import apps
 from django.utils import timezone
+from django.db import models
 
 
 def today():
@@ -140,3 +141,11 @@ def date_to_datetime(date):
         )
 
     return r_datetime
+
+
+def get_slug_fields(model):
+    slug_fields = []
+    for field in model._meta.fields:
+        if isinstance(field, models.SlugField):
+            slug_fields.append(field)
+    return slug_fields
