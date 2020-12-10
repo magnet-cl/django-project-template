@@ -138,17 +138,17 @@ class UrlsTest(BaseTestCase):
 
         '/users/{user_id}/comments/'
         """
-        param_converters_names = url_pattern.pattern.converters.items()
+        param_converter_name = url_pattern.pattern.converters.items()
 
         params = {}
-        if not param_converters_names:
+        if not param_converter_name:
             return
 
         callback = url_pattern.callback
 
         obj = None
 
-        for param_name, converter in param_converters_names:
+        for param_name, converter in param_converter_name:
             if param_name == 'pk' and hasattr(callback, 'view_class'):
                 model_name = underscore(
                     url_pattern.callback.view_class.model.__name__
