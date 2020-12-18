@@ -155,7 +155,7 @@ class UrlsTest(BaseTestCase):
                 )
                 params['pk'] = self.default_params['{}_id'.format(model_name)]
                 obj = self.default_objects[model_name]
-            elif isinstance(converter, SlugConverter) and hasattr(callback, 'view_class'):
+            elif isinstance(converter, SlugConverter) and hasattr(callback, 'view_class'): # noqa
                 model_name = underscore(
                     url_pattern.callback.view_class.model.__name__
                 )
