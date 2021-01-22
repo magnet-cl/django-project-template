@@ -6,6 +6,10 @@ import collections
 # django
 from django.utils.translation import ugettext_lazy as _
 
+# validators
+from .validators import validate_protocol
+
+
 ParameterDefinition = collections.namedtuple(
     'Parameter',
     [
@@ -13,6 +17,7 @@ ParameterDefinition = collections.namedtuple(
         'default',
         'kind',
         'verbose_name',
+        'validators',
     ]
 )
 
@@ -24,6 +29,7 @@ class ParameterDefinitionList(object):
             default='https',
             kind='str',
             verbose_name=_('Default url protocol'),
+            validators=[validate_protocol]
         ),
     ]
 
