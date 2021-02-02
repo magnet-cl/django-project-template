@@ -27,6 +27,7 @@ class Parameter(BaseModel):
         max_length=50,
         verbose_name=_("name"),
         unique=True,
+        editable=False,
     )
     kind = models.CharField(
         max_length=255,
@@ -37,7 +38,8 @@ class Parameter(BaseModel):
             ('time', _('time')),
             ('date', _('date')),
             ('json', _('json')),
-        )
+        ),
+        editable=False,
     )
     cache_seconds = models.PositiveIntegerField(
         verbose_name=_("cache seconds"),
@@ -117,8 +119,8 @@ class Parameter(BaseModel):
         for parameter_definition in ParameterDefinitionList.definitions:
             cls.objects.get_or_create(
                 name=parameter_definition.name,
-                kind=parameter_definition.kind,
                 defaults={
+                    'kind': parameter_definition.kind,
                     'raw_value': parameter_definition.default,
                 }
             )
