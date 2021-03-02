@@ -18,7 +18,8 @@ ParameterDefinition = collections.namedtuple(
         'kind',
         'verbose_name',
         'validators',
-    ]
+    ],
+    defaults=(tuple(),)
 )
 
 
@@ -29,7 +30,7 @@ class ParameterDefinitionList(object):
             default='https',
             kind='str',
             verbose_name=_('Default url protocol'),
-            validators=[validate_protocol]
+            validators=(validate_protocol,)
         ),
     ]
 
