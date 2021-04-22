@@ -37,12 +37,18 @@ This project works with:
 * PostgreSQL >= 9.6
 
 ## Quickstart
-If you are using Ubuntu 16.04/18.04/20.04 `quickstart.sh` installs all
+If you are using Ubuntu 16.04/18.04/20.04, `quickstart.sh` installs all
 dependencies of the project. It assumes you have Node and npm installed.
 
 * `./quickstart.sh`
 
-There is no problem if you run this command more than one time.
+Starting with Ubuntu 20.04, the default package for PostgreSQL's adapter
+is `python3-psycopg2`, which is the default for `quickstart.sh`.
+**If you are using Ubuntu 18.04 or lower, you should explicitly use `python-psycopg`** instead, i.e:
+
+* `./quickstart.sh --postgresql_python_library "python-psycopg2"`
+
+There is no problem if you run `quickstart.sh` more than one time.
 
 ## Start new app
 Use the custom app template to create your apps:
