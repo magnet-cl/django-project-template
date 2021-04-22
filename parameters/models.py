@@ -63,6 +63,16 @@ class Parameter(BaseModel):
             except ValueError:
                 raise ValidationError(_('Invalid time format'))
 
+        self.run_validators()
+
+    def run_validators(self):
+        parameter_definition = ParameterDefinitionList.get_definition(
+            self.name
+        )
+        value = self.value
+        for validator in parameter_definition.validators:
+            validator(value)
+
     @property
     def value(self):
         return self.__class__.process_value(self.kind, self.raw_value)
