@@ -55,6 +55,7 @@ def validate_rut(rut):
     rut = rut.lower()
     rut = rut.replace("-", "")
     rut = rut.replace(".", "")
+    rut = rut.replace(" ", "")
     aux = rut[:-1]
     dv = rut[-1:]
 
