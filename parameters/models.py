@@ -69,8 +69,9 @@ class Parameter(BaseModel):
         parameter_definition = ParameterDefinitionList.get_definition(
             self.name
         )
+        value = self.value
         for validator in parameter_definition.validators:
-            validator(self.value)
+            validator(value)
 
     @property
     def value(self):
