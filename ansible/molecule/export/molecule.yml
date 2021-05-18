@@ -70,7 +70,7 @@ scenario:
     # - cleanup       not configured
     - destroy
   test_sequence:
-    ########################################################################################################################- lint
+    - lint
     - dependency
     # - cleanup       not configured
     - destroy

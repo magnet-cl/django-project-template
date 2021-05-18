@@ -65,14 +65,14 @@ Group | Playbook | Purpose
 --- | --- | ---
 DB | backup-db | Backs up the DB of a server, to a file in the server.
 DB | download-db | Backs up the DB of a server, to a file in your computer.
-DB | export-db | Clones the DB from one server to another.
-DB | export-direct-db | Clones the DB from one server to another,-------------------------------------
+DB | export-db | Clones the DB from one server to another, through your computer.
+DB | export-direct-db | Clones the DB from one server to another, directly between the servers.
 DB | import-db | Clones the DB of a server to your computer.
 DB | reset-db | Resets the DB to an empty one.
 Media | backup-media | Backs up the Media of a server, to a file in the server.
 Media | download-media | Backs up the Media of a server, to a file in your computer.
-Media | export-direct-media | TODO
-Media | export-media | Clones the Media from one server to another.
+Media | export-media | Clones the Media from one server to another, through your computer.
+~~Media~~ | ~~export-direct-media~~ | ~~Clones the Media from one server to another, directly between the servers.~~ Not yet implemented
 Media | import-media | Clones the Media of a server to your computer.
 Deploy | deploy | Deploys or updates the application to a server.
 Helper | human-readable-output | Configures Ansible to show human-readable output.
@@ -98,7 +98,7 @@ Services | stop-services | Stops systemd services of the project.
 
 - `export-db` can be used in two modes:
     - Export local dump to *host_B*: `ansible-playbook ... --limit host_B playbooks/export-db.yaml -e local_dump=staging/2019-08-22.dump`
-    - Export remote dump from *host_A* to *host_B*: `ansible-playbook ... --limit host_A,host_B playbooks/export-db.yaml`
+    - Export remote dump from *host_A* to *host_B*: `ansible-playbook ... --limit host_A,host_B playbooks/export-db.yaml`. A local copy is kept in `db_dumps/xxxx.dump`.
 
 - `export-direct-db` is like `export-db` from remote to remote, but it directly transfers the file between servers, so very high speeds can be reached if they are in the same datacenter (100 MB/s). `host_B` downloads from `host_A` through HTTP, so it will try to reach `host_A` at `https://{{ server_domain }}:55555`
 
