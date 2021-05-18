@@ -13,4 +13,4 @@ if [[ "$(basename "$0")" == "update.sh" ]]; then    # have you ever seen busybox
 fi
 
 # shellcheck disable=SC2086
-echo ansible-playbook --inventory inventory.yaml --limit "$limit" $tags playbooks/deploy.yaml
+ansible-playbook --inventory inventory.yaml --limit "$limit" $tags playbooks/deploy.yaml
