@@ -9,7 +9,8 @@ else
 fi
 
 if [[ "$(basename "$0")" == "update.sh" ]]; then    # have you ever seen busybox?
-  tags=(--tags update)
+  tags="--tags update"
 fi
 
-ansible-playbook --inventory inventory.yaml --limit "$limit" "${tags[@]}" playbooks/deploy.yaml
+# shellcheck disable=SC2086
+echo ansible-playbook --inventory inventory.yaml --limit "$limit" $tags playbooks/deploy.yaml
