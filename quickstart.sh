@@ -48,6 +48,7 @@ if ! command -v ansible >/dev/null; then
     fi
 
   else    # Assume Ubuntu
+    command -v pip3 >/dev/null || sudo apt-get install -y python3-pip
     sudo -H pip3 install ansible
   fi
 fi
