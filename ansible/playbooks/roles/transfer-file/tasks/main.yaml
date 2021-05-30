@@ -43,7 +43,6 @@
           openssl_csr:
             path: ~/nginx_direct/direct.csr
             privatekey_path: ~/nginx_direct/direct.key
-            # TODO: add to readme that server_domain is what the target will use to download from source
             common_name: "{{ server_domain }}"
 
         - name: generate certificate
