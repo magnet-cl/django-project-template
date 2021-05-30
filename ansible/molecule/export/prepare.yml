@@ -17,7 +17,7 @@
         apply:
           become: true
       vars:
-        nodejs_version: 10.x
+        nodejs_version: 12.x
 
 - name: set custom DB name    # to check that DB configuration is being obtained on source and target
   hosts: all

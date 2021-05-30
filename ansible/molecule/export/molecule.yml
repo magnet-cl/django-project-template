@@ -13,11 +13,11 @@ lint:
 
 platforms:
   - name: source
-    box: ${MOLECULE_SOURCE_DISTRO:-ubuntu/bionic64}
+    box: ${MOLECULE_SOURCE_DISTRO:-ubuntu/focal64}
     memory: 1024 # MB
 
   - name: target
-    box: ${MOLECULE_TARGET_DISTRO:-ubuntu/bionic64}
+    box: ${MOLECULE_TARGET_DISTRO:-ubuntu/focal64}
     memory: 1024 # MB
 
 provisioner:

@@ -1,7 +1,6 @@
 ansible_user: vagrant
 server_domain: localhost
-# branch: master
-branch: chore/ansible   # TODO
+branch: master
 
 source_user_name: cndl5xzt2pr4d5dt
 target_user_name: fuusvk6p5kuzjco5

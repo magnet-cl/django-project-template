@@ -13,7 +13,7 @@ lint:
 
 platforms:
   - name: instance
-    box: ${MOLECULE_DISTRO:-ubuntu/bionic64}
+    box: ${MOLECULE_DISTRO:-ubuntu/focal64}
     memory: 1024 # MB
 
 provisioner:

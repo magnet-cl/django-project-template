@@ -185,7 +185,7 @@ Note that the scenario is always required (as there's no `default` scenario), ev
 
 #### Choosing distro to test
 
-Set it in the `MOLECULE_DISTRO` variable when calling `molecule`. By default it is `ubuntu/bionic64` (as specified in `platforms` in `molecule.yml`). To use another Vagrant box, for example CentOS 7, run:
+Set it in the `MOLECULE_DISTRO` variable when calling `molecule`. By default it is `ubuntu/focal64` (as specified in `platforms` in `molecule.yml`). To use another Vagrant box, for example CentOS 7, run:
 ```sh
 MOLECULE_DISTRO=centos/7 molecule test -s <scenario>
 ```
