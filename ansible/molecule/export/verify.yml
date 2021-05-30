@@ -25,7 +25,7 @@
         cmd: |
           set -o pipefail
           dump=(~/db_dumps/*.dump)
-          pg_restore "$dump" | grep {{ target_user_name }}
+          pg_restore --file=- "$dump" | grep {{ target_user_name }}
         executable: /bin/bash
       changed_when: false
 
