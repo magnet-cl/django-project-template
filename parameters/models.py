@@ -37,6 +37,7 @@ class Parameter(BaseModel):
             ('time', _('time')),
             ('date', _('date')),
             ('json', _('json')),
+            ('bool', _('boolean')),  # 'true', '1' or 'yes'
         )
     )
     cache_seconds = models.PositiveIntegerField(
@@ -62,6 +63,12 @@ class Parameter(BaseModel):
                 datetime.datetime.strptime(self.raw_value, '%Y-%m-%d')
             except ValueError:
                 raise ValidationError(_('Invalid time format'))
+
+        if self.kind == 'json':
+            try:
+                json.loads(self.raw_value)
+            except json.JSONDecodeError:
+                raise ValidationError(_('Invalid json format'))
 
         self.run_validators()
 
@@ -90,6 +97,9 @@ class Parameter(BaseModel):
 
         if kind == 'date':
             return datetime.datetime.strptime(raw_value, '%Y-%m-%d')
+
+         if self.kind == 'bool':
+            return self.raw_value.lower() in ("yes", "true", "1")
 
         return raw_value
 
