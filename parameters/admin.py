@@ -14,17 +14,17 @@ from parameters.enums import ParameterDefinitionList
 class ParameterAdmin(admin.ModelAdmin):
     list_display = ('name', 'raw_value', 'cache_seconds')
 
-    fields = [
+    fields = (
         'name',
         'kind',
         'raw_value',
         'cache_seconds',
-    ]
+    )
 
-    readonly_fields = [
+    readonly_fields = (
         'name',
         'kind',
-    ]
+    )
 
     def get_changelist_instance(self, request):
         """
