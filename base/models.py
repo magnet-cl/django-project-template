@@ -75,7 +75,7 @@ class BaseModel(AuditMixin, models.Model):
     def update(self, skip_save=False, **kwargs):
         """
         This is a shortcut method, it basically sets all keyword arguments as
-        attributes on the calling object, then it stores ontly those values
+        attributes on the calling object, then it stores only those values
         into the database.
 
         To store values into the database, this method uses the `save` method
