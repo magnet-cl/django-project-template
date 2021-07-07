@@ -72,17 +72,26 @@ class BaseModel(AuditMixin, models.Model):
         abstract = True
 
     # public methods
-    def update(self, **kwargs):
-        """ proxy method for the QuerySet: update method
-        highly recommended when you need to save just one field
+    def update(self, skip_save=False, **kwargs):
+        """
+        This is a shortcut method, it basically sets all keyword arguments as
+        attributes on the calling object, then it stores only those values
+        into the database.
 
+        To store values into the database, this method uses the `save` method
+        with the `update_fields` parameter, but if you want to skip the save
+        method, you can pass the parameter `skip_save=True` when calling update
+        (useful when you want to avoid calling save signals).
         """
         kwargs['updated_at'] = timezone.now()
 
         for kw in kwargs:
             self.__setattr__(kw, kwargs[kw])
 
-        self.__class__.objects.filter(pk=self.pk).update(**kwargs)
+        if skip_save:
+            self.__class__.objects.filter(pk=self.pk).update(**kwargs)
+        else:
+            self.save(update_fields=kwargs.keys())
 
     def to_dict(instance, fields=None, exclude=None, include_m2m=True):
         """
