@@ -14,7 +14,7 @@
     apply:
       become: true
   vars:
-    nodejs_version: 10.x
+    nodejs_version: 12.x
   when: node_installed_check.rc > 0
 
 - name: install npm dependencies
