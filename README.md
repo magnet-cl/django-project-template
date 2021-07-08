@@ -84,6 +84,11 @@ and `to_dict`.
   can pass the parameter `skip_save=True` when calling update (useful when 
   you want to avoid calling save signals).
 
+
+### log_entries
+  Returns a list of processed LogEntry objects that contain the history of 
+  the object
+
 ### OrderableModel
 
 This model inherits from BaseModel. It adds the `display_order` field to allow
