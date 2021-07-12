@@ -98,8 +98,8 @@ class Parameter(BaseModel):
         if kind == 'date':
             return datetime.datetime.strptime(raw_value, '%Y-%m-%d')
 
-         if self.kind == 'bool':
-            return self.raw_value.lower() in ("yes", "true", "1")
+        if kind == 'bool':
+            return raw_value.lower() in ("yes", "true", "1")
 
         return raw_value
 
