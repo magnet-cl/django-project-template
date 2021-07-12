@@ -98,7 +98,6 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.staticfiles',
     'django.contrib.postgres',
-
     # required apps
     'base.apps.BaseConfig',
     'users',
@@ -108,6 +107,7 @@ INSTALLED_APPS = [
     'loginas',
     'rest_framework',
     'webpack_loader',
+    'django_cron',
 
     # internal
     'regions',
