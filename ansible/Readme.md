@@ -36,6 +36,12 @@ To update only:
 ansible/update.sh [host-or-group]
 ```
 
+#### Validation of production deployment
+
+When you run the deploy/update script including a host named `production` (in inventory.yaml), your local repository has to be in the branch it uses (usually master/main) so it can run Django tests, and cancel deployment if they fail.
+
+However, if you wish to deploy anyway, just add `-f` or `--force`.
+
 ### Other scripts
 
 To avoid having too many files in this folder, they were placed inside `playbooks`. They are executed with the `ansible-playbook` command. In addition to the path to the playbook, two more arguments should be used:
