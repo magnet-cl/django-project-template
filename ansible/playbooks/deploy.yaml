@@ -9,7 +9,9 @@
   hosts: production
   roles:
     - role: validate-deployment
-      tags: update
+      tags:
+        - update
+        - validate-deployment
 
 - name: deploy
   hosts: all
