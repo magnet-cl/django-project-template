@@ -1,5 +1,5 @@
-- name: get Pipenv virtualenv
-  command: pipenv --venv
+- name: get Poetry virtualenv
+  command: poetry env info -p
   args:
     chdir: "{{ server_root_dir }}"
   register: venv

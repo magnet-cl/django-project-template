@@ -49,7 +49,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   #  - Install Homebrew -- already checked above
   # shellcheck disable=SC2016
   echo -e '  - install and configure PostgreSQL. This worked for me: brew install postgresql && brew services start postgresql && createdb $USER'
-  echo -e "  - create the Pipenv virtualenv: pipenv --python 3.6    (suggestion: use pyenv)"
+  echo -e "  - create the Poetry virtualenv: poetry env use 3.8    (suggestion: use pyenv)"
   echo -e "$default"
 fi
 

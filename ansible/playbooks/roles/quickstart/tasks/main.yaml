@@ -47,7 +47,7 @@
   when: ansible_distribution == 'CentOS'
 
 - name: dependencies for Mac OS X
-  # Assume Homebrew, Pipenv and its virtualenv, and PostgreSQL are already installed/created/configured.
+  # Assume Homebrew, Poetry and its virtualenv, and PostgreSQL are already installed/created/configured.
   # Only add additional non-standard requirements here.
   # Improvement: better OSX support.
   homebrew:
@@ -56,8 +56,8 @@
     state: present
   when: ansible_distribution == 'MacOSX'
 
-- name: setup Pipenv
-  import_tasks: pipenv.yaml
+- name: setup Poetry
+  import_tasks: poetry.yaml
 
 - name: create local_settings from default
   command: cp local_settings.py.default local_settings.py

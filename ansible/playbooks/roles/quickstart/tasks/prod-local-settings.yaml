@@ -4,7 +4,7 @@
     path: "{{ server_root_dir }}/project/local_settings.py"
     regexp: ^DEBUG *= *True
     replace: DEBUG = False
-    validate: bash -c "cd {{ server_root_dir }} && pipenv run python %s"  # It returns 1 on "invalid syntax"
+    validate: bash -c "cd {{ server_root_dir }} && poetry run python %s"  # It returns 1 on "invalid syntax"
   when:
     - local_settings_create.changed
 
@@ -12,7 +12,7 @@
 # LOCALLY_ALLOWED_HOSTS
 - name: check if server_domain is in LOCALLY_ALLOWED_HOSTS
   command: >
-    pipenv run python -c
+    poetry run python -c
     "from project.local_settings import LOCALLY_ALLOWED_HOSTS;
     print('{{ server_domain }}' in LOCALLY_ALLOWED_HOSTS)"
   args:
@@ -25,7 +25,7 @@
     path: "{{ server_root_dir }}/project/local_settings.py"
     regexp: ^LOCALLY_ALLOWED_HOSTS *= *\[\n
     replace: LOCALLY_ALLOWED_HOSTS = [\n    '{{ server_domain }}',\n
-    validate: bash -c "cd {{ server_root_dir }} && pipenv run python %s"  # It returns 1 on "invalid syntax"
+    validate: bash -c "cd {{ server_root_dir }} && poetry run python %s"  # It returns 1 on "invalid syntax"
   register: add_allowed_host
   when:
     - allowed_host_added.stdout == 'False'

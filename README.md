@@ -30,8 +30,8 @@ Remove the `LICENSE` if your new project does not have an MIT license.
 This project works with:
 
 * Python >= 3.8
-* pipenv >= 11.9.0
-* Python libraries defined in Pipfile
+* Poetry >= 1.1.7
+* Python libraries defined in pyproject.toml
 * Node >= 8.5
 * Node packages defined in package.json
 * PostgreSQL >= 9.6
@@ -274,11 +274,11 @@ To import values from `local_settings` to `settings`, the method get_local_value
 
 ## Utils
 
-### Pipenv
+### POetry
 
-We use [Pipenv](https://github.com/pypa/pipenv) to manage Python dependencies.
+We use [Poetry](https://python-poetry.org/) to manage Python dependencies.
 
-Instead of running (for example) `pip install localflavor`, use `pipenv install localflavor==1.8`, locking to the version you want (usually the latest, which you can check on [PyPI](https://pypi.org/project/localflavor/#history)).
+Instead of running (for example) `pip install localflavor`, use `poetry add localflavor==1.8`, locking to the version you want (usually the latest, which you can check on [PyPI](https://pypi.org/project/localflavor/#history)).
 
 We set versions to avoid "bugfix" releases breaking our apps. One exception is Django, whose version is specified with `~=` instead of `==`, because its security releases are critical and tend to be done with care.
 
