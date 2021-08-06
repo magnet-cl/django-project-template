@@ -29,7 +29,7 @@ def clean_query_string(request):
 
     try:
         del clean_query_set['p']
-    except:
+    except KeyError:
         pass
 
     mstring = []
