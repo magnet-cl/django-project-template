@@ -48,7 +48,7 @@
     "stylelint-order": "^3.0.1",
     "stylelint-scss": "^3.9.1",
     "terser-webpack-plugin": "^2.3.5",
-    "webpack": "^4.36.1",
+    "webpack": "^4.46.0",
     "webpack-bundle-analyzer": "^3.3.2",
     "webpack-bundle-tracker": "^0.4.2-beta",
     "webpack-cli": "^3.3.6",
