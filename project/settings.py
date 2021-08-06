@@ -288,11 +288,6 @@ STATICFILES_FINDERS = (
 AUTH_USER_MODEL = 'users.User'
 LOGOUT_REDIRECT_URL = '/'
 
-# set the precompilers
-COMPRESS_PRECOMPILERS = (
-    ('text/pug', 'base.filters.pug.PugCompilerFilter'),
-)
-
 # un comment when we start using only SSL
 # RECAPTCHA_USE_SSL = True
 #

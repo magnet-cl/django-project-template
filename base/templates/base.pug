@@ -172,11 +172,6 @@ html(lang='{{ request.LANGUAGE_CODE|default:"es" }}')
       crossorigin='anonymous'
     )
 
-    //- Templates TODO: this is an example of pug templates, delete this
-    script(type='text/pug', src='{% static "templates/users/list.pug" %}')
-    script(type='text/pug', src='{% static "templates/users/detail.pug" %}')
-    //- end templates
-
     // Own scripts
     {% render_bundle 'main' 'js' %}
     block javascripts
