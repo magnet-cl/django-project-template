@@ -5,7 +5,7 @@
   "plugins": [
     "import"
   ],
-  "parser": "babel-eslint",
+  "parser": "@babel/eslint-parser",
   "rules": {
     "arrow-body-style": ["error", "as-needed"],
     "comma-dangle": ["error", "never"],
