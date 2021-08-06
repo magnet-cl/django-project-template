@@ -32,14 +32,15 @@ class Parameter(BaseModel):
     kind = models.CharField(
         max_length=255,
         verbose_name=_("kind"),
+        editable=False,
         choices=(
             ('int', _('integer')),
             ('str', _('text')),
             ('time', _('time')),
             ('date', _('date')),
             ('json', _('json')),
+            ('bool', _('boolean')),  # 'true', '1' or 'yes'
         ),
-        editable=False,
     )
     cache_seconds = models.PositiveIntegerField(
         verbose_name=_("cache seconds"),
@@ -64,6 +65,12 @@ class Parameter(BaseModel):
                 datetime.datetime.strptime(self.raw_value, '%Y-%m-%d')
             except ValueError:
                 raise ValidationError(_('Invalid time format'))
+
+        if self.kind == 'json':
+            try:
+                json.loads(self.raw_value)
+            except json.JSONDecodeError:
+                raise ValidationError(_('Invalid json format'))
 
         self.run_validators()
 
@@ -92,6 +99,9 @@ class Parameter(BaseModel):
 
         if kind == 'date':
             return datetime.datetime.strptime(raw_value, '%Y-%m-%d')
+
+        if kind == 'bool':
+            return raw_value.lower() in ("yes", "true", "1")
 
         return raw_value
 
