@@ -10,6 +10,14 @@ LOCAL_DATABASES = {
         'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '5432',
+    },
+     'logs': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'circle_test_logs',
+        'USER': 'circleci',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 

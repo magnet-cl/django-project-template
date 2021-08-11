@@ -23,15 +23,17 @@ done
 
 debug=$(python -c "from project.settings import DEBUG; print(DEBUG)")
 dbname=$(python -c "from project.settings import LOCAL_DATABASES; print(LOCAL_DATABASES['default']['NAME'])")
+logdbname=$(python -c "from project.settings import LOCAL_DATABASES; print(LOCAL_DATABASES['logs']['NAME'])")
 
 if [ "$debug" != "True" ] ; then
   print_red "DEBUG is not True."
   exit 1
 fi
 
-echo "----------------------drop-database------------------------------"
+print_red "----------------------drop-database------------------------------"
 set +e
-drop_output=$(dropdb "$dbname" 2>&1)
+drop_output=$(dropdb "$dbname" --if-exists 2>&1)
+drop_output_logs=$(dropdb "$logdbname" --if-exists 2>&2)
 drop_code=$?
 set -e
 echo "$drop_output"
@@ -42,8 +44,10 @@ fi
 
 echo "  create-database"
 createdb "$dbname"
+createdb "$logdbname"
 
 python manage.py migrate
+python manage.py migrate --database=logs
 
 
 if  $RUNSERVER ; then

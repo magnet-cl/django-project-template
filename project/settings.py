@@ -101,17 +101,18 @@ INSTALLED_APPS = [
 
     # required apps
     'base.apps.BaseConfig',
-    'users',
+    'users.apps.UsersConfig',
 
     # external
     'captcha',
     'loginas',
     'rest_framework',
     'webpack_loader',
+    'django_db_logger',
 
     # internal
-    'regions',
-    'parameters',
+    'regions.apps.RegionsConfig',
+    'parameters.apps.ParametersConfig',
 ]
 
 # Email settings, uncomment if your project sends emails
@@ -204,6 +205,14 @@ WSGI_APPLICATION = 'project.wsgi.application'
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 DATABASES = {}
 DATABASES.update(LOCAL_DATABASES)
+
+DATABASE_ROUTERS = ('project.routers.DatabaseByAppRouter',)
+
+DATABASE_BY_APPS = {
+    'logs': [
+        'django_db_logger',
+    ],
+}
 
 # The email backend to use. For possible shortcuts see django.core.mail.
 # The default is to use the SMTP backend.
@@ -320,10 +329,14 @@ LOGGING = {
             'formatter': 'standard',
             'level': 'ERROR',
         },
+        'db_log': {
+            'level': 'DEBUG',
+            'class': 'django_db_logger.db_log_handler.DatabaseLogHandler'
+        },
     },
     'loggers': {
         'django.request': {
-            'handlers': ['mail_admins', 'file'],
+            'handlers': ['mail_admins', 'file', 'db_log'],
             'level': 'ERROR',
             'propagate': True,
         },
