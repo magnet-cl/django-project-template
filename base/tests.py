@@ -52,7 +52,11 @@ class BaseTestCase(TestCase, Mockup):
             user = self.user
             password = self.password
 
-        return self.client.login(email=user.email, password=password)
+        username = getattr(user, user.USERNAME_FIELD)
+
+        self.assertTrue(
+            self.client.login(username=username, password=password)
+        )
 
 
 def reverse_pattern(pattern, namespace, args=None, kwargs=None):
