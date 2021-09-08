@@ -98,6 +98,10 @@ class Mockup(object):
         if field not in data:
             data[field] = timezone.now().date()
 
+    def set_required_time(self, data, field, **kwargs):
+        if field not in data:
+            data[field] = timezone.now().time()
+
     def set_required_datetime(self, data, field, **kwargs):
         if field not in data:
             data[field] = timezone.now()
