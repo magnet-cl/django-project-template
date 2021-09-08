@@ -1,7 +1,7 @@
 - name: init
   hosts: all
   gather_facts: no
-  any_errors_fatal: true
+  any_errors_fatal: yes
   tasks:
     - name: import check Ansible version task
       import_tasks: utils/assert-ansible-version.yaml
@@ -52,12 +52,14 @@
   gather_facts: no
   vars_prompt:
     - name: confirmation
-      #     prompt: ¿Are you sure you want to replace the Media of {{ dest_host }} [y/N]?
+      #     prompt: Are you sure you want to replace the Media of  "{{ dest_host }}" ...
       # Oh crap. "'dest_host' is undefined"
+      # yamllint disable rule:line-length
       prompt: >-
-        ¿Are you sure you want to replace the Media of
-        {{ ansible_limit if (ansible_play_hosts | length == 1) else (ansible_limit | regex_replace('.+,(.+)', '\1')) }}
-        [y/N]?
+        Are you sure you want to replace the Media of
+        "{{ ansible_limit if (ansible_play_hosts | length == 1) else (ansible_limit | regex_replace('.+,(.+)', '\1')) }}"
+        ({{ lookup('env', 'PWD') | dirname | basename }}) [y/N]?
+      # yamllint enable rule:line-length
       private: no   # Show input (this is made to input passwords)
   tasks:
     - name: check confirmation
@@ -65,6 +67,7 @@
         that: confirmation | lower == 'y'
         fail_msg: Confirmation failed.
         quiet: yes
+  tags: molecule-notest
 
 - name: download archive
   hosts: all
@@ -96,24 +99,37 @@
             archive_name: "{{ hostvars[src_host].archive_name }}"
           when: archive_name is not defined
 
-        - name: set media_path variable
-          set_fact:
-            media_path: "{{ server_root_dir }}/project/media"
+        - include_role:
+            name: media
+            tasks_from: get-use-s3
 
-        - name: set empty media directory
-          file:
-            path: "{{ media_path }}"
-            state: "{{ item }}"
-          loop:   # https://github.com/ansible/ansible/issues/18910
-            - absent
-            - directory
+        - name: restore local Media
+          block:
+            - name: set media_path variable
+              set_fact:
+                media_path: "{{ server_root_dir }}/project/media"
 
-        - name: unpack the archive
-          unarchive:
-            src: "{{ archive_name }}"
-            dest: "{{ media_path }}"
-            remote_src: no
-            extra_opts:
-              - --strip-components=1
+            - name: set empty media directory
+              file:
+                path: "{{ media_path }}"
+                state: "{{ item }}"
+              loop:   # https://github.com/ansible/ansible/issues/18910
+                - absent
+                - directory
+              when: (delete_previous | default('no')) == 'yes'
+
+            - name: unpack the archive
+              unarchive:
+                src: "{{ archive_name }}"
+                dest: "{{ media_path }}"
+                remote_src: no
+                extra_opts:
+                  - --strip-components=1
+          when: use_s3.stdout == 'False'
+
+        - include_role:
+            name: media
+            tasks_from: s3-unarchive
+          when: use_s3.stdout == 'True'
 
       when: inventory_hostname == dest_host or src_host == '__local__'

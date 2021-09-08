@@ -1,7 +1,7 @@
 - name: init
   hosts: all
   gather_facts: no
-  any_errors_fatal: true
+  any_errors_fatal: yes
   tasks:
     - name: import check Ansible version task
       import_tasks: utils/assert-ansible-version.yaml
@@ -52,12 +52,14 @@
   gather_facts: no
   vars_prompt:
     - name: confirmation
-      #     prompt: ¿Are you sure you want to replace the DB of {{ dest_host }} [y/N]?
+      #     prompt: Are you sure you want to replace the DB of  "{{ dest_host }}" ...
       # Oh crap. "'dest_host' is undefined"
+      # yamllint disable rule:line-length
       prompt: >-
-        ¿Are you sure you want to replace the DB of
-        {{ ansible_limit if (ansible_play_hosts | length == 1) else (ansible_limit | regex_replace('.+,(.+)', '\1')) }}
-        [y/N]?
+        Are you sure you want to replace the DB of
+        "{{ ansible_limit if (ansible_play_hosts | length == 1) else (ansible_limit | regex_replace('.+,(.+)', '\1')) }}"
+        ({{ lookup('env', 'PWD') | dirname | basename }}) [y/N]?
+      # yamllint enable rule:line-length
       private: no   # Show input (this is made to input passwords)
   tasks:
     - name: check confirmation
@@ -65,12 +67,17 @@
         that: confirmation | lower == 'y'
         fail_msg: Confirmation failed.
         quiet: yes
+  tags: molecule-notest
 
 - name: download DB
   hosts: all    # Can't use a variable here, so put everything in a block and limit with "when"
   tasks:
     - name: download DB on source host only
       block:
+        - name: get source DB configuration
+          include_role:
+            name: get-db-config
+
         - name: backup
           include_role:
             name: db
@@ -91,73 +98,55 @@
   tasks:
     - name: copy and import the dump on destination host only
       block:
+
+        # Upload dump
         - name: set dump_name
           set_fact:
             # If the dump was downloaded, dump_name variable is set in src_host only
             dump_name: "{{ hostvars[src_host].dump_name }}"
           when: dump_name is not defined
-
         - name: create dump upload tempfile
           tempfile:
             prefix: db_dump.
           register: temp_dump
-
         - name: upload dump
           copy:
             src: "{{ dump_name }}"
             dest: "{{ temp_dump.path }}"
             force: yes    # overwrite empty temp_dump
 
-        - name: create a backup before importing
+        - name: get destination DB configuration
+          include_role:
+            name: get-db-config
+
+        # Backup
+        - name: check if DB exists
+          include_role:
+            name: db
+            tasks_from: check-existence
+        - name: create a backup before restoring
           include_role:
             name: db
             tasks_from: backup
+          when: db_exists.stdout == '1'
           # Note: it's "local_dump" instead of "dump_name" to avoid overriding the variable inside this role.
 
-        - name: import the dump
-          block:
-            - name: run pg_restore
-              command:
-                argv:
-                  - pg_restore
-                  - --dbname={{ project_name }}
-                  - --clean
-                  - --if-exists
-                  - --no-owner
-                  - --no-acl
-                  - --jobs=2
-                  - "{{ temp_dump.path }}"
-              register: pg_restore_result
-          rescue:
-            - name: Skip version printing
-              fail:
-                msg: Failed (see above)
-              when: >
-                src_host == '__local__'
-                  or 'could not open input file' in pg_restore_result.stderr
-
-            - name: get source version
-              command: pg_dump -V
-              delegate_to: "{{ src_host }}"
-              changed_when: false
-              register: src_version
-
-            - name: get destination version
-              command: pg_restore -V
-              changed_when: false
-              register: dest_version
-
-            - name: fail, printing versions
-              fail:
-                msg: |
-                  pg_restore failed (see above)
-                  FYI, source has "{{ src_version.stdout }}" and destination has "{{ dest_version.stdout }}"
+        - name: restore dump
+          include_role:
+            name: db
+            tasks_from: restore
+          vars:
+            - dump_path: "{{ temp_dump.path }}"
+            - is_local_dump_file: "{{ src_host == '__local__' }}"
+            - src_delegate: "{{ src_host }}"
 
       always:
         - name: remove dump tempfile
           file:
             path: "{{ temp_dump.path }}"
             state: absent
+          # Note: the dump could be kept in ~/db_dumps/ instead of deleting it,
+          # though it should have src_host in the file name to avoid confusion.
 
       when: inventory_hostname == dest_host or src_host == '__local__'
         # "or" in case (inventory_hostname != dest_host == ansible_limit) because it contains comma

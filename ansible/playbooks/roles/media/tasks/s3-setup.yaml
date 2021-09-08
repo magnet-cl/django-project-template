@@ -1,0 +1,45 @@
+- name: install FUSE
+  # Already installed in Ubuntu but required for CentOS
+  package:
+    name: fuse
+    state: present
+  become: yes
+  # It works without having to add the user to the fuse group.
+
+- name: download and install goofys
+  get_url:
+    dest: /usr/local/bin/goofys
+    url: https://github.com/kahing/goofys/releases/download/v0.23.1/goofys
+    mode: 0755
+    checksum: sha256:c47c6d2038ad62663c493d35e97b98826b30f23037013b64567c334c6ce82a34
+  become: true
+
+- name: get S3 configuration from local_settings
+  command: >
+    pipenv run ./manage.py shell -c
+    "import json;
+    from django.conf import settings;
+    print(json.dumps({
+      'key_id': settings.AWS_ACCESS_KEY_ID,
+      'key_secret': settings.AWS_SECRET_ACCESS_KEY,
+      'endpoint': settings.AWS_S3_ENDPOINT_URL,
+      'bucket': settings.AWS_STORAGE_BUCKET_NAME,
+      'media_dir': settings.S3_MEDIA_DIR,
+    }))"
+  args:
+    chdir: "{{ server_root_dir }}"
+  no_log: yes   # Prevents printing key_secret. Comment this line to debug this task.
+  changed_when: false
+  register: s3_conf
+
+- name: set S3 configuration
+  set_fact:
+    s3_conf: "{{ s3_conf.stdout | from_json }}"
+  no_log: yes
+
+- name: create mountpoint
+  tempfile:
+    state: directory
+    prefix: s3.
+    suffix: .{{ s3_conf.bucket }}
+  register: s3_mountpoint

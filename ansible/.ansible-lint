@@ -1,2 +1,5 @@
 skip_list:
+  - '204'   # line-length already checked by Yamllint
+            # (disabling the rule in this linter to avoid requiring two comments to ignore a long line)
+
   - '503'   # https://github.com/ansible/ansible-lint/issues/419

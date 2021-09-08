@@ -1,0 +1,21 @@
+# Frees the port {{ app_port }}, checking if it's in use, sending SIGTERM and waiting.
+
+- name: get PID using port {{ app_port }}
+  command: lsof -t -i:{{ app_port }}
+  changed_when: false
+  failed_when: false
+  register: port_pid
+
+- name: terminate and wait
+  block:
+    - name: send SIGTERM
+      shell: sleep 1 && kill {{ port_pid.stdout }}
+      async: 4
+      poll: 0
+
+    - name: wait for termination
+      wait_for:
+        path: /proc/{{ port_pid.stdout }}   # Let's hope no process reuses this PID within 1 second
+        state: absent
+        timeout: 3
+  when: port_pid.rc == 0

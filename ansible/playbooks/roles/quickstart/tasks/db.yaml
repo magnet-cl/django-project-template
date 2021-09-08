@@ -1,9 +1,15 @@
-- name: set database name in local_settings
+- name: set database name on local_settings creation
   replace:
     path: "{{ server_root_dir }}/project/local_settings.py"
     regexp: "        'NAME': 'database-name',"
     replace: "        'NAME': '{{ project_name }}',"
     validate: bash -c "cd {{ server_root_dir }} && pipenv run python %s"  # It returns 1 on "invalid syntax"
+  when: local_settings_create.changed
+
+- name: get DB configuration
+  include_role:
+    name: get-db-config
+  when: db_conf is not defined    # Speedup, it could have been set with DB backup
 
 - name: install and configure Postgres and create DB
   block:
@@ -37,6 +43,7 @@
                 role_attr_flags: SUPERUSER
                 state: present
             # Workaround for strange failure:
+            # yamllint disable-line rule:line-length
             postgresql_python_library: "{{ 'python3-psycopg2' if 'python3' in discovered_interpreter_python else 'python-psycopg2' }}"
 
       rescue:
@@ -56,7 +63,9 @@
     - name: Ensure PostgreSQL Python libraries are installed. (Ubuntu)
       # Copy-paste from geerlingguy
       apt:
-        name: "{{ postgresql_python_library | default('python3-psycopg2') }}"
+        name:
+          - "{{ postgresql_python_library | default('python3-psycopg2') }}"
+          - libpq-dev
         state: present
       become: yes
       when:
@@ -66,15 +75,18 @@
 
     - name: create database
       postgresql_db:
-        name: "{{ project_name }}"
+        name: "{{ db_conf.NAME }}"
+        login_user: "{{ db_conf.USER }}"
+        login_password: "{{ db_conf.PASSWORD }}"
+        login_host: "{{ db_conf.HOST }}"
+        login_port: "{{ (db_conf.PORT | int) if db_conf.PORT else omit }}"
         state: present
-        login_user: "{{ ansible_user_id }}"
 
   when: ansible_distribution != 'MacOSX'
 
 - name: create database with a hack on OSX
   # postgresql_db:    HAH! Try making Ansible's discovered_interpreter_python import psycopg2  https://xkcd.com/1987
-  command: createdb {{ project_name }}
+  command: createdb {{ db_conf.NAME }}
   register: osx_createdb
   failed_when:
     - osx_createdb is failed

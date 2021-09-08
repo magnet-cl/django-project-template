@@ -5,8 +5,7 @@
     regexp: ^DEBUG *= *True
     replace: DEBUG = False
     validate: bash -c "cd {{ server_root_dir }} && pipenv run python %s"  # It returns 1 on "invalid syntax"
-  when:
-    - local_settings_create.changed
+  when: local_settings_create.changed
 
 
 # LOCALLY_ALLOWED_HOSTS
@@ -27,8 +26,7 @@
     replace: LOCALLY_ALLOWED_HOSTS = [\n    '{{ server_domain }}',\n
     validate: bash -c "cd {{ server_root_dir }} && pipenv run python %s"  # It returns 1 on "invalid syntax"
   register: add_allowed_host
-  when:
-    - allowed_host_added.stdout == 'False'
+  when: allowed_host_added.stdout == 'False'
 
 - name: alert if failed to add allowed host
   fail:

@@ -1,0 +1,4 @@
+app_name: Webpack
+app_port: 3000
+start_command: npm start
+timeout_200: "{{ 12 * 1.5 }}"   # The time that a 5 USD droplet takes from running the server, to a 200, x1.5

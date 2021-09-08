@@ -1,0 +1,76 @@
+dependency:
+  name: galaxy
+  options:
+    role-file: molecule/quickstart/requirements.yaml
+
+driver:
+  name: vagrant
+  provider:
+    name: virtualbox
+
+lint:
+  name: yamllint
+
+platforms:
+  - name: instance
+    box: ${MOLECULE_DISTRO:-ubuntu/focal64}
+    memory: 1024 # MB
+
+provisioner:
+  name: ansible
+
+  config_options:
+    defaults:
+      stdout_callback: debug    # human-readable output
+
+  inventory:
+    host_vars:
+      instance:
+        project_dir: ~/django-project-template-py3
+        ansible_python_interpreter: auto
+
+  lint:
+    name: ansible-lint
+
+verifier:
+  name: ansible
+  lint:
+    name: ansible-lint
+
+scenario:
+  create_sequence:
+    # - dependency    speedup, not required for this sequence
+    - create
+    - prepare
+  check_sequence:
+    - dependency
+    # - cleanup       not configured
+    - destroy
+    - create
+    - prepare
+    - converge
+    - check
+    - destroy
+  converge_sequence:
+    - dependency
+    - create
+    - prepare
+    - converge
+  destroy_sequence:
+    # - dependency    speedup, not required for this sequence
+    # - cleanup       not configured
+    - destroy
+  test_sequence:
+    - lint
+    - dependency
+    # - cleanup       not configured
+    - destroy
+    - syntax
+    - create
+    - prepare
+    - converge
+    # - idempotence   The playbook just runs a script. Idempotence of tasks is checked in the `deploy` scenario.
+    # - side_effect   not configured
+    - verify
+    # - cleanup       not configured
+    - destroy

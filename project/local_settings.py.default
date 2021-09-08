@@ -36,7 +36,18 @@ ADMINS = ()
 
 GOOGLE_ANALYTICS_CODE = None
 
-SECRET_KEY = 'CHANGE ME'
+SECRET_KEY = ''   # CHANGE ME
 
 RECAPTCHA_PUBLIC_KEY = ''
 RECAPTCHA_PRIVATE_KEY = ''
+
+USE_S3 = False
+# AWS_ACCESS_KEY_ID = 'ABCDEFG'
+# AWS_SECRET_ACCESS_KEY = '0123456789abcdef'
+# AWS_STORAGE_BUCKET_NAME = 'dpt-bucket'
+# AWS_S3_ENDPOINT_URL = 'https://nyc3.digitaloceanspaces.com'
+# AWS_S3_CUSTOM_DOMAIN = 'dpt-bucket.nyc3.cdn.digitaloceanspaces.com'
+# AWS_S3_OBJECT_PARAMETERS = {
+#     'CacheControl': 'max-age=86400',
+# }
+# AWS_S3_SIGNATURE_VERSION = 's3v4'

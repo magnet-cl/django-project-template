@@ -1,0 +1,85 @@
+dependency:
+  name: galaxy
+  options:
+    role-file: requirements.yaml    # relative to base https://github.com/ansible/molecule/issues/1509
+
+driver:
+  name: vagrant
+  provider:
+    name: virtualbox
+
+lint:
+  name: yamllint
+
+platforms:
+  - name: source
+    box: ${MOLECULE_SOURCE_DISTRO:-ubuntu/focal64}
+    memory: 1024 # MB
+
+  - name: target
+    box: ${MOLECULE_TARGET_DISTRO:-ubuntu/focal64}
+    memory: 1024 # MB
+
+provisioner:
+  name: ansible
+
+  config_options:
+    defaults:
+      stdout_callback: debug    # human-readable output
+
+  inventory:
+    #   host_vars:
+    #     instance:
+    # doesn't work together with `links`
+    links:
+      group_vars: ../../group_vars/
+      host_vars: host_vars/   # source and target have the same variables (symlink)
+
+  ansible_args:
+    - --limit=source,target   # Specify hosts for export playbooks
+
+  lint:
+    name: ansible-lint
+
+verifier:
+  name: ansible
+  lint:
+    name: ansible-lint
+
+scenario:
+  create_sequence:
+    - dependency
+    - create
+    - prepare
+  check_sequence:
+    - dependency
+    # - cleanup       not configured
+    - destroy
+    - create
+    - prepare
+    - converge
+    - check
+    - destroy
+  converge_sequence:
+    - dependency
+    - create
+    - prepare
+    - converge
+  destroy_sequence:
+    # - dependency    speedup, not required for this sequence
+    # - cleanup       not configured
+    - destroy
+  test_sequence:
+    - lint
+    - dependency
+    # - cleanup       not configured
+    - destroy
+    - syntax
+    - create
+    - prepare
+    - converge
+    # - idempotence   It's not idempotent. A new backup is made every time.
+    # - side_effect   not configured
+    - verify
+    # - cleanup       not configured
+    - destroy

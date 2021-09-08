@@ -1,0 +1,37 @@
+- name: get DB configuration
+  block:
+    - name: get DB parameters
+      command: >
+        pipenv run python -c
+        "import json;
+        from project.settings import LOCAL_DATABASES;
+        print(json.dumps(LOCAL_DATABASES['default']))"
+
+      args:
+        #   chdir: "{{ server_root_dir }}"
+        # This doesn't work on localhost unless it's included in --limit :(
+        # So:
+        chdir: "{{ (lookup('env', 'PWD') | dirname) if (on_localhost | default(False)) else server_root_dir }}"
+
+      no_log: yes   # Prevents printing password. Comment this line to debug this task.
+      changed_when: false
+      register: db_conf
+
+  rescue:
+    - name: "{{ failed_get_db_config_task_name }}"
+      fail:
+        msg: Failed to obtain database configuration. Make sure the project is set up correctly.
+
+- name: set DB configuration
+  set_fact:
+    db_conf: "{{ db_conf.stdout | from_json }}"
+  no_log: yes
+
+- name: verify database name
+  assert:
+    that: (db_conf.NAME | quote) == db_conf.NAME
+    fail_msg: |
+      db_conf.NAME has characters that require quoting!
+        {{ db_conf.NAME }}
+        {{ db_conf.NAME | quote }}
+    quiet: yes

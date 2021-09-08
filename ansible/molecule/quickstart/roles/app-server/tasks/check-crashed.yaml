@@ -1,0 +1,3 @@
+- name: check that {{ app_name }} hasn't crashed
+  async_status:
+    jid: "{{ lookup('vars', app_name + '_start').ansible_job_id }}"

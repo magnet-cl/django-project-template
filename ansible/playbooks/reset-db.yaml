@@ -14,21 +14,24 @@
       # This prevents "ERROR! 'ansible_limit' is undefined" later.
 
     - name: assert that DEBUG = True
-      find:
-        contains: ^DEBUG *= *True
-        paths:
-          - "{{ server_root_dir }}/project"
-        patterns:
-          - local_settings.py
+      command: >
+        pipenv run python -c
+        "from project.local_settings import DEBUG;
+        print(DEBUG)"
+      args:
+        chdir: "{{ server_root_dir }}"
+      changed_when: false
       register: debug_enabled
-      failed_when: not debug_enabled.files
+      failed_when: debug_enabled.stdout != 'True'
 
 - name: confirm
   hosts: all
   gather_facts: no
   vars_prompt:
     - name: confirmation
-      prompt: ¿Are you sure you want to reset the DB of {{ ansible_limit }} [y/N]?
+      prompt: >-
+        Are you sure you want to reset the DB of "{{ ansible_limit }}"
+        ({{ lookup('env', 'PWD') | dirname | basename }}) [y/N]?
       private: no   # Show input (this is made to input passwords)
   tasks:
     - name: check confirmation
@@ -39,23 +42,32 @@
 
 - name: backup-drop-create
   hosts: all
+  roles:
+    - get-db-config
   tasks:
+    - name: check if DB exists
+      include_role:
+        name: db
+        tasks_from: check-existence
+
     - name: backup DB
       import_role:
         name: db
         tasks_from: backup
+      when: db_exists.stdout == '1'
 
-    - name: drop DB
+    - name: drop and create DB
       postgresql_db:
-        name: "{{ project_name }}"
-        state: absent
-        login_user: "{{ ansible_user_id }}"
+        name: "{{ db_conf.NAME }}"
+        login_user: "{{ db_conf.USER }}"
+        login_password: "{{ db_conf.PASSWORD }}"
+        login_host: "{{ db_conf.HOST }}"
+        login_port: "{{ (db_conf.PORT | int) if db_conf.PORT else omit }}"
 
-    - name: create DB
-      postgresql_db:
-        name: "{{ project_name }}"
-        state: present
-        login_user: "{{ ansible_user_id }}"
+        state: "{{ item }}"
+      loop:
+        - absent
+        - present
 
 - name: migrate
   import_playbook: migrate-db.yaml

@@ -1,0 +1,4 @@
+app_name: Django
+app_port: 8000
+start_command: pipenv run ./manage.py runserver
+timeout_200: 1    # There's enough wait time in Webpack

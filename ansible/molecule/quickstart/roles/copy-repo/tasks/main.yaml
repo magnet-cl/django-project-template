@@ -1,0 +1,34 @@
+- name: create temporary tar file
+  delegate_to: localhost
+  tempfile:
+    suffix: quickstart_tar_copy.tar
+  register: quickstart_tar_copy
+
+- name: copy repository to VM
+  block:
+    - name: tar repository contents
+      delegate_to: localhost
+      shell: >
+        cd "$(git rev-parse --show-toplevel)" &&
+          tar cf {{ quickstart_tar_copy.path }} --exclude-vcs --exclude-vcs-ignores .
+      # TODO: OSX support (auto "brew install gnu-tar", use "gtar")
+
+    - name: set empty repository directory
+      file:
+        path: "{{ project_dir }}"
+        state: "{{ item }}"
+      loop:   # https://github.com/ansible/ansible/issues/18910
+        - absent
+        - directory
+
+    - name: unpack repository in VM
+      unarchive:
+        src: "{{ quickstart_tar_copy.path }}"
+        dest: "{{ project_dir }}"
+
+  always:
+    - name: remove temporary tar
+      delegate_to: localhost
+      file:
+        path: "{{ quickstart_tar_copy.path }}"
+        state: absent

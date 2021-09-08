@@ -1,0 +1,79 @@
+- name: prepare for deploy
+  hosts: all
+
+  tasks:
+    - name: set english environment locale
+      import_tasks: ../utils/set-locale.yaml
+
+    - name: Install Git   # required by geerlingguy.nodejs
+      package:
+        name: git
+        state: present
+      become: yes
+
+    - name: install Node.js
+      include_role:
+        name: geerlingguy.nodejs
+        apply:
+          become: true
+      vars:
+        nodejs_version: 12.x
+
+- name: set custom DB name    # to check that DB configuration is being obtained on source and target
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: clone repository
+      git:
+        repo: "{{ server_git_url }}"
+        version: "{{ branch }}"
+        dest: "{{ server_root_dir }}"
+        depth: 1    # Download last commit only.
+
+    - name: create local_settings from default
+      command: cp local_settings.py.default local_settings.py
+      args:
+        chdir: "{{ server_root_dir }}/project"
+        creates: local_settings.py
+
+    - name: set DEBUG = False
+      replace:
+        path: "{{ server_root_dir }}/project/local_settings.py"
+        regexp: ^DEBUG *= *True
+        replace: DEBUG = False
+
+    - name: set database name
+      replace:
+        path: "{{ server_root_dir }}/project/local_settings.py"
+        regexp: "        'NAME': 'database-name',"
+        replace: "        'NAME': 'the_{{ inventory_hostname }}_db',"
+
+    # No validate on this tasks because there's no pipenv yet.
+
+- name: deploy
+  import_playbook: ../../playbooks/deploy.yaml
+
+- name: set testing data
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: set testing user name
+      command: >
+        pipenv run ./manage.py shell -c
+        "from users.models import User;
+        alex = User.objects.first();
+        alex.first_name = '{{ lookup('vars', inventory_hostname + '_user_name') }}';
+        alex.save()"
+      args:
+        chdir: "{{ server_root_dir }}"
+      changed_when: true  # Silence linter
+
+    - name: create Media directory
+      file:
+        path: "{{ server_root_dir }}/project/media"
+        state: directory
+
+    - name: create testing Media file
+      copy:
+        dest: "{{ server_root_dir }}/project/media/{{ lookup('vars', inventory_hostname + '_media_name') }}"
+        content: "."
