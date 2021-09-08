@@ -35,7 +35,7 @@ body {
 
 @include from-colors using ($name, $value) {
 
-  @include bg-variant(".bg-#{$name}", $value);
+  @include bg-variant(".bg-#{$name}", $value, true);
 
   .text-#{$name} {
     color: $value !important;  /* stylelint-disable-line */

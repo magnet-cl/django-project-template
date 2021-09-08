@@ -1,8 +1,10 @@
+@use "sass:math";
+
 @function strip-unit($number) {
 
   @if type-of($number) == "number" and not unitless($number) {
 
-    @return $number / ($number * 0 + 1);
+    @return math.div($number, $number * 0 + 1);
   }
 
   @return $number;
@@ -18,7 +20,7 @@
     $context: strip-unit($context);
   }
 
-  @return $pixels / $context;
+  @return math.div($pixels, $context);
 }
 
 @function rem($pixels, $context: $font-size-base-in-px) {
