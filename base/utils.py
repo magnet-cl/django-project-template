@@ -55,6 +55,27 @@ def format_rut(rut):
     return '%s-%s' % (code, verifier)
 
 
+def rut_algorithm(rut):
+    """
+    Uses mod13 algorithm to compute RUT's check digit.
+    Returns a number from 0 to 10
+
+    Taken from CLRutField.
+    """
+
+    rev = map(int, reversed(str(rut)))
+    factors = cycle(range(2, 8))
+    s = sum(d * f for d, f in zip(rev, factors))
+    return (-s) % 11
+
+
+def rut_check_digit(rut):
+    """
+    Returns the RUT check digit as a number from 0-9 and K
+    """
+    return '0123456789k'[rut_algorithm(rut)]
+
+
 def validate_rut(rut):
     rut = rut.lower()
     rut = rut.replace("-", "")
@@ -63,10 +84,7 @@ def validate_rut(rut):
     aux = rut[:-1]
     dv = rut[-1:]
 
-    rev = map(int, reversed(str(aux)))
-    factors = cycle(range(2, 8))
-    s = sum(d * f for d, f in zip(rev, factors))
-    res = (-s) % 11
+    res = rut_algorithm(aux)
 
     if str(res) == dv:
         return True
@@ -90,6 +108,15 @@ def tz_datetime(*args, **kwargs):
     tz = timezone.get_current_timezone()
     naive_dt = timezone.datetime(*args, **kwargs)
     return timezone.make_aware(naive_dt, tz)
+
+
+def random_rut(minimum=1000000, maximum=99999999):
+    """
+    Generates a random but valid RUT number
+    """
+
+    digits = str(random.randint(minimum, maximum))
+    return format_rut(digits + rut_check_digit(digits))
 
 
 def random_string(length=6, chars=None, include_spaces=True):
