@@ -1,10 +1,20 @@
-- name: deploy
+- name: check Ansible version
   hosts: all
-  pre_tasks:
+  tasks:
     - name: import check Ansible version task
       import_tasks: utils/assert-ansible-version.yaml
       tags: always
 
+- name: validate deployment
+  hosts: production
+  roles:
+    - role: validate-deployment
+      tags:
+        - update
+        - validate-deployment
+
+- name: deploy
+  hosts: all
   roles:
     - role: update-code
       tags: update

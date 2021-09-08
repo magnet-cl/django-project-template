@@ -20,9 +20,11 @@
 - name: install npm dependencies
   npm:
     path: "{{ server_root_dir }}"
-    ci: yes
+    ci: "{{ not is_dev_machine }}"
     production: "{{ not is_dev_machine }}"
   environment:
     PATH: "{{ path_for_node }}"
-  tags: update
-  # Unfortunately this task is always reported as "changed" https://github.com/ansible/ansible/issues/58280
+  tags:
+    - update
+    - molecule-idempotence-notest
+  # FIXME: idempotence    https://github.com/ansible/ansible/issues/58280

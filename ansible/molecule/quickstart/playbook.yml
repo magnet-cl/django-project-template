@@ -1,0 +1,13 @@
+- name: Test quickstart
+  hosts: all
+  gather_facts: false
+
+  roles:
+    - copy-repo   # copies a fresh copy every time
+
+  tasks:
+    - name: run quickstart.sh
+      command: ./quickstart.sh
+      args:
+        chdir: "{{ project_dir }}"
+      changed_when: true  # Silence linter

@@ -397,3 +397,9 @@ After a successful deployment, you can update with:
 * `ansible/update.sh <host_name>`
 
 For more information and additional tasks, see `ansible/Readme.md`.
+
+### Storing files on S3
+
+To store static and uploaded files on AWS S3 (or DigitalOcean Spaces), uncomment the commented required dependencies in `Pipfile`, set `USE_S3 = True` in `local_settings.py` and configure the rest of the commented settings.
+
+Use the provided configuration to ensure compatibility with Ansible scripts that backup and restore media.

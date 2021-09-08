@@ -1,0 +1,166 @@
+# Transfers {{ src_transfer_path }} from {{ src_host }},
+# to a temporary location in {{ dest_host }}, that is returned in dest_transfer_path.
+
+
+# One option is to transfer the file with scp,
+# but we don't want to mess with ssh permissions between servers.
+
+# So another nginx is set up, as non-root user, in another port,
+# to avoid touching the real production nginx.
+
+# A self-signed certificate is created, instead of parsing the site configuration
+# and retrieving the certificate with sudo.
+# Note: alerts of nginx failing to write to the global error log (/var/log/nginx/error.log) are harmless.
+
+- name: transfer file between two hosts
+  block:
+    - name: setup on source
+      block:
+        - name: create nginx_direct directories
+          file:
+            path: ~/nginx_direct/root   # creates both, like `mkdir -p`
+            state: directory
+
+        - name: create configuration file
+          copy:
+            src: nginx_direct.conf
+            dest: ~/nginx_direct/nginx_direct.conf
+          # An alternative is to use `template` and define port, path, etc. in vars,
+          # but code becomes too hard to follow.
+
+        - name: copy dhparam
+          copy:
+            src: dhparam.pem    # source: https://ssl-config.mozilla.org/ffdhe2048.txt
+            dest: ~/nginx_direct/dhparam.pem
+
+        - name: generate private key
+          openssl_privatekey:
+            path: ~/nginx_direct/direct.key
+            type: ECC
+            curve: secp256r1
+
+        - name: generate Certificate Signing Request
+          openssl_csr:
+            path: ~/nginx_direct/direct.csr
+            privatekey_path: ~/nginx_direct/direct.key
+            common_name: "{{ server_domain }}"
+
+        - name: generate certificate
+          openssl_certificate:
+            path: ~/nginx_direct/direct.crt
+            csr_path: ~/nginx_direct/direct.csr
+            privatekey_path: ~/nginx_direct/direct.key
+            provider: selfsigned
+            selfsigned_not_after: +2d
+        # Shell shortcut for the three tasks above:
+        # openssl req -x509 -nodes -days=1 \
+        #   -subj="/CN={{ server_domain }}" \
+        #   -newkey=ec -pkeyopt=ec_paramgen_curve:prime256v1 \
+        #   -keyout=direct.key -out=direct.crt
+
+        - name: load certificate
+          slurp:
+            src: ~/nginx_direct/direct.crt
+          register: direct_cert
+
+        - name: generate random password
+          set_fact:
+            direct_password: "{{ lookup('password', '/dev/null') }}"  # generate without saving to file
+
+        - name: add basic auth user
+          #     htpasswd:
+          #       path: ~/nginx_direct/.htpasswd
+          #       username: magnet
+          #       password: "{{ direct_password }}"
+          # "htpasswd" module requires passlib. Workaround:
+          shell:
+            cmd: echo "magnet:$(openssl passwd -apr1 {{ direct_password | quote }})" > ~/nginx_direct/.htpasswd
+            creates: ~/nginx_direct/.htpasswd
+
+        - name: symlink wanted file
+          file:
+            state: link
+            src: "{{ src_transfer_path }}"
+            dest: ~/nginx_direct/root/file
+
+        - name: start nginx
+          command:
+            cmd: nginx -p . -c nginx_direct.conf
+            chdir: ~/nginx_direct
+          async: "{{ 60 * 60 * 24 * 2 }}"   # 48h timeout
+          poll: 0                           # Run asynchronously
+
+      when: inventory_hostname == src_host
+
+    - name: download on target
+      block:
+        - name: create temporary certificate file
+          tempfile:
+            prefix: direct_nginx_cert.
+          register: direct_cert_file
+
+        - name: create temporary transfer file
+          tempfile:
+            prefix: direct_transfer_file.
+          register: direct_transfer_file
+
+        - name: set dest_transfer_path
+          set_fact:
+            dest_transfer_path: "{{ direct_transfer_file.path }}"
+
+        - name: save certificate
+          copy:
+            content: "{{ hostvars[src_host].direct_cert.content | b64decode }}"
+            dest: "{{ direct_cert_file.path }}"
+
+        - name: transfer the file
+          # get_url:    supports client certificate but not CA certificate
+          command:
+            cmd: >
+              curl
+              --cacert "{{ direct_cert_file.path }}"
+              --user magnet:{{ hostvars[src_host].direct_password | quote }}
+              --output {{ dest_transfer_path }}
+              https://{{ hostvars[src_host].server_domain | quote }}:55555
+            warn: no
+          changed_when: true  # using "creates" skips the task because the temp file already exists
+
+      when: inventory_hostname == dest_host
+
+  rescue:
+    - name: delete dest_transfer_path
+      file:
+        path: "{{ dest_transfer_path }}"
+        state: absent
+      when:
+        - inventory_hostname == dest_host
+        - dest_transfer_path is defined
+
+    - name: fail
+      fail:
+
+  always:
+    # Cleanup, ignoring failures.
+
+    - name: stop nginx
+      command:
+        cmd: nginx -p . -c nginx_direct.conf -s quit
+        chdir: ~/nginx_direct
+      failed_when: false
+      when: inventory_hostname == src_host
+
+    - name: remove nginx configuration and files
+      file:
+        path: ~/nginx_direct
+        state: absent
+      failed_when: false
+      when: inventory_hostname == src_host
+
+    - name: delete temporary certificate file
+      file:
+        path: "{{ direct_cert_file.path }}"
+        state: absent
+      failed_when: false
+      when:
+        - inventory_hostname == dest_host
+        - direct_cert_file is defined

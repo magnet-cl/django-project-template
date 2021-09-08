@@ -1,0 +1,24 @@
+- hosts: all
+  gather_facts: no
+  tasks:
+    - name: simulate available update
+      command: git reset --hard HEAD~
+      # noqa 303    Clearly, "reset" will never be available in Ansible's git module
+      # https://stackoverflow.com/questions/40636189/is-it-possible-to-reset-hard-with-ansibles-git-module
+      args:
+        chdir: "{{ server_root_dir }}"
+      changed_when: true  # Silence linter
+
+- name: update with deploy playbook
+  import_playbook: ../../playbooks/deploy.yaml
+  # There's no way to add the "update" tag just to the verify playbook :(
+
+- hosts: all
+  gather_facts: no
+  tasks:
+    - name: check that DB backup was created on code update
+      find:
+        paths: ~/db_dumps
+        patterns: "*.dump"
+      register: db_dump_files
+      failed_when: db_dump_files.matched == 0

@@ -1,0 +1,33 @@
+# The idea is NOT to download everything to a temporary folder and then tar it,
+# because it could needlessly require too much free space.
+
+# One option is to download everything (s5cmd seems the fastest
+# https://medium.com/@joshua_robinson/s5cmd-for-high-performance-object-storage-7071352cc09d)
+# and use `tar --remove-files`, as it deletes files after adding then to the archive.
+
+# The option used here is: mount the bucket with goofys (https://github.com/kahing/goofys#readme)
+# and tar from there.
+
+- import_tasks: s3-setup.yaml
+
+- name: archive Media in S3
+  block:
+    - name: mount bucket
+      command:
+        argv:
+          - goofys
+          - --endpoint={{ s3_conf.endpoint }}
+          - -o=ro   # read-only
+          - "{{ s3_conf.bucket }}:{{ s3_conf.media_dir }}"
+          - "{{ s3_mountpoint.path }}"
+      environment:
+        AWS_ACCESS_KEY_ID: "{{ s3_conf.key_id }}"
+        AWS_SECRET_ACCESS_KEY: "{{ s3_conf.key_secret }}"
+
+    - name: archive bucket
+      archive:
+        path: "{{ s3_mountpoint.path }}"
+        dest: "{{ archive_name }}"
+
+  always:
+    - import_tasks: s3-cleanup.yaml

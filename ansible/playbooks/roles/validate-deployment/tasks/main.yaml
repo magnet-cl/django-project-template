@@ -1,0 +1,27 @@
+- name: get current branch
+  delegate_to: localhost
+  command: git rev-parse --abbrev-ref HEAD
+  register: current_branch
+  changed_when: false
+
+- name: fail on branch mismatch
+  fail:
+    msg: Wrong branch. You need to be on branch {{ branch }} to deploy to production
+  when: current_branch.stdout != branch
+  # Note: this assumes that if the branch is correct, it has no important modifications done locally.
+
+- name: get Pipenv virtualenv
+  include_role:
+    name: get-venv
+    apply:
+      delegate_to: localhost
+  vars:
+    server_root_dir: "{{ lookup('env', 'PWD') | dirname }}"
+
+- name: run Django tests
+  delegate_to: localhost
+  django_manage:
+    command: test
+    failfast: yes
+    app_path: "{{ lookup('env', 'PWD') | dirname }}"
+    virtualenv: "{{ venv.stdout }}"

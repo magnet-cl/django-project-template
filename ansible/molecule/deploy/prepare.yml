@@ -1,0 +1,41 @@
+- name: Prepare
+  hosts: all
+  gather_facts: false
+
+  tasks:
+    - name: check if private key exists
+      delegate_to: localhost
+      stat:
+        path: id_rsa
+      register: id_rsa
+
+    - name: set private key to clone repository
+      copy:
+        src: id_rsa
+        dest: ~/.ssh/id_rsa
+        mode: 0400
+      when: id_rsa.stat.exists
+
+    - name: add repositories host keys
+      known_hosts:
+        name: "{{ item.host }}"
+        key: "{{ item.key }}"
+        state: present
+      loop:
+        # yamllint disable rule:line-length
+        - host: github.com
+          key: github.com ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ==
+        - host: bitbucket.org
+          key: bitbucket.org ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAubiN81eDcafrgMeLzaFPsw2kNvEcqTKl/VqLat/MaB33pZy0y3rJZtnqwR2qOOvbwKZYKiEO1O6VqNEBxKvJJelCq0dTXWT5pbO2gDXC6h6QDXCaHo6pOHGPUy+YBaGQRGuSusMEASYiWunYN0vCAI8QaXnWMXNMdFP3jHAJH0eDsoiGnLPBlBp4TNm6rYI74nMzgz3B9IikW4WVK+dc8KZJZWYjAuORU3jc1c/NPskD2ASinf8v3xnfXeukU0sJ5N6m5E8VLjObPEO+mN2t/FZTMZLiFqPWc/ALSqnMnnhwrNi2rbfg/rd/IpL8Le3pSBne8+seeFVBoGqzHM9yXw==
+        # yamllint enable rule:line-length
+
+    - name: set english environment locale
+      import_tasks: ../utils/set-locale.yaml
+
+    - name: Install Git and wget
+      package:
+        name:
+          - git
+          - wget
+        state: present
+      become: yes

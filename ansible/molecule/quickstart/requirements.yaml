@@ -1,0 +1,3 @@
+- name: geerlingguy.nodejs
+  src: https://github.com/geerlingguy/ansible-role-nodejs
+  version: 405a113ccbde0c99614f6f815fb4285cb742ad25

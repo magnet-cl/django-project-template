@@ -9,9 +9,13 @@
 
 - name: dump DB
   postgresql_db:
-    name: "{{ project_name }}"
+    name: "{{ db_conf.NAME }}"
+    login_user: "{{ db_conf.USER }}"
+    login_password: "{{ db_conf.PASSWORD }}"
+    login_host: "{{ db_conf.HOST }}"
+    login_port: "{{ (db_conf.PORT | int) if db_conf.PORT else omit }}"
+
     state: dump
     target: db_dumps/{{ dump_name }}
     # Note: name will be local time of the controller
     target_opts: --format=custom  # same as -Fc
-    login_user: "{{ ansible_user }}"

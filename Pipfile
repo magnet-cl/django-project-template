@@ -5,6 +5,9 @@ name = "pypi"
 
 [packages]
 Django = "~=2.2.15"
+# Uncomment for S3 support:
+# boto3 = "~=1.10"
+# django-storages = "~=1.8"
 django-cron = "==0.5.1"
 django-debug-toolbar = "==2.0"
 django-form-utils = "==1.0.3"
@@ -16,11 +19,11 @@ ipython = "==7.6.1"
 pypugjs = "==5.8.1"
 pytz = "==2020.1"
 python-memcached = "==1.59"
-gunicorn = "==19.9.0"
+gunicorn = "==20.0.4"
 djangorestframework = "==3.9.1"
 djangorestframework-camel-case = "==1.1.2"
 django-webpack-loader = "==0.7.0"
-psycopg2-binary = "==2.8.5"
+psycopg2-binary = "==2.8.6"
 ipdb = "==0.13.3"
 
 [dev-packages]

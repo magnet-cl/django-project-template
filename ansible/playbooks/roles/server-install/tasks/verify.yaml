@@ -1,0 +1,48 @@
+- name: make a test request through nginx
+  uri:
+    url: http://{{ server_domain }}
+    force: yes  # ignore cache
+  tags: update
+
+- name: check if wget is installed
+  shell: command -v wget  # noqa 305    "command" is a shell builtin, not an executable utility
+  register: wget_existence
+  failed_when: False
+  changed_when: False
+  tags: update
+
+- name: check site using wget
+  block:
+    - name: check home page for broken links
+      command: >
+        wget
+          --spider
+          --recursive
+          --no-directories
+          --no-verbose
+          --page-requisites
+          --span-hosts
+          {{ server_domain }}
+      args:
+        warn: no  # Silence suggestion to use `uri` module
+      register: wget_spider_result
+      changed_when: false
+      failed_when: false
+      tags: update
+
+    - name: warn if broken links present
+      debug:
+        msg: |
+          WARNING: broken links found in home page
+          ---
+          {{ wget_spider_result.stderr }}
+      when: wget_spider_result.rc > 0
+      tags: update
+
+    - name: fail if broken links present and testing with Molecule
+      fail:
+        msg: broken links found in home page
+      when:
+        - wget_spider_result.rc > 0
+        - "'molecule-notest' in ansible_skip_tags"  # super detection
+  when: wget_existence.rc == 0

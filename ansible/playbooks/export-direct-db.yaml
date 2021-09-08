@@ -1,0 +1,112 @@
+- name: init
+  hosts: all
+  gather_facts: no
+  any_errors_fatal: yes
+  tasks:
+    - name: import check Ansible version task
+      import_tasks: utils/assert-ansible-version.yaml
+
+    - name: check that ansible_limit is defined
+      assert:
+        that: ansible_limit is defined
+        fail_msg: Please explicitly limit the hosts you want to target with --limit
+        quiet: yes
+      # This prevents "ERROR! 'ansible_limit' is undefined" later.
+
+    - name: check that this playbook is run against two hosts
+      assert:
+        that: ansible_play_hosts | length == 2
+        fail_msg: You must limit this playbook to two hosts.
+        quiet: yes
+      run_once: yes
+
+    - name: check that ansible_limit contains exactly one comma
+      assert:
+        that: ansible_limit is match('^[^,]+,[^,]+$')
+        fail_msg: Please use the --limit option with one comma.
+        quiet: yes
+
+    - name: set source and destination host name
+      set_fact:
+        src_host: "{{ ansible_limit | regex_replace('(.+),.+', '\\1') }}"
+        dest_host: "{{ ansible_limit | regex_replace('.+,(.+)', '\\1') }}"
+
+- name: confirm
+  hosts: all
+  run_once: yes
+  any_errors_fatal: yes
+  gather_facts: no
+  vars_prompt:
+    - name: confirmation
+      #     prompt: Are you sure you want to replace the DB of  "{{ dest_host }}" ...
+      # Oh crap. "'dest_host' is undefined"
+      prompt: >-
+        Are you sure you want to replace the DB of
+        "{{ ansible_limit | regex_replace('.+,(.+)', '\1') }}"
+        ({{ lookup('env', 'PWD') | dirname | basename }}) [y/N]?
+      private: no   # Show input (this is made to input passwords)
+  tasks:
+    - name: check confirmation
+      assert:
+        that: confirmation | lower == 'y'
+        fail_msg: Confirmation failed.
+        quiet: yes
+  tags: molecule-notest
+
+
+- name: export direct DB
+  hosts: all
+  any_errors_fatal: yes   # Doesn't do what I wanted with two hosts though...
+  tasks:
+    - name: backup DB on source host only
+      block:
+        - name: get source DB configuration
+          include_role:
+            name: get-db-config
+
+        - name: backup
+          include_role:
+            name: db
+            tasks_from: backup
+
+      when: inventory_hostname == src_host
+
+    - name: transfer the dump
+      include_role:
+        name: transfer-file
+      vars:
+        src_transfer_path: ~/db_dumps/{{ dump_name }}
+
+    - name: import the dump on destination host only
+      block:
+        - name: get destination DB configuration
+          include_role:
+            name: get-db-config
+
+        # Backup
+        - name: check if DB exists
+          include_role:
+            name: db
+            tasks_from: check-existence
+        - name: create a backup before restoring
+          include_role:
+            name: db
+            tasks_from: backup
+          when: db_exists.stdout == '1'
+
+        - name: restore dump
+          include_role:
+            name: db
+            tasks_from: restore
+          vars:
+            - dump_path: "{{ dest_transfer_path }}"
+            - is_local_dump_file: no
+            - src_delegate: "{{ src_host }}"
+
+      always:
+        - name: remove temporary dump
+          file:
+            path: "{{ dest_transfer_path }}"
+            state: absent
+
+      when: inventory_hostname == dest_host
