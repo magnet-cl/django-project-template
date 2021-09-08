@@ -24,7 +24,7 @@ from users.models import User
 
 # utils
 from inflection import underscore
-from base.utils import random_string
+from base.utils import random_string, random_rut
 
 
 class Mockup(object):
@@ -158,15 +158,10 @@ class Mockup(object):
             )
             data[field] = ip
 
-    def set_required_rut(self, data, field, length=6):
+    def set_required_rut(self, data, field, minimum_rut=1000000,
+                         maximum_rut=99999999, **kwargs):
         if field not in data:
-            rut = '{}.{}.{}-{}'.format(
-                self.random_int(minimum=1, maximum=99),
-                self.random_int(minimum=100, maximum=990),
-                self.random_int(minimum=100, maximum=990),
-                random_string(length=1, chars='k' + string.digits),
-            )
-            data[field] = rut
+            data[field] = random_rut(minimum_rut, maximum_rut)
 
     def set_required_string(self, data, field, length=6, include_spaces=True):
         if field not in data:
