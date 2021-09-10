@@ -274,7 +274,7 @@ To import values from `local_settings` to `settings`, the method get_local_value
 
 ## Utils
 
-### POetry
+### Poetry
 
 We use [Poetry](https://python-poetry.org/) to manage Python dependencies.
 
