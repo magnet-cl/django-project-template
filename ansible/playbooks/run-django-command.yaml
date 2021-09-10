@@ -10,7 +10,7 @@
         fail_msg: Please specify "django_command".
         quiet: yes
 
-    - name: get Pipenv virtualenv
+    - name: get Poetry virtualenv
       import_role:
         name: get-venv
 

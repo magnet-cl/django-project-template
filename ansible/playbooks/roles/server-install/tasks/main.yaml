@@ -41,14 +41,14 @@
     month: "*"
     weekday: "*"
     user: "{{ ansible_user }}"
-    job: cd ~/{{ project_name }} && /usr/local/bin/pipenv run ./manage.py runcrons >> ~/cronjob.log
+    job: cd ~/{{ project_name }} && /home/{{ ansible_user }}/.poetry/bin/poetry run ./manage.py runcrons >> ~/cronjob.log
     state: "{{ 'present' if django_cron_installed.out == 'True\n' else 'absent' }}"
 
 - name: create gunicorn configuration file
   template:
     src: gunicorn_conf.py.j2
     dest: "{{ server_root_dir }}/gunicorn_conf.py"
-    validate: bash -c "cd {{ server_root_dir }} && pipenv run python %s"
+    validate: bash -c "cd {{ server_root_dir }} && poetry run python %s"
 
 - name: create systemd service file
   template:
