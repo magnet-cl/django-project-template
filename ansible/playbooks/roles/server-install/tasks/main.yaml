@@ -41,7 +41,7 @@
     month: "*"
     weekday: "*"
     user: "{{ ansible_user }}"
-    job: cd ~/{{ project_name }} && /home/magnet/.poetry/bin/poetry run ./manage.py runcrons >> ~/cronjob.log
+    job: cd ~/{{ project_name }} && /home/{{ ansible_user }}/.poetry/bin/poetry run ./manage.py runcrons >> ~/cronjob.log
     state: "{{ 'present' if django_cron_installed.out == 'True\n' else 'absent' }}"
 
 - name: create gunicorn configuration file
