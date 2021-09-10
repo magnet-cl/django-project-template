@@ -55,25 +55,16 @@ def format_rut(rut):
     return '%s-%s' % (code, verifier)
 
 
-def rut_algorithm(rut):
+def rut_mod11(rut):
     """
-    Uses mod13 algorithm to compute RUT's check digit.
-    Returns a number from 0 to 10
-
-    Taken from CLRutField.
+    Uses a mod11 algorithm to compute RUT's check digit.
+    Returns a number from 0 to 10.
     """
 
     rev = map(int, reversed(str(rut)))
     factors = cycle(range(2, 8))
     s = sum(d * f for d, f in zip(rev, factors))
     return (-s) % 11
-
-
-def rut_check_digit(rut):
-    """
-    Returns the RUT check digit as a number from 0-9 and K
-    """
-    return '0123456789k'[rut_algorithm(rut)]
 
 
 def validate_rut(rut):
@@ -84,7 +75,7 @@ def validate_rut(rut):
     aux = rut[:-1]
     dv = rut[-1:]
 
-    res = rut_algorithm(aux)
+    res = rut_mod11(aux)
 
     if str(res) == dv:
         return True
@@ -116,7 +107,8 @@ def random_rut(minimum=1000000, maximum=99999999):
     """
 
     digits = str(random.randint(minimum, maximum))
-    return format_rut(digits + rut_check_digit(digits))
+    check_digit = '0123456789k'[rut_mod11(digits)]
+    return format_rut(digits + check_digit)
 
 
 def random_string(length=6, chars=None, include_spaces=True):

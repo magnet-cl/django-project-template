@@ -158,10 +158,9 @@ class Mockup(object):
             )
             data[field] = ip
 
-    def set_required_rut(self, data, field, minimum_rut=1000000,
-                         maximum_rut=99999999, **kwargs):
+    def set_required_rut(self, data, field, minimum=1000000, maximum=99999999):
         if field not in data:
-            data[field] = random_rut(minimum_rut, maximum_rut)
+            data[field] = random_rut(minimum, maximum)
 
     def set_required_string(self, data, field, length=6, include_spaces=True):
         if field not in data:
