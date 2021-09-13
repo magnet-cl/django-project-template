@@ -55,6 +55,19 @@ def format_rut(rut):
     return '%s-%s' % (code, verifier)
 
 
+def rut_verifying_digit(rut):
+    """
+    Uses a mod11 algorithm to compute RUT's check digit.
+    Returns a value from 0 to 9 or k.
+    """
+
+    rev = map(int, reversed(str(rut)))
+    factors = cycle(range(2, 8))
+    s = sum(d * f for d, f in zip(rev, factors))
+    mod = (-s) % 11
+    return '0123456789k'[mod]
+
+
 def validate_rut(rut):
     rut = rut.lower()
     rut = rut.replace("-", "")
@@ -63,17 +76,9 @@ def validate_rut(rut):
     aux = rut[:-1]
     dv = rut[-1:]
 
-    rev = map(int, reversed(str(aux)))
-    factors = cycle(range(2, 8))
-    s = sum(d * f for d, f in zip(rev, factors))
-    res = (-s) % 11
+    res = rut_verifying_digit(aux)
 
-    if str(res) == dv:
-        return True
-    elif dv == "k" and res == 10:
-        return True
-    else:
-        return False
+    return res == dv
 
 
 def strip_accents(s):
@@ -90,6 +95,15 @@ def tz_datetime(*args, **kwargs):
     tz = timezone.get_current_timezone()
     naive_dt = timezone.datetime(*args, **kwargs)
     return timezone.make_aware(naive_dt, tz)
+
+
+def random_rut(minimum=1000000, maximum=99999999):
+    """
+    Generates a random but valid RUT number
+    """
+
+    digits = str(random.randint(minimum, maximum))
+    return format_rut(digits + rut_verifying_digit(digits))
 
 
 def random_string(length=6, chars=None, include_spaces=True):
