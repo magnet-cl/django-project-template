@@ -58,13 +58,14 @@ def format_rut(rut):
 def rut_mod11(rut):
     """
     Uses a mod11 algorithm to compute RUT's check digit.
-    Returns a number from 0 to 10.
+    Returns a value from 0 to 9 or k.
     """
 
     rev = map(int, reversed(str(rut)))
     factors = cycle(range(2, 8))
     s = sum(d * f for d, f in zip(rev, factors))
-    return (-s) % 11
+    mod = (-s) % 11
+    return '0123456789k'[mod]
 
 
 def validate_rut(rut):
@@ -77,12 +78,7 @@ def validate_rut(rut):
 
     res = rut_mod11(aux)
 
-    if str(res) == dv:
-        return True
-    elif dv == "k" and res == 10:
-        return True
-    else:
-        return False
+    return res == dv
 
 
 def strip_accents(s):
@@ -107,8 +103,7 @@ def random_rut(minimum=1000000, maximum=99999999):
     """
 
     digits = str(random.randint(minimum, maximum))
-    check_digit = '0123456789k'[rut_mod11(digits)]
-    return format_rut(digits + check_digit)
+    return format_rut(digits + rut_mod11(digits))
 
 
 def random_string(length=6, chars=None, include_spaces=True):
