@@ -55,7 +55,7 @@ def format_rut(rut):
     return '%s-%s' % (code, verifier)
 
 
-def rut_mod11(rut):
+def rut_verifying_digit(rut):
     """
     Uses a mod11 algorithm to compute RUT's check digit.
     Returns a value from 0 to 9 or k.
@@ -76,7 +76,7 @@ def validate_rut(rut):
     aux = rut[:-1]
     dv = rut[-1:]
 
-    res = rut_mod11(aux)
+    res = rut_verifying_digit(aux)
 
     return res == dv
 
@@ -103,7 +103,7 @@ def random_rut(minimum=1000000, maximum=99999999):
     """
 
     digits = str(random.randint(minimum, maximum))
-    return format_rut(digits + rut_mod11(digits))
+    return format_rut(digits + rut_verifying_digit(digits))
 
 
 def random_string(length=6, chars=None, include_spaces=True):
