@@ -23,12 +23,30 @@ ParameterDefinition = collections.namedtuple(
 )
 
 
+class ParameterKinds:
+    INT = 'int'
+    STR = 'str'
+    TIME = 'time'
+    DATE = 'date'
+    JSON = 'json'
+    BOOL = 'bool'
+
+    choices = (
+        (INT, _('integer')),
+        (STR, _('text')),
+        (TIME, _('time')),
+        (DATE, _('date')),
+        (JSON, _('json')),
+        (BOOL, _('boolean')),  # 'true', '1' or 'yes'
+    )
+
+
 class ParameterDefinitionList(object):
     definitions = [
         ParameterDefinition(
             name='DEFAULT_URL_PROTOCOL',
             default='https',
-            kind='str',
+            kind=ParameterKinds.STR,
             verbose_name=_('Default url protocol'),
             validators=(validate_protocol,)
         ),

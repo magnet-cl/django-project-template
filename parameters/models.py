@@ -17,6 +17,7 @@ from base.models import BaseModel
 
 # enums
 from parameters.enums import ParameterDefinitionList
+from parameters.enums import ParameterKinds
 
 
 class Parameter(BaseModel):
@@ -33,14 +34,7 @@ class Parameter(BaseModel):
         max_length=255,
         verbose_name=_("kind"),
         editable=False,
-        choices=(
-            ('int', _('integer')),
-            ('str', _('text')),
-            ('time', _('time')),
-            ('date', _('date')),
-            ('json', _('json')),
-            ('bool', _('boolean')),  # 'true', '1' or 'yes'
-        ),
+        choices=ParameterKinds.choices,
     )
     cache_seconds = models.PositiveIntegerField(
         verbose_name=_("cache seconds"),
@@ -48,25 +42,25 @@ class Parameter(BaseModel):
     )
 
     def clean(self):
-        if self.kind == 'int':
+        if self.kind == ParameterKinds.INT:
             try:
                 int(self.raw_value)
             except ValueError:
                 raise ValidationError(_('Invalid input'))
 
-        if self.kind == 'time':
+        if self.kind == ParameterKinds.TIME:
             try:
                 time.strptime(self.raw_value, '%H:%M')
             except ValueError:
                 raise ValidationError(_('Invalid time format'))
 
-        if self.kind == 'date':
+        if self.kind == ParameterKinds.DATE:
             try:
                 datetime.datetime.strptime(self.raw_value, '%Y-%m-%d')
             except ValueError:
                 raise ValidationError(_('Invalid time format'))
 
-        if self.kind == 'json':
+        if self.kind == ParameterKinds.JSON:
             try:
                 json.loads(self.raw_value)
             except json.JSONDecodeError:
@@ -88,19 +82,19 @@ class Parameter(BaseModel):
 
     @classmethod
     def process_value(cls, kind, raw_value):
-        if kind == 'int':
+        if kind == ParameterKinds.INT:
             return int(raw_value)
 
-        if kind == 'json':
+        if kind == ParameterKinds.JSON:
             return json.loads(raw_value)
 
-        if kind == 'time':
+        if kind == ParameterKinds.TIME:
             return time.strptime(raw_value, '%H:%M')
 
-        if kind == 'date':
+        if kind == ParameterKinds.DATE:
             return datetime.datetime.strptime(raw_value, '%Y-%m-%d')
 
-        if kind == 'bool':
+        if kind == ParameterKinds.BOOL:
             return raw_value.lower() in ("yes", "true", "1")
 
         return raw_value
