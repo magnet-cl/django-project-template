@@ -18,7 +18,8 @@ def create_users(apps, schema_editor):
         is_staff=True,
         is_superuser=True,
         last_name='Smith',
-        password=make_password('codigofuente'),
+        password='bcrypt_sha256$$2b$12$'
+                 'TM9AaqBES87B9Dp6z0LJoude3Y4nMxJSVUw/kDe7VCGq.dcUI2cUW',
     )
 
 
