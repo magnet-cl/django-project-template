@@ -335,6 +335,15 @@ LOGGING = {
 }
 
 
+# Override logging conf
+LOCAL_LOGGING = get_local_value('LOCAL_LOGGING', dict())
+LOCAL_LOGGING_HANDLERS = get_local_value('LOCAL_LOGGING_HANDLERS', dict())
+LOCAL_LOGGING_LOGGERS = get_local_value('LOCAL_LOGGING_LOGGERS', dict())
+LOGGING['loggers'].update(LOCAL_LOGGING_LOGGERS)
+LOGGING['handlers'].update(LOCAL_LOGGING_HANDLERS)
+LOGGING.update(LOCAL_LOGGING)
+
+
 # ### Login as settings ###
 CAN_LOGIN_AS = "base.utils.can_loginas"
 LOGOUT_URL = reverse_lazy('loginas-logout')

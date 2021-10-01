@@ -46,3 +46,18 @@ SECRET_KEY = 'CHANGE ME'
 
 RECAPTCHA_PUBLIC_KEY = ''
 RECAPTCHA_PRIVATE_KEY = ''
+
+# If you have special logging needs, such as overriding the handlers, use
+# LOCAL_LOGGING_HANDLERS, LOGAL_LOGGING_LOGGERS or LOCAL_LOGGING.
+# The following is an example of overriding the 'mail_admins' handler so
+# it can use the SMTP backend regardless of the global email backend.
+# LOCAL_LOGGING_HANDLERS = {
+#     'mail_admins': {
+#         'class': 'django.utils.log.AdminEmailHandler',
+#         'filters': ['require_debug_false'],
+#         'formatter': 'standard',
+#         'level': 'ERROR',
+#         'email_backend': 'django.core.mail.backends.smtp.EmailBackend',
+#     }
+# }
+
