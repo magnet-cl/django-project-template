@@ -112,3 +112,5 @@ webpack-stats.json
 .vscode/
 *.dump
 .tags
+test-results/
+.coverage

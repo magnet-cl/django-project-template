@@ -53,8 +53,13 @@ jobs:
 
       - run:
           name: run tests
-          command: poetry run python manage.py test
+          command: |
+            poetry run pytest --cov --cov-report=html --cov-report=xml --cov-report=term
 
       - store_artifacts:
-          path: test-reports
-          destination: test-reports
+          path: test-results
+          destination: test-results
+
+      - store_test_results:
+          path: test-results
+          destination: test-results
