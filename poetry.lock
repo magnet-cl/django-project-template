@@ -346,7 +346,7 @@ python-versions = ">=3.5"
 
 [[package]]
 name = "pypugjs"
-version = "5.8.1"
+version = "5.9.9"
 description = "PugJS syntax template adapter for Django, Jinja2, Mako and Tornado templates"
 category = "main"
 optional = false
@@ -413,7 +413,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "e0d3238bf82949203ee8875ff0b9470fa49f5f454f414fd42c272783c7dbddd9"
+content-hash = "a015d6dab174fef7a6378f01c63a8e4712d77712148ba61da6b991cb2f5af93f"
 
 [metadata.files]
 appnope = [
@@ -571,7 +571,8 @@ pygments = [
     {file = "Pygments-2.10.0.tar.gz", hash = "sha256:f398865f7eb6874156579fdf36bc840a03cab64d1cde9e93d68f46a425ec52c6"},
 ]
 pypugjs = [
-    {file = "pypugjs-5.8.1-py2.py3-none-any.whl", hash = "sha256:a6da44ac31682d30e9a564f28c429ef93387bfba540a01c8227c4a5b4529b3bd"},
+    {file = "pypugjs-5.9.9-py2.py3-none-any.whl", hash = "sha256:5e8f9868751d667ead17f0e741d1efcb604bc6722318fd23b0fed3386fda48c2"},
+    {file = "pypugjs-5.9.9.tar.gz", hash = "sha256:3205dce370857caf3d3e1a9621011864cae9aef97e04a5b5cee60392d2100a68"},
 ]
 python-memcached = [
     {file = "python-memcached-1.59.tar.gz", hash = "sha256:a2e28637be13ee0bf1a8b6843e7490f9456fd3f2a4cb60471733c7b5d5557e4f"},
