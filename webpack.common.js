@@ -1,13 +1,17 @@
 /* eslint-disable import/no-extraneous-dependencies */
+const path = require('path');
+
+// Packages
 const webpack = require('webpack');
 
+// Plugins
 const BundleTracker = require('webpack-bundle-tracker');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
-const path = require('path');
-
+// Config
 module.exports = {
   context: __dirname,
+
   entry: './assets/js/index',
 
   output: {
@@ -20,8 +24,12 @@ module.exports = {
       jQuery: 'jquery',
       $: 'jquery'
     }),
-    new BundleTracker({ filename: './webpack-stats.json' }),
-    new BundleAnalyzerPlugin({ analyzerMode: 'assets', openAnalyzer: false })
+    new BundleTracker({
+      filename: './webpack-stats.json'
+    }),
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'static'
+    })
   ],
 
   module: {
@@ -39,7 +47,10 @@ module.exports = {
       },
       {
         test: /.(jpg|png|woff(2)?|eot|ttf|svg)$/,
-        loader: 'file-loader'
+        exclude: /node_modules/,
+        use: {
+          loader: 'file-loader'
+        }
       }
     ]
   },
