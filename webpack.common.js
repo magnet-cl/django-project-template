@@ -28,7 +28,8 @@ module.exports = {
       filename: './webpack-stats.json'
     }),
     new BundleAnalyzerPlugin({
-      analyzerMode: 'static'
+      analyzerMode: 'static',
+      openAnalyzer: false
     })
   ],
 
