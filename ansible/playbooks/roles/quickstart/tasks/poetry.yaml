@@ -38,25 +38,20 @@
         msg: Poetry is installed but not available in path. Please try reinstalling manually.
       when: poetry_existence.rc > 0
 
-    # TODO check this comment, it used to refer to poetry
-    # Poetry doesn't play well with Ansible...
-
     - name: get Poetry virtualenv
       command: poetry env info -p
       args:
         chdir: "{{ server_root_dir }}"
       register: venv
       changed_when: false
-      failed_when:
-        - venv.rc > 0
-        - no_venv_message not in venv.stderr
+      failed_when: false
       tags: update
 
     - name: create virtualenv with Poetry
       command: poetry env use 3.8
       args:
         chdir: "{{ server_root_dir }}"
-      when: no_venv_message in venv.stderr
+      when: venv.rc > 0
 
   when: ansible_distribution != 'MacOSX'
 
@@ -69,3 +64,4 @@
   command: poetry install
   args:
     chdir: "{{ server_root_dir }}"
+  # Improvement: idempotence (report task as "ok" instead of always as "changed")
