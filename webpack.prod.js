@@ -1,42 +1,43 @@
 /* eslint-disable import/no-extraneous-dependencies */
-const merge = require('webpack-merge');
-const autoprefixer = require('autoprefixer');
-const path = require('path');
 const glob = require('glob');
-const sass = require('sass');
+const path = require('path');
 
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+// Packages
+const autoprefixer = require('autoprefixer');
+const { merge } = require('webpack-merge');
+
+// Plugins
+const CSSMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
+// Config files
 const common = require('./webpack.common');
 
+// Config
 module.exports = merge(common, {
   mode: 'production',
 
   output: {
-    filename: '[name]-[hash].js'
+    filename: '[name]-[contenthash].js'
   },
 
   plugins: [
     new MiniCssExtractPlugin({
-      filename: '[name]-[hash].css',
-      chunkFilename: '[id]-[hash].css'
+      filename: '[name]-[contenthash].css',
+      chunkFilename: '[id]-[contenthash].css'
     }),
-    new CleanWebpackPlugin(),
-    new OptimizeCSSAssetsPlugin({})
+    new CleanWebpackPlugin()
   ],
 
   devtool: 'source-map',
 
   optimization: {
+    minimize: true,
     minimizer: [
-      new TerserPlugin({
-        cache: true,
-        parallel: true,
-        sourceMap: true
-      })
+      new TerserPlugin(),
+      new CSSMinimizerPlugin()
     ]
   },
 
@@ -48,21 +49,26 @@ module.exports = merge(common, {
           MiniCssExtractPlugin.loader,
           {
             loader: 'css-loader',
-            options: { sourceMap: true }
+            options: {
+              sourceMap: true
+            }
           },
           {
             loader: 'postcss-loader',
             options: {
               sourceMap: true,
-              plugins: () => [autoprefixer()]
+              postcssOptions: {
+                plugins: () => [autoprefixer()]
+              }
             }
           },
           {
             loader: 'sass-loader',
             options: {
               sourceMap: true,
-              implementation: sass,
-              includePaths: glob.sync('node_modules').map(d => path.join(__dirname, d))
+              sassOptions: {
+                includePaths: glob.sync('node_modules').map((d) => path.join(__dirname, d))
+              }
             }
           }
         ]

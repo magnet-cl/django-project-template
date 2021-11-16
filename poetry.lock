@@ -118,7 +118,7 @@ django = ">1.11,<3.0"
 
 [[package]]
 name = "django-webpack-loader"
-version = "0.7.0"
+version = "1.4.1"
 description = "Transparently use webpack with django"
 category = "main"
 optional = false
@@ -346,7 +346,7 @@ python-versions = ">=3.5"
 
 [[package]]
 name = "pypugjs"
-version = "5.8.1"
+version = "5.9.9"
 description = "PugJS syntax template adapter for Django, Jinja2, Mako and Tornado templates"
 category = "main"
 optional = false
@@ -413,7 +413,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "d42b1f52c49f3ef070c432e30ebd60ffea69cc26ffe7540e289b2050397bcb68"
+content-hash = "a015d6dab174fef7a6378f01c63a8e4712d77712148ba61da6b991cb2f5af93f"
 
 [metadata.files]
 appnope = [
@@ -463,8 +463,8 @@ django-recaptcha = [
     {file = "django_recaptcha-2.0.4-py3.6.egg", hash = "sha256:e588fff328d924617ef39ba98f3b50fa6ccb0f81e05255ca04bcfc2427b81c12"},
 ]
 django-webpack-loader = [
-    {file = "django-webpack-loader-0.7.0.tar.gz", hash = "sha256:7a3c88201aa54481f9399465615cbe7b9aece8081496a6d0287b7cb8e232f447"},
-    {file = "django_webpack_loader-0.7.0-py2.py3-none-any.whl", hash = "sha256:d28a276ed3d89e97a313b74967e373693f8b86afe629f4c91eea91c5b4f2ec20"},
+    {file = "django-webpack-loader-1.4.1.tar.gz", hash = "sha256:7e34085b7fc4d352e482ff9cf7d09ae4524e730675e25432ab1d25a2dd94e583"},
+    {file = "django_webpack_loader-1.4.1-py2.py3-none-any.whl", hash = "sha256:290ce20a1347e14ba1cadfb5df90f2d1218eb81a1ecdcfb7ccc8ef9adab4b7d3"},
 ]
 djangocms-admin-style = [
     {file = "djangocms-admin-style-1.4.0.tar.gz", hash = "sha256:0ff3f45ed56e98c92fcabf219377f4165ab20a4cb2d018c1da461b6b85179177"},
@@ -571,7 +571,8 @@ pygments = [
     {file = "Pygments-2.10.0.tar.gz", hash = "sha256:f398865f7eb6874156579fdf36bc840a03cab64d1cde9e93d68f46a425ec52c6"},
 ]
 pypugjs = [
-    {file = "pypugjs-5.8.1-py2.py3-none-any.whl", hash = "sha256:a6da44ac31682d30e9a564f28c429ef93387bfba540a01c8227c4a5b4529b3bd"},
+    {file = "pypugjs-5.9.9-py2.py3-none-any.whl", hash = "sha256:5e8f9868751d667ead17f0e741d1efcb604bc6722318fd23b0fed3386fda48c2"},
+    {file = "pypugjs-5.9.9.tar.gz", hash = "sha256:3205dce370857caf3d3e1a9621011864cae9aef97e04a5b5cee60392d2100a68"},
 ]
 python-memcached = [
     {file = "python-memcached-1.59.tar.gz", hash = "sha256:a2e28637be13ee0bf1a8b6843e7490f9456fd3f2a4cb60471733c7b5d5557e4f"},

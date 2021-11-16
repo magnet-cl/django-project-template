@@ -1,16 +1,18 @@
 /* eslint-disable import/no-extraneous-dependencies */
-const webpack = require('webpack');
-const path = require('path');
 const glob = require('glob');
-const autoprefixer = require('autoprefixer');
-const merge = require('webpack-merge');
-const sass = require('sass');
+const path = require('path');
 
+// Packages
+const autoprefixer = require('autoprefixer');
+const { merge } = require('webpack-merge');
+
+// Plugins
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
+// Config files
 const common = require('./webpack.common');
 
-
+// Config
 module.exports = merge(common, {
   mode: 'development',
 
@@ -23,18 +25,17 @@ module.exports = merge(common, {
     new MiniCssExtractPlugin({
       filename: '[name].css',
       chunkFilename: '[id].css'
-    }),
-    new webpack.NoEmitOnErrorsPlugin(),
-    new webpack.HotModuleReplacementPlugin()
+    })
   ],
 
-  devtool: 'cheap-eval-source-map',
+  devtool: 'eval-cheap-source-map',
 
   devServer: {
-    hot: true,
-    quiet: false,
     port: 3000,
-    headers: { 'Access-Control-Allow-Origin': '*' }
+    headers: {
+      'Access-Control-Allow-Origin': '*'
+    },
+    watchFiles: ['**/*.pug']
   },
 
   module: {
@@ -46,21 +47,26 @@ module.exports = merge(common, {
           'style-loader',
           {
             loader: 'css-loader',
-            options: { sourceMap: true }
+            options: {
+              sourceMap: true
+            }
           },
           {
             loader: 'postcss-loader',
             options: {
               sourceMap: true,
-              plugins: () => [autoprefixer()]
+              postcssOptions: {
+                plugins: () => [autoprefixer()]
+              }
             }
           },
           {
             loader: 'sass-loader',
             options: {
               sourceMap: true,
-              implementation: sass,
-              includePaths: glob.sync('node_modules').map(d => path.join(__dirname, d))
+              sassOptions: {
+                includePaths: glob.sync('node_modules').map((d) => path.join(__dirname, d))
+              }
             }
           }
         ]
