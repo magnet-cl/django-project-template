@@ -244,6 +244,23 @@ If you have chilean RUT input, use the `rut` class too enable javascript validat
 
 ## Test
 
+### Test runner
+Due to limitations with built-in test runner `pytest` is used instead. To run
+tests, execute the following command:
+
+`pytest [--reuse-db] [--create-db] [your-tests-to-run]`
+
+### Coverage
+Test coverage is implemented with the `pytest-cov` plugin. You can run test
+coverage by appending the `--cov` parameter to the command line.
+
+- `--cov` - Runs coverage with standard terminal output
+- `--cov --cov-report=html` - Runs coverage with HTML output.
+- `--cov --cov-report=html --cov-report=term` - Runs coverage with HTML+stdout
+ output.
+
+Coverage reports are output to the `test-results` directory.
+
 ### Mockups
 
 On `base/mockups.py` there is a class called Mockups, it's a class to create objects for our clases to be used on testing. Every model defined by us requires a method in this class called create_<model_name> if you don't define this method, a test will fail.

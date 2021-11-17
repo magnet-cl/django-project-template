@@ -1,0 +1,17 @@
+[run]
+source = .
+
+[report]
+include = *.py
+omit =
+    tests.py
+    *_test.py
+    *_tests.py
+    */site-packages/*
+    */migrations/*
+
+[html]
+directory = test-results/coverage
+
+[xml]
+output = test-results/coverage.xml

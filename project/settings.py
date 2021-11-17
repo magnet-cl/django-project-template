@@ -57,7 +57,7 @@ else:
     env = 'production'
 
 # TEST should be true if we are running python tests
-TEST = 'test' in sys.argv
+TEST = 'test' in sys.argv or 'pytest' in sys.argv[0]
 
 
 # People who get code error notifications.
