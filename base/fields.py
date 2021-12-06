@@ -8,6 +8,7 @@ import re
 
 # django
 from django.db.models import CharField
+from django.db.models import FileField
 from django.core.exceptions import ValidationError
 
 # utils
@@ -15,6 +16,25 @@ from base import utils
 
 # translations
 from django.utils.translation import ugettext_lazy as _
+
+
+# public methods
+def file_path(self, name):
+    """
+    Generic method to give to a FileField or ImageField in it's upload_to
+    parameter.
+
+    This returns the name of the class, concatenated with the id of the
+    object and the name of the file.
+    """
+    base_path = "{}/{}/{}/{}"
+
+    return base_path.format(
+        self.__class__.__name__,
+        str(utils.today()),
+        utils.random_string(30),
+        name
+    )
 
 
 class ChileanRUTField(CharField):
@@ -81,3 +101,9 @@ class ChileanRUTField(CharField):
                 params={'value': value},
             )
         return value
+
+
+class BaseFileField(FileField):
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault('upload_to', file_path)
+        super().__init__(*args, **kwargs)
