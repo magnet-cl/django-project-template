@@ -89,6 +89,18 @@ and `to_dict`.
 This model inherits from BaseModel. It adds the `display_order` field to allow
 customizable ordering. Change the `set_display_order_` method to change the logic of how a new object is arranged.
 
+## Model Fields
+
+### BaseFileField
+
+This class inherits from django's FileField. The upload_to parameter is set to the function file_path by default.
+
+### ChileanRUTField
+
+This class inherits from django's CharField. This field normalizes how Chilean RUTs are stored in the database. The Chilean RUTs are stored in the format "XX.XXX.XXX-Y". Letters are stored in uppercase.
+
+It accepts the formats XX.XXX.XXX-Y and XXXXXXXXY. It also checks if the RUTs checksum is valid.
+
 ## Forms
 
 ### BaseModelForm
