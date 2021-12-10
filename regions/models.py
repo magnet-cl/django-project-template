@@ -1,13 +1,13 @@
 # django
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
-from django.utils.translation import ugettext_noop
+from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext_noop
 
 # base
 from base.models import BaseModel
 
 # mark for translation the app name
-ugettext_noop('Regions')
+gettext_noop('Regions')
 
 
 class Region(BaseModel):

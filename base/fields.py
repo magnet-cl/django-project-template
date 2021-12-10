@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-""" 
+"""
 Custom Fields
 """
 
@@ -14,7 +14,7 @@ from django.core.exceptions import ValidationError
 from base import utils
 
 # translations
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 
 class ChileanRUTField(CharField):

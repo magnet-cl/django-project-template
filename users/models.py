@@ -14,8 +14,8 @@ from django.template import loader
 from django.utils import timezone
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
-from django.utils.translation import ugettext_lazy as _
-from django.utils.translation import ugettext_noop
+from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext_noop
 
 # managers
 from users.managers import UserManager
@@ -28,7 +28,7 @@ from parameters.models import Parameter
 from messaging import email_manager
 
 # mark for translation the app name
-ugettext_noop("Users")
+gettext_noop("Users")
 
 
 class User(AbstractBaseUser, PermissionsMixin, BaseModel):
