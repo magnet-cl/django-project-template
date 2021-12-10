@@ -10,7 +10,7 @@ import decimal
 # django
 from django.db import models
 from django.utils.functional import Promise
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 from django.core.serializers.json import DjangoJSONEncoder
 
 
@@ -31,6 +31,6 @@ class ModelEncoder(DjangoJSONEncoder):
             return str(obj)
 
         elif isinstance(obj, Promise):
-            return force_text(obj)
+            return force_str(obj)
 
         return super(ModelEncoder, self).default(obj)
