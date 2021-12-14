@@ -127,11 +127,11 @@ sqlparse = ">=0.2.0"
 
 [[package]]
 name = "django-loginas"
-version = "0.3.6"
+version = "0.3.10"
 description = "An app to add a \"Log in as user\" button in the Django user admin page."
 category = "main"
 optional = false
-python-versions = "*"
+python-versions = ">3.3"
 
 [[package]]
 name = "django-recaptcha"
@@ -555,7 +555,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "cdd68a230a6eed5f8ed556e8a33ae1e10e0e4458e15b111516d7f29c2a1794e7"
+content-hash = "84c0b185058f34ba1503bc63b83e237943d75205a299c595dc4b749b4ec0811e"
 
 [metadata.files]
 appnope = [
@@ -650,8 +650,8 @@ django-debug-toolbar = [
     {file = "django_debug_toolbar-3.2.2-py3-none-any.whl", hash = "sha256:d7bab7573fab35b0fd029163371b7182f5826c13da69734beb675c761d06a4d3"},
 ]
 django-loginas = [
-    {file = "django-loginas-0.3.6.tar.gz", hash = "sha256:bd72331883954836e0e78df63e4e49e928c284d0f889f40cd227f892b1d26eff"},
-    {file = "django_loginas-0.3.6-py2.py3-none-any.whl", hash = "sha256:d45ef6d67414526aae3020948ad9ac2f5e5f806a3f2d197dbdc148ce685b147a"},
+    {file = "django-loginas-0.3.10.tar.gz", hash = "sha256:8d81f31d993b3c3c9f9018b385bfbdf74ead320e0a4b18493141d0e2dbc8ad6b"},
+    {file = "django_loginas-0.3.10-py2.py3-none-any.whl", hash = "sha256:2d609ddcc68ff840b3e59baa58ac58b870cd1aef491aaab8cd796d022d961c40"},
 ]
 django-recaptcha = [
     {file = "django_recaptcha-2.0.6-py2.py3-none-any.whl", hash = "sha256:567784963fd5400feaf92e8951d8dbbbdb4b4c48a76e225d4baa63a2c9d2cd8c"},
