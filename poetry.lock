@@ -154,7 +154,7 @@ python-versions = "*"
 
 [[package]]
 name = "djangocms-admin-style"
-version = "1.4.0"
+version = "2.0.2"
 description = "Adds pretty CSS styles for the django CMS admin interface."
 category = "main"
 optional = false
@@ -555,7 +555,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "84c0b185058f34ba1503bc63b83e237943d75205a299c595dc4b749b4ec0811e"
+content-hash = "613c4b67564cada7f62806052789b326b287606bc4dc058d7e44bf66b465cee2"
 
 [metadata.files]
 appnope = [
@@ -661,7 +661,8 @@ django-webpack-loader = [
     {file = "django_webpack_loader-1.4.1-py2.py3-none-any.whl", hash = "sha256:290ce20a1347e14ba1cadfb5df90f2d1218eb81a1ecdcfb7ccc8ef9adab4b7d3"},
 ]
 djangocms-admin-style = [
-    {file = "djangocms-admin-style-1.4.0.tar.gz", hash = "sha256:0ff3f45ed56e98c92fcabf219377f4165ab20a4cb2d018c1da461b6b85179177"},
+    {file = "djangocms-admin-style-2.0.2.tar.gz", hash = "sha256:4381b259b62340127654a51a1eb83af2c9a42b608a36393c731c04712cd37068"},
+    {file = "djangocms_admin_style-2.0.2-py3-none-any.whl", hash = "sha256:6661a6c36ce56d18ec8fad05a3e56589417fc0bd0c647eb6d336e7f836999723"},
 ]
 djangorestframework = [
     {file = "djangorestframework-3.12.4-py3-none-any.whl", hash = "sha256:6d1d59f623a5ad0509fe0d6bfe93cbdfe17b8116ebc8eda86d45f6e16e819aaf"},
