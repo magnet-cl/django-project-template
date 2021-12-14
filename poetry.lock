@@ -207,11 +207,11 @@ tornado = ["tornado (>=0.2)"]
 
 [[package]]
 name = "inflection"
-version = "0.3.1"
+version = "0.5.1"
 description = "A port of Ruby on Rails inflector to Python"
 category = "main"
 optional = false
-python-versions = "*"
+python-versions = ">=3.5"
 
 [[package]]
 name = "iniconfig"
@@ -555,7 +555,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "613c4b67564cada7f62806052789b326b287606bc4dc058d7e44bf66b465cee2"
+content-hash = "5e0251e6f6d702df9416fbedbe290a4d517a2bec700d0f81fa6553d87d7c8d1b"
 
 [metadata.files]
 appnope = [
@@ -680,7 +680,8 @@ gunicorn = [
     {file = "gunicorn-19.9.0.tar.gz", hash = "sha256:fa2662097c66f920f53f70621c6c58ca4a3c4d3434205e608e121b5b3b71f4f3"},
 ]
 inflection = [
-    {file = "inflection-0.3.1.tar.gz", hash = "sha256:18ea7fb7a7d152853386523def08736aa8c32636b047ade55f7578c4edeb16ca"},
+    {file = "inflection-0.5.1-py2.py3-none-any.whl", hash = "sha256:f38b2b640938a4f35ade69ac3d053042959b62a0f1076a5bbaa1b9526605a8a2"},
+    {file = "inflection-0.5.1.tar.gz", hash = "sha256:1a29730d366e996aaacffb2f1f1cb9593dc38e2ddd30c91250c6dde09ea9b417"},
 ]
 iniconfig = [
     {file = "iniconfig-1.1.1-py2.py3-none-any.whl", hash = "sha256:011e24c64b7f47f6ebd835bb12a743f2fbe9a26d4cecaa7f53bc4f35ee9da8b3"},
