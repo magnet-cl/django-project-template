@@ -7,22 +7,22 @@ license = "MIT"
 
 [tool.poetry.dependencies]
 python = "^3.8"
-Django = "~=2.2.24"
-django-cron = "==0.5.1"             # latest version
-django-debug-toolbar = "~=3.2.2"    # latest version. try to move to dev-dependencies. official support 3.2 and python 3.10
-django-loginas = "==0.3.6"          # update available
-django-recaptcha = "==2.0.6"        # latest version. maybe dead, consider removing. official support for up to python 3.8 and django 3.0 only
-djangocms-admin-style = "==1.4.0"   # update available. official support for up to python 3.8 and django 3.1 only
-inflection = "==0.3.1"              # update available
-pypugjs = "==5.9.9"                 # latest version
-pytz = "==2020.1"                   # update available
-python-memcached = "==1.59"         # latest version
-gunicorn = "==19.9.0"               # update available
-djangorestframework = "==3.12.4"    # latest version. official support for django 3.2 and python 3.10
-djangorestframework-camel-case = "==1.1.2"  # update available
-django-webpack-loader = "==1.4.1"   # latest version. official support for up to python 3.9 only (supports django 3.2)
-psycopg2-binary = "==2.8.5"         # update available. official support for python 3.10
-ipdb = "==0.13.3"                   # update available. official support for up to python 3.9 only
+Django = "~2.2.24"
+django-cron = "0.5.1"             # latest version
+django-debug-toolbar = "~3.2.2"   # latest version. try to move to dev-dependencies. official support 3.2 and python 3.10
+django-loginas = "0.3.6"          # update available
+django-recaptcha = "2.0.6"        # latest version. maybe dead, consider removing. official support for up to python 3.8 and django 3.0 only
+djangocms-admin-style = "1.4.0"   # update available. official support for up to python 3.8 and django 3.1 only
+inflection = "0.3.1"              # update available
+pypugjs = "5.9.9"                 # latest version
+pytz = "2020.1"                   # update available
+python-memcached = "1.59"         # latest version
+gunicorn = "19.9.0"               # update available
+djangorestframework = "3.12.4"    # latest version. official support for django 3.2 and python 3.10
+djangorestframework-camel-case = "1.1.2"  # update available
+django-webpack-loader = "1.4.1"   # latest version. official support for up to python 3.9 only (supports django 3.2)
+psycopg2-binary = "2.8.5"         # update available. official support for python 3.10
+ipdb = "0.13.3"                   # update available. official support for up to python 3.9 only
 
 [tool.poetry.dev-dependencies]
 flake8 = "*"
