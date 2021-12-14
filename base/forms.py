@@ -1,8 +1,6 @@
 # django
 from django import forms
-from django.forms import HiddenInput
-
-from form_utils.forms import BetterModelForm
+from django.forms import ModelForm, HiddenInput
 
 setattr(
     forms.fields.Field, 'is_checkbox',
@@ -15,7 +13,7 @@ setattr(
 )
 
 
-class BaseModelForm(BetterModelForm):
+class BaseModelForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(BaseModelForm, self).__init__(*args, **kwargs)
