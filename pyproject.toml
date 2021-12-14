@@ -11,7 +11,7 @@ Django = "~=2.2.24"
 django-cron = "==0.5.1"             # latest version
 django-debug-toolbar = "~=3.2.2"    # latest version. try to move to dev-dependencies. official support 3.2 and python 3.10
 django-loginas = "==0.3.6"          # update available
-django-recaptcha = "==2.0.4"        # update required. maybe dead, consider removing. official support for up to python 3.8 and django 3.0 only
+django-recaptcha = "==2.0.6"        # latest version. maybe dead, consider removing. official support for up to python 3.8 and django 3.0 only
 djangocms-admin-style = "==1.4.0"   # update available. official support for up to python 3.8 and django 3.1 only
 inflection = "==0.3.1"              # update available
 pypugjs = "==5.9.9"                 # latest version

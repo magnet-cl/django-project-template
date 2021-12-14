@@ -135,14 +135,14 @@ python-versions = "*"
 
 [[package]]
 name = "django-recaptcha"
-version = "2.0.4"
+version = "2.0.6"
 description = "Django recaptcha form field/widget app."
 category = "main"
 optional = false
 python-versions = "*"
 
 [package.dependencies]
-django = ">1.11,<3.0"
+django = ">1.11,<4.0"
 
 [[package]]
 name = "django-webpack-loader"
@@ -555,7 +555,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "cd2f8e78a8d9ba72db183d1cf2182f75cb316645cb128066b86733a40c4c680e"
+content-hash = "cdd68a230a6eed5f8ed556e8a33ae1e10e0e4458e15b111516d7f29c2a1794e7"
 
 [metadata.files]
 appnope = [
@@ -654,9 +654,7 @@ django-loginas = [
     {file = "django_loginas-0.3.6-py2.py3-none-any.whl", hash = "sha256:d45ef6d67414526aae3020948ad9ac2f5e5f806a3f2d197dbdc148ce685b147a"},
 ]
 django-recaptcha = [
-    {file = "django-recaptcha-2.0.4.tar.gz", hash = "sha256:eeae26a6888e752092fe4cc8bf27b8936e957447ba6f3d293249199aa851fb4a"},
-    {file = "django_recaptcha-2.0.4-py2.py3-none-any.whl", hash = "sha256:cefa62157a8fa1fa2f3f4a978792781cb7c5a6dc5c1df703ac910ccd03426dee"},
-    {file = "django_recaptcha-2.0.4-py3.6.egg", hash = "sha256:e588fff328d924617ef39ba98f3b50fa6ccb0f81e05255ca04bcfc2427b81c12"},
+    {file = "django_recaptcha-2.0.6-py2.py3-none-any.whl", hash = "sha256:567784963fd5400feaf92e8951d8dbbbdb4b4c48a76e225d4baa63a2c9d2cd8c"},
 ]
 django-webpack-loader = [
     {file = "django-webpack-loader-1.4.1.tar.gz", hash = "sha256:7e34085b7fc4d352e482ff9cf7d09ae4524e730675e25432ab1d25a2dd94e583"},
