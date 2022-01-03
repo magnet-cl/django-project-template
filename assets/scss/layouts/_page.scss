@@ -1,0 +1,46 @@
+/*
+ * Content:
+ *
+ * Html
+ * Main
+ * Page loading
+ */
+
+
+// Html
+// ============================================================================
+
+html {
+  position: relative;
+  min-height: 100%;
+  font-size: $font-size-base-in-px; // 62.5% = 10px | 100% = 16px
+}
+
+
+// Main
+// ============================================================================
+
+main {
+  min-height: calc(100vh - #{$navbar-min-height + $footer-min-height});
+  margin-top: $navbar-min-height;
+}
+
+
+// Page loading
+// ============================================================================
+
+body {
+  .page-loading-icon {
+    position: relative;
+    left: 10px;
+    display: none;
+  }
+
+  &.wait {
+    cursor: wait !important; // stylelint-disable-line declaration-no-important
+
+    .page-loading-icon {
+      display: inline-block;
+    }
+  }
+}

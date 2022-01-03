@@ -1,0 +1,24 @@
+/*
+ * Content:
+ *
+ * Modules
+ * Highlight alert
+ */
+
+
+// Modules
+// ============================================================================
+
+@use "sass:color";
+
+
+// Highlight alert
+// ============================================================================
+
+.highlight {
+  @each $color, $value in $theme-colors {
+    &.alert-#{$color} {
+      background: color.adjust($value, $lightness: -10%);
+    }
+  }
+}
