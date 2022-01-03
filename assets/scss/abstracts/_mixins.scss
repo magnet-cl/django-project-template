@@ -4,7 +4,6 @@
  * Modules
  * Bootstrap mixins
  * Backgrounds
- * Colors
  */
 
 
@@ -25,22 +24,4 @@
 
 @mixin split-background($color-a, $color-b) {
   background: linear-gradient(to right, $color-a 0%, $color-a 50%, $color-b 50%, $color-b 100%);
-}
-
-
-// Colors
-// ============================================================================
-
-@mixin from-colors() {
-  @each $key, $value in $colors {
-    @content($key, $value);
-  }
-
-  @each $key, $value in $theme-colors {
-    @content($key, $value);
-  }
-
-  @each $key, $value in $grays {
-    @content("gray-#{$key}", $value);
-  }
 }
