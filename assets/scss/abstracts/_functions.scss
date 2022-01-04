@@ -4,6 +4,7 @@
  * Modules
  * Bootstrap functions
  * Units
+ * Maps
  * Spacing
  */
 
@@ -62,6 +63,20 @@
 
 @function px($rems, $context: $font-size-base-in-px) {
   @return unitless-px($rems, $context) * 1px;
+}
+
+
+// Maps
+// ============================================================================
+
+@function map-add-key-prefix($map, $prefix) {
+  $_map: ();
+
+  @each $key, $value in $map {
+    $_map: map.set($_map, "#{$prefix}#{$key}", $value);
+  }
+
+  @return $_map;
 }
 
 

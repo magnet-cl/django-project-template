@@ -55,6 +55,8 @@ $grays: (
   "900": $gray-900
 );
 
+$grays-rgb: map-loop($grays, to-rgb, "$value");
+
 // Colors
 $blue: #0d6efd;
 $indigo: #6610f2;
@@ -104,6 +106,8 @@ $theme-colors: (
   "dark": $dark
 );
 
+$theme-colors-rgb: map-loop($theme-colors, to-rgb, "$value");
+
 
 // Body
 // ============================================================================
@@ -115,28 +119,16 @@ $body-bg: $white;
 // ============================================================================
 
 $utilities-colors: map.merge(
-  $theme-colors,
+  map.merge(
+    $theme-colors-rgb,
+    map-add-key-prefix($grays-rgb, gray-)
+  ),
   (
-    "gray-100": map.get($grays, "100"),
-    "gray-200": map.get($grays, "200"),
-    "gray-300": map.get($grays, "300"),
-    "gray-400": map.get($grays, "400"),
-    "gray-500": map.get($grays, "500"),
-    "gray-600": map.get($grays, "600"),
-    "gray-700": map.get($grays, "700"),
-    "gray-800": map.get($grays, "800"),
-    "gray-900": map.get($grays, "900"),
-    "black": $black,
-    "white": $white,
-    "body": $body-bg
+    "black": to-rgb($black),
+    "white": to-rgb($white),
+    "body": to-rgb($body-bg)
   )
 );
-
-$utilities-text: $utilities-colors;
-$utilities-text-colors: $utilities-colors;
-
-$utilities-bg: $utilities-colors;
-$utilities-bg-colors: $utilities-bg;
 
 
 // Components
