@@ -40,7 +40,7 @@ def audit_log(sender, instance, created, raw, update_fields, **kwargs):
         for key in original_dict.keys():
             if original_dict[key] != actual_dict[key]:
                 change = True
-                if key == sensitive_fields:
+                if key in sensitive_fields:
                     changed_field_labels[key] = {'change': 'field updated'}
                 else:
                     changed_field_labels[key] = {
