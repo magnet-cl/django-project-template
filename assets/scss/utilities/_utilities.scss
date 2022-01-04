@@ -1,0 +1,78 @@
+/*
+ * Content:
+ *
+ * Modules
+ * Bootstrap utilities
+ * Utilities
+ * Utilities api
+ */
+
+
+// Modules
+// ============================================================================
+
+@use "sass:map";
+
+
+// Bootstrap utilities
+// ============================================================================
+
+@import "~bootstrap/scss/utilities";
+
+
+// Utilities
+// ============================================================================
+
+$utilities: map.merge(
+  $utilities,
+  (
+    // Color
+    "color": map.merge(
+      map.get($utilities, "color"),
+      (
+        values: map.merge(
+          $utilities-text-colors,
+          (
+            "muted": $text-muted,
+            "reset": inherit
+          )
+        )
+      )
+    ),
+    "color-hover": (
+      property: color,
+      class: text,
+      state: hover,
+      local-vars: (
+        "text-opacity": 1
+      ),
+      values: map.merge(
+        $utilities-text-colors,
+        (
+          "muted": $text-muted,
+          "reset": inherit
+        )
+      )
+    ),
+    // Remove unused utilities
+    // Remove them according to the needs of the project.
+    "opacity": null,
+    "top": null,
+    "bottom": null,
+    "start": null,
+    "end": null,
+    "translate-middle": null,
+    "line-height": null,
+    "text-opacity": null,
+    "bg-opacity": null,
+    "gradient": null,
+    "user-select": null,
+    "pointer-events": null
+  )
+);
+
+
+// Utilities api
+// ============================================================================
+
+@import "~bootstrap/scss/utilities/api";
