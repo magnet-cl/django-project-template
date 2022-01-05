@@ -99,7 +99,8 @@ html(lang="{{ request.LANGUAGE_CODE|default:'es' }}")
     block stylesheets
 
   body(class=body_class)
-    include includes/navbar.pug
+    include includes/navbar/navbar.pug
+
     main
       //- Messages
       if messages
