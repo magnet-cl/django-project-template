@@ -15,6 +15,7 @@ import os
 import sys
 
 # django
+from django.contrib.messages import constants as messages
 from django.urls import reverse_lazy
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -393,3 +394,9 @@ LOG_IGNORE_FIELDS = [
 CRON_CLASSES = [
     'base.cron.ClearSessionsCronJob',
 ]
+
+# Message level tags
+MESSAGE_TAGS = {
+    messages.DEBUG: "dark",
+    messages.ERROR: "danger",
+}

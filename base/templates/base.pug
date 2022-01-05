@@ -101,14 +101,20 @@ html(lang="{{ request.LANGUAGE_CODE|default:'es' }}")
   body(class=body_class)
     include includes/navbar.pug
     main
+      //- Messages
       if messages
-        .container
-          .main-alert.fixed-notification
-            for message in messages
-              .alert(class="alert-{{ message.tags }}")
-                | {{ message }}
-                button.close(type="button", data-dismiss="alert", aria-label="Close")
-                  span.i.fa.fa-times
+        .main-alert.fixed-notification
+          for message in messages
+            .alert.alert-dismissible.fade.show(
+              class="alert-{{ message.level_tag }}",
+              role="alert"
+            )
+              | {{ message }}
+              button.btn-close(
+                type="button",
+                aria-label="{% trans 'Close' %}",
+                data-bs-dismiss="alert"
+              )
 
       .container
         nav(aria-label="breadcrumb")
