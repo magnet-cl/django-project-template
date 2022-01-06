@@ -16,6 +16,7 @@
     "moment": "^2.29.0",
     "popper.js": "^1.16.1",
     "select2": "^4.0.13",
+    "select2-bootstrap-5-theme": "^1.2.0",
     "tempusdominus-bootstrap-4": "^5.39.0",
     "tempusdominus-core": "^5.19.0"
   },
