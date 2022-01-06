@@ -1,8 +1,8 @@
-# Python CircleCI 2.0 configuration file
+# Python CircleCI 2.1 configuration file
 
-version: 2
+version: 2.1
 jobs:
-  build:
+  test:
     docker:
       - image: circleci/python:3.8-buster-node
       - image: circleci/postgres:12
@@ -63,3 +63,37 @@ jobs:
       - store_test_results:
           path: test-results
           destination: test-results
+
+  lint:
+    docker:
+        - image: circleci/python:3.8-buster-node
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            - cache-v1-{{ checksum "poetry.lock" }}
+            - cache-
+
+      - run:
+          name: install python packages
+          command: poetry install
+
+      - save_cache:
+          key: cache-v1-{{ checksum "poetry.lock" }}
+          paths:
+            - ~/.local
+            - ~/.cache
+
+      - run:
+          name: run black
+          command: poetry run black --check .
+
+workflows:
+  test_and_lint:
+    jobs:
+      - test
+      - lint
