@@ -85,10 +85,6 @@ html(lang="{{ request.LANGUAGE_CODE|default:'es' }}")
     script(defer, src="https://kit.fontawesome.com/0f7c5bee93.js")
 
     // External libraries styles
-    link(
-      href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css",
-      rel="stylesheet"
-    )
 
     // Own styles
     {% render_bundle "main" "css" %}
@@ -162,8 +158,8 @@ html(lang="{{ request.LANGUAGE_CODE|default:'es' }}")
       crossorigin="anonymous"
     )
     script(
-      src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js",
-      integrity="sha256-z0oKYg6xiLq3yJGsp/LsY9XykbweQlHl42jHv2XTBz4=",
+      src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/js/tempusdominus-bootstrap-4.min.js",
+      integrity="sha512-k6/Bkb8Fxf/c1Tkyl39yJwcOZ1P4cRrJu77p83zJjN2Z55prbFHxPs9vN7q3l3+tSMGPDdoH51AEU8Vgo1cgAA==",
       crossorigin="anonymous"
     )
 
