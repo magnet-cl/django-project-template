@@ -18,22 +18,32 @@ jobs:
 
       - restore_cache:
           keys:
-            - cache-v1-{{ checksum "poetry.lock" }}
-            - cache-
+            - poetry-v1-{{ checksum "poetry.lock" }}
+            - poetry-
 
       - run:
           name: install python packages
           command: poetry install
 
       - save_cache:
-          key: cache-v1-{{ checksum "poetry.lock" }}
+          key: poetry-v1-{{ checksum "poetry.lock" }}
           paths:
             - ~/.local
             - ~/.cache
 
+      - restore_cache:
+          keys:
+            - npm-v1-{{ checksum "package-lock.json" }}
+            - npm-
+
       - run:
           name: install node packages
           command: npm ci
+
+      - save_cache:
+          key: npm-v1-{{ checksum "package-lock.json" }}
+          paths:
+            - ~/.npm
 
       - run:
           name: generate bundles
@@ -75,15 +85,15 @@ jobs:
 
       - restore_cache:
           keys:
-            - cache-v1-{{ checksum "poetry.lock" }}
-            - cache-
+            - poetry-v1-{{ checksum "poetry.lock" }}
+            - poetry-
 
       - run:
           name: install python packages
           command: poetry install
 
       - save_cache:
-          key: cache-v1-{{ checksum "poetry.lock" }}
+          key: poetry-v1-{{ checksum "poetry.lock" }}
           paths:
             - ~/.local
             - ~/.cache
