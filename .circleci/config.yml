@@ -1,4 +1,4 @@
-# Python CircleCI 2.1 configuration file
+# Python CircleCI 2.0 configuration file
 
 version: 2.1
 jobs:
@@ -101,6 +101,10 @@ jobs:
       - run:
           name: run black
           command: poetry run black --check .
+
+      - run:
+          name: run flake8
+          command: poetry run flake8 --max-line-length=88 --ignore=E203,W503 --exclude=migrations .
 
 workflows:
   test_and_lint:
