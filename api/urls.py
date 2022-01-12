@@ -13,10 +13,10 @@ from regions import viewsets as regions_views
 router = DefaultRouter()
 
 # regions
-router.register(r'communes', regions_views.CommuneViewSet)
+router.register(r"communes", regions_views.CommuneViewSet)
 
 
-app_name = 'api'
+app_name = "api"
 urlpatterns = [
-    path('', include(router.urls)),
+    path("", include(router.urls)),
 ]
