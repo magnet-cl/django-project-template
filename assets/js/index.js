@@ -1,8 +1,11 @@
 import '../scss/main.scss';
 import App from './app';
 
+// Vendors
+import './vendors/tempus-dominus';
+
+// Behaviors
 import './behaviors/status';
-import './behaviors/input-time-picker';
 import './behaviors/input-rut';
 
 $(() => {
