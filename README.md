@@ -358,7 +358,6 @@ avoid not sending values of inputs with type submit. To disable this behaviour, 
 ### chained regions and communes selects
 
 The project comes with chained regions and communes selects.
-To able this add regions.js in the regions and communes selects template.
 
 ### Rut formatter
 

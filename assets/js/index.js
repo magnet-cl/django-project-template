@@ -7,6 +7,7 @@ import './vendors/tempus-dominus';
 
 // Behaviors
 import './behaviors/input-rut';
+import './behaviors/regions';
 
 window.addEventListener('DOMContentLoaded', () => {
   const alerts = document.querySelectorAll('.alert');
