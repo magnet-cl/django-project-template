@@ -2,33 +2,34 @@ const App = {};
 
 App.utils = {
   hideLoading() {
-    $('body').removeClass('wait');
+    document.body.classList.remove('wait');
   },
 
   thousandSeparator(x) {
     return Math.round(x).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
   },
 
-  showLoading($element) {
-    $('body').addClass('wait');
+  showLoading(element) {
+    document.body.classList.add('wait');
 
-    if ($element && $element.find('.page-loading-icon').length === 0) {
-      $element.append(
-        '<i class="fa fa-spinner fa-spin page-loading-icon"></i>'
+    if (!element.querySelector('.loading-icon')) {
+      element.insertAdjacentHTML(
+        'beforeend',
+        '<span class="fas fa-spinner fa-spin loading-icon" aria-hidden="true"></span>'
       );
     }
   },
 
-  highlight($element) {
-    $element.addClass('highlight');
+  highlight(element) {
+    element.classList.add('highlight');
 
     setTimeout(() => {
-      $element.toggleClass('dim highlight');
+      element.classList.add('dim');
+      element.classList.remove('highlight');
     }, 15);
 
-    setTimeout(() => $element.removeClass('dim'), 1010);
+    setTimeout(() => element.classList.remove('dim'), 1010);
   }
 };
-
 
 export default App;

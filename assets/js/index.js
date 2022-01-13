@@ -2,42 +2,41 @@ import '../scss/main.scss';
 import App from './app';
 
 // Vendors
+import './vendors/select2';
 import './vendors/tempus-dominus';
 
 // Behaviors
 import './behaviors/status';
 import './behaviors/input-rut';
 
-$(() => {
-  $('.alert').each((i, item) => {
-    App.utils.highlight($(item));
+window.addEventListener('DOMContentLoaded', () => {
+  const alerts = document.querySelectorAll('.alert');
+  alerts.forEach((alert) => {
+    App.utils.highlight(alert);
   });
 
-  const $alert = $('.main-alert .alert');
-  setTimeout(() => $alert.fadeOut(), 10000);
+  setTimeout(() => {
+    const mainAlerts = document.querySelectorAll('.main-alert .alert');
+    mainAlerts.forEach((alert) => {
+      $(alert).alert('close');
+    });
+  }, 10000);
 
-  $('.model-form input:text').addClass('form-control');
+  document.querySelectorAll('form')
+    .forEach((form) => {
+      form.addEventListener('submit', () => {
+        const submitButtons = [...form.elements].filter((element) => (
+          element.matches('[type="submit"]:not(.js-do-not-disable-on-submit)')
+        ));
 
-  $('select').not('.js-not-select2').select2({
-    width: '100%'
-  });
+        // Disable buttons after submit to prevent disabling submit inputs
+        // with values
+        submitButtons.forEach((submitButton) => {
+          submitButton.disabled = true; // eslint-disable-line no-param-reassign
+          App.utils.showLoading(submitButton);
+        });
 
-  $('form').submit((e) => {
-    const $this = $(e.currentTarget);
-    const $buttons = $this.find(':submit').not('.js-do-not-disable-on-submit');
-
-    // disable buttons after submit to prevent disabling submit inputs
-    // with values
-    setTimeout(() => {
-      $buttons.addClass('disabled').prop('disabled', true);
-      App.utils.showLoading($buttons);
-
-      setTimeout(() => {
-        $buttons.removeClass('disabled').prop('disabled', false);
-        App.utils.hideLoading();
-      }, 3000);
-    }, 10);
-
-    return true;
-  });
+        return true;
+      });
+    });
 });
