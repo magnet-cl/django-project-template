@@ -6,7 +6,6 @@ import './vendors/select2';
 import './vendors/tempus-dominus';
 
 // Behaviors
-import './behaviors/status';
 import './behaviors/input-rut';
 
 window.addEventListener('DOMContentLoaded', () => {
