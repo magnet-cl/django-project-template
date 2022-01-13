@@ -29,7 +29,7 @@ block content
             a(href="{% templatetag openvariable %} {{snake_case_model_name}}.get_absolute_url {% templatetag closevariable %}")
               | {% templatetag openvariable %}{{snake_case_model_name}}{% templatetag closevariable %}
           if perms.{{app_name}}.change_{{model_name.lower}} or perms.{{app_name}}.delete_{{model_name.lower}}
-            td.text-right
+            td.text-end
               if perms.{{app_name}}.change_{{model_name.lower}}
                 a.btn.btn-sm.btn-outline-secondary(href="{% templatetag openblock %} url '{{lower_case_model_name}}_update' {{snake_case_model_name}}.id {% templatetag closeblock %}")
                   {% templatetag openblock %} trans 'Update {{model_verbose_name}}' {% templatetag closeblock %}

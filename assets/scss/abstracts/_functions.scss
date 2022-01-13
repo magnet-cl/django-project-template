@@ -1,9 +1,32 @@
+/*
+ * Content:
+ *
+ * Modules
+ * Bootstrap functions
+ * Units
+ * Maps
+ * Spacing
+ */
+
+
+// Modules
+// ============================================================================
+
+@use "sass:map";
 @use "sass:math";
 
+
+// Bootstrap functions
+// ============================================================================
+
+@import "~bootstrap/scss/functions";
+
+
+// Units
+// ============================================================================
+
 @function strip-unit($number) {
-
   @if type-of($number) == "number" and not unitless($number) {
-
     @return math.div($number, $number * 0 + 1);
   }
 
@@ -11,7 +34,6 @@
 }
 
 @function unitless-rem($pixels, $context: $font-size-base-in-px) {
-
   @if not (unitless($pixels)) {
     $pixels: strip-unit($pixels);
   }
@@ -24,12 +46,10 @@
 }
 
 @function rem($pixels, $context: $font-size-base-in-px) {
-
   @return unitless-rem($pixels, $context) * 1rem;
 }
 
 @function unitless-px($rems, $context: $font-size-base-in-px) {
-
   @if not (unitless($rems)) {
     $rems: strip-unit($rems);
   }
@@ -42,11 +62,27 @@
 }
 
 @function px($rems, $context: $font-size-base-in-px) {
-
   @return unitless-px($rems, $context) * 1px;
 }
 
-@function spacer($spacer: 1) {
 
-  @return map-get($spacers, $spacer);
+// Maps
+// ============================================================================
+
+@function map-add-key-prefix($map, $prefix) {
+  $_map: ();
+
+  @each $key, $value in $map {
+    $_map: map.set($_map, "#{$prefix}#{$key}", $value);
+  }
+
+  @return $_map;
+}
+
+
+// Spacing
+// ============================================================================
+
+@function spacer($spacer: 1) {
+  @return map.get($spacers, $spacer);
 }

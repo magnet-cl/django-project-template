@@ -1,20 +1,51 @@
-@charset "utf-8";
+/*
+ * Content:
+ *
+ * Abstracts
+ * Vendors
+ * Layouts
+ * Componentes
+ * Utilities
+ * Shame
+ */
 
-@import "abstracts/variables",
-  "abstracts/functions",
-  "abstracts/mixins",
-  "abstracts/animations";
+// Abstracts
+// ============================================================================
 
-@import "vendor/boostrap";
+@import "abstracts/+import";
 
-@import "base/base",
-  "base/typography";
 
-@import "layout/navbar",
-  "layout/main",
-  "layout/footer",
-  "layout/sections";
+// Vendors
+// ============================================================================
 
-@import "components/fixed-notification";
+@import "vendors/+import";
+
+
+// Base
+// ============================================================================
+
+@import "base/+import";
+
+
+// Layouts
+// ============================================================================
+
+@import "layouts/+import";
+
+
+// Components
+// ============================================================================
+
+@import "components/+import";
+
+
+// Utilities
+// ============================================================================
+
+@import "utilities/+import";
+
+
+// Shame
+// ============================================================================
 
 @import "shame";

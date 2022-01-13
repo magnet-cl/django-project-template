@@ -29,7 +29,7 @@
             a.page-link(href="?p={{ page_obj.next_page_number }}&{% get_order_by_querystring ordering=ordering %}&{{clean_query_string}}") 
               | »
   .col-sm-3
-    .text-muted.text-right
+    .text-muted.text-end
       div
         | {% blocktrans with start_index=page_obj.start_index end_index=page_obj.end_index %}Showing results from {{start_index}} to {{end_index}}{% endblocktrans %}
       div

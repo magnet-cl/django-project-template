@@ -1,0 +1,12 @@
+- load i18n
+
+if not url
+  {% url url_name as url %}
+
+li
+  a.dropdown-item(
+    class="{% if request.path == url %}active{% endif %}",
+    href="{{ url }}",
+    aria-current="true"
+  )
+    {% trans text|capfirst %}

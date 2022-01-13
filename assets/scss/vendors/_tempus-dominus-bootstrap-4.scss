@@ -1,0 +1,20 @@
+/*
+ * Content:
+ *
+ * Tempus dominus bootstrap 4
+ * Bootstrap 5 migration patch
+ */
+
+
+// Tempus dominus bootstrap 4
+// ============================================================================
+
+@import "~tempusdominus-bootstrap-4/src/sass/tempusdominus-bootstrap-4";
+
+
+// Bootstrap 5 migration patch
+// ============================================================================
+
+.sr-only {
+  @include visually-hidden();
+}

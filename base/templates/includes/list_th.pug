@@ -3,7 +3,7 @@
 
 th.text-nowrap
   .d-flex.flex-row.justify-content-between
-    div 
+    div
       a(href="?{% get_order_by_querystring ordering=ordering current_order=order_by %}&{{clean_query_string}}")
         {% trans verbose_name|capfirst %}
     for order in ordering
@@ -14,7 +14,7 @@ th.text-nowrap
           else
             i.fa.fa-chevron-up
         if ordering|length > 1
-          div.text-right
+          .text-end
             span.badge.badge-info
               | {{forloop.counter}}
             a(href="?{% get_order_by_querystring ordering=ordering current_order=order_by remove=True %}&{{clean_query_string}}")

@@ -18,7 +18,7 @@ window.addEventListener('DOMContentLoaded', () => {
   setTimeout(() => {
     const mainAlerts = document.querySelectorAll('.main-alert .alert');
     mainAlerts.forEach((alert) => {
-      $(alert).alert('close');
+      bootstrap.Alert.getInstance(alert).close();
     });
   }, 10000);
 

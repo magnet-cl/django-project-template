@@ -1,0 +1,16 @@
+/*
+ * Content:
+ *
+ * Root
+ */
+
+
+// Root
+// ============================================================================
+
+:root {
+  // Colors
+  @each $color, $value in $grays-rgb {
+    --#{$variable-prefix}gray-#{$color}-rgb: #{$value}; // stylelint-disable-line custom-property-pattern
+  }
+}

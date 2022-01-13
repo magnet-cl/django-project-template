@@ -17,6 +17,7 @@
     "$": true,
     "Dropzone": true,
     "Image": true,
+    "bootstrap": true,
     "document": true,
     "fetch": true,
     "localStorage": true,

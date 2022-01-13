@@ -6,39 +6,38 @@ block javascripts
   script(src="{% static 'js/login.js' %}")
 
 block content
-  form#login-form.form-signin.form-horizontal.mt-4(
+  form#login-form.mt-4(
     action='',
     method='post',
     data-username-field-id="id_{{form.email_field.name}}"
   )
     {% csrf_token %}
 
-    .form-signin-inner
-      if form.non_field_errors
-        for error in form.non_field_errors
-          .alert.alert-danger {{ error }}
+    if form.non_field_errors
+      for error in form.non_field_errors
+        .alert.alert-danger {{ error }}
 
-      for field in form.hidden_fields
-        | {{field}}
-      input#id_next(type='hidden', name='next', value='{{ next }}')
+    for field in form.hidden_fields
+      | {{field}}
+    input#id_next(type='hidden', name='next', value='{{ next }}')
 
-      for field in form.visible_fields
+    for field in form.visible_fields
 
-        .form-row
-          .form-group.col-6
-            label(for="id_{{ field.name }}")
-              | {{field.label}}
+      .row
+        .mb-3.col-6
+          label(for="id_{{ field.name }}")
+            | {{field.label}}
 
-            {{field}}
+          {{field}}
 
-            if field.errors
-              .invalid-feedback {{ field.errors|striptags }}
+          if field.errors
+            .invalid-feedback {{ field.errors|striptags }}
 
-            if field.help_text
-              small.form-text.text-muted(id="{{field.name}}Help") {{ field.help_text }}
+          if field.help_text
+            small.form-text(id="{{field.name}}Help") {{ field.help_text }}
 
-    .form-row
-      .form-group.col-sm-6.text-right
+    .row
+      .mb-3.col-sm-6.text-end
         button.btn.btn-primary(type='submit', value="")
           | {% trans 'Log in' %}
 

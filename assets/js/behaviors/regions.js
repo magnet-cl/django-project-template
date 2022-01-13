@@ -1,8 +1,11 @@
+import { SELECT2_DEFAULT_OPTIONS } from '../vendors/select2';
+
 window.addEventListener('DOMContentLoaded', () => {
   const regionSearchSelector = '#id_region';
   const communeSearchSelector = '#id_commune';
 
   $(communeSearchSelector).select2({
+    ...SELECT2_DEFAULT_OPTIONS,
     ajax: {
       url: '/regions/communes/search/',
       dataType: 'json',
@@ -14,12 +17,11 @@ window.addEventListener('DOMContentLoaded', () => {
       processResults: (data) => ({ results: data }),
       cache: true
     },
-    placeholder: 'Comuna',
-    width: '100%'
+    placeholder: 'Comuna'
   });
 
   $(regionSearchSelector).select2({
-    placeholder: 'Región',
-    width: '100%'
+    ...SELECT2_DEFAULT_OPTIONS,
+    placeholder: 'Región'
   });
 });
