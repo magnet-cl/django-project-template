@@ -28,11 +28,3 @@ repos:
         always_run: true
         stages:
           - push
-
-      - id: django-test
-        name: django-test
-        entry: poetry run python3 manage.py test
-        language: system
-        always_run: true
-        stages:
-          - push
