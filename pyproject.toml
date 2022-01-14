@@ -34,6 +34,7 @@ pytest-django = "^4.4.0"
 [tool.isort]
 ensure_newline_before_comments = true
 extend_skip = ["migrations", "manage.py"]
+filter_files = true
 force_single_line = true
 group_by_package = true
 import_heading_django = "django"
