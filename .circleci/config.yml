@@ -106,6 +106,10 @@ jobs:
           name: run flake8
           command: poetry run flake8 --max-line-length=88 --ignore=E203,W503 --exclude=migrations .
 
+      - run:
+          name: run isort
+          command: poetry run isort --check .
+
 workflows:
   test_and_lint:
     jobs:
