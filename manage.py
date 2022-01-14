@@ -17,7 +17,7 @@ if __name__ == "__main__":
             raise ImportError(
                 "Couldn't import Django. Are you sure it's installed and "
                 "available on your PYTHONPATH environment variable? Did you "
-                "forget to activate a posetry environment (poetry shell)?"
+                "forget to activate a poetry environment (poetry shell)?"
             )
         raise
     execute_from_command_line(sys.argv)
