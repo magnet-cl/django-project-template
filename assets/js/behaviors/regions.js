@@ -1,5 +1,10 @@
-import { SELECT2_DEFAULT_OPTIONS } from '../vendors/select2';
+// Constants
+const SELECT2_DEFAULT_OPTIONS = {
+  width: '100%',
+  theme: 'bootstrap-5'
+};
 
+// Initialize behavior
 window.addEventListener('DOMContentLoaded', () => {
   const regionSearchSelector = '#id_region';
   const communeSearchSelector = '#id_commune';

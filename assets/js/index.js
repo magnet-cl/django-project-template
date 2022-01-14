@@ -1,7 +1,7 @@
 import '../scss/main.scss';
 
 // Vendors
-import './vendors/select2';
+import './vendors/choices';
 import './vendors/tempus-dominus';
 
 // Behaviors

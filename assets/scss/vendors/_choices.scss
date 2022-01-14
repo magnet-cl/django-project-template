@@ -1,0 +1,20 @@
+/*
+ * Content:
+ *
+ * Choices
+ * Input
+ */
+
+
+// Choices
+// ============================================================================
+
+@import "~choices.js/src/styles/choices";
+
+
+// Input
+// ============================================================================
+
+.#{$choices-selector}__input--placeholder-hidden::placeholder {
+  color: transparent;
+}

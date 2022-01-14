@@ -162,6 +162,9 @@ html(lang="{{ request.LANGUAGE_CODE|default:'es' }}")
       integrity="sha512-k6/Bkb8Fxf/c1Tkyl39yJwcOZ1P4cRrJu77p83zJjN2Z55prbFHxPs9vN7q3l3+tSMGPDdoH51AEU8Vgo1cgAA==",
       crossorigin="anonymous"
     )
+    script(
+      src="https://cdn.jsdelivr.net/npm/choices.js@9.0.1/public/assets/scripts/choices.min.js"
+    )
 
     // Own scripts
     {% render_bundle "main" "js" %}
