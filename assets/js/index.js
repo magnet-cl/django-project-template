@@ -1,5 +1,4 @@
 import '../scss/main.scss';
-import App from './app';
 
 // Vendors
 import './vendors/select2';
@@ -8,6 +7,9 @@ import './vendors/tempus-dominus';
 // Behaviors
 import './behaviors/input-rut';
 import './behaviors/regions';
+
+// Utils
+import App from './utils/app';
 
 window.addEventListener('DOMContentLoaded', () => {
   const alerts = document.querySelectorAll('.alert');
