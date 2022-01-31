@@ -1,38 +1,38 @@
 
 - load i18n
 
-- if field.is_hidden
+if field.is_hidden
   div
     {{ field }}
-- else
+else
   .row
     .col-sm-6
       div(
-        class="{% if field.errors %}has-error{% endif %} {% if field.field.is_checkbox %} form-check {% endif %} {% if not field.field.is_radio_button %} form-group {% endif %}"
+        class="{% if field.field.is_checkbox %} form-check {% endif %} {% if not field.field.is_radio_button %}mb-3{% endif %}"
       )
         if field.field.is_checkbox or field.field.is_radio_button
-          {{ field }}
-          label(for="id_{{ field.name }}")
-            {{ field.label }}
+          | {{ field }}
+          label.form-check-label(for="id_{{ field.name }}")
+            | {{ field.label }}
         else
           label(for="id_{{ field.name }}")
             | {{ field.label}}
-            - if not field.field.required
-              | ({% trans 'optional' %})
+            if not field.field.required
+              | ({% trans "optional" %})
           {{ field }}
 
         if field.errors
-          span.text-danger.text-right(for="id_{{ field.name }}")
+          span.invalid-feedback.d-block(for="id_{{ field.name }}")
             {% for error in field.errors %}
             | {{ error }}
             {% endfor %}
 
     if field.help_text
       .col-sm-6
-        .form-group
+        .mb-3
           div
             label &nbsp;
-          small.form-text.text-muted(
+          small.form-text(
             id="{{ field.name }}_help"
           )
-              {{ field.help_text|safe }}
+            | {{ field.help_text|safe }}

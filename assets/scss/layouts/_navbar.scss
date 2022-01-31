@@ -1,0 +1,34 @@
+/*
+ * Content:
+ *
+ * Navbar
+ * Navbar brand
+ * Navbar toggler
+ */
+
+
+// Navbar
+// ============================================================================
+
+.navbar {
+  min-height: $navbar-min-height;
+  box-shadow: 0 -1px 8px 0 $shadow-color;
+}
+
+
+// Navbar brand
+// ============================================================================
+
+.navbar-brand {
+  padding: 0;
+}
+
+
+// Navbar toggler
+// ============================================================================
+
+.navbar-toggler {
+  padding: $navbar-toggler-padding-y px($navbar-toggler-padding-x);
+  font-size: px($navbar-toggler-font-size);
+  border: none;
+}

@@ -11,17 +11,15 @@ block content
   .row
     .offset-sm-8.col-sm-4
       form()
-        .view-controls.text-left
-          .input-group.mb-3
-            input.form-control(
-              name="q",
-              placeholder="{% trans 'Search by name or email' %}",
-              type="text",
-              value="{{q|default:''}}"
-            )
-            .input-group-append
-              button.btn.btn-outline-secondary(type="submit")
-                i.fa.fa-search
+        .input-group.mb-3
+          input.form-control(
+            name="q",
+            placeholder="{% trans 'Search by name or email' %}",
+            type="text",
+            value="{{q|default:''}}"
+          )
+          button.btn.btn-outline-secondary(type="submit")
+            i.fa.fa-search
 
         for order in ordering
           input(type="hidden", name="o", value="{{order}}")

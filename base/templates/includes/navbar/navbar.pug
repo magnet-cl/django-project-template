@@ -1,0 +1,50 @@
+- load i18n
+
+header
+  nav.navbar.navbar-expand-md.navbar-dark.bg-dark.fixed-top(
+    aria-label="{% trans 'Main navigation' %}"
+  )
+    .container-fluid
+      //- Brand
+      a.navbar-brand(href="{% url 'home' %}") Project
+        i.fa.fa-spinner.fa-spin.page-loading-icon
+
+      //- Menu toggler
+      button.navbar-toggler(
+        type="button",
+        aria-label="{% trans 'Toggle main navigation' %}",
+        aria-controls="navbarCollapse",
+        aria-expanded="false",
+        data-bs-toggle="collapse",
+        data-bs-target="#navbarCollapse"
+      )
+        span.navbar-toggler-icon
+
+      //- Menu
+      #navbarCollapse.collapse.navbar-collapse
+        {% with navbar_link_template="includes/navbar/navbar_link.pug" dropdown_link_template="includes/dropdown/dropdown_link.pug" %}
+        ul.navbar-nav.me-auto
+          if user.is_authenticated
+            if user.is_staff
+              {% include navbar_link_template with text="Administration" url_name="admin:index" %}
+            {% include navbar_link_template with text="status" url_name="status" %}
+            {% include navbar_link_template with text="users" url_name="user_list" %}
+
+        ul.navbar-nav
+          if user.is_authenticated
+            li.nav-item.dropdown
+              a#dropdownLoggedIn.nav-link.dropdown-toggle(
+                href="#",
+                role="button",
+                aria-haspopup="true",
+                aria-expanded="false",
+                data-bs-toggle="dropdown"
+              )
+                {% trans "Logged in as" %} {{ user.email }}
+              ul.dropdown-menu(aria-labelledby="dropdownLoggedIn")
+                {% include dropdown_link_template with text="My profile" url_name="user_profile" %}
+                {% include dropdown_link_template with text="Change password" url_name="password_change" %}
+                {% include dropdown_link_template with text="Logout" url_name=request.session.loginas_from_user|yesno:"loginas-logout,logout" %}
+          else
+            {% include navbar_link_template with text="login" url_name="login" %}
+        {% endwith %}
