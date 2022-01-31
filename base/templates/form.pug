@@ -16,7 +16,7 @@ block content
         p.alert.alert-danger
           | {{ error }}
 
-  form.model-form(
+  form(
     method="post",
     enctype="multipart/form-data",
     role="form",
@@ -40,7 +40,7 @@ block content
         .col-sm-6.text-end
           .btn-group
             block buttons
-              button.btn.btn-primary.js-submit-button(
+              button.btn.btn-primary(
                 name="submit",
                 type="submit",
                 value="{% block submit_button_value %}1{% endblock %}"

@@ -12,7 +12,10 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 module.exports = {
   context: __dirname,
 
-  entry: './assets/js/index',
+  entry: {
+    main: './assets/js/index',
+    status: './assets/js/status'
+  },
 
   output: {
     path: path.resolve('./assets/bundles/')

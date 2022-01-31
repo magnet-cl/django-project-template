@@ -1,12 +1,12 @@
 extends base.pug
 
-- load static
+- load render_bundle from webpack_loader
 
 block javascripts
-  script(src="{% static 'js/status.js' %}")
+  {% render_bundle "status" "js" %}
 
 block content
-  table.table.table-bordered.table-hover
+  table.table.table-bordered.table-hover.status
     tbody
 
       tr
