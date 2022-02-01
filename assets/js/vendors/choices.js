@@ -1,3 +1,6 @@
+// Vendors
+import Choices from 'choices.js';
+
 // Constants
 const CHOICES_LANG_TEXTS = {
   en: {
@@ -40,7 +43,7 @@ function setChoicesMultiplePlaceholderVisibility(choices) {
  * @param {HTMLSelectElement} select
  * @returns {Choices}
  */
-function initChoices(select) {
+export function initChoices(select) {
   const documentLang = document.documentElement.lang;
   const isMultiple = select.hasAttribute('multiple');
   const placeholder = select.querySelector('option[value=""]')?.textContent;
@@ -48,6 +51,8 @@ function initChoices(select) {
     shouldSort: false,
     searchResultLimit: 100,
     removeItemButton: isMultiple,
+    placeholderValue: '',
+    allowHTML: false,
     ...CHOICES_LANG_TEXTS[documentLang]
   };
   const choices = new Choices(select, options);
@@ -65,7 +70,7 @@ function initChoices(select) {
 
 // Initialize behavior
 window.addEventListener('DOMContentLoaded', () => {
-  const choicesSelects = document.querySelectorAll('select:not(.js-not-choices)');
+  const choicesSelects = document.querySelectorAll('select:not(.js-not-choices):not(#id_region):not(#id_commune)');
 
   choicesSelects.forEach(initChoices);
 });

@@ -16,7 +16,6 @@
   "globals": {
     "$": true,
     "bootstrap": true,
-    "Choices": true,
     "document": true,
     "Dropzone": true,
     "fetch": true,
