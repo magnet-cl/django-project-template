@@ -11,6 +11,7 @@
  * Navbar
  * Footer
  * Bootstrap variables
+ * Choices variables
  */
 
 
@@ -193,3 +194,18 @@ $footer-min-height: 56px;
 // ============================================================================
 
 @import "~bootstrap/scss/variables";
+
+
+// Choices variables
+// ============================================================================
+
+$choices-guttering: 0;
+$choices-font-size-lg: $form-select-font-size-lg;
+$choices-font-size-md: $form-select-font-size;
+$choices-font-size-sm: $form-select-font-size-sm;
+$choices-border-radius: $form-select-border-radius;
+$choices-bg-color: $form-select-bg;
+$choices-bg-color-disabled: $form-select-disabled-bg;
+$choices-text-color: $form-select-color;
+$choices-keyline-color: $form-select-border-color;
+$choices-disabled-color: $form-select-disabled-color;
