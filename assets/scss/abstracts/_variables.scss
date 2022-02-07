@@ -8,8 +8,10 @@
  * Utilities maps
  * Components
  * Typography
+ * Buttons
  * Navbar
  * Footer
+ * Dropdown
  * Bootstrap variables
  * Choices variables
  */
@@ -177,6 +179,12 @@ $lead-font-size: $font-size-base * 1.25;
 $small-font-size: 80%;
 
 
+// Buttons
+// ============================================================================
+
+$btn-hover-bg-shade-amount: 15%;
+
+
 // Navbar
 // ============================================================================
 
@@ -188,6 +196,13 @@ $navbar-nav-item-link-padding-x: 14.4px;
 // ============================================================================
 
 $footer-min-height: 56px;
+
+
+// Dropdown
+// ============================================================================
+
+$dropdown-link-hover-color: $white;
+$dropdown-link-hover-bg: shade-color($primary, $btn-hover-bg-shade-amount);
 
 
 // Bootstrap variables
@@ -208,6 +223,25 @@ $choices-bg-color-disabled: $form-select-disabled-bg;
 $choices-text-color: $form-select-color;
 $choices-disabled-color: $form-select-disabled-color;
 $choices-keyline-color: $form-select-border-color;
+
+// Dropdown
+$choices-bg-color-dropdown: $gray-100;
+$choices-dropdown-border-width: 0;
+$choices-dropdown-border-color: $choices-keyline-color;
+
+$choices-dropdown-item-paddiny-y: $form-select-padding-y;
+$choices-dropdown-item-paddiny-x: $form-select-padding-x;
+$choices-dropdown-item-font-size: $font-size-base;
+$choices-dropdown-item-line-height: $line-height-base;
+$choices-dropdown-item-color: $dropdown-link-color;
+
+$choices-dropdown-item-active-color: $dropdown-link-active-color;
+$choices-dropdown-item-active-bg: $dropdown-link-active-bg;
+
+$choices-dropdown-item-hover-color: $dropdown-link-hover-color;
+$choices-dropdown-item-hover-bg: $dropdown-link-hover-bg;
+
+$choices-dropdown-item-disabled-color: $dropdown-link-disabled-color;
 
 // Multiple item
 $choices-border-radius-item: $badge-border-radius;
