@@ -7,6 +7,7 @@
  * Input
  * List
  * Select single
+ * Select multiple
  */
 
 
@@ -25,7 +26,8 @@
   &.is-disabled {
     .#{$choices-selector}__inner,
     .#{$choices-selector}__input,
-    .#{$choices-selector}__item {
+    .#{$choices-selector}__item,
+    .#{$choices-selector}__button {
       cursor: default;
     }
   }
@@ -40,10 +42,8 @@
   min-height: initial;
   padding: $form-select-padding-y $form-select-indicator-padding $form-select-padding-y $form-select-padding-x;
   font-family: $form-select-font-family;
-
-  @include font-size($choices-font-size-md);
   font-weight: $form-select-font-weight;
-  line-height: $form-select-line-height;
+  line-height: $choices-line-height;
   color: $choices-text-color;
   background-image: escape-svg($form-select-indicator);
   background-repeat: no-repeat;
@@ -51,6 +51,7 @@
   background-size: $form-select-bg-size;
   border-width: $form-select-border-width;
 
+  @include font-size($choices-font-size);
   @include border-radius($form-select-border-radius, 0);
   @include box-shadow($form-select-box-shadow);
   @include transition($form-select-transition);
@@ -76,8 +77,16 @@
 // Input
 // ============================================================================
 
-.#{$choices-selector}__input--placeholder-hidden::placeholder {
-  color: transparent;
+.#{$choices-selector}__input {
+  padding: 0;
+  margin-bottom: 0;
+  line-height: $choices-line-height;
+
+  @include font-size($choices-font-size);
+
+  &--placeholder-hidden::placeholder {
+    color: transparent;
+  }
 }
 
 
@@ -87,6 +96,38 @@
 .#{$choices-selector}__list {
   &--single {
     padding: 0;
+  }
+
+  &--multiple {
+    display: block;
+
+    .#{$choices-selector}__item {
+      padding: $choices-multiple-item-padding-y $choices-multiple-item-padding-x;
+      margin-right: $choices-multiple-item-spacer;
+      margin-bottom: $choices-multiple-item-spacer;
+      line-height: $choices-multiple-item-line-height;
+      color: $choices-multiple-item-color;
+      cursor: default;
+      background: $choices-multiple-item-bg;
+      border: $choices-multiple-item-border-width solid $choices-multiple-item-border-color;
+
+      @include font-size($choices-multiple-item-font-size);
+
+      &[data-deletable] {
+        padding-right: $choices-multiple-item-padding-x;
+      }
+
+      &.is-highlighted {
+        background: $choices-multiple-item-bg;
+        border: $choices-multiple-item-border-width solid $choices-multiple-item-border-color;
+      }
+
+      .is-disabled & {
+        color: $choices-multiple-item-disabled-color;
+        background: $choices-multiple-item-disabled-bg;
+        border: $choices-multiple-item-border-width solid $choices-multiple-item-disabled-border-color;
+      }
+    }
   }
 
   &--dropdown {
@@ -109,5 +150,27 @@
 
   .#{$choices-selector}__inner {
     padding-bottom: $form-select-padding-y;
+  }
+}
+
+
+// Select multiple
+// ============================================================================
+
+.#{$choices-selector}[data-type*="select-multiple"] {
+  .#{$choices-selector}__inner {
+    padding-bottom: $form-select-padding-y - $choices-multiple-item-spacer;
+  }
+
+  .#{$choices-selector}__button {
+    margin-left: $choices-button-offset * .5;
+    border-left: none;
+    opacity: 1;
+  }
+
+  &.is-disabled {
+    .#{$choices-selector}__button {
+      background-image: escape-svg(str-replace($choices-icon-cross-svg, #{$choices-multiple-item-color}, #{$choices-multiple-item-disabled-color}));
+    }
   }
 }
