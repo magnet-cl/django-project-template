@@ -95,7 +95,14 @@
 
 .#{$choices-selector}__list {
   &--single {
+    display: block;
     padding: 0;
+
+    .#{$choices-selector}__item {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
   }
 
   &--multiple {
