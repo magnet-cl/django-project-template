@@ -12,6 +12,7 @@
  * Navbar
  * Footer
  * Dropdown
+ * Close
  * Bootstrap variables
  * Choices variables
  */
@@ -205,6 +206,13 @@ $dropdown-link-hover-color: $white;
 $dropdown-link-hover-bg: shade-color($primary, $btn-hover-bg-shade-amount);
 
 
+// Close
+// ============================================================================
+
+$btn-close-color: $black;
+$btn-close-bg: url("data:image/svg+xml,<svg width='8' height='8' viewBox='0 0 8 8' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M5.26396 4.00002L7.15923 2.10476C7.3918 1.87218 7.3918 1.4951 7.15923 1.26233L6.73801 0.841119C6.50544 0.608543 6.12836 0.608543 5.89559 0.841119L4.00033 2.73638L2.10506 0.841119C1.87248 0.608543 1.4954 0.608543 1.26264 0.841119L0.841424 1.26233C0.608848 1.49491 0.608848 1.87199 0.841424 2.10476L2.73669 4.00002L0.841424 5.89529C0.608848 6.12786 0.608848 6.50494 0.841424 6.73771L1.26264 7.15892C1.49521 7.3915 1.87248 7.3915 2.10506 7.15892L4.00033 5.26366L5.89559 7.15892C6.12817 7.3915 6.50544 7.3915 6.73801 7.15892L7.15923 6.73771C7.3918 6.50513 7.3918 6.12805 7.15923 5.89529L5.26396 4.00002Z' fill='#{$btn-close-color}'/></svg>");
+
+
 // Bootstrap variables
 // ============================================================================
 
@@ -262,6 +270,9 @@ $choices-multiple-item-disabled-border-color: $choices-multiple-item-border-colo
 // Remove button
 $choices-button-dimension: .5rem;
 $choices-button-offset: spacer(1);
+$choices-button-color: $choices-multiple-item-color;
+$choices-button-disabled-color: $choices-multiple-item-disabled-color;
+$choices-button-focus-shadow: $btn-close-focus-shadow;
 
-$choices-icon-cross-svg: url("data:image/svg+xml,<svg width='8' height='8' viewBox='0 0 8 8' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M5.26396 4.00002L7.15923 2.10476C7.3918 1.87218 7.3918 1.4951 7.15923 1.26233L6.73801 0.841119C6.50544 0.608543 6.12836 0.608543 5.89559 0.841119L4.00033 2.73638L2.10506 0.841119C1.87248 0.608543 1.4954 0.608543 1.26264 0.841119L0.841424 1.26233C0.608848 1.49491 0.608848 1.87199 0.841424 2.10476L2.73669 4.00002L0.841424 5.89529C0.608848 6.12786 0.608848 6.50494 0.841424 6.73771L1.26264 7.15892C1.49521 7.3915 1.87248 7.3915 2.10506 7.15892L4.00033 5.26366L5.89559 7.15892C6.12817 7.3915 6.50544 7.3915 6.73801 7.15892L7.15923 6.73771C7.3918 6.50513 7.3918 6.12805 7.15923 5.89529L5.26396 4.00002Z' fill='#{$choices-multiple-item-color}'/></svg>");
+$choices-icon-cross-svg: str-replace($btn-close-bg, #{$btn-close-color}, #{$choices-button-color});
 $choices-icon-cross: escape-svg($choices-icon-cross-svg);

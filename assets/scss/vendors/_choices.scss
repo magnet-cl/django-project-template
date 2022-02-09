@@ -234,13 +234,21 @@
 
   .#{$choices-selector}__button {
     margin-left: $choices-button-offset * .5;
+    color: $choices-button-color;
     border-left: none;
     opacity: 1;
+
+    @include border-radius();
+
+    &:focus {
+      box-shadow: $choices-button-focus-shadow;
+    }
   }
 
   &.is-disabled {
     .#{$choices-selector}__button {
-      background-image: escape-svg(str-replace($choices-icon-cross-svg, #{$choices-multiple-item-color}, #{$choices-multiple-item-disabled-color}));
+      color: $choices-button-disabled-color;
+      background-image: escape-svg(str-replace($choices-icon-cross-svg, #{$choices-button-color}, #{$choices-button-disabled-color}));
     }
   }
 }
