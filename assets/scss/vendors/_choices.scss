@@ -1,14 +1,23 @@
 /*
  * Content:
  *
+ * Modules
  * Choices
  * Base
  * Inner
  * Input
+ * Placeholder
  * List
  * Select single
  * Select multiple
  */
+
+
+// Modules
+// ============================================================================
+
+@use "sass:color";
+@use "sass:map";
 
 
 // Choices
@@ -71,6 +80,10 @@
   .is-open.is-flipped & {
     @include border-radius($form-select-border-radius, 0);
   }
+
+  .is-disabled & {
+    border-color: $form-select-disabled-border-color;
+  }
 }
 
 
@@ -84,8 +97,30 @@
 
   @include font-size($choices-font-size);
 
+  &::placeholder {
+    color: $input-placeholder-color;
+    opacity: 1;
+  }
+
+  .is-disabled &::placeholder {
+    color: $choices-disabled-color;
+  }
+
   &--placeholder-hidden::placeholder {
     color: transparent;
+  }
+}
+
+
+// Placeholder
+// ============================================================================
+
+.#{$choices-selector}__placeholder {
+  color: $input-placeholder-color;
+  opacity: 1;
+
+  .is-disabled & {
+    color: $choices-disabled-color;
   }
 }
 

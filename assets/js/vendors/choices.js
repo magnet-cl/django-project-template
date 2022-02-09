@@ -9,7 +9,8 @@ const CHOICES_LANG_TEXTS = {
     noChoicesText: 'No choices to choose from',
     itemSelectText: '',
     addItemText: (value) => `Press Enter to add <b>"${value}"</b>`,
-    maxItemText: (maxItemCount) => `Only ${maxItemCount} values can be added`
+    maxItemText: (maxItemCount) => `Only ${maxItemCount} values can be added`,
+    searchPlaceholderValue: 'Search'
   },
   es: {
     loadingText: 'Cargando...',
@@ -17,7 +18,8 @@ const CHOICES_LANG_TEXTS = {
     noChoicesText: 'No hay opciones para elegir',
     itemSelectText: '',
     addItemText: (value) => `Pressione Enter para agregar <b>"${value}"</b>`,
-    maxItemText: (maxItemCount) => `Sólo se pueden agregar ${maxItemCount} valores`
+    maxItemText: (maxItemCount) => `Sólo se pueden agregar ${maxItemCount} valores`,
+    searchPlaceholderValue: 'Buscar'
   }
 };
 
@@ -53,6 +55,17 @@ export function initChoices(select) {
     removeItemButton: isMultiple,
     placeholderValue: '',
     allowHTML: false,
+    callbackOnInit: function onInit() {
+      const choicesElement = this.containerOuter.element;
+      const selectHasInvalidStyle = select.classList.contains('is-invalid');
+      const selectHasValidStyle = select.classList.contains('is-valid');
+
+      if (selectHasInvalidStyle) {
+        choicesElement.classList.add('is-invalid');
+      } else if (selectHasValidStyle) {
+        choicesElement.classList.add('is-valid');
+      }
+    },
     ...CHOICES_LANG_TEXTS[documentLang]
   };
   const choices = new Choices(select, options);

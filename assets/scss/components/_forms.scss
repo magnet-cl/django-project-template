@@ -1,0 +1,16 @@
+/*
+ * Content:
+ *
+ * Form control
+ */
+
+
+// Form control
+// ============================================================================
+
+.form-control {
+  &:disabled,
+  &:disabled::placeholder {
+    color: $input-disabled-color;
+  }
+}
