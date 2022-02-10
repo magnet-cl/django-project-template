@@ -1,6 +1,9 @@
 // Vendors
 import Choices from 'choices.js';
 
+// Utils
+import { getParentBySelector } from '../utils/traversing';
+
 // Constants
 const CHOICES_LANG_TEXTS = {
   en: {
@@ -22,6 +25,12 @@ const CHOICES_LANG_TEXTS = {
     searchPlaceholderValue: 'Buscar'
   }
 };
+
+const SELECT_VALID_CLASS = 'is-valid';
+const SELECT_INVALID_CLASS = 'is-invalid';
+
+const CHOICES_VALID_CLASS = SELECT_VALID_CLASS;
+const CHOICES_INVALID_CLASS = SELECT_INVALID_CLASS;
 
 // Functions
 /**
@@ -57,13 +66,28 @@ export function initChoices(select) {
     allowHTML: false,
     callbackOnInit: function onInit() {
       const choicesElement = this.containerOuter.element;
-      const selectHasInvalidStyle = select.classList.contains('is-invalid');
-      const selectHasValidStyle = select.classList.contains('is-valid');
+      const selectHasInvalidClass = select.classList.contains(SELECT_INVALID_CLASS);
+      const selectHasValidClass = select.classList.contains(SELECT_VALID_CLASS);
+      const selectIsInvalid = select.matches(':invalid');
+      const selectIsValid = select.matches(':valid');
+      const selectIsInValidatedElement = !!getParentBySelector(choicesElement, '.was-validated');
 
-      if (selectHasInvalidStyle) {
-        choicesElement.classList.add('is-invalid');
-      } else if (selectHasValidStyle) {
-        choicesElement.classList.add('is-valid');
+      if (selectHasInvalidClass || (selectIsInValidatedElement && selectIsInvalid)) {
+        choicesElement.classList.add(CHOICES_INVALID_CLASS);
+      } else if (selectHasValidClass || (selectIsInValidatedElement && selectIsValid)) {
+        choicesElement.classList.add(CHOICES_VALID_CLASS);
+      }
+
+      if (selectIsInValidatedElement) {
+        select.addEventListener('change', () => {
+          if (select.matches(':invalid')) {
+            choicesElement.classList.add(CHOICES_INVALID_CLASS);
+            choicesElement.classList.remove(CHOICES_VALID_CLASS);
+          } else {
+            choicesElement.classList.add(CHOICES_VALID_CLASS);
+            choicesElement.classList.remove(CHOICES_INVALID_CLASS);
+          }
+        });
       }
     },
     ...CHOICES_LANG_TEXTS[documentLang]

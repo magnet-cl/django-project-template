@@ -84,6 +84,31 @@
   .is-disabled & {
     border-color: $form-select-disabled-border-color;
   }
+
+  @each $state, $data in $form-validation-states {
+    $color: map.get($data, "color");
+    $icon: map.get($data, "icon");
+    $focus-box-shadow: map.get($data, "focus-box-shadow");
+
+    // Default values
+    $focus-box-shadow: 0 0 $input-btn-focus-blur $input-focus-width color.change($color, $alpha: $input-btn-focus-color-opacity) !default;
+
+    .is-#{$state} & {
+      border-color: $color;
+
+      @if $enable-validation-icons {
+        padding-right: $form-select-feedback-icon-padding-end;
+        background-image: escape-svg($form-select-indicator), escape-svg($icon);
+        background-position: $form-select-bg-position, $form-select-feedback-icon-position;
+        background-size: $form-select-bg-size, $form-select-feedback-icon-size;
+      }
+    }
+
+    .is-focused.is-#{$state} & {
+      border-color: $color;
+      box-shadow: $focus-box-shadow;
+    }
+  }
 }
 
 
