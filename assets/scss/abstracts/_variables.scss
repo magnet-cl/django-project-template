@@ -264,6 +264,8 @@ $choices-dropdown-item-hover-bg: $dropdown-link-hover-bg;
 
 $choices-dropdown-item-disabled-color: $dropdown-link-disabled-color;
 
+$choices-dropdown-group-item-padding-l: $choices-dropdown-item-paddiny-x * 2;
+
 // Multiple item
 $choices-border-radius-item: $badge-border-radius;
 $choices-multiple-item-padding-y: 0;
@@ -289,3 +291,13 @@ $choices-button-focus-shadow: $btn-close-focus-shadow;
 
 $choices-icon-cross-svg: str-replace($btn-close-bg, #{$btn-close-color}, #{$choices-button-color});
 $choices-icon-cross: escape-svg($choices-icon-cross-svg);
+
+// Heading
+$choices-heading-padding-y: $choices-dropdown-item-paddiny-y;
+$choices-heading-padding-x: $choices-dropdown-item-paddiny-x;
+$choices-heading-font-weight: $font-weight-base;
+$choices-heading-font-size: $font-size-base;
+$choices-heading-line-height: $line-height-base;
+$choices-heading-color: $gray-700;
+$choices-heading-border-width: $border-width;
+$choices-heading-border-color: $border-color;

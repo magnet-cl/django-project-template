@@ -7,6 +7,7 @@
  * Inner
  * Input
  * Placeholder
+ * Heading
  * List
  * Select single
  * Select multiple
@@ -150,6 +151,21 @@
 }
 
 
+// Heading
+// ============================================================================
+
+.#{$choices-selector}__heading {
+  padding: $choices-heading-padding-y $choices-heading-padding-x;
+  font-weight: $choices-heading-font-weight;
+  line-height: $choices-heading-line-height;
+  color: $choices-heading-color;
+  cursor: default;
+  border-bottom: $choices-heading-border-width solid $choices-heading-border-color;
+
+  @include font-size($choices-heading-font-size);
+}
+
+
 // List
 // ============================================================================
 
@@ -207,6 +223,10 @@
     color: $choices-dropdown-item-color;
 
     @include font-size($choices-dropdown-item-font-size);
+
+    &[role="treeitem"] {
+      padding-left: $choices-dropdown-group-item-padding-l;
+    }
 
     &.is-highlighted {
       color: $choices-dropdown-item-hover-color;
