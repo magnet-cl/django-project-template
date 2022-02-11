@@ -134,7 +134,7 @@
 }
 
 .#{$choices-selector}__input--placeholder-hidden::placeholder {
-  color: transparent;
+  color: transparent !important; // stylelint-disable-line declaration-no-important
 }
 
 
