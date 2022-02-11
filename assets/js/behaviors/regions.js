@@ -66,7 +66,9 @@ window.addEventListener('DOMContentLoaded', () => {
   const communeChoices = initChoices(communeSelect);
 
   // Store placeholder as data attribute
-  communeSelect.dataset.placeholder = communeSelectPlaceholder;
+  if (communeSelectPlaceholder) {
+    communeSelect.dataset.placeholder = communeSelectPlaceholder;
+  }
 
   // Add initial commune options
   setCommuneOptions(communeChoices, regionChoices.getValue(true));
