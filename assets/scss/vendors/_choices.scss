@@ -130,10 +130,10 @@
   .is-disabled &::placeholder {
     color: $choices-disabled-color;
   }
+}
 
-  &--placeholder-hidden::placeholder {
-    color: transparent;
-  }
+.#{$choices-selector}__input--placeholder-hidden::placeholder {
+  color: transparent;
 }
 
 
@@ -153,82 +153,80 @@
 // List
 // ============================================================================
 
-.#{$choices-selector}__list {
-  &--single {
-    display: block;
-    padding: 0;
+.#{$choices-selector}__list--single {
+  display: block;
+  padding: 0;
 
-    .#{$choices-selector}__item {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
+  .#{$choices-selector}__item {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
+}
 
-  &--multiple {
-    display: block;
+.#{$choices-selector}__list--multiple {
+  display: block;
 
-    .#{$choices-selector}__item {
-      padding: $choices-multiple-item-padding-y $choices-multiple-item-padding-x;
-      margin-right: $choices-multiple-item-spacer;
-      margin-bottom: $choices-multiple-item-spacer;
-      line-height: $choices-multiple-item-line-height;
-      color: $choices-multiple-item-color;
-      cursor: default;
+  .#{$choices-selector}__item {
+    padding: $choices-multiple-item-padding-y $choices-multiple-item-padding-x;
+    margin-right: $choices-multiple-item-spacer;
+    margin-bottom: $choices-multiple-item-spacer;
+    line-height: $choices-multiple-item-line-height;
+    color: $choices-multiple-item-color;
+    cursor: default;
+    background: $choices-multiple-item-bg;
+    border: $choices-multiple-item-border-width solid $choices-multiple-item-border-color;
+
+    @include font-size($choices-multiple-item-font-size);
+
+    &[data-deletable] {
+      padding-right: $choices-multiple-item-padding-x;
+    }
+
+    &.is-highlighted {
       background: $choices-multiple-item-bg;
       border: $choices-multiple-item-border-width solid $choices-multiple-item-border-color;
+    }
 
-      @include font-size($choices-multiple-item-font-size);
+    .is-disabled & {
+      color: $choices-multiple-item-disabled-color;
+      background: $choices-multiple-item-disabled-bg;
+      border: $choices-multiple-item-border-width solid $choices-multiple-item-disabled-border-color;
+    }
+  }
+}
 
-      &[data-deletable] {
-        padding-right: $choices-multiple-item-padding-x;
-      }
+.#{$choices-selector}__list--dropdown {
+  margin-top: 0;
+  border: $choices-dropdown-border-width solid $choices-dropdown-border-color;
+  border-radius: $choices-border-radius;
 
-      &.is-highlighted {
-        background: $choices-multiple-item-bg;
-        border: $choices-multiple-item-border-width solid $choices-multiple-item-border-color;
-      }
+  .#{$choices-selector}__item {
+    padding: $choices-dropdown-item-paddiny-y $choices-dropdown-item-paddiny-x;
+    line-height: $choices-dropdown-item-line-height;
+    color: $choices-dropdown-item-color;
 
-      .is-disabled & {
-        color: $choices-multiple-item-disabled-color;
-        background: $choices-multiple-item-disabled-bg;
-        border: $choices-multiple-item-border-width solid $choices-multiple-item-disabled-border-color;
-      }
+    @include font-size($choices-dropdown-item-font-size);
+
+    &.is-highlighted {
+      color: $choices-dropdown-item-hover-color;
+      background: $choices-dropdown-item-hover-bg;
+    }
+
+    &.is-selected {
+      color: $choices-dropdown-item-active-color;
+      background: $choices-dropdown-item-active-bg;
+    }
+
+    &.#{$choices-selector}__item--disabled {
+      color: $choices-dropdown-item-disabled-color;
+      background: none;
     }
   }
 
-  &--dropdown {
-    margin-top: 0;
-    border: $choices-dropdown-border-width solid $choices-dropdown-border-color;
+  .is-flipped & {
+    margin-bottom: 0;
     border-radius: $choices-border-radius;
-
-    .#{$choices-selector}__item {
-      padding: $choices-dropdown-item-paddiny-y $choices-dropdown-item-paddiny-x;
-      line-height: $choices-dropdown-item-line-height;
-      color: $choices-dropdown-item-color;
-
-      @include font-size($choices-dropdown-item-font-size);
-
-      &.is-highlighted {
-        color: $choices-dropdown-item-hover-color;
-        background: $choices-dropdown-item-hover-bg;
-      }
-
-      &.is-selected {
-        color: $choices-dropdown-item-active-color;
-        background: $choices-dropdown-item-active-bg;
-      }
-
-      &.#{$choices-selector}__item--disabled {
-        color: $choices-dropdown-item-disabled-color;
-        background: none;
-      }
-    }
-
-    .is-flipped & {
-      margin-bottom: 0;
-      border-radius: $choices-border-radius;
-    }
   }
 }
 
