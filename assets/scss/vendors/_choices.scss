@@ -49,19 +49,19 @@
 
 .#{$choices-selector}__inner {
   display: block;
-  min-height: initial;
+  min-height: calc(#{$form-select-border-width * 2} + #{$form-select-padding-y * 2} + #{$form-select-font-size * $form-select-line-height});
   padding: $form-select-padding-y $form-select-indicator-padding $form-select-padding-y $form-select-padding-x;
   font-family: $form-select-font-family;
   font-weight: $form-select-font-weight;
-  line-height: $choices-line-height;
-  color: $choices-text-color;
+  line-height: $form-select-line-height;
+  color: $form-select-color;
   background-image: escape-svg($form-select-indicator);
   background-repeat: no-repeat;
   background-position: $form-select-bg-position;
   background-size: $form-select-bg-size;
   border-width: $form-select-border-width;
 
-  @include font-size($choices-font-size);
+  @include font-size($form-select-font-size);
   @include border-radius($form-select-border-radius, 0);
   @include box-shadow($form-select-box-shadow);
   @include transition($form-select-transition);
@@ -119,9 +119,9 @@
 .#{$choices-selector}__input {
   padding: 0;
   margin-bottom: 0;
-  line-height: $choices-line-height;
+  line-height: $form-select-line-height;
 
-  @include font-size($choices-font-size);
+  @include font-size($form-select-font-size);
 
   &::placeholder {
     color: $input-placeholder-color;
@@ -129,7 +129,7 @@
   }
 
   .is-disabled &::placeholder {
-    color: $choices-disabled-color;
+    color: $form-select-disabled-color;
   }
 }
 
@@ -146,7 +146,7 @@
   opacity: 1;
 
   .is-disabled & {
-    color: $choices-disabled-color;
+    color: $form-select-disabled-color;
   }
 }
 
