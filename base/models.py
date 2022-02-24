@@ -113,7 +113,7 @@ class BaseModel(AuditMixin, models.Model):
             if exclude and f.name in exclude:
                 continue
             if isinstance(f, models.fields.related.ForeignKey):
-                data[f.name + '_id'] = f.value_from_object(instance)
+                data[f.attname] = instance.__dict__.get(f.attname)
             elif isinstance(f, models.fields.related.ManyToManyField):
                 if include_m2m:
                     # If the object doesn't have a primary key yet, just use an
@@ -130,7 +130,7 @@ class BaseModel(AuditMixin, models.Model):
                             )
                         )
             else:
-                data[f.name] = f.value_from_object(instance)
+                data[f.name] = instance.__dict__.get(f.name)
         return data
 
     def to_json(self, fields=None, exclude=None, **kargs):
