@@ -8,7 +8,10 @@ from django.conf import settings
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import AccessMixin
+from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ImproperlyConfigured
+from django.db import models
+from django.db.models import ForeignKey
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.urls import reverse
@@ -18,6 +21,7 @@ from django.views.generic import RedirectView
 from django.views.generic import TemplateView
 from django.views.generic.detail import DetailView
 from django.views.generic.detail import SingleObjectMixin
+from django.views.generic.edit import BaseCreateView as GenericBaseCreateView
 from django.views.generic.edit import CreateView
 from django.views.generic.edit import DeleteView
 from django.views.generic.edit import UpdateView
@@ -30,7 +34,6 @@ from django.views.defaults import server_error
 
 # utils
 from base.view_utils import clean_query_string
-from inflection import underscore
 
 
 @login_required
@@ -155,37 +158,126 @@ class BaseSubModelCreateView(LoginPermissionRequiredMixin, CreateView):
     """
     Create view when the object is nested within a parent object
     """
+
+    parent_model = None
+    parent_pk_url_kwarg = "parent_pk"
+    model_parent_fk_field = None
+    context_parent_object_name = None
     login_required = True
     permission_required = ()
+    is_generic_relation = False
+    next_url = None
 
-    def get_form_kwargs(self):
-        model_underscore_name = underscore(self.parent_model.__name__)
+    def get_parent_object(self):
+        parent_pk = self.kwargs.get(self.parent_pk_url_kwarg)
+        return get_object_or_404(self.parent_model, pk=parent_pk)
 
-        obj = get_object_or_404(
-            self.parent_model,
-            pk=self.kwargs['{}_id'.format(model_underscore_name)]
-        )
+    def get_model_related_field_name(self):
+        """
+        Gets the field name that relates model with its parent model.
+        If `model_parent_fk_field` is defined, it uses that value. Otherwise,
+        traverse the model declared fields and return the first ForeignKey
+        field relating to the parent model.
+        """
+        if self.model_parent_fk_field is not None:
+            return self.model_parent_fk_field
+        else:
+            for field in self.model._meta.get_fields():
+                if isinstance(field, ForeignKey):
+                    if field.related_model == self.parent_model:
+                        return field.name
 
-        self.object = self.model(**{model_underscore_name: obj})
+            raise ImproperlyConfigured(
+                "No model_parent_fk_field declared and no"
+                "field relating to {parent} was found in {model}".format(
+                    parent=self.parent_model.__name__,
+                    model=self.model.__name__
+                )
+            )
 
-        return super(BaseSubModelCreateView, self).get_form_kwargs()
+    def get_initial_object(self):
+        """Gets an object previously initialized with the parent object."""
+        parent_pk = self.kwargs.get(self.parent_pk_url_kwarg)
+        if self.is_generic_relation:
+            parent_content_type = ContentType.objects.get_for_model(
+                self.parent_model
+            )
+            object = self.model(
+                **{"object_id": parent_pk, "content_type": parent_content_type}
+            )
+        else:
+            parent_obj = self.parent_object
+            related_field_name = self.get_model_related_field_name()
+            object = self.model(**{related_field_name: parent_obj})
+
+        return object
+
+    def get_cancel_url(self):
+        if self.next_url:
+            return self.next_url
+
+        return self.parent_object.get_absolute_url()
+
+    def get_success_url(self):
+        next_url = self.request.POST.get("next")
+        if next_url:
+            return next_url
+
+        return super().get_success_url()
 
     def get_context_data(self, **kwargs):
-        context = super(BaseSubModelCreateView, self).get_context_data(
-            **kwargs
-        )
-        model_underscore_name = underscore(self.parent_model.__name__)
+        context = super(BaseSubModelCreateView, self).get_context_data(**kwargs)
 
-        obj = get_object_or_404(
-            self.parent_model,
-            pk=self.kwargs['{}_id'.format(model_underscore_name)]
+        context["parent_object"] = self.parent_object
+        context_parent_object_name = self.get_context_parent_object_name(
+            self.parent_object
         )
+        if context_parent_object_name:
+            context[context_parent_object_name] = self.parent_object
+        context["title"] = _("Create %s") % self.model._meta.verbose_name
 
-        context[model_underscore_name] = obj
-        context['title'] = _('Create %s') % self.model._meta.verbose_name
-        context['cancel_url'] = obj.get_absolute_url()
+        self.next_url = self.request.GET.get("next")
+        context["next"] = self.next_url
+        context["cancel_url"] = self.get_cancel_url()
 
         return context
+
+    def get_context_parent_object_name(self, parent_obj):
+        """Get the name to use for the parent object."""
+        if self.context_parent_object_name:
+            return self.context_parent_object_name
+        elif isinstance(parent_obj, models.Model):
+            return parent_obj._meta.model_name
+        else:
+            return None
+
+    def get(self, request, *args, **kwargs):
+        self.parent_object = self.get_parent_object()
+        self.object = self.get_initial_object()
+        # Give a chance to declare further instance attributes
+        self.pre_get(request, *args, **kwargs)
+        return super(GenericBaseCreateView, self).get(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        self.parent_object = self.get_parent_object()
+        self.object = self.get_initial_object()
+        # Give a chance to declare further instance attributes
+        self.pre_post(request, *args, **kwargs)
+        return super(GenericBaseCreateView, self).post(request, *args, **kwargs)
+
+    def pre_get(self, request, *args, **kwargs):
+        """
+        Allows to perform several operations before the superclass get()
+        generates the response.
+        """
+        pass
+
+    def pre_post(self, request, *args, **kwargs):
+        """
+        Allows to perform several operations before the superclass post()
+        generates the response.
+        """
+        pass
 
 
 class BaseListView(LoginPermissionRequiredMixin, ListView):
