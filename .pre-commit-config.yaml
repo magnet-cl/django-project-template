@@ -21,6 +21,15 @@ repos:
         stages:
           - commit
 
+      - id: health-check
+        name: health-check
+        entry: poetry run python manage.py check --fail-level WARNING
+        language: system
+        always_run: true
+        pass_filenames: false
+        stages:
+          - commit
+
       - id: migrations
         name: check migrations
         entry: poetry run python3 manage.py makemigrations --check --dry-run
@@ -28,3 +37,4 @@ repos:
         always_run: true
         stages:
           - push
+
