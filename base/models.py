@@ -7,11 +7,13 @@ All apps should use the BaseModel as parent for all models
 import json
 
 # django
+from django.conf import settings
+from django.contrib.admin.models import LogEntry
+from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
-from django.conf import settings
 
 # base
 from base import utils
@@ -156,6 +158,31 @@ class BaseModel(AuditMixin, models.Model):
         absolute_url = self.get_absolute_url()
         site = Site.objects.get_current().domain
         return 'http://{site}{path}'.format(site=site, path=absolute_url)
+
+    def log_entries(self):
+        """The 'history' of this object."""
+        # First check if the user can see this history.
+        model = self.__class__
+
+        content_type = ContentType.objects.get_for_model(
+            model,
+            for_concrete_model=False
+        )
+
+        log_entries = list(LogEntry.objects.filter(
+            object_id=self.id,
+            content_type=content_type,
+        ).select_related().order_by('action_time'))
+
+        for log_entry in log_entries:
+            parsed_message = log_entry.get_change_message()
+
+            try:
+                log_entry.parsed_message = json.loads(parsed_message)
+            except Exception:
+                log_entry.parsed_message = parsed_message
+
+        return log_entries
 
 
 class OrderableModel(BaseModel):
