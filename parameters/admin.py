@@ -9,10 +9,14 @@ from django.contrib import admin
 from .models import Parameter
 from parameters.enums import ParameterDefinitionList
 
+# forms
+from parameters.forms import ParameterForm
+
 
 @admin.register(Parameter)
 class ParameterAdmin(admin.ModelAdmin):
     list_display = ('name', 'raw_value', 'cache_seconds')
+    form = ParameterForm
 
     fields = (
         'name',
