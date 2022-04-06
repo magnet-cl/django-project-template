@@ -115,18 +115,22 @@ INSTALLED_APPS = [
     'parameters',
 ]
 
+EMAIL_SETTINGS = get_local_value('EMAIL_SETTINGS', dict())
+
 # Email settings, uncomment if your project sends emails
 # You must set this values in local_settings
-EMAIL_HOST = get_local_value('EMAIL_HOST', '')
-EMAIL_HOST_USER = get_local_value('EMAIL_HOST_USER', '')
-EMAIL_HOST_PASSWORD = get_local_value('EMAIL_HOST_PASSWORD', '')
-EMAIL_PORT = get_local_value('EMAIL_PORT', 587)
-EMAIL_USE_TLS = get_local_value('EMAIL_USE_TLS', True)
+DEFAULT_FROM_EMAIL = EMAIL_SETTINGS.get(
+    'DEFAULT_FROM_EMAIL',
+    'webmaster@localhost'
+)
+SERVER_EMAIL = EMAIL_SETTINGS.get('SERVER_EMAIL', 'root@localhost')
+EMAIL_SENDER_NAME = EMAIL_SETTINGS.get('EMAIL_SENDER_NAME', 'DPT project')
 
-# Default email address to use for various automated correspondence from
-# the site managers.
-DEFAULT_FROM_EMAIL = 'webmaster@localhost'
-EMAIL_SENDER_NAME = 'My project'
+EMAIL_HOST = EMAIL_SETTINGS.get('EMAIL_HOST', '')
+EMAIL_HOST_USER = EMAIL_SETTINGS.get('EMAIL_HOST_USER', '')
+EMAIL_HOST_PASSWORD = EMAIL_SETTINGS.get('EMAIL_HOST_PASSWORD', '')
+EMAIL_PORT = EMAIL_SETTINGS.get('EMAIL_PORT', 587)
+EMAIL_USE_TLS = EMAIL_SETTINGS.get('EMAIL_USE_TLS', True)
 
 if DEBUG:
     INSTALLED_APPS += [
@@ -330,6 +334,15 @@ LOGGING = {
         },
     }
 }
+
+
+# Override logging conf
+LOCAL_LOGGING = get_local_value('LOCAL_LOGGING', dict())
+LOCAL_LOGGING_HANDLERS = get_local_value('LOCAL_LOGGING_HANDLERS', dict())
+LOCAL_LOGGING_LOGGERS = get_local_value('LOCAL_LOGGING_LOGGERS', dict())
+LOGGING['loggers'].update(LOCAL_LOGGING_LOGGERS)
+LOGGING['handlers'].update(LOCAL_LOGGING_HANDLERS)
+LOGGING.update(LOCAL_LOGGING)
 
 
 # ### Login as settings ###
