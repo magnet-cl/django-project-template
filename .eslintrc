@@ -15,11 +15,11 @@
   },
   "globals": {
     "$": true,
-    "Dropzone": true,
-    "Image": true,
     "bootstrap": true,
     "document": true,
+    "Dropzone": true,
     "fetch": true,
+    "Image": true,
     "localStorage": true,
     "moment": true,
     "window": true

@@ -339,10 +339,10 @@ behaviors, use "components" like if it was React: for example every input that
 validate rut, requires the class "rut" that is searched with jQuery.
 If there is a behavior unique to a page, use a unique id.
 
-### Select2
+### Choices.js
 
-The project comes with select2 by default for all selects. If you wish to
-disable this feature add the class .js-not-select2 to the select
+The project comes with choices.js by default for all selects. If you wish to
+disable this feature add the class `.js-not-choices` to the select.
 
 ### tempusdominus-bootstrap-4
 

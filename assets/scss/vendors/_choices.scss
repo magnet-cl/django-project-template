@@ -1,0 +1,332 @@
+/*
+ * Content:
+ *
+ * Modules
+ * Choices
+ * Base
+ * Inner
+ * Input
+ * Placeholder
+ * Heading
+ * List
+ * Select single
+ * Select multiple
+ */
+
+
+// Modules
+// ============================================================================
+
+@use "sass:color";
+@use "sass:map";
+
+
+// Choices
+// ============================================================================
+
+@import "~choices.js/src/styles/choices";
+
+
+// Base
+// ============================================================================
+
+.#{$choices-selector} {
+  overflow: initial;
+
+  &.is-disabled {
+    .#{$choices-selector}__inner,
+    .#{$choices-selector}__input,
+    .#{$choices-selector}__item,
+    .#{$choices-selector}__button {
+      cursor: default;
+    }
+  }
+}
+
+
+// Inner
+// ============================================================================
+
+.#{$choices-selector}__inner {
+  display: block;
+  min-height: calc(#{$form-select-border-width * 2} + #{$form-select-padding-y * 2} + #{$form-select-font-size * $form-select-line-height});
+  padding: $form-select-padding-y $form-select-indicator-padding $form-select-padding-y $form-select-padding-x;
+  font-family: $form-select-font-family;
+  font-weight: $form-select-font-weight;
+  line-height: $form-select-line-height;
+  color: $form-select-color;
+  background-image: escape-svg($form-select-indicator);
+  background-repeat: no-repeat;
+  background-position: $form-select-bg-position;
+  background-size: $form-select-bg-size;
+  border-width: $form-select-border-width;
+
+  @include font-size($form-select-font-size);
+  @include border-radius($form-select-border-radius, 0);
+  @include box-shadow($form-select-box-shadow);
+  @include transition($form-select-transition);
+
+  .is-focused &,
+  .is-open & {
+    border-color: $form-select-focus-border-color;
+
+    @if $enable-shadows {
+      @include box-shadow($form-select-box-shadow, $form-select-focus-box-shadow);
+    } @else {
+      box-shadow: $form-select-focus-box-shadow;
+    }
+  }
+
+  .is-open &,
+  .is-open.is-flipped & {
+    @include border-radius($form-select-border-radius, 0);
+  }
+
+  .is-disabled & {
+    border-color: $form-select-disabled-border-color;
+  }
+
+  @each $state, $data in $form-validation-states {
+    $color: map.get($data, "color");
+    $icon: map.get($data, "icon");
+    $focus-box-shadow: map.get($data, "focus-box-shadow");
+
+    // Default values
+    $focus-box-shadow: 0 0 $input-btn-focus-blur $input-focus-width color.change($color, $alpha: $input-btn-focus-color-opacity) !default;
+
+    .is-#{$state} & {
+      border-color: $color;
+
+      @if $enable-validation-icons {
+        padding-right: $form-select-feedback-icon-padding-end;
+        background-image: escape-svg($form-select-indicator), escape-svg($icon);
+        background-position: $form-select-bg-position, $form-select-feedback-icon-position;
+        background-size: $form-select-bg-size, $form-select-feedback-icon-size;
+      }
+    }
+
+    .is-focused.is-#{$state} & {
+      border-color: $color;
+      box-shadow: $focus-box-shadow;
+    }
+  }
+}
+
+
+// Input
+// ============================================================================
+
+.#{$choices-selector}__input {
+  padding: 0;
+  margin-bottom: 0;
+  line-height: $form-select-line-height;
+
+  @include font-size($form-select-font-size);
+
+  &::placeholder {
+    color: $input-placeholder-color;
+    opacity: 1;
+  }
+
+  .is-disabled &::placeholder {
+    color: $form-select-disabled-color;
+  }
+}
+
+.#{$choices-selector}__input--placeholder-hidden::placeholder {
+  color: transparent !important; // stylelint-disable-line declaration-no-important
+}
+
+
+// Placeholder
+// ============================================================================
+
+.#{$choices-selector}__placeholder {
+  color: $input-placeholder-color;
+  opacity: 1;
+
+  .is-disabled & {
+    color: $form-select-disabled-color;
+  }
+}
+
+
+// Heading
+// ============================================================================
+
+.#{$choices-selector}__heading {
+  padding: $choices-heading-padding-y $choices-heading-padding-x;
+  font-weight: $choices-heading-font-weight;
+  line-height: $choices-heading-line-height;
+  color: $choices-heading-color;
+  cursor: default;
+  border-bottom: $choices-heading-border-width solid $choices-heading-border-color;
+
+  @include font-size($choices-heading-font-size);
+}
+
+
+// List
+// ============================================================================
+
+.#{$choices-selector}__list--single {
+  display: block;
+  padding: 0;
+
+  .#{$choices-selector}__item {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.#{$choices-selector}__list--multiple {
+  display: block;
+
+  .#{$choices-selector}__item {
+    padding: $choices-multiple-item-padding-y $choices-multiple-item-padding-x;
+    margin-right: $choices-multiple-item-spacer;
+    margin-bottom: $choices-multiple-item-spacer;
+    line-height: $choices-multiple-item-line-height;
+    color: $choices-multiple-item-color;
+    cursor: default;
+    background: $choices-multiple-item-bg;
+    border: $choices-multiple-item-border-width solid $choices-multiple-item-border-color;
+
+    @include font-size($choices-multiple-item-font-size);
+
+    &[data-deletable] {
+      padding-right: $choices-multiple-item-padding-x;
+    }
+
+    &.is-highlighted {
+      background: $choices-multiple-item-bg;
+      border: $choices-multiple-item-border-width solid $choices-multiple-item-border-color;
+    }
+
+    .is-disabled & {
+      color: $choices-multiple-item-disabled-color;
+      background: $choices-multiple-item-disabled-bg;
+      border: $choices-multiple-item-border-width solid $choices-multiple-item-disabled-border-color;
+    }
+  }
+}
+
+.#{$choices-selector}__list--dropdown {
+  margin-top: 0;
+  border: $choices-dropdown-border-width solid $choices-dropdown-border-color;
+  border-radius: $choices-border-radius;
+
+  .#{$choices-selector}__item {
+    padding: $choices-dropdown-item-paddiny-y $choices-dropdown-item-paddiny-x;
+    line-height: $choices-dropdown-item-line-height;
+    color: $choices-dropdown-item-color;
+
+    @include font-size($choices-dropdown-item-font-size);
+
+    &[role="treeitem"] {
+      padding-left: $choices-dropdown-group-item-padding-l;
+    }
+
+    &.is-highlighted {
+      color: $choices-dropdown-item-hover-color;
+      background: $choices-dropdown-item-hover-bg;
+    }
+
+    &.is-selected {
+      color: $choices-dropdown-item-active-color;
+      background: $choices-dropdown-item-active-bg;
+    }
+
+    &.#{$choices-selector}__item--disabled {
+      color: $choices-dropdown-item-disabled-color;
+      background: none;
+    }
+  }
+
+  .is-flipped & {
+    margin-bottom: 0;
+    border-radius: $choices-border-radius;
+  }
+}
+
+
+// Select single
+// ============================================================================
+
+.#{$choices-selector}[data-type*="select-one"] {
+  &::after {
+    content: none;
+  }
+
+  .#{$choices-selector}__inner {
+    padding-bottom: $form-select-padding-y;
+  }
+
+  .#{$choices-selector}__list--dropdown {
+    padding: $form-select-padding-y $form-select-padding-x 0;
+
+    .#{$choices-selector}__list {
+      padding-top: $form-select-padding-y;
+      margin-right: -$form-select-padding-x;
+      margin-left: -$form-select-padding-x;
+    }
+  }
+
+  .#{$choices-selector}__input {
+    padding: $input-padding-y $input-padding-x;
+    font-family: $input-font-family;
+    font-weight: $input-font-weight;
+    line-height: $input-line-height;
+    color: $input-color;
+    background-color: $input-bg;
+    border: $input-border-width solid $input-border-color;
+
+    @include font-size($input-font-size);
+    @include border-radius($input-border-radius, 0);
+    @include box-shadow($input-box-shadow);
+    @include transition($input-transition);
+
+    &:focus {
+      color: $input-focus-color;
+      background-color: $input-focus-bg;
+      border-color: $input-focus-border-color;
+
+      @if $enable-shadows {
+        @include box-shadow($input-box-shadow, $input-focus-box-shadow);
+      } @else {
+        box-shadow: $input-focus-box-shadow;
+      }
+    }
+  }
+}
+
+
+// Select multiple
+// ============================================================================
+
+.#{$choices-selector}[data-type*="select-multiple"] {
+  .#{$choices-selector}__inner {
+    padding-bottom: $form-select-padding-y - $choices-multiple-item-spacer;
+  }
+
+  .#{$choices-selector}__button {
+    margin-left: $choices-button-offset * .5;
+    color: $choices-button-color;
+    border-left: none;
+    opacity: 1;
+
+    @include border-radius();
+
+    &:focus {
+      box-shadow: $choices-button-focus-shadow;
+    }
+  }
+
+  &.is-disabled {
+    .#{$choices-selector}__button {
+      color: $choices-button-disabled-color;
+      background-image: escape-svg(str-replace($choices-icon-cross-svg, #{$choices-button-color}, #{$choices-button-disabled-color}));
+    }
+  }
+}
