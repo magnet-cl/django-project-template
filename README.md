@@ -1,3 +1,11 @@
+# ⛔️ DEPRECATED
+
+**This repository is deprecated and no longer maintained.**
+
+A new version of this template is available at https://github.com/magnet-cl/django3-project-template.
+
+Please consider upgrading to the new version.
+
 # Django Project Template (DPT)
 
 A project template for Django 2.2 in Python 3. This project tries to solve problems or features that commonly appear on Magnet projects. The idea is that you start your project using this code as the base.
