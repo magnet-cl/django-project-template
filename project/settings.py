@@ -10,9 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
-from importlib import import_module
 import os
 import sys
+from importlib import import_module
 
 # django
 from django.contrib.messages import constants as messages
@@ -109,6 +109,7 @@ INSTALLED_APPS = [
     'loginas',
     'rest_framework',
     'webpack_loader',
+    'django_cron',
 
     # internal
     'regions',
