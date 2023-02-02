@@ -14,29 +14,9 @@ from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 
 # base
-from base import utils
 from base.managers import BaseManager
 from base.serializers import ModelEncoder
 from base.mixins import AuditMixin
-
-
-# public methods
-def file_path(self, name):
-    """
-    Generic method to give to a FileField or ImageField in it's upload_to
-    parameter.
-
-    This returns the name of the class, concatenated with the id of the
-    object and the name of the file.
-    """
-    base_path = "{}/{}/{}/{}"
-
-    return base_path.format(
-        self.__class__.__name__,
-        str(utils.today()),
-        utils.random_string(30),
-        name
-    )
 
 
 class BaseModel(AuditMixin, models.Model):

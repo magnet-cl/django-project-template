@@ -8,10 +8,12 @@ import re
 
 # django
 from django.db.models import CharField
+from django.db.models import FileField
 from django.core.exceptions import ValidationError
 
 # utils
 from base import utils
+from .functions import file_path
 
 # translations
 from django.utils.translation import ugettext_lazy as _
@@ -81,3 +83,9 @@ class ChileanRUTField(CharField):
                 params={'value': value},
             )
         return value
+
+
+class BaseFileField(FileField):
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault('upload_to', file_path)
+        super().__init__(*args, **kwargs)
