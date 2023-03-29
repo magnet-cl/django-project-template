@@ -1,8 +1,8 @@
 # Python CircleCI 2.0 configuration file
 
-version: 2
+version: 2.1
 jobs:
-  build:
+  test:
     docker:
       - image: circleci/python:3.8-buster-node
       - image: circleci/postgres:12
@@ -18,22 +18,32 @@ jobs:
 
       - restore_cache:
           keys:
-            - cache-v1-{{ checksum "poetry.lock" }}
-            - cache-
+            - poetry-v1-{{ checksum "poetry.lock" }}
+            - poetry-
 
       - run:
           name: install python packages
           command: poetry install
 
       - save_cache:
-          key: cache-v1-{{ checksum "poetry.lock" }}
+          key: poetry-v1-{{ checksum "poetry.lock" }}
           paths:
             - ~/.local
             - ~/.cache
 
+      - restore_cache:
+          keys:
+            - npm-v1-{{ checksum "package-lock.json" }}
+            - npm-
+
       - run:
           name: install node packages
           command: npm ci
+
+      - save_cache:
+          key: npm-v1-{{ checksum "package-lock.json" }}
+          paths:
+            - ~/.npm
 
       - run:
           name: generate bundles
@@ -63,3 +73,45 @@ jobs:
       - store_test_results:
           path: test-results
           destination: test-results
+
+  lint:
+    docker:
+        - image: circleci/python:3.8-buster-node
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            - poetry-v1-{{ checksum "poetry.lock" }}
+            - poetry-
+
+      - run:
+          name: install python packages
+          command: poetry install
+
+      - save_cache:
+          key: poetry-v1-{{ checksum "poetry.lock" }}
+          paths:
+            - ~/.local
+            - ~/.cache
+
+      - run:
+          name: run black
+          command: poetry run black --check .
+
+      - run:
+          name: run flake8
+          command: poetry run flake8 --max-line-length=88 --ignore=E203,W503 --exclude=migrations .
+
+      - run:
+          name: run isort
+          command: poetry run isort --check .
+
+workflows:
+  test_and_lint:
+    jobs:
+      - test
+      - lint

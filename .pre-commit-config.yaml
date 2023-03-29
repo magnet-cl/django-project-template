@@ -1,0 +1,40 @@
+repos:
+  - repo: local
+
+    hooks:
+      - id: black
+        name: black
+        entry: poetry run black
+        types:
+          - python
+        language: system
+        stages:
+          - commit
+
+      - id: flake8
+        name: flake8
+        entry: poetry run flake8 --max-line-length=88 --ignore=E203,W503
+        exclude: migrations
+        language: system
+        types:
+          - python
+        stages:
+          - commit
+
+      - id: health-check
+        name: health-check
+        entry: poetry run python manage.py check --fail-level WARNING
+        language: system
+        always_run: true
+        pass_filenames: false
+        stages:
+          - commit
+
+      - id: migrations
+        name: check migrations
+        entry: poetry run python3 manage.py makemigrations --check --dry-run
+        language: system
+        always_run: true
+        stages:
+          - push
+
